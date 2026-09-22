@@ -9,16 +9,23 @@ const placeholder =
 async function main() {
   const adminEmail = process.env.ADMIN_EMAIL || "admin@rovanx.local";
   const adminPassword = process.env.ADMIN_PASSWORD || "change-this-admin-password";
+  const passwordHash = await bcrypt.hash(adminPassword, 12);
+  const existingAdmin = await prisma.adminUser.findFirst();
 
-  await prisma.adminUser.upsert({
-    where: { email: adminEmail },
-    update: {},
-    create: {
-      email: adminEmail,
-      name: "ROVANX Admin",
-      passwordHash: await bcrypt.hash(adminPassword, 12)
-    }
-  });
+  if (existingAdmin) {
+    await prisma.adminUser.update({
+      where: { id: existingAdmin.id },
+      data: { email: adminEmail, passwordHash }
+    });
+  } else {
+    await prisma.adminUser.create({
+      data: {
+        email: adminEmail,
+        name: "ROVANX Admin",
+        passwordHash
+      }
+    });
+  }
 
   const categories = [
     "Vitality",
