@@ -9,6 +9,7 @@ WORKDIR /app
 RUN corepack enable
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+RUN mkdir -p public
 RUN pnpm prisma generate
 RUN DATABASE_URL="postgresql://rovanx:rovanx@localhost:5432/rovanx?schema=public" NEXT_PUBLIC_SITE_URL="http://localhost:3000" pnpm run build
 
