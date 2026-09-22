@@ -76,3 +76,29 @@ export async function saveArticleAction(formData: FormData) {
   revalidatePath("/blog");
   redirect("/admin/blog");
 }
+
+export async function saveStoreSettingsAction(formData: FormData) {
+  await requireAdmin();
+
+  const value = {
+    name: String(formData.get("name") || "ROVANX").trim(),
+    tagline: String(formData.get("tagline") || "").trim(),
+    contactEmail: String(formData.get("contactEmail") || "").trim(),
+    whatsapp: String(formData.get("whatsapp") || "").replace(/[^0-9]/g, ""),
+    instagram: String(formData.get("instagram") || "").trim(),
+    facebook: String(formData.get("facebook") || "").trim(),
+    tiktok: String(formData.get("tiktok") || "").trim(),
+    legalReviewRequired: formData.get("legalReviewRequired") === "on"
+  };
+
+  await prisma.siteSetting.upsert({
+    where: { key: "store" },
+    update: { value },
+    create: { key: "store", value }
+  });
+
+  revalidatePath("/");
+  revalidatePath("/admin/settings");
+  revalidatePath("/order", "layout");
+  redirect("/admin/settings?saved=1");
+}
