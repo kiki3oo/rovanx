@@ -9,6 +9,10 @@ export default async function OrderConfirmationPage({ params }: { params: Promis
     include: { customer: true, items: true }
   });
   if (!order) notFound();
+  const setting = await prisma.siteSetting.findUnique({ where: { key: "store" } });
+  const store = (setting?.value || {}) as { whatsapp?: string };
+  const whatsapp = store.whatsapp && store.whatsapp !== "PLACEHOLDER" ? store.whatsapp : "";
+  const whatsappMessage = encodeURIComponent(`Bonjour ROVANX, je souhaite confirmer ma commande ${order.reference}.`);
 
   return (
     <section className="section">
@@ -35,8 +39,13 @@ export default async function OrderConfirmationPage({ params }: { params: Promis
             <strong>{formatMoney(order.total)}</strong>
           </div>
           <div className="mt-6 rounded-lg bg-sand-50 p-4 text-sm text-black/70">
-            Prochaines etapes: confirmation par appel, preparation apres confirmation, livraison selon la zone. Bouton WhatsApp placeholder a configurer.
+            Prochaines etapes: confirmation par appel, preparation apres confirmation, livraison selon la zone.
           </div>
+          {whatsapp ? (
+            <a className="btn btn-primary mt-4 w-full sm:w-auto" href={`https://wa.me/${whatsapp}?text=${whatsappMessage}`} target="_blank" rel="noreferrer">
+              Confirmer sur WhatsApp
+            </a>
+          ) : null}
         </div>
       </div>
     </section>
