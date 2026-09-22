@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { prisma } from "@/lib/db";
 
 const links = [
   ["About", "/legal/about"],
@@ -12,15 +13,34 @@ const links = [
   ["Blog", "/blog"]
 ];
 
-export function Footer() {
+type StoreSettings = {
+  name?: string;
+  tagline?: string;
+  contactEmail?: string;
+  whatsapp?: string;
+  instagram?: string;
+  facebook?: string;
+  tiktok?: string;
+};
+
+export async function Footer() {
+  const setting = await prisma.siteSetting.findUnique({ where: { key: "store" } });
+  const store = (setting?.value || {}) as StoreSettings;
+  const socialLinks = [
+    ["Instagram", store.instagram],
+    ["Facebook", store.facebook],
+    ["TikTok", store.tiktok]
+  ].filter((item): item is [string, string] => Boolean(item[1]));
+
   return (
     <footer className="bg-graphite-950 py-10 text-white">
       <div className="container grid gap-8 md:grid-cols-[1.2fr_2fr]">
         <div>
-          <p className="text-2xl font-black">ROVANX</p>
+          <p className="text-2xl font-black">{store.name || "ROVANX"}</p>
           <p className="mt-2 max-w-sm text-sm text-white/68">
-            Marque marocaine de vitalite et bien-etre masculin. Contenu legal et produit a valider avant production.
+            {store.tagline || "Marque marocaine de vitalite et bien-etre masculin."}
           </p>
+          {store.contactEmail ? <a className="mt-3 block text-sm text-white/78 hover:text-white" href={`mailto:${store.contactEmail}`}>{store.contactEmail}</a> : null}
         </div>
         <div className="grid grid-cols-2 gap-3 text-sm sm:grid-cols-3">
           {links.map(([label, href]) => (
@@ -28,7 +48,12 @@ export function Footer() {
               {label}
             </Link>
           ))}
-          <span className="text-white/50">Social: placeholders</span>
+          {store.whatsapp && store.whatsapp !== "PLACEHOLDER" ? (
+            <a href={`https://wa.me/${store.whatsapp}`} target="_blank" rel="noreferrer" className="text-white/78 hover:text-white">WhatsApp</a>
+          ) : null}
+          {socialLinks.map(([label, href]) => (
+            <a key={label} href={href} target="_blank" rel="noreferrer" className="text-white/78 hover:text-white">{label}</a>
+          ))}
         </div>
       </div>
     </footer>
