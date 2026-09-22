@@ -1,0 +1,12 @@
+.env
+.env.local
+.next
+node_modules
+.pnpm-store
+coverage
+playwright-report
+test-results
+dist
+uploads
+*.log
+tsconfig.tsbuildinfo

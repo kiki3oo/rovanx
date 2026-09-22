@@ -1,0 +1,315 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ProductRole {
+  MAIN_HERO
+  HERO
+  ENTRY
+  UPSELL
+  CROSS_SELL
+}
+
+enum StockStatus {
+  IN_STOCK
+  OUT_OF_STOCK
+  PREORDER
+  UNKNOWN
+}
+
+enum OrderStatus {
+  NEW
+  UPSOLD
+  SENT_TO_FULFILLMENT
+  CONTACTING
+  CONFIRMED
+  CANCELLED
+  SHIPPED
+  DELIVERED
+  RETURNED
+}
+
+enum ArticleStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum ReviewStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String
+  slug        String    @unique
+  description String?
+  active      Boolean   @default(true)
+  products    Product[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Product {
+  id                    String           @id @default(cuid())
+  name                  String
+  slug                  String           @unique
+  sku                   String           @unique
+  role                  ProductRole      @default(CROSS_SELL)
+  shortDescription      String
+  longDescription       String
+  placeholderNotice     String?
+  regularPrice          Int
+  salePrice             Int?
+  cost                  Int?
+  stockStatus           StockStatus      @default(UNKNOWN)
+  active                Boolean          @default(true)
+  featured              Boolean          @default(false)
+  hero                  Boolean          @default(false)
+  categoryId            String
+  category              Category         @relation(fields: [categoryId], references: [id])
+  images                ProductImage[]
+  ingredients           String?
+  servingSize           String?
+  usageInstructions     String?
+  warnings              String?
+  regulatoryInformation String?
+  onssaReference        String?
+  benefits              String[]
+  faqs                  Json?
+  seoTitle              String?
+  seoDescription        String?
+  ogImage               String?
+  orderItems            OrderItem[]
+  bundleItems           BundleItem[]
+  sourceUpsells         UpsellRule[]     @relation("UpsellSource")
+  offeredUpsells        UpsellRule[]     @relation("UpsellOffer")
+  relatedArticles       ArticleProduct[]
+  reviews               Review[]
+  createdAt             DateTime         @default(now())
+  updatedAt             DateTime         @updatedAt
+}
+
+model ProductImage {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url       String
+  alt       String
+  sortOrder Int     @default(0)
+}
+
+model Bundle {
+  id                   String       @id @default(cuid())
+  name                 String
+  slug                 String       @unique
+  image                String?
+  description          String
+  bundlePrice          Int
+  regularCombinedPrice Int
+  active               Boolean      @default(true)
+  seoTitle             String?
+  seoDescription       String?
+  items                BundleItem[]
+  createdAt            DateTime     @default(now())
+  updatedAt            DateTime     @updatedAt
+}
+
+model BundleItem {
+  id        String  @id @default(cuid())
+  bundleId  String
+  productId String
+  quantity  Int     @default(1)
+  bundle    Bundle  @relation(fields: [bundleId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@unique([bundleId, productId])
+}
+
+model Customer {
+  id        String   @id @default(cuid())
+  fullName  String
+  phone     String
+  phoneNorm String   @unique
+  city      String
+  address   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  orders    Order[]
+}
+
+model Order {
+  id                String               @id @default(cuid())
+  reference         String               @unique
+  customerId        String
+  customer          Customer             @relation(fields: [customerId], references: [id])
+  status            OrderStatus          @default(NEW)
+  source            String?
+  notes             String?
+  addressDetails    String?
+  subtotal          Int
+  discountTotal     Int                  @default(0)
+  total             Int
+  currency          String               @default("MAD")
+  cod               Boolean              @default(true)
+  utmSource         String?
+  utmMedium         String?
+  utmCampaign       String?
+  utmContent        String?
+  utmTerm           String?
+  landingPage       String?
+  referrer          String?
+  upsellAccepted    Boolean              @default(false)
+  items             OrderItem[]
+  statusHistory     OrderStatusHistory[]
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+}
+
+model OrderItem {
+  id            String   @id @default(cuid())
+  orderId       String
+  order         Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId     String
+  product       Product  @relation(fields: [productId], references: [id])
+  productName   String
+  sku           String
+  quantity      Int
+  unitPrice     Int
+  total         Int
+  isUpsell      Boolean  @default(false)
+  createdAt     DateTime @default(now())
+}
+
+model OrderStatusHistory {
+  id        String      @id @default(cuid())
+  orderId   String
+  order     Order       @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  from      OrderStatus?
+  to        OrderStatus
+  note      String?
+  createdAt DateTime    @default(now())
+}
+
+model UpsellRule {
+  id               String   @id @default(cuid())
+  sourceProductId  String
+  offeredProductId String
+  sourceProduct    Product  @relation("UpsellSource", fields: [sourceProductId], references: [id])
+  offeredProduct   Product  @relation("UpsellOffer", fields: [offeredProductId], references: [id])
+  upsellPrice      Int?
+  headline         String
+  description      String
+  enabled          Boolean  @default(true)
+  priority         Int      @default(0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model ArticleCategory {
+  id          String    @id @default(cuid())
+  name        String
+  slug        String    @unique
+  description String?
+  articles    Article[]
+}
+
+model ArticleTag {
+  id       String    @id @default(cuid())
+  name     String
+  slug     String    @unique
+  articles Article[]
+}
+
+model Author {
+  id        String    @id @default(cuid())
+  name      String
+  bio       String?
+  articles  Article[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Article {
+  id             String           @id @default(cuid())
+  title          String
+  slug           String           @unique
+  excerpt        String
+  coverImage     String?
+  body           String
+  authorId       String
+  author         Author           @relation(fields: [authorId], references: [id])
+  categoryId     String
+  category       ArticleCategory  @relation(fields: [categoryId], references: [id])
+  tags           ArticleTag[]
+  status         ArticleStatus    @default(DRAFT)
+  publishedAt    DateTime?
+  seoTitle       String?
+  seoDescription String?
+  canonicalUrl   String?
+  ogTitle        String?
+  ogDescription  String?
+  ogImage        String?
+  faqs           Json?
+  sources        Json?
+  relatedProducts ArticleProduct[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+}
+
+model ArticleProduct {
+  articleId String
+  productId String
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@id([articleId, productId])
+}
+
+model FAQ {
+  id        String   @id @default(cuid())
+  question  String
+  answer    String
+  locale    String   @default("fr")
+  page      String?
+  active    Boolean  @default(true)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Review {
+  id          String       @id @default(cuid())
+  productId   String
+  product     Product      @relation(fields: [productId], references: [id], onDelete: Cascade)
+  authorName  String
+  rating      Int
+  body        String
+  status      ReviewStatus @default(PENDING)
+  demoOnly    Boolean      @default(false)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model SiteSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
