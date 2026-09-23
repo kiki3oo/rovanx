@@ -11,21 +11,21 @@ type ProductCardProduct = Pick<
 export function ProductCard({ product }: { product: ProductCardProduct }) {
   const price = product.salePrice || product.regularPrice;
   return (
-    <article className="grid overflow-hidden rounded-lg border border-black/10 bg-white">
-      <Link href={`/product/${product.slug}`} className="product-visual m-3">
-        <span className="max-w-[12ch] text-lg font-black">{product.name}</span>
+    <article className="surface-card grid overflow-hidden transition duration-200 hover:-translate-y-1 hover:border-bronze-500/45">
+      <Link href={`/product/${product.slug}`} className="product-visual m-3 min-h-[260px] overflow-hidden">
+        <span className="max-w-[13ch] text-balance text-xl font-black leading-tight">{product.name}</span>
       </Link>
-      <div className="grid gap-3 p-4 pt-1">
-        <div className="flex flex-wrap gap-2">
+      <div className="grid gap-4 p-5 pt-1">
+        <div className="flex min-h-7 flex-wrap gap-2">
           {product.salePrice ? <span className="badge">Offre</span> : null}
-          {product.hero || product.featured ? <span className="badge">Selection</span> : null}
+          {product.hero || product.featured ? <span className="badge">Selection premium</span> : null}
         </div>
         <Link href={`/product/${product.slug}`}>
-          <h3 className="text-lg font-black leading-tight">{product.name}</h3>
+          <h3 className="text-xl font-black leading-tight hover:text-bronze-600">{product.name}</h3>
         </Link>
-        <p className="text-sm text-black/65">{product.shortDescription}</p>
-        <div className="flex items-center gap-2">
-          <strong>{formatMoney(price)}</strong>
+        <p className="min-h-12 text-sm leading-6 text-black/62">{product.shortDescription}</p>
+        <div className="flex items-end justify-between gap-3 border-t border-black/10 pt-4">
+          <strong className="text-xl">{formatMoney(price)}</strong>
           {product.salePrice ? (
             <span className="text-sm text-black/45 line-through">{formatMoney(product.regularPrice)}</span>
           ) : null}
