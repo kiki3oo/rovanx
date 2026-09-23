@@ -24,6 +24,13 @@ export function ProductCard({ product }: { product: ProductCardProduct }) {
           <h3 className="text-xl font-black leading-tight hover:text-bronze-600">{product.name}</h3>
         </Link>
         <p className="min-h-12 text-sm leading-6 text-black/62">{product.shortDescription}</p>
+        <div className="grid grid-cols-3 gap-2 text-center text-[11px] font-black uppercase text-black/55">
+          {["COD", "Appel", "Livraison"].map((item) => (
+            <span key={item} className="rounded-md bg-bronze-500/10 px-2 py-2 text-bronze-700">
+              {item}
+            </span>
+          ))}
+        </div>
         <div className="flex items-end justify-between gap-3 border-t border-black/10 pt-4">
           <strong className="text-xl">{formatMoney(price)}</strong>
           {product.salePrice ? (
