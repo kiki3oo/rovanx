@@ -21,7 +21,9 @@ export const checkoutSchema = z.object({
   utmContent: z.string().optional(),
   utmTerm: z.string().optional(),
   landingPage: z.string().optional(),
-  referrer: z.string().optional()
+  referrer: z.string().optional(),
+  locale: z.enum(["ary", "fr", "en"]).optional(),
+  displayCurrency: z.enum(["MAD", "EUR", "USD", "XOF", "XAF"]).optional()
 });
 
 export const productAdminSchema = z.object({
