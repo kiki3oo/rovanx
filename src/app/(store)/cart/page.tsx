@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Trash2 } from "lucide-react";
+import { ArrowRight, PhoneCall, ShieldCheck, Trash2, Truck } from "lucide-react";
 import { useCart } from "@/components/store/cart-provider";
 import { formatMoney } from "@/lib/money";
 
@@ -13,12 +13,20 @@ export default function CartPage() {
     <section className="section">
       <div className="container">
         <p className="badge mb-3">Panier</p>
-        <h1 className="mb-8 text-4xl font-black">Votre commande</h1>
+        <div className="mb-8 grid gap-3 md:grid-cols-[1fr_auto] md:items-end">
+          <div>
+            <h1 className="text-4xl font-black">Votre commande</h1>
+            <p className="mt-3 text-black/62">Derniere verification avant paiement a la livraison.</p>
+          </div>
+          <Link href="/shop" className="btn btn-secondary">
+            Continuer shopping
+          </Link>
+        </div>
         {lines.length ? (
           <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
             <div className="grid gap-3">
               {lines.map((line) => (
-                <div key={line.product.id} className="grid gap-4 rounded-lg border border-black/10 bg-white p-4 sm:grid-cols-[1fr_auto_auto] sm:items-center">
+                <div key={line.product.id} className="surface-card grid gap-4 p-4 sm:grid-cols-[1fr_auto_auto] sm:items-center">
                   <div>
                     <h2 className="font-black">{line.product.name}</h2>
                     <p className="text-sm text-black/55">{formatMoney(line.product.price)}</p>
@@ -41,7 +49,7 @@ export default function CartPage() {
               ))}
               {crossSell}
             </div>
-            <aside className="h-fit rounded-lg border border-black/10 bg-white p-5">
+            <aside className="premium-panel h-fit p-5">
               <h2 className="text-xl font-black">Total</h2>
               <div className="mt-4 flex justify-between border-t border-black/10 pt-4">
                 <span>Sous-total</span>
@@ -51,13 +59,18 @@ export default function CartPage() {
                 <span>Livraison</span>
                 <span>A confirmer</span>
               </div>
+              <div className="mt-5 grid gap-3 text-sm text-black/65">
+                <span className="flex items-center gap-2"><ShieldCheck size={16} className="text-bronze-600" /> Paiement a la livraison</span>
+                <span className="flex items-center gap-2"><PhoneCall size={16} className="text-bronze-600" /> Confirmation telephonique</span>
+                <span className="flex items-center gap-2"><Truck size={16} className="text-bronze-600" /> Expedition apres validation</span>
+              </div>
               <Link href="/checkout" className="btn btn-primary mt-5 w-full">
-                Continuer
+                Passer commande <ArrowRight size={17} />
               </Link>
             </aside>
           </div>
         ) : (
-          <div className="rounded-lg border border-black/10 bg-white p-8 text-center">
+          <div className="premium-panel p-8 text-center">
             <p>Votre panier est vide.</p>
             <Link href="/shop" className="btn btn-primary mt-4">
               Voir les produits
