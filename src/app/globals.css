@@ -8,7 +8,9 @@
   --muted: #6d716f;
   --accent: #b9823c;
   --accent-dark: #93652f;
+  --accent-light: #e7bd73;
   --burgundy: #7b1f37;
+  --burgundy-soft: #a8324f;
   --surface: #ffffff;
   --graphite: #171a21;
 }
@@ -91,11 +93,38 @@ a {
   box-shadow: 0 18px 60px rgba(23, 26, 33, 0.06);
 }
 
+.premium-panel {
+  border: 1px solid rgba(185, 130, 60, 0.22);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(255, 247, 234, 0.84)),
+    #fff;
+  box-shadow: 0 22px 70px rgba(23, 26, 33, 0.08);
+}
+
 .dark-surface {
   border: 1px solid rgba(255, 255, 255, 0.1);
   background:
     linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
     #171a21;
+}
+
+.brand-hero {
+  background:
+    linear-gradient(115deg, rgba(18, 20, 26, 0.98) 0%, rgba(18, 20, 26, 0.94) 48%, rgba(53, 23, 35, 0.98) 100%),
+    #171a21;
+}
+
+.gold-text {
+  background: linear-gradient(135deg, #f1d59a, #b9823c 52%, #fff3cf);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.conversion-strip {
+  border-block: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.055);
 }
 
 .field {
