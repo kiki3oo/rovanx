@@ -1,141 +1,29 @@
+import Image from "next/image";
+
+const ROVANX_3D_LOGO_SRC =
+  "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QBMRXhpZgAATU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAABpKADAAQAAAABAAAA5QAAAAD/7QA4UGhvdG9zaG9wIDMuMAA4QklNBAQAAAAAAAA4QklNBCUAAAAAABDUHYzZjwCyBOmACZjs+EJ+/8AAEQgA5QGkAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/bAEMABAQEBAQEBgQEBgkGBgYJDAkJCQkMDwwMDAwMDxIPDw8PDw8SEhISEhISEhUVFRUVFRkZGRkZHBwcHBwcHBwcHP/bAEMBBAUFBwcHDAcHDB0UEBQdHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHf/dAAQAG//aAAwDAQACEQMRAD8A+EadQKUCtzMcBTgKbTgKYDgBUgGKYKlApMBVWpgKaKkUGkIcBxUiimgVIooAkA9qmUcVGKnVaYEgFTqKYo6VOopiJQPzqZRxk0xRU6rgc0AOA4qZRTO9TxjjmmIeq+tTAYFNAqRaBDlWpgppFHSp1AouAirxUoXipFUVKEpXAr7PSjys1ox2zOQAK9c8G/B/xJ4qCXJi+xWR5NxOCqkf7I6t+HHvWU60Y7s0jTbPD2iI5xTClfRnjH4ORWMzQ+Gb4XksCKZIpMKzEjJKkcYPYH868HvtOvNOna1voXglTqjgg1nSxMKmkXqXOjKOrMcqKiZKulKhZfWum5jYosveoinerjL6VEy0wsUytQlauMKrsKBFR1quw4q4wqBhSGVGUYqBhirjDjnrVdxSKKbVERVhhUJFICBhURFWGAqEjFAEJFMK1MRTSBQBXI9qYRipjTCPSgCFlqIqPSrBFRGmMj2j0ppHWpCBTetAEZHtSYFPwKSkAwqKTaKU9etJn3/SgD//0PhMU72pF606tzMUYp1NFPFMBy1NjmowBUy+1SDHAc1KvpUY61IOtAiQCpFHpUYFTLQBIoqwnSol6VYUUwJV45qwgHeolFWEFMROi8VKBTV6VKPSgBwHerEYpiDNW40PGKLhYaF9KmVaspbO3QVei0y4kICIWJ7AVDml1Gotmeo9KsIhr0DSPhj4w1cLJb6fJHEf+Ws37pPrl8Z/DNem6T8FreF1/tm9a4k7w2i8fi7D+SmuapjKUN5G0KE5bI8Agt5JnCRqWY9ABXsHhX4N+KNeKT3UY021PPmXHykj/ZT7x/ID3r6B0XwzoPhiETwwW2mqv/LaUhpf++25z7DFZ+rfFXw5p8jWekxy61eg/dAJUH1Kj/2bH1ryquYt/ArI7qeDfqdB4U+F3hDw4q3MUH9p3UfJuLnAiUjuB93j/gRqTxP8TdD0VxZ227WdQb/V2tuP3eR64zkD1PH0rzRJ/iD8Qptju8VoTjybUgIo9HmPyL9F3sK9T8OfC7SdLiB1HbMzcvFHkRsf+mjH95Kf94gf7Nee605vQ6vYwp/G/kjwa++KWuSahI/jbRop7QEFJbBx51qCOFJU9u/P4mukWPQPGlhvspIddtgPuNiO6j/DjP1GPxrpPiHoWm3OsPGYVi8qONY2iHlsg2jhSuOPbp7V4hfeEbq2n+36WzLMhyJrYiKbPuvCP+G0n0rNzV9dzeMYuOgmrfCpJmkfw7c/Ov3rW5+V19s4/mB9a8n1bw/q+iy+TqlrJbt2LDg/Q9D+de46b4116AfZPElsmsQw8GRVMd1GPUrw4/AfjWofGcc+l3kzReZazTGGzW6CuxVR87uMYIB6fqa78PjqqkofEYTwCn8Oh8222l3N1FJc8RW8ILSTSHaigepNeeav4qtoZTb6UpuCOPMYYU/7o64+uPpXXfE3xI1/er4U04CKxssCVU4DzdSDjsmcY/vZPpWHZ/C/xK0I1CyjS8RhnCMA4/4Cf6V7sqyjbmdjkq4eMFaKuw0i4nurMSXhHmkkkAYGOwq8y1X+wajprCG+tpLdhxh1q/zqwM7ea3Uk1ozzWtdSBl4qB171cIPXFV3WmIplSTUMi1aIweagcc0gKLDrUBHBq04qFhxQMrMKhOKnaoSPSgREaYalIphoAiIpvTrTzTDQBEeab9aeR6Uw0AREU2nnrTKpDGmm06kNSAw0Uv40fjSA/9H4UFOFMByM1JW6MxRTwO/eminr1oAkGKlHNRr1qQDFICUU8UwU8UCHipVqMVMoAoAmSrK1WHAqwlMCyvNWEPOTVdTnpUyGgRZU44qVcdDUC81aRaYFuBdxA7V9c+H/AIAabLZW17q2shVuI1lCRJzhgDj5iPX0r5EjlEToPVgPzNfo413Pp1lfXVk/lzWOgxmM4ztf5sHB46ivGx9acHFRdtzvw1NSTZm6X8HPAljhvstzqBHeQlVP5BR+tdd5HhTwvHmKLT9JA7sVMn+J/OvnTTrT4r+KW8m71y5upDFFNJHbqsaIJl3KCzMi5x6Ka6m1+CF1d/vNauck9fNleb/xxPLT9TXiSrN9bnpLDxXxM6DXvi14FsHKrcTapcdkiBUZ+n3v0NeZ6l8VfF2rMbPw3pS2St93cPnx67QCx/75FepWnwo8O6Svyo0xHYARJ/3zHgn8Samn02DT4zDawpCn92NQoP1x1rByN1yLbU8Nj8JeK9fm8/xPqLgN1jLEDHptUlj9GZa9d8L+DfDmnIkXkfaAuDtcAR5/3F+U/wDAtx96pyfJJ835Cuh0qc7wBUXKcnY9f09lESpGAqqMAAYAHtitftXO6a22MF+KydI8Vw6z4q1LR7Nt8GmQosjD7vnOSSufVVAz9a7Kd+W5581rocD49YjX5wD/AAx/+givNNXIbTpIyxQysqgg4I+YEkfQDOa7r4h6tpsGuTu9wjfKgwrAnIUA8CvmH4k+PLfT7CS1tpP9NuEMcUQPMauMNI3px931PPQVrQw0p1LtaHpUY2gpS2PXfA2q6f8AEDw1b3moxJLdQfuZz0YSL/ErDBXcMNwa8v8Aitcf8Ix4gsNM8+SS3aJZF80glQ7kEZAGRx3yfemfs33M8i6tEciNpIdvpuAbP6EVJ+0VZRala6Z4msiXW3kl0+YjsyHcp+h5I9sVtTjGnjLdBQk9bHzfHOreKpJrvlXvWLk+hkya+odK8T6ToKS6dqGlyPaieSSK+t26rId2CV9Dn7xr5cv7bdJHqUOStxhm/wBmQgMfzzkfj6V9ceGJ9D8WeGbXU7i2VbwJ5Vw8ZMb+YnBJKkZzwefWunMlZRn0IjDlupHQ2uueFNVh22mqxurf8s7tQfwzwP51mal4Q0S9BddPtpN38du+zP5ED9K4LXPB2jvIZElZW9WAJ/76XYfzzXFSafqumMf7K1CQY6AOc/8Aj2P515UH1hKwpQT3R3l98PtPXLKbq1/3lEi/n8teZ+INGTR3iVLgXAlzghSpGPXNejeBr/xJeTX8er3byRxWxaIYwd4kRGyevAJ7968v8ZyPbadp0uSTHM8f4Yb/AAr08LiKntFCUro4a9CCg2lZmE2epqBweadFOsygjvSuAa948gpN1qBqtOKrNQBWcCoTVh6gagRCTxTDTyMdaYetAEdNpxFNNAEZqMipT1pjUDITTTTye1MIpoBtNNOPtTTQA00mTSmkpAf/0vhQU7tSDkU6ugzHCnr1pnSnLnNICdfSpM1GD0qQUgJRzTxUYqTmgRIPzqVahGalUc0AWFFWUIxVVDzg1YXmgCwvXiplUk4FQp0q2h6elMCwgAAFTBgBUS0jk44/KkMWFjNf20R/imjX82Ffolq823SfEzg/6vTLaMfiXr879GXzde02P+9dRDH/AAMV96avcn/hGvFsv/TO2j/n/jXzuaP34ryZ62BWj9UdX8NsC71X/ZSyi/75gB/rXq5CmvEvh9dbJ9ZPc3USf9828Yr1yG6B+XPNeJCWlmdtWPvXJLiHcMAVyGp2Zwxx+Nd2MMKzr63TymduAozVtdjKMrbniV9blHPFdl4a8Pk239qanILa0HKlurfT/PNeeahrvn+OZdHQAWmnAJKf+ekzDcR9FAx+JPpWH4l+LVt582oXcu3StMPlwon/AC0ccZUdyTwvoOa9TDYPeVToZ1KrlaMT1Pxz4ku7LTJLTQALPzFIa5l/gXuecZb0GQB1J7V8Z3Xj6x8LQT6RpWrT3YmcyTC2OWkc9S8gwPyyKzNc8SeJfifqP/E3uDY6aW/dWisQoHYv/ebH+RW7HN8LfA0AhvGjuroDJUDzWz/urwP+BV6nLdWSPTw9NQjzWXqzynU/G+vXbMNMgazDfx43yn/gTcA/QCuVtNA1bV7otICHkbLzXDgDnuSTk16frHxH8H37FbWwuY17bUjUfkDXFza7okhLw2dzIewZ1UfoDWlnY2cPaO/Pf5HvPhHVNH8C6E+l6VcJc3jK0k90OI4uPmcnvtHQD2rLi1IeJfhLr91ODsk1MyW4bqFHlov47Qc/jXiN1q0OhJ9pu4xcXbD91b9l9DJ7D+73rWlFunG/Y+jp1VRdpHpOuHwv4W08ao1usuqXIP2SN+cH/AJ6sPRe2eprxErc6rMtvCSVdi7uf4mPVj/SrhXUvEuoSXt85nnlOST0A7D2A7AV1yWUGjW20Ye5n/doPUtx09F60nJQ92O5xVZus3yq0TodD0U2VuibewrqrdVgP2h+FhBkP0Qbv6Vv6fZb7OIuOQgB/KqWtWvl2Ytl4a7dYB9HPzf8Ajua+dnWcnqKMLbGv4XX+zfDst5MfutGT/wBsIi7fq9fP/jy4Pl6RYE/MiSTN9X2r/wCymvoDXH+weEra0UYkvcnHtM//AMbC18yeL7sXniORE+7bIsQ/Dk/qa7sujzVeb1OTGO0LFGDAWrynAqjCOKuqe1fSnhj+1NHoaCfSk5FAhH4qqR61OzVAaBDT0qInmnknHFMNACH3ppp3Wme1AxCajJBpxqPPSgBjE1H71IxFM4FAxtNp1NpiG0Uh60lLQD//1vhQGl70wdKcK3MyQYpwpgp+aQD14FSA1CD6VIpoGTg5qQVCD2p+eBQSSZp2c1Hk0ooGP5p6kimZpwoAnBqQfpUI4FSg0ATA4p2e1RZNSqO9AFaZcg12Hw2vANTvtEc4W/iJT/fTmuTkGRVSzv5NI1W11OE4a3kDfhnmufEU/aUpRN6E+SakfXcu3X/DNrLOfn2PaTHuC3yg/g6j863/AA1rMV74ftpZMefGpilHcSRnaf5V574c1SKa+vdI34t9SjFxA3oWAz+TbW/A1R06/l0rWLqyl+RbsmQL/dlX5ZB+PWvjKlJttfM+khLQ6+fwaPHfimy0Y3LW9ncsXutp+8kILD8c8D6132ofA/TtFU3fgfW7jSblRwpYvGx/2hXimoeJL/SHa+0+QxyBJIyy9QsilTj3AORVuf4tahe+GxcRTMLu3VXcd28vBYfjjmvo8v8A4KTex42LVql0ZHia3+J9zdNpusahbmKLIMyOAD9R1z7VxljJqzXMWl3A84rISXXncQCoHHXk9aXXtcv/ABZqM02nsy2yxiSdxweccZ7AEge5rptEWHRbZbyYcW0ZIJ/z9a1rzvJU09yKULJzfQ9M17W7L4f+D08L+HlEviXxAAs8sfLRxMcbVxzz0HrX0r8HPCVl4T8GxabebTfXJE1yT2bHC59FH65r458Bo1xqsnjXWv3lzKxFsrdEA4yPp0Hvk13fxJ+Kc+i+H/7B0uYrf6mhDMp5igPBI/2n5A9smt4RVly7GUm27dTO+JXjyw1nxjfXVo4ewsB9mhYdGEZJdx7MxOPYCvLtO8TW2n6Fc3upMI57+V5VB5Kqe4HqBwPevPYXnu3Fip+TIMp7Af3f8a9MTRfCuqLCl0MPGAJJM44HYk8KP1rkrpTkoWuj2MFh57xWp4lqV9fa1qH2mFGVFGyFBztUf1PUmp7XRSp82/O3PJz1P9TXtGq658ONAh+yaUvnTKPmMQ3cj/aNeTar4r+1SkadZrEW6NJ8zfgOldSTa12OurRhH3qk7vyL739rpltujURJ2LfeY/7K/wBTWj4O0u91zU11W8UiNOI1POB6/U1B4R8Aar4pvlurzdIucnd6f57V9R6V4Pj0m2WJEwQOuK8fG4yEIunT3MI80t1Zdina26rGFx0rlr6BtU8S2+nW3P2ZQP8AtrOdi/kMmvQbxItOs5bqf5I4VLsT6CvPvC0rW9rf+KL75C2+XJ7NICF/74iBP1Irw6d3dm+xQ8dapbjWGhiOLXTIDJ9MDZGP++RXyosrXV1LdPy0rlz+JzXpvjPWJDpEk0nFxrEpfHcRLworzOzTCivrMupcsHI8PFzu0jYhHFWu1VoulTZr1Tzh5603PvQTUZbtQAjVE2KVmqP680CEzTSc9qCaTNAxDwaaSKDzzTM+tAWEOOtR7vypWNNzxQAw00045pppgNJptOPNNNADTzSYoJpM0tQP/9f4SHSnCmjpS1sZjxThTKdVAPBp4OKiHtUmakZMDTwaiBp2eOaAJc04Hmo6cDQIlp6nFRZp4NAEoPNSA1CKlBzQBKahkPFPLccVC5DUAZkincTTNh9KvlBmkCD0osO4yyuZdPu47uLhozn6juK9n06807WIjNY3cNuZBukt5iU2ufvFGAYbSecHGD0JFeNOmRVMgqeDisalKM1ZmkKji9D3YaCm7zm1G2Mw5D+fyD2P3eo7VMtlqtvj7BrUVsMAN5dwRuI7n5eteBbpP7x/Ol3Sf3j+dYqh5mvtX2PdZNCNyMXGo27jqR538X977vX3qSPRGKkSXtvM55yZxuJ7DJGK8HWWVCGVyCPet3T75Gddr+ROOhz8pqJ0LIuNVtnb3V3qIuRYazc3SLA3yx3ByoPbuePQ9K0GjlCZicxyD5kdeoPYilsdctb6NNN8QQ+YF4Rs4Zf9x//ZTkfzrSOi3drGZtFcajZgFmixiRB7pyR9VyPWuKrGS1Omm09CpDZzJZbEmZJWbLuOrZPzZPv3pt/YyLCLieYw2xP3T/AMtGHTav8RHr0HcitnTWvNTkFr4e0+S6u8ZcyAGOL1J7HHq5A9q1pbfQtFL6hr06a1qSdQW/0OI9gzjmUjsiYX3I4rnjzuWh0NRiveODttI1bUj/AG5I0tugYJFc3DiMMV4Cx8kttHoMD1rQTT9Wi4t9aSFDyypPjJPU8DvWJ4i8VX2uytcSzFYFGzzGAUBR0SNBwi+igflXm9zeb/3dtlI/Unk/X/CvUhBs4JzsexrpEikBryGRFG1VMvC55OOO5pEsLgFzNcQysxyWMvPtzt9K8S3yf3j+dG+T+8fzNX9XXUy9s+x7ha6VKZmluLuAljlneUk4H0Qnp7Vy/i7W7GO2bR9Mk853OZ5sYyem1RzhQOAM55JPJwPN98n94/nSAEmtI0UnzEyqNqwgWl2GrKpxT/LzXRYwuVY1Oc1oR8daiCYqZRg00K5YB7ilNRhiBTc0AO78U000n3pCaYgJpKQmkoAKSgnjikpAFITSZoyBQAmKQmgkdqQ0DEpc8UlIaAEPWk/ClPWkyfWgR//U+DKWm0tbCaHZo4zzRRQSOGKOlMp9Ah3UU7rTOlL1oAf9KKaDS0AO7807imZxS55oAeDjmn571FnmloAlBppFN7c04HimAYpMU6ikMaVBqs0YJq4RTNuaAKgio8qreKNvagCn5VRPFjkVpbRTGQH8KBha6pJCohuV86Lpz94fQ/0Ndjpet3duVm0+YzonO3JWRPoev8xXCPH7VAN8TB4yVYdCDgisJU1ujWNToz2668f6pe2I0+JpZ8nc0RAjQn+9JswZD7k/jXnWpatvk33s32uZfuxJxEn5cfl+dc9Nf3twnlyykr3A4z9cdfxqqqVEaPcp1Lk9zdXF4+6ZsgcKo4UD0AqNY81KsdWFSuhK2xi5XIBFR5WatYp20VViWU/Kp6xj0qztoxQIYFp+KWimAmBScClzSGgBcim0ZpppALSZptLQAdKaeaKKACmk0E02gBc80hI6UntRQMUCkPWikNIBM0UlFBVhDRig0lAWP//V+C6XoaKK1AUUuaQUtAwpelIaWmSh1FFFBI6jFFLQCClpO9LQIWndKQUHtQhjiKM4oPakNAD6Uc0lKKAQpooPU0UAwoxzQOlL3qkBCyjmq7ICKtN1qBuhpMRW2DNSogxTe9SJ0NIRKBgZqUAVGOlSr1/CgoTvSmk/iFKelACUEcUooPSgBp4pO1KaTtQISkpfSkpgIeKbTjTaAEpCaU000gCg0opDQISm5p3emUAL2puacelNpFdBxpnWnmmCmVYKQc0tItIAIpMGnHtSUgP/Z";
+
 type RovanxLogoProps = {
   className?: string;
   variant?: "full" | "mark";
   tone?: "dark" | "light";
 };
 
-export function RovanxLogo({ className = "", variant = "full", tone = "dark" }: RovanxLogoProps) {
+export function RovanxLogo({ className = "", variant = "full" }: RovanxLogoProps) {
   if (variant === "mark") {
     return <RovanxMark className={className} />;
   }
 
-  const textFill = tone === "light" ? "#f4efe4" : "#e9e2d2";
-  const textStroke = tone === "light" ? "#171a21" : "#4a321c";
-
   return (
-    <svg
-      className={className}
-      viewBox="0 0 360 252"
-      role="img"
-      aria-label="ROVANX Men's Vitality"
-      preserveAspectRatio="xMidYMid meet"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <defs>
-        <linearGradient id="rovanx-gold" x1="0" x2="1" y1="0" y2="1">
-          <stop offset="0" stopColor="#f4dda5" />
-          <stop offset="0.45" stopColor="#b9823c" />
-          <stop offset="1" stopColor="#6d441d" />
-        </linearGradient>
-        <linearGradient id="rovanx-silver" x1="0" x2="1" y1="0" y2="1">
-          <stop offset="0" stopColor="#ffffff" />
-          <stop offset="0.48" stopColor="#d8d8d8" />
-          <stop offset="1" stopColor="#7b7d7f" />
-        </linearGradient>
-        <linearGradient id="rovanx-burgundy" x1="0" x2="1" y1="0" y2="1">
-          <stop offset="0" stopColor="#cf4962" />
-          <stop offset="0.5" stopColor="#7b1f37" />
-          <stop offset="1" stopColor="#351120" />
-        </linearGradient>
-      </defs>
-
-      <g transform="translate(70 4)">
-        <path d="M110 3 205 43v70c0 61-37 103-95 126-58-23-95-65-95-126V43L110 3Z" fill="#171a21" />
-        <path
-          d="M110 12 194 48v64c0 54-32 91-84 112-52-21-84-58-84-112V48l84-36Z"
-          fill="url(#rovanx-gold)"
-        />
-        <path
-          d="M110 26 181 56v57c0 45-27 78-71 96-44-18-71-51-71-96V56l71-30Z"
-          fill="#d9b06a"
-          opacity="0.72"
-        />
-        <path d="M110 24 177 53v12l-67-27-67 27V53l67-29Z" fill="#f8e7ba" opacity="0.86" />
-      </g>
-
-      <g transform="translate(96 33)">
-        <path
-          d="M107 2c-9 34 0 58 27 75-25 8-42 25-51 51-5-39 3-81 24-126Z"
-          fill="url(#rovanx-burgundy)"
-          stroke="#2a0e18"
-          strokeWidth="4"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M119 29c23 6 40 20 51 42-21-8-40-6-58 5 18 4 31 16 40 34-24-10-46-8-65 7 3-32 14-61 32-88Z"
-          fill="url(#rovanx-burgundy)"
-          stroke="#2a0e18"
-          strokeWidth="4"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M114 102c26-1 45 9 58 31-25-7-47-3-66 12 0-16 3-30 8-43Z"
-          fill="#7b1f37"
-          stroke="#2a0e18"
-          strokeWidth="4"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M31 70c16-40 52-58 90-43-23 4-37 16-42 36 19-4 35 0 49 12-29 1-50 12-63 32 15 2 27 10 36 23-23-8-43-5-60 8-11 9-25 12-41 9 18-7 28-18 30-33-17-1-31-9-42-25 17 3 31-3 43-19Z"
-          fill="url(#rovanx-silver)"
-          stroke="#24262a"
-          strokeWidth="5"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M53 74c9-16 24-24 45-24-11 8-18 18-22 31 10-2 19 0 27 6-17 3-30 11-38 25 8 2 15 7 20 15-16-6-30-4-43 6-7 5-16 8-27 7 13-5 21-13 23-24-10-2-18-8-24-18 12 2 23-6 39-24Z"
-          fill="#f8f8f4"
-        />
-        <path d="M36 84c11-3 22-2 32 4-9 6-19 8-30 5l-13 11 3-14 8-6Z" fill="#171a21" />
-        <path
-          d="M66 70c8 2 15 6 20 13-8-1-16 2-23 9 0-8 1-15 3-22Z"
-          fill="#171a21"
-          opacity="0.82"
-        />
-        <path d="M82 45c8-13 22-20 41-20-15 10-25 21-30 35-3-6-7-11-11-15Z" fill="#f1f0eb" />
-        <path
-          d="M43 119c10 3 19 3 28 0-7 8-16 13-29 16 3-6 3-11 1-16Z"
-          fill="#171a21"
-          opacity="0.72"
-        />
-      </g>
-
-      <g transform="translate(42 156)">
-        <path d="M14 0h272l14 14v52H0V14L14 0Z" fill="#171a21" />
-        <path d="M23 11h254l9 9v34H14V20l9-9Z" fill="url(#rovanx-gold)" />
-        <text
-          x="150"
-          y="48"
-          textAnchor="middle"
-          fill={textFill}
-          stroke={textStroke}
-          strokeWidth="1.4"
-          paintOrder="stroke"
-          fontFamily="Arial Black, Arial, Helvetica, sans-serif"
-          fontSize="47"
-          fontWeight="900"
-          letterSpacing="2"
-        >
-          ROVANX
-        </text>
-      </g>
-
-      <g transform="translate(79 218)">
-        <path d="M0 0h202l-12 20H12L0 0Z" fill="#171a21" />
-        <text
-          x="101"
-          y="15"
-          textAnchor="middle"
-          fill="#d7c8ad"
-          fontFamily="Arial, Helvetica, sans-serif"
-          fontSize="15"
-          fontWeight="800"
-          letterSpacing="4"
-        >
-          MEN&apos;S VITALITY
-        </text>
-      </g>
-    </svg>
+    <Image
+      className={"object-contain " + className}
+      src={ROVANX_3D_LOGO_SRC}
+      alt="ROVANX Mens Vitality"
+      width={420}
+      height={229}
+      priority
+      unoptimized
+    />
   );
 }
 
