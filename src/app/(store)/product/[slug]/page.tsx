@@ -2,8 +2,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { CheckCircle2, Clock3, PhoneCall, ShieldCheck, Truck } from "lucide-react";
 import { prisma } from "@/lib/db";
-import { formatMoney } from "@/lib/money";
 import { AddToCartButton } from "@/components/store/add-to-cart-button";
+import { Money } from "@/components/store/money";
 import { ProductCard } from "@/components/store/product-card";
 import { buildMetadata } from "@/lib/seo";
 
@@ -67,8 +67,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             </div>
             <div className="premium-panel grid gap-4 p-5">
               <div className="flex flex-wrap items-end gap-3">
-                <strong className="text-4xl">{formatMoney(price)}</strong>
-                {product.salePrice ? <span className="text-black/45 line-through">{formatMoney(product.regularPrice)}</span> : null}
+                <strong className="text-4xl"><Money value={price} /></strong>
+                {product.salePrice ? <span className="text-black/45 line-through"><Money value={product.regularPrice} /></span> : null}
               </div>
               <div className="grid gap-2 text-sm text-black/68 sm:grid-cols-3">
                 <span className="flex items-center gap-2"><ShieldCheck size={16} className="text-bronze-600" /> COD</span>
@@ -138,7 +138,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
       <div className="sticky bottom-0 z-30 border-t border-black/10 bg-white p-3 md:hidden">
         <AddToCartButton
-          label={`Ajouter - ${formatMoney(price)}`}
+          label="Ajouter au panier"
           product={{ id: product.id, name: product.name, slug: product.slug, sku: product.sku, price, regularPrice: product.regularPrice }}
         />
       </div>
