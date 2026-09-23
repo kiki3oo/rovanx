@@ -14,11 +14,11 @@ export default function CartPage() {
   return (
     <section className="section">
       <div className="container">
-        <p className="badge mb-3">Panier</p>
+        <p className="badge mb-3">{t("cart")}</p>
         <div className="mb-8 grid gap-3 md:grid-cols-[1fr_auto] md:items-end">
           <div>
-            <h1 className="text-4xl font-black">Votre commande</h1>
-            <p className="mt-3 text-black/62">Derniere verification avant paiement a la livraison.</p>
+            <h1 className="text-4xl font-black">{t("cartTitle")}</h1>
+            <p className="mt-3 text-black/62">{t("cartIntro")}</p>
           </div>
           <Link href="/shop" className="btn btn-secondary">
             {t("continueShopping")}
@@ -54,17 +54,17 @@ export default function CartPage() {
             <aside className="premium-panel h-fit p-5">
               <h2 className="text-xl font-black">Total</h2>
               <div className="mt-4 flex justify-between border-t border-black/10 pt-4">
-                <span>Sous-total</span>
+                <span>{t("subtotal")}</span>
                 <strong><Money value={subtotal} /></strong>
               </div>
               <div className="mt-2 flex justify-between">
-                <span>Livraison</span>
-                <span>A confirmer</span>
+                <span>{t("shipping")}</span>
+                <span>{t("toConfirm")}</span>
               </div>
               <div className="mt-5 grid gap-3 text-sm text-black/65">
-                <span className="flex items-center gap-2"><ShieldCheck size={16} className="text-bronze-600" /> Paiement a la livraison</span>
-                <span className="flex items-center gap-2"><PhoneCall size={16} className="text-bronze-600" /> Confirmation telephonique</span>
-                <span className="flex items-center gap-2"><Truck size={16} className="text-bronze-600" /> Expedition apres validation</span>
+                <span className="flex items-center gap-2"><ShieldCheck size={16} className="text-bronze-600" /> {t("codSecureText")}</span>
+                <span className="flex items-center gap-2"><PhoneCall size={16} className="text-bronze-600" /> {t("phoneConfirmation")}</span>
+                <span className="flex items-center gap-2"><Truck size={16} className="text-bronze-600" /> {t("shipAfterValidation")}</span>
               </div>
               <Link href="/checkout" className="btn btn-primary mt-5 w-full">
                 {t("checkout")} <ArrowRight size={17} />
