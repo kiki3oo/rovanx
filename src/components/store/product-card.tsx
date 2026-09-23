@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Product } from "@prisma/client";
-import { formatMoney } from "@/lib/money";
 import { AddToCartButton } from "@/components/store/add-to-cart-button";
+import { Money } from "@/components/store/money";
 
 type ProductCardProduct = Pick<
   Product,
@@ -32,9 +32,9 @@ export function ProductCard({ product }: { product: ProductCardProduct }) {
           ))}
         </div>
         <div className="flex items-end justify-between gap-3 border-t border-black/10 pt-4">
-          <strong className="text-xl">{formatMoney(price)}</strong>
+          <strong className="text-xl"><Money value={price} /></strong>
           {product.salePrice ? (
-            <span className="text-sm text-black/45 line-through">{formatMoney(product.regularPrice)}</span>
+            <span className="text-sm text-black/45 line-through"><Money value={product.regularPrice} /></span>
           ) : null}
         </div>
         <AddToCartButton
