@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/db";
 import { ProductCard } from "@/components/store/product-card";
 import { buildMetadata } from "@/lib/seo";
+import { LocalizedText } from "@/components/store/localized-text";
 
 export const metadata = buildMetadata({
   title: "Shop",
@@ -43,14 +44,14 @@ export default async function ShopPage({
       <div className="container">
         <div className="mb-8 grid gap-5 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
           <div>
-            <p className="badge mb-3">Shop</p>
-            <h1 className="text-4xl font-black">Produits ROVANX</h1>
-            <p className="mt-3 text-black/62">Filtre rapidement la selection. Les visuels definitifs restent a remplacer apres validation des produits.</p>
+            <p className="badge mb-3"><LocalizedText id="shop" /></p>
+            <h1 className="text-4xl font-black"><LocalizedText id="shopTitle" /></h1>
+            <LocalizedText id="shopIntro" as="p" className="mt-3 text-black/62" />
           </div>
           <form className="surface-card grid gap-3 p-4 sm:grid-cols-3">
-            <input className="input" name="search" placeholder="Recherche" defaultValue={params.search || ""} />
+            <input className="input" name="search" placeholder="Search / Recherche" defaultValue={params.search || ""} />
             <select className="select" name="category" defaultValue={params.category || ""}>
-              <option value="">Toutes categories</option>
+              <option value="">Toutes categories / All categories</option>
               {categories.map((category) => (
                 <option key={category.id} value={category.slug}>
                   {category.name}
@@ -60,10 +61,10 @@ export default async function ShopPage({
             <select className="select" name="sort" defaultValue={params.sort || "featured"}>
               <option value="featured">Featured</option>
               <option value="newest">Newest</option>
-              <option value="price-asc">Prix bas a haut</option>
-              <option value="price-desc">Prix haut a bas</option>
+              <option value="price-asc">Low to high</option>
+              <option value="price-desc">High to low</option>
             </select>
-            <button className="btn btn-primary sm:col-span-3">Filtrer</button>
+            <button className="btn btn-primary sm:col-span-3"><LocalizedText id="filter" /></button>
           </form>
         </div>
         {products.length ? (
@@ -73,7 +74,7 @@ export default async function ShopPage({
             ))}
           </div>
         ) : (
-          <div className="surface-card p-8 text-center">Aucun produit trouve.</div>
+          <div className="surface-card p-8 text-center"><LocalizedText id="noProducts" /></div>
         )}
       </div>
     </section>
