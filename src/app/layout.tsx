@@ -13,6 +13,9 @@ export const metadata: Metadata = {
     template: "%s | ROVANX"
   },
   description: "ROVANX, marque marocaine de vitalite et bien-etre masculin.",
+  icons: {
+    icon: "/favicon.svg"
+  },
   robots: {
     index: true,
     follow: true
