@@ -21,7 +21,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <section className="brand-hero relative overflow-hidden py-16 text-white md:py-20">
+      <section className="brand-hero relative overflow-hidden py-12 text-white md:py-20">
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-bronze-500/70 to-transparent" />
         <div className="container grid items-center gap-10 md:grid-cols-[1.02fr_0.98fr]">
           <div className="grid gap-6">
@@ -30,7 +30,7 @@ export default async function HomePage() {
               Men&apos;s Vitality <span className="gold-text">& Wellness</span>
             </h1>
             <p className="max-w-xl text-lg text-white/72">
-              Une experience premium pour les hommes qui veulent commander simplement, comprendre vite l&apos;offre, et recevoir leur commande avec paiement a la livraison.
+              Une boutique premium pensee pour aider le client a choisir vite, commander sans stress, et payer uniquement a la livraison.
             </p>
             <div className="flex flex-col gap-3 sm:flex-row">
               <Link href="/shop" className="btn btn-primary">
@@ -48,7 +48,7 @@ export default async function HomePage() {
               ))}
             </div>
           </div>
-          <div className="dark-surface grid min-h-[410px] place-items-center rounded-lg p-8 shadow-2xl shadow-black/20">
+          <div className="dark-surface soft-glow grid min-h-[310px] place-items-center rounded-lg p-7 shadow-2xl shadow-black/20 md:min-h-[410px]">
             <RovanxLogo className="h-[300px] w-[260px] sm:h-[350px] sm:w-[310px]" />
           </div>
         </div>
@@ -72,13 +72,29 @@ export default async function HomePage() {
         </div>
       </section>
 
+      <section className="section-tight bg-white">
+        <div className="container grid gap-4 md:grid-cols-3">
+          {[
+            ["1", "Choisir", "Le client voit directement les produits ou les packs les plus importants."],
+            ["2", "Confirmer", "La commande se fait simplement, avec appel de confirmation avant expedition."],
+            ["3", "Recevoir", "Paiement a la livraison pour reduire la hesitation et rassurer l'acheteur."]
+          ].map(([step, title, text]) => (
+            <div key={step} className="premium-panel grid gap-3 p-5">
+              <span className="grid h-9 w-9 place-items-center rounded-full bg-graphite-950 text-sm font-black text-bronze-500">{step}</span>
+              <h2 className="text-xl font-black">{title}</h2>
+              <p className="text-sm leading-6 text-black/62">{text}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <section className="section">
         <div className="container">
           <div className="mb-7 grid gap-4 md:grid-cols-[1fr_auto] md:items-end">
             <div>
               <p className="badge mb-3">Best sellers</p>
               <h2 className="text-3xl font-black">Les offres a montrer en premier</h2>
-              <p className="mt-2 max-w-xl text-black/62">Une selection mise en avant pour pousser le client vers l&apos;action sans le perdre dans trop de choix.</p>
+              <p className="mt-2 max-w-xl text-black/62">Une selection courte et claire pour pousser le client vers l&apos;action sans le perdre dans trop de choix.</p>
             </div>
             <Link href="/shop" className="btn btn-secondary">
               Voir tout le shop <ArrowRight size={17} />
@@ -97,7 +113,7 @@ export default async function HomePage() {
           <div>
             <p className="badge mb-3">Decision rapide</p>
             <h2 className="text-3xl font-black">Choisir par besoin</h2>
-            <p className="mt-3 text-black/62">Le client doit comprendre ou cliquer en moins de quelques secondes.</p>
+            <p className="mt-3 text-black/62">Le client doit reconnaitre son besoin, cliquer, puis avancer vers la commande sans friction.</p>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {["Vitality", "Men's wellness", "Prostate support", "Energy", "Balance", "Sleep"].map((goal) => (
@@ -123,7 +139,7 @@ export default async function HomePage() {
                 <p className="mt-2 text-sm text-black/65">{bundle.description}</p>
                 <p className="mt-4 text-2xl font-black">{formatMoney(bundle.bundlePrice)}</p>
                 <p className="text-sm text-black/50 line-through">{formatMoney(bundle.regularCombinedPrice)}</p>
-                <Link href="/bundles" className="btn btn-primary mt-5 w-full">
+                <Link href="/bundles" className="btn btn-primary mt-5">
                   Voir le pack
                 </Link>
               </article>
@@ -174,6 +190,12 @@ export default async function HomePage() {
           </Link>
         </div>
       </section>
+
+      <div className="mobile-order-bar md:hidden">
+        <Link href="/shop" className="btn btn-primary">
+          Voir les offres <ArrowRight size={18} />
+        </Link>
+      </div>
     </>
   );
 }
