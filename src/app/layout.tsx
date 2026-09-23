@@ -3,6 +3,7 @@ import "./globals.css";
 import { CartProvider } from "@/components/store/cart-provider";
 import { Header } from "@/components/store/header";
 import { Footer } from "@/components/store/footer";
+import { PreferencesProvider } from "@/components/store/preferences-provider";
 
 export const dynamic = "force-dynamic";
 
@@ -26,11 +27,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fr" dir="ltr">
       <body>
-        <CartProvider>
-          <Header />
-          <main>{children}</main>
-          <Footer />
-        </CartProvider>
+        <PreferencesProvider>
+          <CartProvider>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+          </CartProvider>
+        </PreferencesProvider>
       </body>
     </html>
   );
