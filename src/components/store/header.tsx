@@ -20,9 +20,9 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-black/10 bg-sand-50/95 backdrop-blur">
-      <div className="container flex min-h-16 items-center justify-between gap-4">
+      <div className="container flex min-h-24 items-center justify-between gap-4 py-2">
         <Link href="/" className="flex items-center" aria-label="ROVANX home">
-          <RovanxLogo className="h-[72px] w-[150px] sm:w-[174px]" />
+          <RovanxLogo className="h-20 w-[148px] sm:w-[164px]" />
         </Link>
         <nav className="hidden items-center gap-6 text-sm font-semibold md:flex">
           {nav.map(([label, href]) => (
