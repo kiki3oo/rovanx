@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { CheckCircle2, LockKeyhole, PhoneCall, ShieldCheck, Truck } from "lucide-react";
 import { useCart } from "@/components/store/cart-provider";
 import { formatMoney } from "@/lib/money";
 
@@ -49,10 +50,25 @@ export default function CheckoutPage() {
     <section className="section">
       <div className="container">
         <p className="badge mb-3">COD Checkout</p>
-        <h1 className="mb-8 text-4xl font-black">Paiement a la livraison</h1>
+        <div className="mb-8 max-w-3xl">
+          <h1 className="text-4xl font-black">Confirmer la commande</h1>
+          <p className="mt-3 text-black/62">Remplissez vos informations. Un agent confirme par telephone avant expedition. Aucun paiement en ligne.</p>
+        </div>
         {lines.length ? (
           <div className="grid gap-6 lg:grid-cols-[1fr_380px]">
-            <form action={submit} className="grid gap-4 rounded-lg border border-black/10 bg-white p-5">
+            <form action={submit} className="surface-card grid gap-4 p-5">
+              <div className="grid gap-3 rounded-md bg-bronze-500/10 p-4 text-sm text-black/70 sm:grid-cols-3">
+                {[
+                  [LockKeyhole, "Donnees protegees"],
+                  [PhoneCall, "Confirmation par appel"],
+                  [Truck, "Livraison apres validation"]
+                ].map(([Icon, text]) => (
+                  <span key={String(text)} className="flex items-center gap-2 font-bold">
+                    <Icon size={16} className="text-bronze-600" />
+                    {text as string}
+                  </span>
+                ))}
+              </div>
               <label className="field">
                 <span>Nom complet *</span>
                 <input className="input" name="fullName" required />
@@ -82,7 +98,7 @@ export default function CheckoutPage() {
                 {loading ? "Creation..." : "Confirmer la commande"}
               </button>
             </form>
-            <aside className="h-fit rounded-lg border border-black/10 bg-white p-5">
+            <aside className="premium-panel h-fit p-5">
               <h2 className="text-xl font-black">Resume</h2>
               <div className="mt-4 grid gap-3">
                 {lines.map((line) => (
@@ -98,13 +114,15 @@ export default function CheckoutPage() {
                 <span>Total COD</span>
                 <strong>{formatMoney(subtotal)}</strong>
               </div>
-              <p className="mt-4 text-sm text-black/60">
-                Un agent confirmera la commande avant preparation. Aucun paiement en ligne requis.
-              </p>
+              <div className="mt-5 grid gap-3 text-sm text-black/65">
+                <span className="flex items-center gap-2"><ShieldCheck size={16} className="text-bronze-600" /> Aucun paiement en ligne requis</span>
+                <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-bronze-600" /> Appel avant preparation</span>
+                <span className="flex items-center gap-2"><Truck size={16} className="text-bronze-600" /> Livraison selon disponibilite</span>
+              </div>
             </aside>
           </div>
         ) : (
-          <div className="rounded-lg border border-black/10 bg-white p-8">Ajoutez un produit avant le checkout.</div>
+          <div className="premium-panel p-8">Ajoutez un produit avant le checkout.</div>
         )}
       </div>
     </section>
