@@ -4,10 +4,12 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { CheckCircle2, LockKeyhole, PhoneCall, ShieldCheck, Truck } from "lucide-react";
 import { useCart } from "@/components/store/cart-provider";
-import { formatMoney } from "@/lib/money";
+import { Money } from "@/components/store/money";
+import { usePreferences } from "@/components/store/preferences-provider";
 
 export default function CheckoutPage() {
   const { lines, subtotal, clear } = useCart();
+  const { currency, locale } = usePreferences();
   const router = useRouter();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -23,6 +25,8 @@ export default function CheckoutPage() {
       addressDetails: formData.get("addressDetails"),
       notes: formData.get("notes"),
       items: lines.map((line) => ({ productId: line.product.id, quantity: line.quantity })),
+      displayCurrency: currency,
+      locale,
       landingPage: window.location.href,
       referrer: document.referrer || undefined,
       utmSource: new URLSearchParams(window.location.search).get("utm_source") || undefined,
@@ -106,13 +110,13 @@ export default function CheckoutPage() {
                     <span>
                       {line.product.name} x {line.quantity}
                     </span>
-                    <strong>{formatMoney(line.product.price * line.quantity)}</strong>
+                    <strong><Money value={line.product.price * line.quantity} /></strong>
                   </div>
                 ))}
               </div>
               <div className="mt-4 flex justify-between border-t border-black/10 pt-4">
                 <span>Total COD</span>
-                <strong>{formatMoney(subtotal)}</strong>
+                <strong><Money value={subtotal} /></strong>
               </div>
               <div className="mt-5 grid gap-3 text-sm text-black/65">
                 <span className="flex items-center gap-2"><ShieldCheck size={16} className="text-bronze-600" /> Aucun paiement en ligne requis</span>
