@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
-import { formatMoney } from "@/lib/money";
+import { Money } from "@/components/store/money";
 import { UpsellDecision } from "@/components/store/upsell-decision";
 
 export default async function UpsellPage({ params }: { params: Promise<{ orderId: string }> }) {
@@ -48,7 +48,7 @@ export default async function UpsellPage({ params }: { params: Promise<{ orderId
           <p className="badge w-fit">Une seule offre</p>
           <h1 className="text-4xl font-black">{rule.headline}</h1>
           <p className="text-lg text-black/65">{rule.description}</p>
-          <p className="text-3xl font-black">{formatMoney(price)}</p>
+          <p className="text-3xl font-black"><Money value={price} /></p>
           <p className="rounded-lg border border-black/10 bg-white p-4 text-sm text-black/65">
             Ajoute au meme colis et a la meme commande. Aucun deuxieme checkout.
           </p>
