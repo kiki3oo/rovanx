@@ -3,10 +3,12 @@
 import Link from "next/link";
 import { ArrowRight, PhoneCall, ShieldCheck, Trash2, Truck } from "lucide-react";
 import { useCart } from "@/components/store/cart-provider";
-import { formatMoney } from "@/lib/money";
+import { Money } from "@/components/store/money";
+import { usePreferences } from "@/components/store/preferences-provider";
 
 export default function CartPage() {
   const { lines, subtotal, updateQuantity, removeItem } = useCart();
+  const { t } = usePreferences();
   const crossSell = lines.length ? null : null;
 
   return (
@@ -19,7 +21,7 @@ export default function CartPage() {
             <p className="mt-3 text-black/62">Derniere verification avant paiement a la livraison.</p>
           </div>
           <Link href="/shop" className="btn btn-secondary">
-            Continuer shopping
+            {t("continueShopping")}
           </Link>
         </div>
         {lines.length ? (
@@ -29,7 +31,7 @@ export default function CartPage() {
                 <div key={line.product.id} className="surface-card grid gap-4 p-4 sm:grid-cols-[1fr_auto_auto] sm:items-center">
                   <div>
                     <h2 className="font-black">{line.product.name}</h2>
-                    <p className="text-sm text-black/55">{formatMoney(line.product.price)}</p>
+                    <p className="text-sm text-black/55"><Money value={line.product.price} /></p>
                   </div>
                   <label className="field max-w-24">
                     <span className="text-xs font-bold">Qty</span>
@@ -53,7 +55,7 @@ export default function CartPage() {
               <h2 className="text-xl font-black">Total</h2>
               <div className="mt-4 flex justify-between border-t border-black/10 pt-4">
                 <span>Sous-total</span>
-                <strong>{formatMoney(subtotal)}</strong>
+                <strong><Money value={subtotal} /></strong>
               </div>
               <div className="mt-2 flex justify-between">
                 <span>Livraison</span>
@@ -65,15 +67,15 @@ export default function CartPage() {
                 <span className="flex items-center gap-2"><Truck size={16} className="text-bronze-600" /> Expedition apres validation</span>
               </div>
               <Link href="/checkout" className="btn btn-primary mt-5 w-full">
-                Passer commande <ArrowRight size={17} />
+                {t("checkout")} <ArrowRight size={17} />
               </Link>
             </aside>
           </div>
         ) : (
           <div className="premium-panel p-8 text-center">
-            <p>Votre panier est vide.</p>
+            <p>{t("emptyCart")}</p>
             <Link href="/shop" className="btn btn-primary mt-4">
-              Voir les produits
+              {t("viewProducts")}
             </Link>
           </div>
         )}
