@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { ArrowRight, BadgeCheck, CheckCircle2, ShieldCheck } from "lucide-react";
 import { prisma } from "@/lib/db";
-import { formatMoney } from "@/lib/money";
 import { buildMetadata } from "@/lib/seo";
+import { Money } from "@/components/store/money";
 
 export const metadata = buildMetadata({
   title: "Bundles",
@@ -46,8 +46,8 @@ export default async function BundlesPage() {
                   </li>
                 ))}
               </ul>
-              <p className="mt-6 text-3xl font-black">{formatMoney(bundle.bundlePrice)}</p>
-              <p className="text-sm text-black/45 line-through">{formatMoney(bundle.regularCombinedPrice)}</p>
+              <p className="mt-6 text-3xl font-black"><Money value={bundle.bundlePrice} /></p>
+              <p className="text-sm text-black/45 line-through"><Money value={bundle.regularCombinedPrice} /></p>
               <div className="mt-5 rounded-md bg-white/80 p-3 text-sm text-black/65">
                 <ShieldCheck size={16} className="mb-2 text-bronze-600" />
                 Paiement a la livraison avec confirmation avant expedition.
