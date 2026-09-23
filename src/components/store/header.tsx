@@ -20,9 +20,9 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-black/10 bg-[#f5f0e7]/92 backdrop-blur-xl">
-      <div className="container flex min-h-24 items-center justify-between gap-4 py-2">
+      <div className="container flex min-h-20 items-center justify-between gap-3 py-2 md:min-h-24">
         <Link href="/" className="flex items-center rounded-md" aria-label="ROVANX home">
-          <RovanxLogo className="h-20 w-[150px] sm:h-[86px] sm:w-[172px]" />
+          <RovanxLogo className="h-16 w-[122px] sm:h-[86px] sm:w-[172px]" />
         </Link>
         <nav className="hidden items-center rounded-full border border-black/10 bg-white/72 px-2 py-2 text-sm font-bold shadow-sm md:flex">
           {nav.map(([label, href]) => (
@@ -32,12 +32,12 @@ export function Header() {
           ))}
         </nav>
         <div className="flex items-center gap-2">
-          <Link href="/cart" className="btn btn-secondary px-3 shadow-sm" aria-label="Cart">
+          <Link href="/cart" className="btn btn-secondary w-auto px-3 shadow-sm" aria-label="Cart">
             <ShoppingBag size={18} />
             <span className="text-sm">{count}</span>
           </Link>
           <button
-            className="btn btn-secondary px-3 md:hidden"
+            className="btn btn-secondary w-auto px-3 md:hidden"
             onClick={() => setOpen(!open)}
             aria-label="Menu"
           >
