@@ -3,8 +3,8 @@ import { ArrowRight, BadgeCheck, PhoneCall, ShieldCheck, Sparkles, Star, Truck }
 import { prisma } from "@/lib/db";
 import { ProductCard } from "@/components/store/product-card";
 import { buildMetadata } from "@/lib/seo";
-import { formatMoney } from "@/lib/money";
 import { RovanxLogo } from "@/components/brand/rovanx-logo";
+import { Money } from "@/components/store/money";
 
 export const metadata = buildMetadata({
   title: "ROVANX | Men's Vitality & Wellness",
@@ -137,8 +137,8 @@ export default async function HomePage() {
                 <BadgeCheck className="mb-4 text-bronze-600" />
                 <h3 className="text-xl font-black">{bundle.name}</h3>
                 <p className="mt-2 text-sm text-black/65">{bundle.description}</p>
-                <p className="mt-4 text-2xl font-black">{formatMoney(bundle.bundlePrice)}</p>
-                <p className="text-sm text-black/50 line-through">{formatMoney(bundle.regularCombinedPrice)}</p>
+                <p className="mt-4 text-2xl font-black"><Money value={bundle.bundlePrice} /></p>
+                <p className="text-sm text-black/50 line-through"><Money value={bundle.regularCombinedPrice} /></p>
                 <Link href="/bundles" className="btn btn-primary mt-5">
                   Voir le pack
                 </Link>
