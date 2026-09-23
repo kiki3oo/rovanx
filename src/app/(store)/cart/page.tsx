@@ -34,7 +34,7 @@ export default function CartPage() {
                     <p className="text-sm text-black/55"><Money value={line.product.price} /></p>
                   </div>
                   <label className="field max-w-24">
-                    <span className="text-xs font-bold">Qty</span>
+                    <span className="text-xs font-bold">{t("quantity")}</span>
                     <input
                       className="input"
                       type="number"
@@ -44,7 +44,7 @@ export default function CartPage() {
                       onChange={(event) => updateQuantity(line.product.id, Number(event.target.value))}
                     />
                   </label>
-                  <button className="btn btn-secondary px-3" onClick={() => removeItem(line.product.id)} aria-label="Remove item">
+                  <button className="btn btn-secondary px-3" onClick={() => removeItem(line.product.id)} aria-label={t("removeItem")}>
                     <Trash2 size={18} />
                   </button>
                 </div>
@@ -52,7 +52,7 @@ export default function CartPage() {
               {crossSell}
             </div>
             <aside className="premium-panel h-fit p-5">
-              <h2 className="text-xl font-black">Total</h2>
+              <h2 className="text-xl font-black">{t("summary")}</h2>
               <div className="mt-4 flex justify-between border-t border-black/10 pt-4">
                 <span>{t("subtotal")}</span>
                 <strong><Money value={subtotal} /></strong>

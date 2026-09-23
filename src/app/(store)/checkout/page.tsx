@@ -43,7 +43,7 @@ export default function CheckoutPage() {
     const data = await response.json();
     setLoading(false);
     if (!response.ok) {
-      setError(data.error || "Checkout failed");
+      setError(t("orderFailed"));
       return;
     }
     clear();

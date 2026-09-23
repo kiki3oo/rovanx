@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { prisma } from "@/lib/db";
 import { buildMetadata } from "@/lib/seo";
+import { LocalizedText } from "@/components/store/localized-text";
+import { BlogSearch } from "@/components/store/blog-search";
 
 export const metadata = buildMetadata({
   title: "Blog",
@@ -27,12 +29,9 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
   return (
     <section className="section">
       <div className="container">
-        <p className="badge mb-3">SEO Blog</p>
-        <h1 className="mb-6 text-4xl font-black">Articles ROVANX</h1>
-        <form className="mb-8 grid gap-3 rounded-lg border border-black/10 bg-white p-4 sm:grid-cols-[1fr_auto]">
-          <input className="input" name="search" placeholder="Recherche" defaultValue={params.search || ""} />
-          <button className="btn btn-primary">Chercher</button>
-        </form>
+        <p className="badge mb-3"><LocalizedText id="blog" /></p>
+        <h1 className="mb-6 text-4xl font-black"><LocalizedText id="articlesTitle" /></h1>
+        <BlogSearch search={params.search || ""} />
         <div className="grid gap-5 md:grid-cols-3">
           {articles.map((article) => (
             <Link key={article.id} href={`/blog/${article.slug}`} className="rounded-lg border border-black/10 bg-white p-5">

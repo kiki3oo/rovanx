@@ -6,6 +6,7 @@ import { AddToCartButton } from "@/components/store/add-to-cart-button";
 import { Money } from "@/components/store/money";
 import { ProductCard } from "@/components/store/product-card";
 import { buildMetadata } from "@/lib/seo";
+import { LocalizedText } from "@/components/store/localized-text";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -47,6 +48,14 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       availability: "https://schema.org/InStock"
     }
   };
+  const productDetails = [
+    [CheckCircle2, "benefits", product.benefits.join(", ")],
+    [CheckCircle2, "ingredients", product.ingredients],
+    [Clock3, "instructions", product.usageInstructions],
+    [ShieldCheck, "warnings", product.warnings],
+    [ShieldCheck, "regulatory", product.regulatoryInformation],
+    [Truck, "deliveryCod", null]
+  ] as const;
 
   return (
     <>
@@ -56,7 +65,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <div className="product-visual min-h-[430px] overflow-hidden">
             <div>
               <p className="text-3xl font-black">{product.name}</p>
-              <p className="mt-2 text-white/60">Visuel produit a remplacer</p>
+              <p className="mt-2 text-white/60"><LocalizedText id="visualPlaceholder" /></p>
             </div>
           </div>
           <div className="grid content-start gap-5">
@@ -68,17 +77,16 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             <div className="premium-panel grid gap-4 p-5">
               <div className="flex flex-wrap items-end gap-3">
                 <strong className="text-4xl"><Money value={price} /></strong>
-                {product.salePrice ? <span className="text-black/45 line-through"><Money value={product.regularPrice} /></span> : null}
+              {product.salePrice ? <span className="text-black/45 line-through"><Money value={product.regularPrice} /></span> : null}
               </div>
               <div className="grid gap-2 text-sm text-black/68 sm:grid-cols-3">
-                <span className="flex items-center gap-2"><ShieldCheck size={16} className="text-bronze-600" /> COD</span>
-                <span className="flex items-center gap-2"><PhoneCall size={16} className="text-bronze-600" /> Confirmation</span>
-                <span className="flex items-center gap-2"><Truck size={16} className="text-bronze-600" /> Livraison</span>
+                <span className="flex items-center gap-2"><ShieldCheck size={16} className="text-bronze-600" /> <LocalizedText id="cashOnDelivery" /></span>
+                <span className="flex items-center gap-2"><PhoneCall size={16} className="text-bronze-600" /> <LocalizedText id="callConfirm" /></span>
+                <span className="flex items-center gap-2"><Truck size={16} className="text-bronze-600" /> <LocalizedText id="shipping" /></span>
               </div>
             </div>
             <div className="grid gap-3 sm:grid-cols-2">
               <AddToCartButton
-                label="Ajouter au panier"
                 product={{
                   id: product.id,
                   name: product.name,
@@ -89,15 +97,15 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 }}
               />
               <Link className="btn btn-secondary" href="/checkout">
-                Commander maintenant
+                <LocalizedText id="orderNow" />
               </Link>
             </div>
             <div className="grid gap-3 rounded-lg border border-bronze-500/25 bg-white p-4 text-sm text-black/70">
-              {product.placeholderNotice || "Informations a valider avant production."}
+              {product.placeholderNotice || <LocalizedText id="productInfoPending" />}
               <div className="flex flex-wrap gap-2">
-                {["Sans paiement en ligne", "Appel avant expedition", "Support client"].map((item) => (
+                {["noOnlinePayment", "callBeforePrep", "support"].map((item) => (
                   <span key={item} className="rounded-full bg-bronze-500/10 px-3 py-1 font-bold text-bronze-600">
-                    {item}
+                    <LocalizedText id={item as "noOnlinePayment" | "callBeforePrep" | "support"} />
                   </span>
                 ))}
               </div>
@@ -108,18 +116,11 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
       <section className="section bg-white">
         <div className="container grid gap-5 md:grid-cols-2">
-          {[
-            [CheckCircle2, "Benefits", product.benefits.join(", ") || "Placeholder"],
-            [CheckCircle2, "Ingredients", product.ingredients || "Placeholder"],
-            [Clock3, "Instructions", product.usageInstructions || "Placeholder"],
-            [ShieldCheck, "Warnings", product.warnings || "Placeholder"],
-            [ShieldCheck, "Regulatory", product.regulatoryInformation || "Placeholder"],
-            [Truck, "Delivery/COD", "Paiement a la livraison. Confirmation telephonique avant expedition."]
-          ].map(([Icon, title, content]) => (
+          {productDetails.map(([Icon, title, content]) => (
             <div key={String(title)} className="surface-card p-5">
               <Icon className="mb-4 text-bronze-600" />
-              <h2 className="font-black">{title as string}</h2>
-              <p className="mt-2 text-sm text-black/65">{content as string}</p>
+              <h2 className="font-black"><LocalizedText id={title as "benefits" | "ingredients" | "instructions" | "warnings" | "regulatory" | "deliveryCod"} /></h2>
+              <p className="mt-2 text-sm text-black/65">{content ? content as string : <LocalizedText id={title === "deliveryCod" ? "bundleShippingText" : "productInfoPending"} />}</p>
             </div>
           ))}
         </div>
@@ -127,7 +128,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
       <section className="section">
         <div className="container">
-          <h2 className="mb-6 text-3xl font-black">Produits associes</h2>
+          <h2 className="mb-6 text-3xl font-black"><LocalizedText id="relatedProducts" /></h2>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {related.map((item) => (
               <ProductCard key={item.id} product={item} />
@@ -138,7 +139,6 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
       <div className="sticky bottom-0 z-30 border-t border-black/10 bg-white p-3 md:hidden">
         <AddToCartButton
-          label="Ajouter au panier"
           product={{ id: product.id, name: product.name, slug: product.slug, sku: product.sku, price, regularPrice: product.regularPrice }}
         />
       </div>

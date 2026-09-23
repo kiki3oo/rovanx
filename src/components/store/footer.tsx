@@ -1,18 +1,15 @@
 import Link from "next/link";
 import { prisma } from "@/lib/db";
 import { RovanxLogo } from "@/components/brand/rovanx-logo";
+import { LocalizedText } from "@/components/store/localized-text";
+import type { TranslationKey } from "@/components/store/preferences-provider";
 
 const links = [
-  ["About", "/legal/about"],
-  ["Contact", "/legal/contact"],
-  ["FAQ", "/legal/faq"],
-  ["Shipping", "/legal/shipping"],
-  ["Returns", "/legal/returns"],
-  ["Privacy", "/legal/privacy"],
-  ["Terms", "/legal/terms"],
-  ["Cookies", "/legal/cookies"],
-  ["Blog", "/blog"]
-];
+  ["about", "/legal/about"], ["contact", "/legal/contact"], ["faq", "/legal/faq"],
+  ["shippingPolicy", "/legal/shipping"], ["returns", "/legal/returns"],
+  ["privacy", "/legal/privacy"], ["terms", "/legal/terms"],
+  ["cookies", "/legal/cookies"], ["blog", "/blog"]
+] as const satisfies ReadonlyArray<readonly [TranslationKey, string]>;
 
 type StoreSettings = {
   name?: string;
@@ -40,7 +37,9 @@ export async function Footer() {
           <RovanxLogo className="h-32 w-[190px]" tone="light" />
           <p className="sr-only">{store.name || "ROVANX"}</p>
           <p className="mt-2 max-w-sm text-sm text-white/68">
-            {store.tagline || "Marque marocaine de vitalite et bien-etre masculin."}
+            {store.tagline && store.tagline !== "Men's Vitality & Wellness"
+              ? store.tagline
+              : <LocalizedText id="footerTagline" />}
           </p>
           {store.contactEmail ? (
             <a
@@ -54,7 +53,7 @@ export async function Footer() {
         <div className="grid grid-cols-2 gap-3 text-sm sm:grid-cols-3">
           {links.map(([label, href]) => (
             <Link key={label} href={href} className="text-white/78 hover:text-white">
-              {label}
+              <LocalizedText id={label} />
             </Link>
           ))}
           {store.whatsapp && store.whatsapp !== "PLACEHOLDER" ? (

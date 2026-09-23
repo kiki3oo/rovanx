@@ -1,8 +1,9 @@
-import Link from "next/link";
-import { ArrowRight, BadgeCheck, CheckCircle2, ShieldCheck } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { buildMetadata } from "@/lib/seo";
+import Link from "next/link";
+import { ArrowRight, BadgeCheck, CheckCircle2, ShieldCheck } from "lucide-react";
 import { Money } from "@/components/store/money";
+import { LocalizedText } from "@/components/store/localized-text";
 
 export const metadata = buildMetadata({
   title: "Bundles",
@@ -20,16 +21,14 @@ export default async function BundlesPage() {
   return (
     <section className="section">
       <div className="container">
-        <p className="badge mb-3">Bundles</p>
+        <p className="badge mb-3"><LocalizedText id="bundles" /></p>
         <div className="mb-8 grid gap-4 md:grid-cols-[1fr_auto] md:items-end">
           <div>
-            <h1 className="text-4xl font-black">Packs ROVANX</h1>
-            <p className="mt-3 max-w-2xl text-black/62">
-              Des packs simples a comprendre, faits pour aider le client a choisir plus vite et commander une solution complete.
-            </p>
+            <h1 className="text-4xl font-black"><LocalizedText id="bundlesTitle" /></h1>
+            <LocalizedText id="bundlePageIntro" as="p" className="mt-3 max-w-2xl text-black/62" />
           </div>
           <Link href="/shop" className="btn btn-secondary">
-            Voir produits <ArrowRight size={17} />
+            <LocalizedText id="viewProducts" /> <ArrowRight size={17} />
           </Link>
         </div>
         <div className="grid gap-5 md:grid-cols-3">
@@ -50,10 +49,10 @@ export default async function BundlesPage() {
               <p className="text-sm text-black/45 line-through"><Money value={bundle.regularCombinedPrice} /></p>
               <div className="mt-5 rounded-md bg-white/80 p-3 text-sm text-black/65">
                 <ShieldCheck size={16} className="mb-2 text-bronze-600" />
-                Paiement a la livraison avec confirmation avant expedition.
+                <LocalizedText id="bundleShippingText" />
               </div>
               <Link href="/shop" className="btn btn-primary mt-5 w-full">
-                Composer ma commande
+                <LocalizedText id="composeOrder" />
               </Link>
             </article>
           ))}

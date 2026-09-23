@@ -1,7 +1,7 @@
 "use client";
 
 import { supportedCurrencies } from "@/lib/money";
-import { localeLabels, supportedLocales, usePreferences } from "@/components/store/preferences-provider";
+import { localeLabels, supportedLocales, usePreferences, type SupportedLocale } from "@/components/store/preferences-provider";
 
 export function PreferenceSwitcher() {
   const { currency, locale, setCurrency, setLocale, t } = usePreferences();
@@ -13,7 +13,7 @@ export function PreferenceSwitcher() {
         id="locale-switcher"
         className="h-11 rounded-md border border-black/10 bg-white/80 px-2 text-xs font-black text-graphite-900 shadow-sm"
         value={locale}
-        onChange={(event) => setLocale(event.target.value as typeof locale)}
+        onChange={(event) => setLocale(event.target.value as SupportedLocale)}
       >
         {supportedLocales.map((item) => (
           <option key={item} value={item}>

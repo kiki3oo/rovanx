@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { buildMetadata } from "@/lib/seo";
+import { LocalizedText } from "@/components/store/localized-text";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -38,7 +39,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
         <div className="container max-w-3xl">
           <span className="badge mb-3">{article.category.name}</span>
           <h1 className="text-4xl font-black">{article.title}</h1>
-          <p className="mt-3 text-black/55">Par {article.author.name}</p>
+          <p className="mt-3 text-black/55"><LocalizedText id="byAuthor" /> {article.author.name}</p>
           <div className="mt-8 rounded-lg border border-black/10 bg-white p-6 leading-8 text-black/75">
             {article.body.split("\n").map((paragraph) => (
               <p key={paragraph} className="mb-4">
@@ -47,7 +48,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             ))}
           </div>
           <div className="mt-6 rounded-lg border border-bronze-500/20 bg-white p-4 text-sm text-black/65">
-            Sources: placeholder obligatoire avant publication de contenu sante detaille.
+            <LocalizedText id="sourcesPending" />
           </div>
         </div>
       </article>

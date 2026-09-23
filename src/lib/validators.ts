@@ -22,7 +22,7 @@ export const checkoutSchema = z.object({
   utmTerm: z.string().optional(),
   landingPage: z.string().optional(),
   referrer: z.string().optional(),
-  locale: z.enum(["ary", "fr", "en"]).optional(),
+  locale: z.enum(["ar", "fr", "en"]).optional(),
   displayCurrency: z.enum(["MAD", "EUR", "USD", "XOF", "XAF"]).optional()
 });
 

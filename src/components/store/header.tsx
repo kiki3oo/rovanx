@@ -38,14 +38,14 @@ export function Header() {
           <div className="hidden sm:block">
             <PreferenceSwitcher />
           </div>
-          <Link href="/cart" className="btn btn-secondary w-auto px-3 shadow-sm" aria-label="Cart">
+          <Link href="/cart" className="btn btn-secondary w-auto px-3 shadow-sm" aria-label={t("cart")}>
             <ShoppingBag size={18} />
             <span className="text-sm">{count}</span>
           </Link>
           <button
             className="btn btn-secondary w-auto px-3 md:hidden"
             onClick={() => setOpen(!open)}
-            aria-label="Menu"
+            aria-label={t("categories")}
           >
             <Menu size={18} />
           </button>
