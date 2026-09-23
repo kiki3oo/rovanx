@@ -41,12 +41,13 @@ export default async function ShopPage({
   return (
     <section className="section">
       <div className="container">
-        <div className="mb-8 grid gap-4 lg:grid-cols-[1fr_2fr] lg:items-end">
+        <div className="mb-8 grid gap-5 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
           <div>
             <p className="badge mb-3">Shop</p>
             <h1 className="text-4xl font-black">Produits ROVANX</h1>
+            <p className="mt-3 text-black/62">Filtre rapidement la selection. Les visuels definitifs restent a remplacer apres validation des produits.</p>
           </div>
-          <form className="grid gap-3 rounded-lg border border-black/10 bg-white p-4 sm:grid-cols-3">
+          <form className="surface-card grid gap-3 p-4 sm:grid-cols-3">
             <input className="input" name="search" placeholder="Recherche" defaultValue={params.search || ""} />
             <select className="select" name="category" defaultValue={params.category || ""}>
               <option value="">Toutes categories</option>
@@ -72,7 +73,7 @@ export default async function ShopPage({
             ))}
           </div>
         ) : (
-          <div className="rounded-lg border border-black/10 bg-white p-8 text-center">Aucun produit trouve.</div>
+          <div className="surface-card p-8 text-center">Aucun produit trouve.</div>
         )}
       </div>
     </section>
