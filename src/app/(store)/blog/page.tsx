@@ -3,6 +3,7 @@ import { prisma } from "@/lib/db";
 import { buildMetadata } from "@/lib/seo";
 import { LocalizedText } from "@/components/store/localized-text";
 import { BlogSearch } from "@/components/store/blog-search";
+import { SeedContent } from "@/components/store/seed-content";
 
 export const metadata = buildMetadata({
   title: "Blog",
@@ -35,9 +36,9 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
         <div className="grid gap-5 md:grid-cols-3">
           {articles.map((article) => (
             <Link key={article.id} href={`/blog/${article.slug}`} className="rounded-lg border border-black/10 bg-white p-5">
-              <span className="badge mb-3">{article.category.name}</span>
-              <h2 className="font-black">{article.title}</h2>
-              <p className="mt-2 text-sm text-black/65">{article.excerpt}</p>
+              <span className="badge mb-3"><SeedContent value={article.category.name} /></span>
+              <h2 className="font-black"><SeedContent value={article.title} /></h2>
+              <p className="mt-2 text-sm text-black/65"><SeedContent value={article.excerpt} /></p>
             </Link>
           ))}
         </div>

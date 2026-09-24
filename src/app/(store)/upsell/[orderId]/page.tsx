@@ -4,6 +4,7 @@ import { prisma } from "@/lib/db";
 import { Money } from "@/components/store/money";
 import { UpsellDecision } from "@/components/store/upsell-decision";
 import { LocalizedText } from "@/components/store/localized-text";
+import { SeedContent } from "@/components/store/seed-content";
 
 export default async function UpsellPage({ params }: { params: Promise<{ orderId: string }> }) {
   const { orderId } = await params;
@@ -47,8 +48,8 @@ export default async function UpsellPage({ params }: { params: Promise<{ orderId
         </div>
         <div className="grid gap-5">
           <p className="badge w-fit"><LocalizedText id="oneOffer" /></p>
-          <h1 className="text-4xl font-black">{rule.headline}</h1>
-          <p className="text-lg text-black/65">{rule.description}</p>
+          <h1 className="text-4xl font-black"><SeedContent value={rule.headline} /></h1>
+          <p className="text-lg text-black/65"><SeedContent value={rule.description} /></p>
           <p className="text-3xl font-black"><Money value={price} /></p>
           <p className="rounded-lg border border-black/10 bg-white p-4 text-sm text-black/65">
             <LocalizedText id="sameParcel" />

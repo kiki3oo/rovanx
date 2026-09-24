@@ -3,6 +3,7 @@ import type { Product } from "@prisma/client";
 import { AddToCartButton } from "@/components/store/add-to-cart-button";
 import { Money } from "@/components/store/money";
 import { LocalizedText } from "@/components/store/localized-text";
+import { SeedContent } from "@/components/store/seed-content";
 
 type ProductCardProduct = Pick<
   Product,
@@ -24,7 +25,7 @@ export function ProductCard({ product }: { product: ProductCardProduct }) {
         <Link href={`/product/${product.slug}`}>
           <h3 className="text-xl font-black leading-tight hover:text-bronze-600">{product.name}</h3>
         </Link>
-        <p className="min-h-12 text-sm leading-6 text-black/62">{product.shortDescription}</p>
+        <p className="min-h-12 text-sm leading-6 text-black/62"><SeedContent value={product.shortDescription} /></p>
         <div className="grid grid-cols-3 gap-2 text-center text-[11px] font-black uppercase text-black/55">
           {[
             ["COD", "COD"],

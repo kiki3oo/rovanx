@@ -6,6 +6,7 @@ import { buildMetadata } from "@/lib/seo";
 import { RovanxLogo } from "@/components/brand/rovanx-logo";
 import { Money } from "@/components/store/money";
 import { LocalizedText } from "@/components/store/localized-text";
+import { SeedContent } from "@/components/store/seed-content";
 
 export const metadata = buildMetadata({
   title: "ROVANX | Men's Vitality & Wellness",
@@ -138,7 +139,7 @@ export default async function HomePage() {
               <article key={bundle.id} className="premium-panel p-5">
                 <BadgeCheck className="mb-4 text-bronze-600" />
                 <h3 className="text-xl font-black">{bundle.name}</h3>
-                <p className="mt-2 text-sm text-black/65">{bundle.description}</p>
+                <p className="mt-2 text-sm text-black/65"><SeedContent value={bundle.description} /></p>
                 <p className="mt-4 text-2xl font-black"><Money value={bundle.bundlePrice} /></p>
                 <p className="text-sm text-black/50 line-through"><Money value={bundle.regularCombinedPrice} /></p>
                 <Link href="/bundles" className="btn btn-primary mt-5">
@@ -173,8 +174,8 @@ export default async function HomePage() {
           <div className="grid gap-5 md:grid-cols-3">
             {articles.map((article) => (
               <Link key={article.id} href={`/blog/${article.slug}`} className="surface-card p-5 hover:border-bronze-500/45">
-                <h3 className="font-black">{article.title}</h3>
-                <p className="mt-2 text-sm text-black/65">{article.excerpt}</p>
+                <h3 className="font-black"><SeedContent value={article.title} /></h3>
+                <p className="mt-2 text-sm text-black/65"><SeedContent value={article.excerpt} /></p>
               </Link>
             ))}
           </div>

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowRight, BadgeCheck, CheckCircle2, ShieldCheck } from "lucide-react";
 import { Money } from "@/components/store/money";
 import { LocalizedText } from "@/components/store/localized-text";
+import { SeedContent } from "@/components/store/seed-content";
 
 export const metadata = buildMetadata({
   title: "Bundles",
@@ -36,7 +37,7 @@ export default async function BundlesPage() {
             <article key={bundle.id} className="premium-panel grid p-5">
               <BadgeCheck className="mb-4 text-bronze-600" />
               <h2 className="text-xl font-black">{bundle.name}</h2>
-              <p className="mt-2 text-sm text-black/65">{bundle.description}</p>
+              <p className="mt-2 text-sm text-black/65"><SeedContent value={bundle.description} /></p>
               <ul className="mt-5 grid gap-2 text-sm">
                 {bundle.items.map((item) => (
                   <li key={item.id} className="flex items-center gap-2">
