@@ -4,6 +4,7 @@ import { AddToCartButton } from "@/components/store/add-to-cart-button";
 import { Money } from "@/components/store/money";
 import { LocalizedText } from "@/components/store/localized-text";
 import { SeedContent } from "@/components/store/seed-content";
+import { getProductVisual } from "@/lib/product-visuals";
 
 type ProductCardProduct = Pick<
   Product,
@@ -12,10 +13,18 @@ type ProductCardProduct = Pick<
 
 export function ProductCard({ product }: { product: ProductCardProduct }) {
   const price = product.salePrice || product.regularPrice;
+  const visual = getProductVisual(product.slug);
   return (
     <article className="surface-card grid overflow-hidden transition duration-200 hover:-translate-y-1 hover:border-bronze-500/45">
-      <Link href={`/product/${product.slug}`} className="product-visual m-3 min-h-[260px] overflow-hidden">
-        <span className="max-w-[13ch] text-balance text-xl font-black leading-tight">{product.name}</span>
+      <Link
+        href={`/product/${product.slug}`}
+        className={`product-visual m-3 min-h-[260px] overflow-hidden ${visual ? "product-visual-image" : ""}`}
+      >
+        {visual ? (
+          <img src={visual.src} alt={visual.alt} className="product-packshot product-packshot-card" />
+        ) : (
+          <span className="max-w-[13ch] text-balance text-xl font-black leading-tight">{product.name}</span>
+        )}
       </Link>
       <div className="grid gap-4 p-5 pt-1">
         <div className="flex min-h-7 flex-wrap gap-2">

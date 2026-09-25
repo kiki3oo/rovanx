@@ -208,6 +208,13 @@ a {
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
+.product-visual-image {
+  background:
+    radial-gradient(circle at 50% 24%, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.74) 32%, rgba(230, 226, 218, 0.48) 58%, rgba(19, 23, 28, 0.9) 100%),
+    linear-gradient(145deg, #f6f2ea, #1a1d23);
+  padding: clamp(18px, 5vw, 42px);
+}
+
 .product-visual::before {
   content: "";
   width: min(54%, 150px);
@@ -218,6 +225,10 @@ a {
   opacity: 0.5;
 }
 
+.product-visual-image::before {
+  display: none;
+}
+
 .product-visual {
   position: relative;
 }
@@ -225,6 +236,22 @@ a {
 .product-visual > * {
   position: relative;
   z-index: 1;
+}
+
+.product-packshot {
+  display: block;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 26px 34px rgba(0, 0, 0, 0.22));
+}
+
+.product-packshot-card {
+  max-height: 245px;
+}
+
+.product-packshot-page {
+  max-height: 455px;
 }
 
 @media (max-width: 767px) {

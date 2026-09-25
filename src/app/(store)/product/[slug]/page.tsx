@@ -8,6 +8,7 @@ import { ProductCard } from "@/components/store/product-card";
 import { buildMetadata } from "@/lib/seo";
 import { LocalizedText } from "@/components/store/localized-text";
 import { SeedContent } from "@/components/store/seed-content";
+import { getProductVisual } from "@/lib/product-visuals";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -17,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: product.seoTitle || product.name,
     description: product.seoDescription || product.shortDescription,
     path: `/product/${product.slug}`,
-    image: product.ogImage
+    image: product.ogImage || getProductVisual(product.slug)?.src
   });
 }
 
@@ -35,6 +36,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   });
 
   const price = product.salePrice || product.regularPrice;
+  const visual = getProductVisual(product.slug);
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -63,11 +65,15 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <section className="section">
         <div className="container grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
-          <div className="product-visual min-h-[430px] overflow-hidden">
-            <div>
-              <p className="text-3xl font-black">{product.name}</p>
-              <p className="mt-2 text-white/60"><LocalizedText id="visualPlaceholder" /></p>
-            </div>
+          <div className={`product-visual min-h-[430px] overflow-hidden ${visual ? "product-visual-image" : ""}`}>
+            {visual ? (
+              <img src={visual.src} alt={visual.alt} className="product-packshot product-packshot-page" />
+            ) : (
+              <div>
+                <p className="text-3xl font-black">{product.name}</p>
+                <p className="mt-2 text-white/60"><LocalizedText id="visualPlaceholder" /></p>
+              </div>
+            )}
           </div>
           <div className="grid content-start gap-5">
             <div>
