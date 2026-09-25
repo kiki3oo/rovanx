@@ -50,17 +50,24 @@ async function main() {
   );
 
   const products = [
-    ["ROVANX Vitality 60", "rovanx-vitality-60", "ROV-VIT-60", ProductRole.MAIN_HERO, "vitality", 349, 299, true, true],
-    ["ROVANX Vitality 30", "rovanx-vitality-30", "ROV-VIT-30", ProductRole.ENTRY, "vitality", 219, 189, true, false],
-    ["ROVANX Prostate", "rovanx-prostate", "ROV-PRO-01", ProductRole.HERO, "prostate", 279, 239, true, true],
-    ["ROVANX Maca Max", "rovanx-maca-max", "ROV-MAC-01", ProductRole.HERO, "energy", 249, 219, true, true],
-    ["ROVANX Ginseng", "rovanx-ginseng", "ROV-GIN-01", ProductRole.UPSELL, "energy", 229, 199, false, false],
+    ["ROVANX Vitality 60", "rovanx-vitality-60", "ROV-VIT-60", ProductRole.MAIN_HERO, "vitality", 299, null, true, true],
+    ["ROVANX Vitality 30", "rovanx-vitality-30", "ROV-VIT-30", ProductRole.ENTRY, "vitality", 249, null, false, true],
+    ["ROVANX Prostate", "rovanx-prostate", "ROV-PRO-01", ProductRole.HERO, "prostate", 299, null, false, true],
+    ["ROVANX Maca Max 60", "rovanx-maca-max", "ROV-MAC-01", ProductRole.HERO, "energy", 299, null, false, true],
+    ["ROVANX Ginseng 30", "rovanx-ginseng", "ROV-GIN-01", ProductRole.UPSELL, "energy", 249, null, false, true],
     ["ROVANX Daily Men", "rovanx-daily-men", "ROV-DAY-01", ProductRole.CROSS_SELL, "men-s-wellness", 199, null, false, false],
     ["ROVANX Balance", "rovanx-balance", "ROV-BAL-01", ProductRole.CROSS_SELL, "balance", 229, 199, false, false],
     ["ROVANX Magnesium", "rovanx-magnesium", "ROV-MAG-01", ProductRole.UPSELL, "supplements", 189, 169, false, false],
     ["ROVANX Multi", "rovanx-multi", "ROV-MUL-01", ProductRole.CROSS_SELL, "supplements", 179, null, false, false],
     ["ROVANX Sleep", "rovanx-sleep", "ROV-SLP-01", ProductRole.CROSS_SELL, "sleep", 199, 179, false, false]
   ] as const;
+  const launchSlugs = new Set([
+    "rovanx-vitality-60",
+    "rovanx-vitality-30",
+    "rovanx-prostate",
+    "rovanx-maca-max",
+    "rovanx-ginseng"
+  ]);
 
   for (const [name, slug, sku, role, categorySlug, regularPrice, salePrice, hero, featured] of products) {
     await prisma.product.upsert({
@@ -80,7 +87,7 @@ async function main() {
         salePrice,
         cost: null,
         stockStatus: "UNKNOWN",
-        active: true,
+        active: launchSlugs.has(slug),
         featured,
         hero,
         ingredients: placeholder,
@@ -122,7 +129,7 @@ async function main() {
         description: "Bundle provisoire editable dans l'administration.",
         bundlePrice,
         regularCombinedPrice,
-        active: true,
+        active: false,
         seoTitle: `${name} | ROVANX`,
         seoDescription: "Pack ROVANX avec prix et contenu editables."
       }
@@ -162,11 +169,46 @@ async function main() {
           headline,
           description: "Offre additionnelle sans frais de livraison supplementaires.",
           upsellPrice: productBySlug[offeredSlug].salePrice || productBySlug[offeredSlug].regularPrice,
-          enabled: true,
+          enabled: false,
           priority: 10
         }
       });
     }
+  }
+
+  const catalogRolloutKey = "catalog-five-products-2026-09-25";
+  if (!(await prisma.siteSetting.findUnique({ where: { key: catalogRolloutKey } }))) {
+    await prisma.$transaction(async (tx) => {
+      for (const [name, slug, , , , regularPrice, , hero, featured] of products) {
+        await tx.product.update({
+          where: { slug },
+          data: {
+            name,
+            regularPrice,
+            salePrice: null,
+            active: launchSlugs.has(slug),
+            hero,
+            featured,
+            seoTitle: `${name} | ROVANX`
+          }
+        });
+      }
+      await tx.bundle.updateMany({
+        where: { slug: { in: bundleData.map(([, slug]) => slug) } },
+        data: { active: false }
+      });
+      for (const [sourceSlug, offeredSlug, headline] of rules) {
+        await tx.upsellRule.updateMany({
+          where: {
+            sourceProductId: productBySlug[sourceSlug].id,
+            offeredProductId: productBySlug[offeredSlug].id,
+            headline
+          },
+          data: { enabled: false }
+        });
+      }
+      await tx.siteSetting.create({ data: { key: catalogRolloutKey, value: { applied: true } } });
+    });
   }
 
   const blogCategories = [
