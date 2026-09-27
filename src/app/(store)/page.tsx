@@ -7,6 +7,7 @@ import { RovanxLogo } from "@/components/brand/rovanx-logo";
 import { Money } from "@/components/store/money";
 import { LocalizedText } from "@/components/store/localized-text";
 import { SeedContent } from "@/components/store/seed-content";
+import { BLOG_POSTS } from "@/lib/blog-data";
 
 export const revalidate = 60;
 
@@ -18,10 +19,9 @@ export const metadata = buildMetadata({
 
 
 export default async function HomePage() {
-  const [featured, bundles, articles] = await Promise.all([
+  const [featured, bundles] = await Promise.all([
     prisma.product.findMany({ where: { active: true, featured: true }, take: 3, orderBy: { createdAt: "asc" } }).catch(() => []),
-    prisma.bundle.findMany({ where: { active: true }, take: 3, include: { items: { include: { product: true } } } }).catch(() => []),
-    prisma.article.findMany({ where: { status: "PUBLISHED" }, take: 3, orderBy: { publishedAt: "desc" } }).catch(() => [])
+    prisma.bundle.findMany({ where: { active: true }, take: 3, include: { items: { include: { product: true } } } }).catch(() => [])
   ]);
 
   return (
@@ -175,10 +175,11 @@ export default async function HomePage() {
           <p className="badge mb-3"><LocalizedText id="education" /></p>
           <h2 className="mb-7 text-3xl font-black"><LocalizedText id="selectedArticles" /></h2>
           <div className="grid gap-5 md:grid-cols-3">
-            {articles.map((article) => (
-              <Link key={article.id} href={`/blog/${article.slug}`} className="surface-card p-5 hover:border-bronze-500/45">
-                <h3 className="font-black"><SeedContent value={article.title} /></h3>
-                <p className="mt-2 text-sm text-black/65"><SeedContent value={article.excerpt} /></p>
+            {BLOG_POSTS.slice(0, 3).map((article) => (
+              <Link key={article.id} href={`/blog/${article.slug}`} className="surface-card group p-5 hover:border-bronze-500/45">
+                <span className="badge mb-3 border-bronze-500/20 bg-bronze-500/10 text-xs font-bold text-bronze-700">{article.categoryFr}</span>
+                <h3 className="font-black group-hover:text-bronze-600">{article.titleFr}</h3>
+                <p className="mt-2 text-sm text-black/65 line-clamp-3">{article.excerptFr}</p>
               </Link>
             ))}
           </div>

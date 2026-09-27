@@ -89,77 +89,117 @@ export const legalContent: Record<string, LegalSection> = {
   faq: {
     titleFr: "Foire Aux Questions (FAQ)",
     titleAr: "الأسئلة الشائعة",
-    badgeFr: "Réponses Rapides",
-    badgeAr: "إجابات فورية",
+    badgeFr: "Réponses Rapides & Claires",
+    badgeAr: "إجابات واضحة وسريعة",
     contentFr: [
       {
-        heading: "Comment puis-je passer commande ?",
-        text: "Il vous suffit de choisir votre produit ou pack, d'entrer votre nom, numéro de téléphone et ville sur notre formulaire, puis de cliquer sur 'Commander'. Aucun compte ni carte bancaire n'est requis."
+        heading: "1. Comment puis-je passer commande ?",
+        text: "Il vous suffit de sélectionner votre produit ou pack, de renseigner votre nom, votre numéro de téléphone et votre ville sur notre formulaire, puis de cliquer sur 'Commander'. Vous n'avez besoin d'aucun compte ni de carte bancaire."
       },
       {
-        heading: "Quand vais-je recevoir ma commande ?",
-        text: "Après notre appel de confirmation, votre colis est expédié et livré sous 24 à 48 heures ouvrables selon votre ville de résidence."
+        heading: "2. Quand et comment vais-je recevoir ma commande ?",
+        text: "Dès réception de votre commande, notre service client vous appelle pour confirmer votre adresse et vos disponibilités. La livraison s'effectue sous 24h pour les grandes villes (Casablanca, Rabat, Marrakech, Tanger, Fès, Agadir...) et sous 48h pour les autres localités."
       },
       {
-        heading: "Les produits ROVANX sont-ils naturels ?",
-        text: "Oui, nos formules associent des extraits naturels de plantes réputées (Maca, Ginseng, Minéraux essentiels comme le Zinc et le Magnésium) rigoureusement sélectionnés pour l'équilibre et la vitalité masculine."
+        heading: "3. Comment se passe le paiement ?",
+        text: "Le paiement s'effectue intégralement en espèces lors de la livraison (Cash on Delivery). Vous ne payez rien à l'avance en ligne. Vous réglez directement le livreur au moment où il vous remet votre colis en main propre."
       },
       {
-        heading: "Puis-je ouvrir mon colis avant de payer ?",
-        text: "Absolument. Nos partenaires livreurs vous permettent de vérifier l'intégrité extérieure de votre colis avant d'effectuer le règlement."
+        heading: "4. Puis-je vérifier mon colis avant de payer ?",
+        text: "Oui, absolument. Nos partenaires livreurs vous permettent de vérifier l'intégrité de votre colis scellé avant d'effectuer le paiement en toute sérénité."
+      },
+      {
+        heading: "5. Les produits ROVANX sont-ils naturels et sûrs ?",
+        text: "Oui. Nos formules sont développées à base d'extraits naturels concentrés reconnus pour la santé et la vitalité masculine (Maca péruvienne, Panax Ginseng, Zinc chélaté, Magnésium biodisponible, Saw Palmetto). Tous nos ingrédients respectent scrupuleusement les normes de pureté et d'innocuité."
+      },
+      {
+        heading: "6. Comment utiliser les compléments pour une efficacité optimale ?",
+        text: "La posologie recommandée est détaillée sur chaque boîte (généralement 1 à 2 gélules par jour avec un grand verre d'eau au cours d'un repas). Pour ressentir pleinement les bénéfices sur la vitalité et l'endurance, nous conseillons une cure régulière de 30 à 60 jours."
+      },
+      {
+        heading: "7. La livraison est-elle discrète ?",
+        text: "La discrétion est garantie à 100%. Votre commande est expédiée dans un colis neutre, rigoureusement scellé, sans aucun logo extérieur ni mention du contenu."
+      },
+      {
+        heading: "8. Comment contacter le support en cas de question ?",
+        text: "Notre équipe est joignable directement par WhatsApp et par téléphone 6 jours sur 7 pour vous conseiller, suivre votre colis ou répondre à vos interrogations avant et après votre commande."
       }
     ],
     contentAr: [
       {
-        heading: "كيف يمكنني تسجيل الطلب؟",
-        text: "يكفيك اختيار المنتج أو الباقة، إدخال اسمك ورقم هاتفك ومدينتك في استمارة الطلب والضغط على تأكيد. لا حاجة لإنشاء حساب أو إدخال بطاقة بنكية."
+        heading: "1. كيفاش نقدر ندوز الطلب ديالي؟",
+        text: "الأمر سهل جداً وبسيط: كتختار المنتج أو الباقة اللي بغيتي، كتعمر الاسم ورقم الهاتف والمدينة فـ الاستمارة وكتكليكي على 'تأكيد الطلب'. ما كتحتاج لا تسجل حساب ولا تدخل بطاقة بنكية."
       },
       {
-        heading: "متى سأستلم طلبي؟",
-        text: "بعد مكالمة التأكيد الهاتفية من فريقنا، يتم تسليم الطرد خلال 24 إلى 48 ساعة كحد أقصى حسب مدينتك."
+        heading: "2. فوقاش وكيفاش كيوصلني الكولي؟",
+        text: "غير كتوصلنا الطلبية ديالك، كيتصل بيك مستشار من فريقنا لتأكيد العنوان وتحديد وقت التسليم المناسب ليك. كيوصلك الطرد فـ ظرف 24 ساعة فـ المدن الكبرى (الدار البيضاء، الرباط، مراكش، طنجة، فاس، أكادير...) وفـ ظرف 48 ساعة لباقي المدن والمناطق."
       },
       {
-        heading: "هل منتجات ROVANX طبيعية وآمنة؟",
-        text: "نعم، تركيباتنا تحتوي على خلاصات طبيعية مدروسة (مثل جذور الماكا، الجينسنغ، الزنك، والمغنيسيوم) الموجهة لدعم النشاط والحيوية اليومية للرجل."
+        heading: "3. كيفاش كيكون الخلاص؟",
+        text: "الخلاص كيكون نقداً عند الاستلام 100% (Cash on Delivery). ما كتخلص حتى درهم عبر الإنترنت، حتى كيجيب ليك الموزع الطرد ديالك حتى لـ عند باب الدار أو مكان العمل عاد كتخلصو."
       },
       {
-        heading: "هل يمكنني فحص الطرد قبل الأداء؟",
-        text: "بكل تأكيد. يمكنك تفقد الطرد والتأكد من سلامته قبل تسليم المبلغ للموزع."
+        heading: "4. واش نقدر نقلب الكولي قبل ما نخلص؟",
+        text: "بكل تأكيد. الموزعين الشركاء ديالنا كيعطيوك الوقت باش تفحص الطرد وتتأكد من سلامة العلبة والختم الخارجي قبل ما تسلم المبلغ."
+      },
+      {
+        heading: "5. واش منتجات ROVANX طبيعية وآمنة؟",
+        text: "نعم، جميع تركيبات ROVANX مطورة بخلاصات طبيعية عالية الجودة مخصصة لصحة وحيوية الرجل (مثل جذور الماكا، الجينسنغ، الزنك، المغنيسيوم، وخلاصات البلميط المنشاري). نعتمد على مكونات نقية وآمنة تماماً للاستعمال اليومي."
+      },
+      {
+        heading: "6. كيفاش نستعمل المنتج باش يعطيني أحسن نتيجة؟",
+        text: "طريقة الاستعمال موضحة بوضوح فـ ظهر كل علبة (عادة كبسولة إلى كبسولتين يومياً مع كأس كبير من الماء مع الأكل). وللحصول على أفضل النتائج فـ النشاط والطاقة، كنصحو ببرنامج منتظم ما بين 30 إلى 60 يوماً."
+      },
+      {
+        heading: "7. واش التوصيل كيكون سري وكيحترم الخصوصية؟",
+        text: "السرية التامة مضمونة 100%. الطرد كيوصلك فـ كرطونة عادية محكمة الإغلاق، بدون أي صور أو كتابة من الخارج تبين شنو كاين لداخل."
+      },
+      {
+        heading: "8. كيفاش نتواصل معاكم إلى كان عندي أي سؤال بعد الشراء؟",
+        text: "فريق خدمة الزبناء ديالنا فـ المغرب رهن إشارتك مباشرة عبر الواتساب والمكالمات الهاتفية 6 أيام فـ الأسبوع، باش نجاوبوك على أي استفسار ونتبعو معاك طلبيتك خطوة بخطوة."
       }
     ]
   },
 
   about: {
     titleFr: "À Propos de ROVANX",
-    titleAr: "من نحن - علامة ROVANX",
-    badgeFr: "L'Excellence Masculine",
-    badgeAr: "العناية بحيوية الرجل",
+    titleAr: "من نحن - قصة علامة ROVANX",
+    badgeFr: "L'Excellence & La Vitalité Masculine",
+    badgeAr: "التميز والعناية بحيوية الرجل",
     contentFr: [
       {
-        heading: "Notre Mission",
-        text: "ROVANX est une marque marocaine haut de gamme dédiée à la santé, l'énergie et la vitalité masculine. Nous concevons des solutions complètes et accessibles pour accompagner les hommes dans leur quotidien, renforcer leur confiance et préserver leur équilibre physique et mental."
+        heading: "Notre Mission & Vision",
+        text: "ROVANX est née d'une conviction profonde : chaque homme moderne mérite d'avoir accès à des solutions de bien-être haut de gamme, naturelles et efficaces pour soutenir son énergie, son endurance et son équilibre quotidien au Maroc. Face aux rythmes de vie exigeants et au stress, nous concevons des formules ciblées pour accompagner l'homme à chaque étape de sa vie."
       },
       {
-        heading: "La Qualité au cœur de notre démarche",
-        text: "Chaque formule ROVANX s'appuie sur une sélection rigoureuse d'ingrédients actifs reconnus pour leur efficacité, formulés selon les normes les plus strictes de sécurité et d'hygiène."
+        heading: "Nos 3 Piliers d'Excellence",
+        text: "1. Ingrédients nobles & titrés : Nous sélectionnons des extraits botaniques et minéraux de premier choix (Maca, Ginseng, Minéraux chélatés) pour une biodisponibilité maximale. \n2. Sécurité & Pureté : Des procédés de fabrication rigoureux, sans additifs superflus ni substances controversées. \n3. Proximité & Discrétion : Une logistique locale ultra-rapide et un respect absolu de votre vie privée."
       },
       {
-        heading: "Un service proche de vous",
-        text: "Nous croyons en une expérience d'achat fluide, discrète et respectueuse, avec un accompagnement personnalisé et une livraison rapide partout dans le Royaume."
+        heading: "Pourquoi choisir ROVANX au Maroc ?",
+        text: "Nous combinons la puissance des meilleures plantes adaptogènes avec une compréhension fine des besoins de l'homme marocain : pas d'attente d'importation interminable, pas de paiement risqué par carte bancaire, mais un service irréprochable avec livraison express et paiement direct en dirhams à la réception."
+      },
+      {
+        heading: "Un Engagement envers Votre Confiance",
+        text: "Nous ne promettons pas de miracles éphémères, mais des solutions de fond sérieuses et scientifiquement documentées pour vous aider à retrouver votre pleine forme, votre vitalité et votre sérénité au quotidien."
       }
     ],
     contentAr: [
       {
-        heading: "رسالتنا",
-        text: "ROVANX هي علامة مغربية متميزة متخصصة في صحة، نشاط وحيوية الرجل. نبتكر حلولاً متكاملة ترافق الرجل في روتينه اليومي، لتعزيز طاقته وثقته وحيويته الجسدية والذهنية."
+        heading: "رسالتنا ورؤيتنا",
+        text: "تأسست علامة ROVANX انطلاقاً من إيمان قوي بأن كل رجل يستحق الحصول على حلول صحية راقية، طبيعية وفعالة لمساعدته على الحفاظ على نشاطه، حيويته وتوازنه اليومي. في ظل ضغوطات العمل والحياة اليومية، نبتكر تركيبات متطورة ومدروسة ترافق الرجل في روتينه الصحي لتعزيز طاقته وثقته بنفسه."
       },
       {
-        heading: "الجودة أولويتنا القصوى",
-        text: "تعتمد تركيبات ROVANX على مكونات طبيعية منتقاة بعناية فائقة ومعروفة بفعاليتها العالية، مع الالتزام بأعلى معايير السلامة والجودة."
+        heading: "ركائز التميز لدى ROVANX",
+        text: "1. مكونات طبيعية منتقاة بعناية: نعتمد على أفضل الخلاصات النباتية والمعادن الأساسية (الماكا، الجينسنغ، الزنك، المغنيسيوم) لضمان أقصى درجات الامتصاص والفعالية.\n2. السلامة والنقاء: معايير تصنيع صارمة، وخلو تام من أي مواد كيميائية ضارة أو إضافات غير ضرورية.\n3. القرب والسرية: خدمة توصيل محلية سريعة واحترام مطلق لخصوصية عملائنا الكرام."
       },
       {
-        heading: "خدمة قريبة منكم وفي غاية السرية",
-        text: "نلتزم بتوفير تجربة تسوق سلسة وآمنة، مع احترام تام للخصوصية وتوصيل سريع وموثوق في كافة المدن المغربية."
+        heading: "علاش تختار ROVANX فـ المغرب؟",
+        text: "كنوفرو ليك الجودة العالمية فـ قلب المغرب بلا ما تسنى شهور ديال الشحن من الخارج وبلا مخاطر الأداء بالبطاقة البنكية: كتوصلك طلبيتك حتى للباب فـ ظرف 24-48 ساعة، ومغلفة بكل سرية، وكتخلص نقداً عند الاستلام بعد معاينة الطرد."
+      },
+      {
+        heading: "التزامنا بالثقة والشفافية",
+        text: "فـ ROVANX لا نبيع أوهاماً أو وعوداً سحرية غير واقعية، بل نقدم مكملات غذائية مدروسة ومبنية على خلاصات معروفة عالمياً بفوائدها في دعم النشاط، مقاومة الإرهاق وتعزيز حيوية الرجل بشكل مستدام."
       }
     ]
   },
