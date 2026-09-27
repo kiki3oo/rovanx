@@ -13,7 +13,6 @@ export const metadata = buildMetadata({
   path: "/bundles"
 });
 
-export const revalidate = 60;
 
 export default async function BundlesPage() {
   const bundles = await prisma.bundle.findMany({

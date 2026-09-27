@@ -14,7 +14,6 @@ export const metadata = buildMetadata({
   path: "/"
 });
 
-export const revalidate = 60;
 
 export default async function HomePage() {
   const [featured, bundles, articles] = await Promise.all([

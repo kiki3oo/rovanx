@@ -7,6 +7,8 @@ import { PreferencesProvider } from "@/components/store/preferences-provider";
 import { WhatsAppFloatingButton } from "@/components/store/whatsapp-floating-button";
 import { TrackingScripts } from "@/components/store/tracking-scripts";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
   title: {
