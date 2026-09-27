@@ -8,6 +8,8 @@ import { Money } from "@/components/store/money";
 import { LocalizedText } from "@/components/store/localized-text";
 import { SeedContent } from "@/components/store/seed-content";
 
+export const revalidate = 60;
+
 export const metadata = buildMetadata({
   title: "ROVANX | Men's Vitality & Wellness",
   description: "Boutique marocaine ROVANX pour la vitalite et le bien-etre masculin.",
@@ -17,9 +19,9 @@ export const metadata = buildMetadata({
 
 export default async function HomePage() {
   const [featured, bundles, articles] = await Promise.all([
-    prisma.product.findMany({ where: { active: true, featured: true }, take: 3, orderBy: { createdAt: "asc" } }),
-    prisma.bundle.findMany({ where: { active: true }, take: 3, include: { items: { include: { product: true } } } }),
-    prisma.article.findMany({ where: { status: "PUBLISHED" }, take: 3, orderBy: { publishedAt: "desc" } })
+    prisma.product.findMany({ where: { active: true, featured: true }, take: 3, orderBy: { createdAt: "asc" } }).catch(() => []),
+    prisma.bundle.findMany({ where: { active: true }, take: 3, include: { items: { include: { product: true } } } }).catch(() => []),
+    prisma.article.findMany({ where: { status: "PUBLISHED" }, take: 3, orderBy: { publishedAt: "desc" } }).catch(() => [])
   ]);
 
   return (

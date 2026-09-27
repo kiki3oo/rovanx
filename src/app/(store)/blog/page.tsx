@@ -25,7 +25,7 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
     },
     include: { category: true, author: true },
     orderBy: { publishedAt: "desc" }
-  });
+  }).catch(() => []);
 
   return (
     <section className="section">

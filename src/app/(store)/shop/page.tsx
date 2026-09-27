@@ -17,7 +17,7 @@ export default async function ShopPage({
 }) {
   const params = await searchParams;
   const [categories, products] = await Promise.all([
-    prisma.category.findMany({ where: { active: true }, orderBy: { name: "asc" } }),
+    prisma.category.findMany({ where: { active: true }, orderBy: { name: "asc" } }).catch(() => []),
     prisma.product.findMany({
       where: {
         active: true,
@@ -37,7 +37,7 @@ export default async function ShopPage({
             : params.sort === "newest"
               ? { createdAt: "desc" }
               : [{ featured: "desc" }, { hero: "desc" }, { createdAt: "asc" }]
-    })
+    }).catch(() => [])
   ]);
 
   return (

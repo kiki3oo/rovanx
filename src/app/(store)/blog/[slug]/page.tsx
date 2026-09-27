@@ -4,9 +4,16 @@ import { buildMetadata } from "@/lib/seo";
 import { LocalizedText } from "@/components/store/localized-text";
 import { SeedContent } from "@/components/store/seed-content";
 
+export const revalidate = 60;
+
+export async function generateStaticParams() {
+  const articles = await prisma.article.findMany({ select: { slug: true }, where: { status: "PUBLISHED" } }).catch(() => []);
+  return articles.map((a) => ({ slug: a.slug }));
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const article = await prisma.article.findUnique({ where: { slug } });
+  const article = await prisma.article.findUnique({ where: { slug } }).catch(() => null);
   if (!article) return {};
   return buildMetadata({
     title: article.seoTitle || article.title,
@@ -21,7 +28,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   const article = await prisma.article.findUnique({
     where: { slug },
     include: { author: true, category: true, relatedProducts: { include: { product: true } } }
-  });
+  }).catch(() => null);
   if (!article || article.status !== "PUBLISHED") notFound();
 
   const jsonLd = {

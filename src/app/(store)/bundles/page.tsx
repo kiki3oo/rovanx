@@ -7,6 +7,8 @@ import { LocalizedText } from "@/components/store/localized-text";
 import { SeedContent } from "@/components/store/seed-content";
 import { AddBundleButton } from "@/components/store/add-bundle-button";
 
+export const revalidate = 60;
+
 export const metadata = buildMetadata({
   title: "Bundles",
   description: "Packs ROVANX editables.",
@@ -19,7 +21,7 @@ export default async function BundlesPage() {
     where: { active: true },
     include: { items: { include: { product: true } } },
     orderBy: { createdAt: "asc" }
-  });
+  }).catch(() => []);
 
   return (
     <section className="section">

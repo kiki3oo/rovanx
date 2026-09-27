@@ -12,9 +12,16 @@ import { LocalizedText } from "@/components/store/localized-text";
 import { SeedContent } from "@/components/store/seed-content";
 import { getProductVisual } from "@/lib/product-visuals";
 
+export const revalidate = 60;
+
+export async function generateStaticParams() {
+  const products = await prisma.product.findMany({ select: { slug: true }, where: { active: true } }).catch(() => []);
+  return products.map((p) => ({ slug: p.slug }));
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const product = await prisma.product.findUnique({ where: { slug } });
+  const product = await prisma.product.findUnique({ where: { slug } }).catch(() => null);
   if (!product) return {};
   return buildMetadata({
     title: product.seoTitle || product.name,
@@ -30,13 +37,13 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const product = await prisma.product.findUnique({
     where: { slug },
     include: { category: true }
-  });
+  }).catch(() => null);
   if (!product || !product.active) notFound();
 
   const related = await prisma.product.findMany({
     where: { active: true, categoryId: product.categoryId, id: { not: product.id } },
     take: 3
-  });
+  }).catch(() => []);
 
   const price = product.salePrice || product.regularPrice;
   const visual = getProductVisual(product.slug);
