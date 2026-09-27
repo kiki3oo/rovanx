@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { CheckCircle2, Loader2, LockKeyhole, PhoneCall, ShieldCheck, Sparkles, Truck } from "lucide-react";
-import { moroccanCities } from "@/lib/moroccan-cities";
 import { Money } from "@/components/store/money";
 import { usePreferences } from "@/components/store/preferences-provider";
 
@@ -20,7 +19,6 @@ export function DirectCodForm({ product }: { product: DirectCodProduct }) {
   const router = useRouter();
   const { locale, currency } = usePreferences();
   const [quantity, setQuantity] = useState(1);
-  const [city, setCity] = useState("Casablanca");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -51,7 +49,7 @@ export function DirectCodForm({ product }: { product: DirectCodProduct }) {
     const payload = {
       fullName: formData.get("fullName"),
       phone: formData.get("phone"),
-      city: formData.get("city") || city,
+      city: "À confirmer",
       address: formData.get("address"),
       addressDetails: formData.get("addressDetails") || undefined,
       notes: formData.get("notes") || undefined,
@@ -178,38 +176,21 @@ export function DirectCodForm({ product }: { product: DirectCodProduct }) {
           </span>
         </label>
 
-        {/* City Select */}
-        <label className="field">
-          <span className="font-bold text-black/85">
-            {isArabic ? "المدينة *" : "Ville de livraison *"}
-          </span>
-          <select
-            className="select text-base"
-            name="city"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            required
-          >
-            {moroccanCities.map((cityName) => (
-              <option key={cityName} value={cityName}>
-                {cityName}
-              </option>
-            ))}
-          </select>
-        </label>
-
         {/* Address */}
         <label className="field">
           <span className="font-bold text-black/85">
-            {isArabic ? "العنوان أو الحي *" : "Adresse ou quartier de livraison *"}
+            {isArabic ? "العنوان أو المدينة *" : "Adresse ou Ville de livraison *"}
           </span>
           <input
             className="input text-base"
             name="address"
-            placeholder={isArabic ? "مثال: حي المعاريف، زنقة 14" : "Ex: Quartier Maârif, Rue 14..."}
+            placeholder={isArabic ? "اكتب عنوانك أو مدينتك وحيك هنا..." : "Ex: Casablanca, Quartier Maârif..."}
             required
             autoComplete="street-address"
           />
+          <span className="text-xs text-black/55">
+            {isArabic ? "سنتصل بك لتأكيد العنوان الدقيق وموعد التسليم قبل إرسال الطلب." : "Nous vous contacterons par téléphone pour confirmer l'adresse exacte avant l'envoi."}
+          </span>
         </label>
 
         {/* Order Summary Line */}

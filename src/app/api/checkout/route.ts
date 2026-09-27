@@ -37,14 +37,14 @@ export async function POST(request: Request) {
       update: {
         fullName: parsed.data.fullName,
         phone: parsed.data.phone,
-        city: parsed.data.city,
+        city: parsed.data.city || "À confirmer",
         address: parsed.data.address
       },
       create: {
         fullName: parsed.data.fullName,
         phone: parsed.data.phone,
         phoneNorm,
-        city: parsed.data.city,
+        city: parsed.data.city || "À confirmer",
         address: parsed.data.address
       }
     });

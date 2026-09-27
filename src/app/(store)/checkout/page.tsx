@@ -6,7 +6,6 @@ import { CheckCircle2, LockKeyhole, PhoneCall, ShieldCheck, Truck } from "lucide
 import { useCart } from "@/components/store/cart-provider";
 import { Money } from "@/components/store/money";
 import { usePreferences } from "@/components/store/preferences-provider";
-import { moroccanCities } from "@/lib/moroccan-cities";
 
 export default function CheckoutPage() {
   const { lines, subtotal, clear } = useCart();
@@ -21,7 +20,7 @@ export default function CheckoutPage() {
     const payload = {
       fullName: formData.get("fullName"),
       phone: formData.get("phone"),
-      city: formData.get("city"),
+      city: "À confirmer",
       address: formData.get("address"),
       addressDetails: formData.get("addressDetails"),
       notes: formData.get("notes"),
@@ -88,18 +87,13 @@ export default function CheckoutPage() {
                 <input className="input" name="phone" required inputMode="tel" />
               </label>
               <label className="field">
-                <span>{t("city")}</span>
-                <select className="select text-base" name="city" defaultValue="Casablanca" required>
-                  {moroccanCities.map((cityName) => (
-                    <option key={cityName} value={cityName}>
-                      {cityName}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label className="field">
-                <span>{t("address")}</span>
-                <textarea className="textarea" name="address" required />
+                <span>{locale === "ar" ? "العنوان أو المدينة" : "Adresse ou Ville de livraison"}</span>
+                <textarea
+                  className="textarea"
+                  name="address"
+                  required
+                  placeholder={locale === "ar" ? "اكتب عنوانك أو مدينتك وحيك هنا..." : "Ex: Casablanca, Quartier Maârif..."}
+                />
               </label>
               <label className="field">
                 <span>{t("addressDetails")}</span>
