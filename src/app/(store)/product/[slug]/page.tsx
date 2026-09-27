@@ -11,6 +11,7 @@ import { buildMetadata } from "@/lib/seo";
 import { LocalizedText } from "@/components/store/localized-text";
 import { SeedContent } from "@/components/store/seed-content";
 import { getProductVisual } from "@/lib/product-visuals";
+import { getProductDetail } from "@/lib/product-details";
 
 export const revalidate = 60;
 
@@ -23,9 +24,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const product = await prisma.product.findUnique({ where: { slug } }).catch(() => null);
   if (!product) return {};
+  const detail = getProductDetail(slug);
   return buildMetadata({
-    title: product.seoTitle || product.name,
-    description: product.seoDescription || product.shortDescription,
+    title: product.seoTitle || detail?.name || product.name,
+    description: product.seoDescription || detail?.shortDescription || product.shortDescription,
     path: `/product/${product.slug}`,
     image: product.ogImage || getProductVisual(product.slug)?.src
   });
@@ -45,13 +47,21 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     take: 3
   }).catch(() => []);
 
+  const detail = getProductDetail(product.slug);
+  const shortDescription = detail?.shortDescription || product.shortDescription;
+  const benefitsText = detail ? detail.benefits.join("\n\n• ") : product.benefits.join(", ");
+  const ingredientsText = detail?.ingredients || (product.ingredients?.includes("Placeholder") ? null : product.ingredients);
+  const instructionsText = detail?.usageInstructions || (product.usageInstructions?.includes("Placeholder") ? null : product.usageInstructions);
+  const warningsText = detail?.warnings || (product.warnings?.includes("Placeholder") ? null : product.warnings);
+  const regulatoryText = detail?.regulatoryInformation || (product.regulatoryInformation?.includes("Placeholder") ? null : product.regulatoryInformation);
+
   const price = product.salePrice || product.regularPrice;
   const visual = getProductVisual(product.slug);
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,
-    description: product.shortDescription,
+    description: shortDescription,
     sku: product.sku,
     brand: { "@type": "Brand", name: "ROVANX" },
     offers: {
@@ -62,11 +72,11 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     }
   };
   const productDetails = [
-    [CheckCircle2, "benefits", product.benefits.join(", ")],
-    [CheckCircle2, "ingredients", product.ingredients],
-    [Clock3, "instructions", product.usageInstructions],
-    [ShieldCheck, "warnings", product.warnings],
-    [ShieldCheck, "regulatory", product.regulatoryInformation],
+    [CheckCircle2, "benefits", benefitsText ? `• ${benefitsText}` : null],
+    [CheckCircle2, "ingredients", ingredientsText],
+    [Clock3, "instructions", instructionsText],
+    [ShieldCheck, "warnings", warningsText],
+    [ShieldCheck, "regulatory", regulatoryText],
     [Truck, "deliveryCod", null]
   ] as const;
 
@@ -87,9 +97,10 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           </div>
           <div className="grid content-start gap-5">
             <div>
-              <p className="badge mb-3"><SeedContent value={product.category.name} /></p>
-              <h1 className="text-4xl font-black">{product.name}</h1>
-              <p className="mt-3 text-lg text-black/65"><SeedContent value={product.shortDescription} /></p>
+              <p className="badge mb-3"><SeedContent value={detail?.badge || product.category.name} /></p>
+              <h1 className="text-4xl font-black">{detail?.name || product.name}</h1>
+              {detail?.tagline ? <p className="mt-1 text-sm font-bold text-bronze-600">{detail.tagline}</p> : null}
+              <p className="mt-3 text-lg leading-relaxed text-black/70">{shortDescription}</p>
             </div>
             <div className="premium-panel grid gap-4 p-5">
               <div className="flex flex-wrap items-end gap-3">
@@ -124,11 +135,17 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 }}
               />
             </div>
-            <div className="grid gap-3 rounded-lg border border-bronze-500/25 bg-white p-4 text-sm text-black/70">
-              {product.placeholderNotice ? <SeedContent value={product.placeholderNotice} /> : <LocalizedText id="productInfoPending" />}
-              <div className="flex flex-wrap gap-2">
+            <div className="grid gap-2.5 rounded-xl border border-bronze-500/25 bg-sand-50/70 p-4 text-sm text-black/75">
+              <div className="flex items-center gap-2 font-black text-graphite-950">
+                <ShieldCheck size={18} className="text-bronze-600" />
+                <span>Garantie Qualité & Authenticité ROVANX</span>
+              </div>
+              <p className="text-xs leading-relaxed text-black/65">
+                Formule originale certifiée, extraits standardisés et contrôlés. Emballage scellé et expédition sous 24/48h partout au Maroc avec paiement en espèces à la livraison.
+              </p>
+              <div className="flex flex-wrap gap-2 pt-1">
                 {["noOnlinePayment", "callBeforePrep", "support"].map((item) => (
-                  <span key={item} className="rounded-full bg-bronze-500/10 px-3 py-1 font-bold text-bronze-600">
+                  <span key={item} className="rounded-full bg-bronze-500/10 px-3 py-1 text-xs font-bold text-bronze-700">
                     <LocalizedText id={item as "noOnlinePayment" | "callBeforePrep" | "support"} />
                   </span>
                 ))}

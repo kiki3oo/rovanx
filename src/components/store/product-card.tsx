@@ -5,6 +5,7 @@ import { Money } from "@/components/store/money";
 import { LocalizedText } from "@/components/store/localized-text";
 import { SeedContent } from "@/components/store/seed-content";
 import { getProductVisual } from "@/lib/product-visuals";
+import { getProductDetail } from "@/lib/product-details";
 
 type ProductCardProduct = Pick<
   Product,
@@ -14,6 +15,9 @@ type ProductCardProduct = Pick<
 export function ProductCard({ product }: { product: ProductCardProduct }) {
   const price = product.salePrice || product.regularPrice;
   const visual = getProductVisual(product.slug);
+  const detail = getProductDetail(product.slug);
+  const shortDescription = detail?.shortDescription || product.shortDescription;
+  const productName = detail?.name || product.name;
   return (
     <article className="surface-card grid overflow-hidden transition duration-200 hover:-translate-y-1 hover:border-bronze-500/45">
       <Link
@@ -28,13 +32,14 @@ export function ProductCard({ product }: { product: ProductCardProduct }) {
       </Link>
       <div className="grid gap-4 p-5 pt-1">
         <div className="flex min-h-7 flex-wrap gap-2">
+          {detail?.badge ? <span className="badge border-bronze-500/20 bg-bronze-500/10 text-xs font-bold text-bronze-700">{detail.badge}</span> : null}
           {product.salePrice ? <span className="badge"><LocalizedText id="offer" /></span> : null}
           {product.hero || product.featured ? <span className="badge"><LocalizedText id="selectionPremium" /></span> : null}
         </div>
         <Link href={`/product/${product.slug}`}>
-          <h3 className="text-xl font-black leading-tight hover:text-bronze-600">{product.name}</h3>
+          <h3 className="text-xl font-black leading-tight hover:text-bronze-600">{productName}</h3>
         </Link>
-        <p className="min-h-12 text-sm leading-6 text-black/62"><SeedContent value={product.shortDescription} /></p>
+        <p className="min-h-12 text-sm leading-6 text-black/65 line-clamp-2">{shortDescription}</p>
         <div className="grid grid-cols-3 gap-2 text-center text-[11px] font-black uppercase text-black/55">
           {[
             ["COD", "COD"],
