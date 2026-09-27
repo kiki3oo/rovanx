@@ -4,6 +4,7 @@ import { CheckCircle2, Clock3, PhoneCall, ShieldCheck, Truck } from "lucide-reac
 import { prisma } from "@/lib/db";
 import { AddToCartButton } from "@/components/store/add-to-cart-button";
 import { BuyNowButton } from "@/components/store/buy-now-button";
+import { DirectCodForm } from "@/components/store/direct-cod-form";
 import { Money } from "@/components/store/money";
 import { ProductCard } from "@/components/store/product-card";
 import { buildMetadata } from "@/lib/seo";
@@ -127,6 +128,17 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 ))}
               </div>
             </div>
+
+            <DirectCodForm
+              product={{
+                id: product.id,
+                name: product.name,
+                slug: product.slug,
+                sku: product.sku,
+                price,
+                regularPrice: product.regularPrice
+              }}
+            />
           </div>
         </div>
       </section>

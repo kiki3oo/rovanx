@@ -4,6 +4,8 @@ import { CartProvider } from "@/components/store/cart-provider";
 import { Header } from "@/components/store/header";
 import { Footer } from "@/components/store/footer";
 import { PreferencesProvider } from "@/components/store/preferences-provider";
+import { WhatsAppFloatingButton } from "@/components/store/whatsapp-floating-button";
+import { TrackingScripts } from "@/components/store/tracking-scripts";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
@@ -24,12 +26,16 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr" dir="ltr">
+      <head>
+        <TrackingScripts />
+      </head>
       <body>
         <PreferencesProvider>
           <CartProvider>
             <Header />
             <main>{children}</main>
             <Footer />
+            <WhatsAppFloatingButton />
           </CartProvider>
         </PreferencesProvider>
       </body>

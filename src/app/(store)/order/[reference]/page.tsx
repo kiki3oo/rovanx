@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { formatMoney } from "@/lib/money";
 import { LocalizedText } from "@/components/store/localized-text";
+import { PurchaseTracker } from "@/components/store/purchase-tracker";
 
 export default async function OrderConfirmationPage({ params }: { params: Promise<{ reference: string }> }) {
   const { reference } = await params;
@@ -17,6 +18,7 @@ export default async function OrderConfirmationPage({ params }: { params: Promis
 
   return (
     <section className="section">
+      <PurchaseTracker reference={order.reference} total={order.total} currency={order.currency} />
       <div className="container max-w-3xl">
         <div className="rounded-lg border border-black/10 bg-white p-6">
           <p className="badge mb-3"><LocalizedText id="thanks" /></p>

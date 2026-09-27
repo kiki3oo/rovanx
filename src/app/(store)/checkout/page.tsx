@@ -6,6 +6,7 @@ import { CheckCircle2, LockKeyhole, PhoneCall, ShieldCheck, Truck } from "lucide
 import { useCart } from "@/components/store/cart-provider";
 import { Money } from "@/components/store/money";
 import { usePreferences } from "@/components/store/preferences-provider";
+import { moroccanCities } from "@/lib/moroccan-cities";
 
 export default function CheckoutPage() {
   const { lines, subtotal, clear } = useCart();
@@ -88,7 +89,13 @@ export default function CheckoutPage() {
               </label>
               <label className="field">
                 <span>{t("city")}</span>
-                <input className="input" name="city" required />
+                <select className="select text-base" name="city" defaultValue="Casablanca" required>
+                  {moroccanCities.map((cityName) => (
+                    <option key={cityName} value={cityName}>
+                      {cityName}
+                    </option>
+                  ))}
+                </select>
               </label>
               <label className="field">
                 <span>{t("address")}</span>

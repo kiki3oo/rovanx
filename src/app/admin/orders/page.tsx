@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { MessageCircle } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { formatMoney } from "@/lib/money";
+import { normalizeMoroccanPhone } from "@/lib/phone";
 import { getOrderStatusClassName, getOrderStatusLabel } from "@/lib/order-status";
 import { AdminShell } from "@/components/admin/admin-shell";
 
@@ -69,30 +71,59 @@ export default async function AdminOrdersPage({
               <th className="p-3">Total</th>
               <th className="p-3">Upsell</th>
               <th className="p-3">Created</th>
+              <th className="p-3 text-right">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) => (
-              <tr key={order.id} className="border-t border-black/10">
-                <td className="p-3 font-bold">
-                  <Link href={`/admin/orders/${order.id}`}>{order.reference}</Link>
-                </td>
-                <td className="p-3">
-                  <div className="font-semibold">{order.customer.fullName}</div>
-                  <div className="text-xs text-black/55">{order.customer.phone}</div>
-                </td>
-                <td className="p-3">
-                  <span
-                    className={`inline-flex rounded-full px-2.5 py-1 text-xs font-bold ring-1 ${getOrderStatusClassName(order.status)}`}
-                  >
-                    {getOrderStatusLabel(order.status)}
-                  </span>
-                </td>
-                <td className="p-3">{formatMoney(order.total)}</td>
-                <td className="p-3">{order.upsellAccepted ? "Yes" : "No"}</td>
-                <td className="p-3">{order.createdAt.toLocaleDateString("fr-MA")}</td>
-              </tr>
-            ))}
+            {orders.map((order) => {
+              const phoneForWa = normalizeMoroccanPhone(order.customer.phone).replace(/^\+/, "");
+              const waMessage = encodeURIComponent(
+                `Bonjour ${order.customer.fullName}, nous vous contactons depuis la boutique ROVANX pour confirmer votre commande ${order.reference} d'un montant de ${formatMoney(order.total)}. Pouvez-vous nous confirmer votre adresse de livraison ?`
+              );
+              return (
+                <tr key={order.id} className="border-t border-black/10">
+                  <td className="p-3 font-bold">
+                    <Link href={`/admin/orders/${order.id}`} className="hover:text-bronze-600">
+                      {order.reference}
+                    </Link>
+                  </td>
+                  <td className="p-3">
+                    <div className="font-semibold">{order.customer.fullName}</div>
+                    <div className="text-xs text-black/55">{order.customer.phone}</div>
+                  </td>
+                  <td className="p-3">
+                    <span
+                      className={`inline-flex rounded-full px-2.5 py-1 text-xs font-bold ring-1 ${getOrderStatusClassName(order.status)}`}
+                    >
+                      {getOrderStatusLabel(order.status)}
+                    </span>
+                  </td>
+                  <td className="p-3">{formatMoney(order.total)}</td>
+                  <td className="p-3">{order.upsellAccepted ? "Yes" : "No"}</td>
+                  <td className="p-3">{order.createdAt.toLocaleDateString("fr-MA")}</td>
+                  <td className="p-3 text-right">
+                    <div className="flex items-center justify-end gap-2">
+                      <a
+                        href={`https://wa.me/${phoneForWa}?text=${waMessage}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1 rounded-md bg-[#25D366] px-2.5 py-1 text-xs font-bold text-white shadow-sm hover:bg-emerald-600"
+                        title="Confirmer sur WhatsApp"
+                      >
+                        <MessageCircle size={14} />
+                        WhatsApp
+                      </a>
+                      <Link
+                        href={`/admin/orders/${order.id}`}
+                        className="rounded-md border border-black/15 bg-white px-2.5 py-1 text-xs font-bold hover:bg-sand-50"
+                      >
+                        Détails
+                      </Link>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
