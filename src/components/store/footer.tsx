@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { unstable_cache } from "next/cache";
 import { prisma } from "@/lib/db";
 import { RovanxLogo } from "@/components/brand/rovanx-logo";
 import { LocalizedText } from "@/components/store/localized-text";
@@ -21,9 +22,21 @@ type StoreSettings = {
   tiktok?: string;
 };
 
+const getStoreSettings = unstable_cache(
+  async (): Promise<StoreSettings> => {
+    try {
+      const setting = await prisma.siteSetting.findUnique({ where: { key: "store" } });
+      return (setting?.value || {}) as StoreSettings;
+    } catch {
+      return {};
+    }
+  },
+  ["footer-store-settings"],
+  { revalidate: 300 }
+);
+
 export async function Footer() {
-  const setting = await prisma.siteSetting.findUnique({ where: { key: "store" } });
-  const store = (setting?.value || {}) as StoreSettings;
+  const store = await getStoreSettings();
   const socialLinks = [
     ["Instagram", store.instagram],
     ["Facebook", store.facebook],

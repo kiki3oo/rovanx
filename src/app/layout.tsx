@@ -5,8 +5,6 @@ import { Header } from "@/components/store/header";
 import { Footer } from "@/components/store/footer";
 import { PreferencesProvider } from "@/components/store/preferences-provider";
 
-export const dynamic = "force-dynamic";
-
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
   title: {

@@ -6,6 +6,8 @@ const titles: Record<string, TranslationKey> = {
   returns: "returns", privacy: "privacy", terms: "terms", cookies: "cookies"
 };
 
+export const revalidate = 300;
+
 export default async function LegalPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const title = titles[slug] || "pagePending";
