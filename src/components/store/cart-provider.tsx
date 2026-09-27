@@ -34,15 +34,26 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    const saved = window.localStorage.getItem(storageKey);
-    // Hydrate persisted cart after mount so SSR markup stays stable.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    if (saved) setLines(JSON.parse(saved));
+    try {
+      const saved = typeof window !== "undefined" ? window.localStorage.getItem(storageKey) : null;
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) setLines(parsed);
+      }
+    } catch {
+      // Ignore JSON or storage error
+    }
     setLoaded(true);
   }, []);
 
   useEffect(() => {
-    if (loaded) window.localStorage.setItem(storageKey, JSON.stringify(lines));
+    if (loaded && typeof window !== "undefined") {
+      try {
+        window.localStorage.setItem(storageKey, JSON.stringify(lines));
+      } catch {
+        // Ignore quota/private browsing errors
+      }
+    }
   }, [lines, loaded]);
 
   const value = useMemo<CartContextValue>(() => {

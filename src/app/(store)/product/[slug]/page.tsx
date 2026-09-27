@@ -3,6 +3,7 @@ import Link from "next/link";
 import { CheckCircle2, Clock3, PhoneCall, ShieldCheck, Truck } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { AddToCartButton } from "@/components/store/add-to-cart-button";
+import { BuyNowButton } from "@/components/store/buy-now-button";
 import { Money } from "@/components/store/money";
 import { ProductCard } from "@/components/store/product-card";
 import { buildMetadata } from "@/lib/seo";
@@ -103,9 +104,16 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                   regularPrice: product.regularPrice
                 }}
               />
-              <Link className="btn btn-secondary" href="/checkout">
-                <LocalizedText id="orderNow" />
-              </Link>
+              <BuyNowButton
+                product={{
+                  id: product.id,
+                  name: product.name,
+                  slug: product.slug,
+                  sku: product.sku,
+                  price,
+                  regularPrice: product.regularPrice
+                }}
+              />
             </div>
             <div className="grid gap-3 rounded-lg border border-bronze-500/25 bg-white p-4 text-sm text-black/70">
               {product.placeholderNotice ? <SeedContent value={product.placeholderNotice} /> : <LocalizedText id="productInfoPending" />}

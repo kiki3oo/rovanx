@@ -103,7 +103,7 @@ export type TranslationKey =
   | "contact" | "returns" | "privacy" | "terms" | "cookies" | "shippingPolicy" | "legalPending" | "pagePending"
   | "thanks" | "orderReceived" | "reference" | "nextSteps" | "confirmWhatsapp" | "upsell" | "viewConfirmation"
   | "extraOffer" | "oneOffer" | "sameParcel" | "addToOrder" | "skip" | "orderFailed" | "removeItem"
-  | "footerTagline" | "quantity";
+  | "footerTagline" | "quantity" | "added";
 
 const translations: Record<SupportedLocale, Record<TranslationKey, string>> = {
   ar: {
@@ -137,7 +137,7 @@ const translations: Record<SupportedLocale, Record<TranslationKey, string>> = {
     legalPending: "سيُنشر المحتوى بعد مراجعته واعتماده.", pagePending: "محتوى قيد الإعداد", thanks: "شكرًا لك", orderReceived: "تم استلام طلبك", reference: "رقم الطلب",
     nextSteps: "سنتصل بك لتأكيد الطلب، ثم نجهزه ونرسله حسب منطقتك.", confirmWhatsapp: "التأكيد عبر واتساب", upsell: "منتج إضافي", viewConfirmation: "عرض تأكيد الطلب",
     extraOffer: "عرض إضافي", oneOffer: "عرض واحد لك", sameParcel: "سيُضاف إلى نفس الطلب والشحنة.", addToOrder: "أضف إلى طلبي", skip: "تخطي",
-    orderFailed: "تعذر إتمام الطلب. حاول مرة أخرى.", removeItem: "حذف المنتج", footerTagline: "علامة مغربية تعنى بحيوية الرجل ورفاهيته.", quantity: "الكمية"
+    orderFailed: "تعذر إتمام الطلب. حاول مرة أخرى.", removeItem: "حذف المنتج", footerTagline: "علامة مغربية تعنى بحيوية الرجل ورفاهيته.", quantity: "الكمية", added: "تمت الإضافة! ✓"
   },
   fr: {
     shop: "Boutique",
@@ -224,7 +224,7 @@ const translations: Record<SupportedLocale, Record<TranslationKey, string>> = {
     legalPending: "Ce contenu sera publié après révision et validation.", pagePending: "Contenu à venir", thanks: "Merci", orderReceived: "Commande reçue", reference: "Référence",
     nextSteps: "Nous vous appelons pour confirmer votre commande, puis la préparons et l'expédions selon votre zone.", confirmWhatsapp: "Confirmer sur WhatsApp", upsell: "Produit supplémentaire", viewConfirmation: "Voir la confirmation",
     extraOffer: "Offre supplémentaire", oneOffer: "Une offre pour vous", sameParcel: "Ajouté à la même commande et au même colis.", addToOrder: "Ajouter à ma commande", skip: "Passer",
-    orderFailed: "La commande n'a pas abouti. Veuillez réessayer.", removeItem: "Supprimer le produit", footerTagline: "Marque marocaine dédiée à la vitalité et au bien-être masculin.", quantity: "Quantité"
+    orderFailed: "La commande n'a pas abouti. Veuillez réessayer.", removeItem: "Supprimer le produit", footerTagline: "Marque marocaine dédiée à la vitalité et au bien-être masculin.", quantity: "Quantité", added: "Ajouté au panier ! ✓"
   },
   en: {
     shop: "Shop",
@@ -311,7 +311,7 @@ const translations: Record<SupportedLocale, Record<TranslationKey, string>> = {
     legalPending: "This content will be published after review and approval.", pagePending: "Content coming soon", thanks: "Thank you", orderReceived: "Order received", reference: "Reference",
     nextSteps: "We will call to confirm your order, then prepare and ship it according to your area.", confirmWhatsapp: "Confirm on WhatsApp", upsell: "Additional item", viewConfirmation: "View confirmation",
     extraOffer: "Additional offer", oneOffer: "An offer for you", sameParcel: "Added to the same order and parcel.", addToOrder: "Add to my order", skip: "Skip",
-    orderFailed: "Your order could not be placed. Please try again.", removeItem: "Remove product", footerTagline: "A Moroccan brand for men's vitality and wellness.", quantity: "Quantity"
+    orderFailed: "Your order could not be placed. Please try again.", removeItem: "Remove product", footerTagline: "A Moroccan brand for men's vitality and wellness.", quantity: "Quantity", added: "Added to cart! ✓"
   }
 };
 
@@ -319,6 +319,22 @@ const PreferencesContext = createContext<PreferencesContextValue | null>(null);
 const localeKey = "rovanx-locale";
 const currencyKey = "rovanx-currency";
 const currencyDefaultCookie = "rovanx-currency-default";
+
+function safeGetStorage(key: string): string | null {
+  try {
+    return typeof window !== "undefined" ? window.localStorage.getItem(key) : null;
+  } catch {
+    return null;
+  }
+}
+
+function safeSetStorage(key: string, value: string): void {
+  try {
+    if (typeof window !== "undefined") window.localStorage.setItem(key, value);
+  } catch {
+    // ignore storage quota / private browsing errors
+  }
+}
 
 function isSupportedLocale(value: string | null): value is SupportedLocale {
   return Boolean(value && supportedLocales.includes(value as SupportedLocale));
@@ -329,14 +345,22 @@ function isSupportedCurrency(value: string | null): value is SupportedCurrency {
 }
 
 function readCookie(name: string) {
-  return document.cookie
-    .split("; ")
-    .find((item) => item.startsWith(`${name}=`))
-    ?.split("=")[1] || null;
+  try {
+    return document.cookie
+      .split("; ")
+      .find((item) => item.startsWith(`${name}=`))
+      ?.split("=")[1] || null;
+  } catch {
+    return null;
+  }
 }
 
 function writeCookie(name: string, value: string) {
-  document.cookie = `${name}=${value}; path=/; max-age=${60 * 60 * 24 * 365}; samesite=lax`;
+  try {
+    document.cookie = `${name}=${value}; path=/; max-age=${60 * 60 * 24 * 365}; samesite=lax`;
+  } catch {
+    // ignore
+  }
 }
 
 export function PreferencesProvider({ children }: { children: React.ReactNode }) {
@@ -344,11 +368,11 @@ export function PreferencesProvider({ children }: { children: React.ReactNode })
   const [currency, setCurrencyState] = useState<SupportedCurrency>("MAD");
 
   useEffect(() => {
-    const savedLocale = window.localStorage.getItem(localeKey);
-    const savedCurrency = window.localStorage.getItem(currencyKey);
+    const savedLocale = safeGetStorage(localeKey);
+    const savedCurrency = safeGetStorage(currencyKey);
     const defaultCurrency = readCookie(currencyDefaultCookie);
     // Hydrate browser preferences after mount so SSR markup stays stable.
-    if (savedLocale === "ary") window.localStorage.setItem(localeKey, "ar");
+    if (savedLocale === "ary") safeSetStorage(localeKey, "ar");
     const nextLocale = savedLocale === "ary" ? "ar" : savedLocale;
     // eslint-disable-next-line react-hooks/set-state-in-effect
     if (isSupportedLocale(nextLocale)) setLocaleState(nextLocale);
@@ -364,17 +388,21 @@ export function PreferencesProvider({ children }: { children: React.ReactNode })
     currency,
     setLocale(nextLocale) {
       setLocaleState(nextLocale);
-      window.localStorage.setItem(localeKey, nextLocale);
-      document.documentElement.lang = nextLocale === "ar" ? "ar-MA" : nextLocale;
-      document.documentElement.dir = nextLocale === "ar" ? "rtl" : "ltr";
+      safeSetStorage(localeKey, nextLocale);
+      try {
+        document.documentElement.lang = nextLocale === "ar" ? "ar-MA" : nextLocale;
+        document.documentElement.dir = nextLocale === "ar" ? "rtl" : "ltr";
+      } catch {
+        // ignore
+      }
     },
     setCurrency(nextCurrency) {
       setCurrencyState(nextCurrency);
-      window.localStorage.setItem(currencyKey, nextCurrency);
+      safeSetStorage(currencyKey, nextCurrency);
       writeCookie(currencyKey, nextCurrency);
     },
     t(key) {
-      return translations[locale][key];
+      return translations[locale][key] || key;
     }
   }), [currency, locale]);
 

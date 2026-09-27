@@ -35,19 +35,24 @@ export default function CheckoutPage() {
       utmContent: new URLSearchParams(window.location.search).get("utm_content") || undefined,
       utmTerm: new URLSearchParams(window.location.search).get("utm_term") || undefined
     };
-    const response = await fetch("/api/checkout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
-    const data = await response.json();
-    setLoading(false);
-    if (!response.ok) {
+    try {
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const data = await response.json();
+      setLoading(false);
+      if (!response.ok) {
+        setError(data.error || t("orderFailed"));
+        return;
+      }
+      clear();
+      router.push(data.upsellUrl || `/order/${data.reference}`);
+    } catch {
+      setLoading(false);
       setError(t("orderFailed"));
-      return;
     }
-    clear();
-    router.push(data.upsellUrl || `/order/${data.reference}`);
   }
 
   return (

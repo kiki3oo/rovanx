@@ -5,6 +5,7 @@ import { ArrowRight, BadgeCheck, CheckCircle2, ShieldCheck } from "lucide-react"
 import { Money } from "@/components/store/money";
 import { LocalizedText } from "@/components/store/localized-text";
 import { SeedContent } from "@/components/store/seed-content";
+import { AddBundleButton } from "@/components/store/add-bundle-button";
 
 export const metadata = buildMetadata({
   title: "Bundles",
@@ -52,9 +53,17 @@ export default async function BundlesPage() {
                 <ShieldCheck size={16} className="mb-2 text-bronze-600" />
                 <LocalizedText id="bundleShippingText" />
               </div>
-              <Link href="/shop" className="btn btn-primary mt-5 w-full">
-                <LocalizedText id="composeOrder" />
-              </Link>
+              <AddBundleButton
+                products={bundle.items.map((item) => ({
+                  id: item.product.id,
+                  name: item.product.name,
+                  slug: item.product.slug,
+                  sku: item.product.sku,
+                  price: item.product.salePrice || item.product.regularPrice,
+                  regularPrice: item.product.regularPrice,
+                  quantity: item.quantity
+                }))}
+              />
             </article>
           ))}
         </div>
