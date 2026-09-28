@@ -51,8 +51,8 @@ export default async function HomePage() {
               ))}
             </div>
           </div>
-          <div className="dark-surface soft-glow grid min-h-[310px] place-items-center rounded-lg p-7 shadow-2xl shadow-black/20 md:min-h-[410px]">
-            <RovanxLogo className="h-[300px] w-[260px] sm:h-[350px] sm:w-[310px]" />
+          <div className="dark-surface soft-glow grid min-h-[310px] place-items-center rounded-2xl p-7 shadow-2xl shadow-black/30 md:min-h-[410px]">
+            <RovanxLogo className="h-[280px] w-auto sm:h-[360px]" tone="light" priority />
           </div>
         </div>
         <div className="conversion-strip mt-14">

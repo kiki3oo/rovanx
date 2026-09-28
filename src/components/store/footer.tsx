@@ -47,7 +47,7 @@ export async function Footer() {
     <footer className="bg-graphite-950 py-10 text-white">
       <div className="container grid gap-8 md:grid-cols-[1.2fr_2fr]">
         <div>
-          <RovanxLogo className="h-32 w-[190px]" tone="light" />
+          <RovanxLogo className="h-28 w-auto" tone="light" />
           <p className="sr-only">{store.name || "ROVANX"}</p>
           <p className="mt-2 max-w-sm text-sm text-white/68">
             {store.tagline && store.tagline !== "Men's Vitality & Wellness"

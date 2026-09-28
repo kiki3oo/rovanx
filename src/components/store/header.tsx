@@ -24,8 +24,8 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-black/10 bg-[#f5f0e7]/92 backdrop-blur-xl">
       <div className="container flex min-h-20 items-center justify-between gap-3 py-2 md:min-h-24">
-        <Link href="/" className="flex items-center rounded-md" aria-label="ROVANX home">
-          <RovanxLogo className="h-16 w-[122px] sm:h-[86px] sm:w-[172px]" />
+        <Link href="/" className="flex items-center py-1" aria-label="ROVANX home">
+          <RovanxLogo className="h-14 w-auto sm:h-[72px]" priority />
         </Link>
         <nav className="hidden items-center rounded-full border border-black/10 bg-white/72 px-2 py-2 text-sm font-bold shadow-sm md:flex">
           {nav.map(([key, href]) => (
