@@ -16,9 +16,7 @@ export function RovanxLogo({
   if (variant === "mark") {
     return (
       <Image
-        className={`object-contain transition-transform duration-200 ${
-          tone === "light" ? "drop-shadow-[0_4px_12px_rgba(255,255,255,0.12)]" : "drop-shadow-[0_4px_12px_rgba(0,0,0,0.15)]"
-        } ${className}`}
+        className={`object-contain transition-transform duration-200 drop-shadow-[0_4px_12px_rgba(0,0,0,0.2)] ${className}`}
         src="/brand/rovanx-mark.webp"
         alt="ROVANX Lion Emblem"
         width={360}
@@ -32,8 +30,8 @@ export function RovanxLogo({
     <Image
       className={`object-contain transition-transform duration-200 ${
         tone === "light"
-          ? "drop-shadow-[0_6px_20px_rgba(255,255,255,0.08)] brightness-105"
-          : "drop-shadow-[0_4px_16px_rgba(0,0,0,0.16)]"
+          ? "drop-shadow-[0_12px_32px_rgba(0,0,0,0.45)]"
+          : "drop-shadow-[0_4px_14px_rgba(0,0,0,0.14)]"
       } ${className}`}
       src="/brand/rovanx-logo.webp"
       alt="ROVANX Men's Vitality"
