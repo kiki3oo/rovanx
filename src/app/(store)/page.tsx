@@ -8,6 +8,7 @@ import { Money } from "@/components/store/money";
 import { LocalizedText } from "@/components/store/localized-text";
 import { SeedContent } from "@/components/store/seed-content";
 import { BLOG_POSTS } from "@/lib/blog-data";
+import { HomeBlogArticles } from "@/components/store/home-blog-articles";
 
 export const revalidate = 60;
 
@@ -174,15 +175,7 @@ export default async function HomePage() {
         <div className="container">
           <p className="badge mb-3"><LocalizedText id="education" /></p>
           <h2 className="mb-7 text-3xl font-black"><LocalizedText id="selectedArticles" /></h2>
-          <div className="grid gap-5 md:grid-cols-3">
-            {BLOG_POSTS.slice(0, 3).map((article) => (
-              <Link key={article.id} href={`/blog/${article.slug}`} className="surface-card group p-5 hover:border-bronze-500/45">
-                <span className="badge mb-3 border-bronze-500/20 bg-bronze-500/10 text-xs font-bold text-bronze-700">{article.categoryFr}</span>
-                <h3 className="font-black group-hover:text-bronze-600">{article.titleFr}</h3>
-                <p className="mt-2 text-sm text-black/65 line-clamp-3">{article.excerptFr}</p>
-              </Link>
-            ))}
-          </div>
+          <HomeBlogArticles posts={BLOG_POSTS.slice(0, 3)} />
         </div>
       </section>
 
