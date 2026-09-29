@@ -19,9 +19,12 @@ export const metadata = buildMetadata({
 });
 
 
+import { ensureCatalogSynced } from "@/lib/catalog-sync";
+
 export default async function HomePage() {
+  await ensureCatalogSynced().catch(() => {});
   const [featured, bundles] = await Promise.all([
-    prisma.product.findMany({ where: { active: true, featured: true }, take: 3, orderBy: { createdAt: "asc" } }).catch(() => []),
+    prisma.product.findMany({ where: { active: true, featured: true }, take: 12, orderBy: { createdAt: "asc" } }).catch(() => []),
     prisma.bundle.findMany({ where: { active: true }, take: 3, include: { items: { include: { product: true } } } }).catch(() => [])
   ]);
 

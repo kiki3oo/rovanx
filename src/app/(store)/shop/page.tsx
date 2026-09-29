@@ -10,12 +10,15 @@ export const metadata = buildMetadata({
   path: "/shop"
 });
 
+import { ensureCatalogSynced } from "@/lib/catalog-sync";
+
 export default async function ShopPage({
   searchParams
 }: {
   searchParams: Promise<{ category?: string; search?: string; sort?: string }>;
 }) {
   const params = await searchParams;
+  await ensureCatalogSynced().catch(() => {});
   const [categories, products] = await Promise.all([
     prisma.category.findMany({ where: { active: true }, orderBy: { name: "asc" } }).catch(() => []),
     prisma.product.findMany({
