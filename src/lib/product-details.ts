@@ -115,6 +115,48 @@ export const PRODUCT_DETAILS: Record<string, ProductDetailInfo> = {
       "Déconseillé aux personnes sous traitement antidiabétique sans avis médical. Ne pas dépasser la dose recommandée.",
     regulatoryInformation:
       "Certifié conforme aux normes BPF / GMP. Pureté et concentration en ginsénosides vérifiées en laboratoire."
+  },
+  "rovanx-control-oil": {
+    name: "ROVANX Control Oil",
+    badge: "Formule Contrôle & Retard Naturel",
+    tagline: "Sérum Naturel de Contrôle & d'Endurance Masculine",
+    shortDescription:
+      "Huile de massage naturelle et ciblée pour améliorer le contrôle intime et prolonger la durée du plaisir masculin. Formulée à base d'huiles végétales nobles et d'extraits botaniques actifs sans effet anesthésiant total.",
+    benefits: [
+      "Contrôle & Maîtrise : Aide à retarder l'éjaculation et prolonge significativement l'endurance intime.",
+      "Sensation Naturelle Intacte : Agit par apaisement ciblé sans engourdissement excessif ni perte de sensibilité.",
+      "100% Végétal & Pur : Synergie d'huile de clou de girofle, extrait de Panax Ginseng et huile d'amande douce.",
+      "Facile d'Utilisation : Flacon compte-gouttes précis de 30ml, absorption rapide et sans résidu gras désagréable."
+    ],
+    ingredients:
+      "Huile de clou de girofle (Syzygium aromaticum) titrée en eugénol naturel, extrait de Panax Ginseng rouge, huile d'amande douce vierge (Prunus amygdalus dulcis), huile essentielle de menthe douce, acétate de vitamine E (antioxydant). Sans parfum synthétique ni parabènes.",
+    usageInstructions:
+      "Appliquer 3 à 5 gouttes sur la zone souhaitée 15 à 20 minutes avant le rapport intime. Masser doucement en mouvements circulaires jusqu'à pénétration. Rincer à l'eau claire si nécessaire.",
+    warnings:
+      "Usage externe exclusivement. Effectuer un test cutané sur l'avant-bras avant la première utilisation. Ne pas appliquer sur une peau lésée ou irritée. Tenir hors de portée des enfants.",
+    regulatoryInformation:
+      "Formulation cosmétique élaborée selon les normes de sécurité dermatologique BPF. Ingrédients 100% naturels et testés en laboratoire."
+  },
+  "rovanx-vital-protein": {
+    name: "ROVANX Vital Protein 250g",
+    badge: "Complexe 6-en-1 Puissance & Énergie",
+    tagline: "Protéine Fonctionnelle Haute Performance Masculine",
+    shortDescription:
+      "Complément protéiné premium combinant isolat de Whey de haute digestibilité, L-Arginine activatrice d'oxyde nitrique, extraits concentrés de Maca noire 10:1 et Panax Ginseng. Développé pour nourrir la masse musculaire, décupler l'énergie quotidienne et stimuler la circulation sanguine.",
+    benefits: [
+      "Circulation & Puissance : La L-Arginine pure stimule la production d'oxyde nitrique pour un flux sanguin et une vigueur optimaux.",
+      "Masse Musculaire & Force : Riche en acides aminés essentiels issus de la Whey protéine pour soutenir la tonicité physique.",
+      "Vitalité Globale : La Maca 10:1 et le Ginseng rouge éliminent l'épuisement physique et renforcent la résistance à l'effort.",
+      "Formule Saine : 0 sucre ajouté, délicatement édulcoré à la stévia naturelle, saveur chocolat douce et facile à digérer."
+    ],
+    ingredients:
+      "Isolat et concentré de protéines de lactosérum (Whey Protein), L-Arginine Base pure 1500mg, extrait sec de racine de Maca 10:1 (Lepidium meyenii) 500mg, extrait sec de Panax Ginseng rouge 4% 250mg, Zinc (bisglycinate chélaté) 10mg, Vitamine B12 2.5µg, gomme d'acacia naturelle, arôme naturel, édulcorant naturel (glycosides de stéviol / Stévia).",
+    usageInstructions:
+      "Mélanger 1 cuillère doseuse (10g) dans 200ml d'eau fraîche, de lait ou de smoothie. Consommer une fois par jour le matin ou 30 minutes avant l'effort physique ou l'activité intime.",
+    warnings:
+      "Complément alimentaire destiné à l'adulte. Ne pas dépasser la dose recommandée. Déconseillé aux personnes sous traitement médical lourd sans avis préalable. Conserver au sec à l'abri de la chaleur.",
+    regulatoryInformation:
+      "Conforme aux normes de fabrication pharmaceutique BPF / GMP. Qualité et pureté nutritionnelle garanties sans substances interdites."
   }
 };
 

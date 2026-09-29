@@ -55,6 +55,8 @@ async function main() {
     ["ROVANX Prostate", "rovanx-prostate", "ROV-PRO-01", ProductRole.HERO, "prostate", 299, null, false, true],
     ["ROVANX Maca Max 60", "rovanx-maca-max", "ROV-MAC-01", ProductRole.HERO, "energy", 299, null, false, true],
     ["ROVANX Ginseng 30", "rovanx-ginseng", "ROV-GIN-01", ProductRole.UPSELL, "energy", 249, null, false, true],
+    ["ROVANX Control Oil", "rovanx-control-oil", "ROV-OIL-01", ProductRole.HERO, "men-s-wellness", 249, 199, false, true],
+    ["ROVANX Vital Protein 250g", "rovanx-vital-protein", "ROV-PROT-01", ProductRole.HERO, "supplements", 399, 299, false, true],
     ["ROVANX Daily Men", "rovanx-daily-men", "ROV-DAY-01", ProductRole.CROSS_SELL, "men-s-wellness", 199, null, false, false],
     ["ROVANX Balance", "rovanx-balance", "ROV-BAL-01", ProductRole.CROSS_SELL, "balance", 229, 199, false, false],
     ["ROVANX Magnesium", "rovanx-magnesium", "ROV-MAG-01", ProductRole.UPSELL, "supplements", 189, 169, false, false],
@@ -66,7 +68,9 @@ async function main() {
     "rovanx-vitality-30",
     "rovanx-prostate",
     "rovanx-maca-max",
-    "rovanx-ginseng"
+    "rovanx-ginseng",
+    "rovanx-control-oil",
+    "rovanx-vital-protein"
   ]);
 
   for (const [name, slug, sku, role, categorySlug, regularPrice, salePrice, hero, featured] of products) {
@@ -176,16 +180,16 @@ async function main() {
     }
   }
 
-  const catalogRolloutKey = "catalog-five-products-2026-09-25";
+  const catalogRolloutKey = "catalog-seven-products-2026-09-30";
   if (!(await prisma.siteSetting.findUnique({ where: { key: catalogRolloutKey } }))) {
     await prisma.$transaction(async (tx) => {
-      for (const [name, slug, , , , regularPrice, , hero, featured] of products) {
+      for (const [name, slug, , , , regularPrice, salePrice, hero, featured] of products) {
         await tx.product.update({
           where: { slug },
           data: {
             name,
             regularPrice,
-            salePrice: null,
+            salePrice,
             active: launchSlugs.has(slug),
             hero,
             featured,
