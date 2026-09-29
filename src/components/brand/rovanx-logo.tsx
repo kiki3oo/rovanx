@@ -22,6 +22,7 @@ export function RovanxLogo({
         width={360}
         height={320}
         priority={priority}
+        unoptimized
       />
     );
   }
@@ -38,6 +39,7 @@ export function RovanxLogo({
       width={422}
       height={512}
       priority={priority}
+      unoptimized
     />
   );
 }
