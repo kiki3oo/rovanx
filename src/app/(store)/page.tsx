@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, BadgeCheck, PhoneCall, ShieldCheck, Sparkles, Star, Truck } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { ProductCard } from "@/components/store/product-card";
@@ -31,6 +32,18 @@ export default async function HomePage() {
   return (
     <>
       <section className="brand-hero relative overflow-hidden py-12 text-white md:py-20">
+        <div className="absolute inset-0 -z-10 pointer-events-none select-none">
+          <Image
+            src="/hero/rovanx-hero-bg.webp"
+            alt="ROVANX Men's Vitality & Wellness"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center opacity-30"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#12141a] via-[#12141a]/60 to-[#12141a]/85" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#12141a]/92 via-transparent to-[#12141a]/88" />
+        </div>
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-bronze-500/70 to-transparent" />
         <div className="container grid items-center gap-10 md:grid-cols-[1.02fr_0.98fr]">
           <div className="grid gap-6">
