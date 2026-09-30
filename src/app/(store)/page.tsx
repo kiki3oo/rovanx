@@ -34,13 +34,13 @@ export default async function HomePage() {
       <section className="brand-hero relative overflow-hidden py-12 text-white md:py-20">
         <div className="absolute inset-0 z-0 pointer-events-none select-none overflow-hidden">
           <Image
-            src="/hero/rovanx-hero-couple.webp"
+            src="/hero/rovanx-hero-sensual.webp"
             alt="ROVANX Men's Vitality & Wellness"
             fill
             priority
             unoptimized
             sizes="100vw"
-            className="object-cover object-center opacity-85"
+            className="object-cover object-center opacity-90"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#12141a] via-transparent to-[#12141a]/60" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#12141a]/70 via-transparent to-[#12141a]/70" />
