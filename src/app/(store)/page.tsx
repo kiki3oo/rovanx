@@ -34,7 +34,7 @@ export default async function HomePage() {
       <section className="brand-hero relative overflow-hidden py-12 text-white md:py-20">
         <div className="absolute inset-0 -z-10 pointer-events-none select-none">
           <Image
-            src="/hero/rovanx-hero-bg.webp"
+            src="/hero/rovanx-hero-couple.webp"
             alt="ROVANX Men's Vitality & Wellness"
             fill
             priority
