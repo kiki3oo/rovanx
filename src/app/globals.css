@@ -116,9 +116,7 @@ a {
 }
 
 .brand-hero {
-  background:
-    linear-gradient(115deg, rgba(18, 20, 26, 0.98) 0%, rgba(18, 20, 26, 0.94) 48%, rgba(53, 23, 35, 0.98) 100%),
-    #171a21;
+  background-color: #12141a;
 }
 
 .gold-text {

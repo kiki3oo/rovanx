@@ -32,20 +32,21 @@ export default async function HomePage() {
   return (
     <>
       <section className="brand-hero relative overflow-hidden py-12 text-white md:py-20">
-        <div className="absolute inset-0 -z-10 pointer-events-none select-none">
+        <div className="absolute inset-0 z-0 pointer-events-none select-none overflow-hidden">
           <Image
             src="/hero/rovanx-hero-couple.webp"
             alt="ROVANX Men's Vitality & Wellness"
             fill
             priority
+            unoptimized
             sizes="100vw"
-            className="object-cover object-center opacity-45"
+            className="object-cover object-center opacity-85"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#12141a] via-transparent to-[#12141a]/70" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#12141a]/75 via-transparent to-[#12141a]/75" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#12141a] via-transparent to-[#12141a]/60" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#12141a]/70 via-transparent to-[#12141a]/70" />
         </div>
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-bronze-500/70 to-transparent" />
-        <div className="container grid items-center gap-10 md:grid-cols-[1.02fr_0.98fr]">
+        <div className="container relative z-10 grid items-center gap-10 md:grid-cols-[1.02fr_0.98fr]">
           <div className="grid gap-6">
             <span className="badge w-fit border-white/10 bg-white/10 text-bronze-500"><LocalizedText id="heroBadge" /></span>
             <h1 className="max-w-3xl text-4xl font-black leading-[1.04] sm:text-5xl md:text-6xl">
@@ -72,7 +73,7 @@ export default async function HomePage() {
             <RovanxLogo className="h-[280px] w-auto sm:h-[360px]" tone="light" priority />
           </div>
         </div>
-        <div className="conversion-strip mt-14">
+        <div className="conversion-strip relative z-10 mt-14">
           <div className="container grid gap-3 py-4 text-sm text-white/75 md:grid-cols-4">
             {[
               [ShieldCheck, "codSecure", "codSecureText"],
