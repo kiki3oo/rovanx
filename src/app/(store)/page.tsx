@@ -39,10 +39,10 @@ export default async function HomePage() {
             fill
             priority
             sizes="100vw"
-            className="object-cover object-center opacity-30"
+            className="object-cover object-center opacity-45"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#12141a] via-[#12141a]/60 to-[#12141a]/85" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#12141a]/92 via-transparent to-[#12141a]/88" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#12141a] via-transparent to-[#12141a]/70" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#12141a]/75 via-transparent to-[#12141a]/75" />
         </div>
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-bronze-500/70 to-transparent" />
         <div className="container grid items-center gap-10 md:grid-cols-[1.02fr_0.98fr]">
