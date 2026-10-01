@@ -1,16 +1,16 @@
+import Image from "next/image";
 import { prisma } from "@/lib/db";
 import { ProductCard } from "@/components/store/product-card";
 import { buildMetadata } from "@/lib/seo";
 import { LocalizedText } from "@/components/store/localized-text";
 import { ShopFilters } from "@/components/store/shop-filters";
+import { ensureCatalogSynced } from "@/lib/catalog-sync";
 
 export const metadata = buildMetadata({
   title: "Shop",
-  description: "Tous les produits ROVANX.",
+  description: "Tous les produits ROVANX pour la vitalité et le bien-être masculin.",
   path: "/shop"
 });
-
-import { ensureCatalogSynced } from "@/lib/catalog-sync";
 
 export default async function ShopPage({
   searchParams
@@ -44,26 +44,50 @@ export default async function ShopPage({
   ]);
 
   return (
-    <section className="section">
-      <div className="container">
-        <div className="mb-8 grid gap-5 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+    <div className="relative min-h-[85vh] bg-[#12141a] text-white overflow-hidden py-12 md:py-16">
+      {/* Background Atmosphere */}
+      <div className="absolute inset-0 z-0 pointer-events-none select-none overflow-hidden">
+        <Image
+          src="/hero/rovanx-shop-bg-wide.webp"
+          alt="ROVANX Shop Experience"
+          fill
+          priority
+          unoptimized
+          sizes="100vw"
+          className="object-cover object-top opacity-55 md:opacity-70"
+        />
+        {/* Soft edge and depth gradients for maximum contrast & luxury readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#12141a] via-[#12141a]/65 to-[#12141a]/45" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#12141a]/85 via-transparent to-[#12141a]/85" />
+      </div>
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-bronze-500/70 to-transparent" />
+
+      <div className="container relative z-10">
+        <div className="mb-10 grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
           <div>
-            <p className="badge mb-3"><LocalizedText id="shop" /></p>
-            <h1 className="text-4xl font-black"><LocalizedText id="shopTitle" /></h1>
-            <LocalizedText id="shopIntro" as="p" className="mt-3 text-black/62" />
+            <span className="badge mb-3 border-white/10 bg-white/10 text-bronze-500">
+              <LocalizedText id="shop" />
+            </span>
+            <h1 className="text-4xl font-black leading-tight text-white sm:text-5xl">
+              <LocalizedText id="shopTitle" />
+            </h1>
+            <LocalizedText id="shopIntro" as="p" className="mt-3 max-w-xl text-lg text-white/75" />
           </div>
           <ShopFilters categories={categories} search={params.search || ""} category={params.category || ""} sort={params.sort || "featured"} />
         </div>
+
         {products.length ? (
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {products.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
         ) : (
-          <div className="surface-card p-8 text-center"><LocalizedText id="noProducts" /></div>
+          <div className="dark-surface p-12 text-center text-white/80 rounded-2xl border border-white/10">
+            <LocalizedText id="noProducts" />
+          </div>
         )}
       </div>
-    </section>
+    </div>
   );
 }
