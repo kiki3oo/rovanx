@@ -93,17 +93,33 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="section-tight bg-white">
-        <div className="container grid gap-4 md:grid-cols-3">
+      <section className="section-tight border-b border-white/10 bg-[#12141a] text-white">
+        <div className="container grid gap-5 md:grid-cols-3">
           {[
             ["1", "choose", "chooseText"],
             ["2", "confirm", "confirmText"],
             ["3", "receive", "receiveText"]
           ].map(([step, title, text]) => (
-            <div key={step} className="premium-panel grid gap-3 p-5">
-              <span className="grid h-9 w-9 place-items-center rounded-full bg-graphite-950 text-sm font-black text-bronze-500">{step}</span>
-              <h2 className="text-xl font-black"><LocalizedText id={title as "choose" | "confirm" | "receive"} /></h2>
-              <LocalizedText id={text as "chooseText" | "confirmText" | "receiveText"} as="p" className="text-sm leading-6 text-black/62" />
+            <div
+              key={step}
+              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-bronze-500/50 hover:bg-white/[0.07] hover:shadow-xl hover:shadow-black/40"
+            >
+              <div className="mb-4 flex items-center justify-between">
+                <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-bronze-400 to-bronze-600 text-sm font-black text-white shadow-lg shadow-bronze-600/30">
+                  {step}
+                </span>
+                <span className="text-xs font-bold uppercase tracking-wider text-bronze-500/70">
+                  ROVANX 0{step}
+                </span>
+              </div>
+              <h2 className="text-xl font-black text-white transition-colors group-hover:text-bronze-400">
+                <LocalizedText id={title as "choose" | "confirm" | "receive"} />
+              </h2>
+              <LocalizedText
+                id={text as "chooseText" | "confirmText" | "receiveText"}
+                as="p"
+                className="mt-2 text-sm leading-6 text-white/72"
+              />
             </div>
           ))}
         </div>
