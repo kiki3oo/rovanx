@@ -17,11 +17,11 @@ export default async function LegalPage({ params }: { params: Promise<{ slug: st
             priority
             unoptimized
             sizes="100vw"
-            className="object-cover object-top opacity-55 md:opacity-70"
+            className="object-cover object-top opacity-80 md:opacity-90"
           />
           {/* Depth gradients to blend into dark theme and keep reading comfortable */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#12141a] via-[#12141a]/60 to-[#12141a]/45" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#12141a]/85 via-transparent to-[#12141a]/85" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#12141a] via-[#12141a]/40 to-[#12141a]/30" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#12141a]/70 via-transparent to-[#12141a]/70" />
         </div>
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-bronze-500/70 to-transparent" />
 
