@@ -5,14 +5,14 @@ import { ArrowLeft, ArrowRight, ShieldCheck } from "lucide-react";
 import { usePreferences } from "@/components/store/preferences-provider";
 import { legalContent } from "@/lib/legal-content";
 
-export function LegalView({ slug }: { slug: string }) {
+export function LegalView({ slug, isDarkTheme }: { slug: string; isDarkTheme?: boolean }) {
   const { locale } = usePreferences();
   const isArabic = locale === "ar";
   const section = legalContent[slug];
 
   if (!section) {
     return (
-      <div className="container max-w-3xl rounded-xl border border-black/10 bg-white p-8">
+      <div className={`container max-w-3xl rounded-xl border p-8 ${isDarkTheme ? "border-white/10 bg-white/95 backdrop-blur-md shadow-2xl" : "border-black/10 bg-white"}`}>
         <h1 className="text-3xl font-black">{isArabic ? "صفحة قيد الإعداد" : "Page en cours de rédaction"}</h1>
         <p className="mt-3 text-black/65">
           {isArabic ? "المحتوى سيكون متوفراً قريباً." : "Ce contenu sera disponible prochainement."}
@@ -29,7 +29,7 @@ export function LegalView({ slug }: { slug: string }) {
   const content = isArabic ? section.contentAr : section.contentFr;
 
   return (
-    <article className="container max-w-3xl rounded-2xl border border-black/10 bg-white p-6 shadow-sm sm:p-10">
+    <article className={`container max-w-3xl rounded-2xl border p-6 sm:p-10 ${isDarkTheme ? "border-white/20 bg-white/95 backdrop-blur-md shadow-2xl shadow-black/50" : "border-black/10 bg-white shadow-sm"}`}>
       <div className="mb-6 flex items-center justify-between">
         <span className="badge flex items-center gap-1.5 border-bronze-500/20 bg-bronze-500/10 text-bronze-800">
           <ShieldCheck size={15} />
