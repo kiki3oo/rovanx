@@ -108,10 +108,11 @@ export default async function HomePage() {
             priority
             unoptimized
             sizes="100vw"
-            className="object-cover object-center opacity-90 md:opacity-95"
+            className="object-cover object-center opacity-40 md:opacity-50"
           />
-          {/* Subtle vertical depth gradient for text contrast - completely clear on the sides */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#12141a]/55 via-transparent to-[#12141a]/65" />
+          {/* Ambient luxury dark overlays to keep it truly in the background */}
+          <div className="absolute inset-0 bg-[#12141a]/60" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#12141a] via-transparent to-[#12141a]" />
         </div>
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-bronze-500/70 to-transparent" />
 
