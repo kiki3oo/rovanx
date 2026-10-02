@@ -162,43 +162,72 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="section bg-white">
+      <section className="section border-b border-white/10 bg-[#12141a] text-white">
         <div className="container grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
           <div>
-            <p className="badge mb-3"><LocalizedText id="fastDecision" /></p>
-            <h2 className="text-3xl font-black"><LocalizedText id="categories" /></h2>
-            <LocalizedText id="categoryIntro" as="p" className="mt-3 text-black/62" />
+            <p className="badge mb-3 border-white/10 bg-white/10 text-bronze-400"><LocalizedText id="fastDecision" /></p>
+            <h2 className="text-3xl font-black text-white sm:text-4xl"><LocalizedText id="categories" /></h2>
+            <LocalizedText id="categoryIntro" as="p" className="mt-3 text-white/70" />
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {[
               ["goalVitality", "Vitality"], ["goalWellness", "Men's wellness"], ["goalProstate", "Prostate support"],
               ["goalEnergy", "Energy"], ["goalBalance", "Balance"], ["goalSleep", "Sleep"]
             ].map(([key, goal]) => (
-              <Link key={key} href={`/shop?search=${encodeURIComponent(goal)}`} className="surface-card p-5 font-black hover:border-bronze-500">
-                <Sparkles className="mb-4 text-bronze-600" size={20} />
-                <LocalizedText id={key as "goalVitality" | "goalWellness" | "goalProstate" | "goalEnergy" | "goalBalance" | "goalSleep"} />
+              <Link
+                key={key}
+                href={`/shop?search=${encodeURIComponent(goal)}`}
+                className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-5 font-black text-white backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-bronze-500/50 hover:bg-white/[0.08] hover:shadow-xl hover:shadow-black/40"
+              >
+                <div className="mb-4 flex items-center justify-between">
+                  <span className="grid h-10 w-10 place-items-center rounded-xl border border-bronze-500/25 bg-bronze-500/15 text-bronze-400 transition-colors group-hover:bg-bronze-500/25 group-hover:text-bronze-300">
+                    <Sparkles size={20} />
+                  </span>
+                  <ArrowRight size={16} className="text-white/40 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-bronze-400" />
+                </div>
+                <span className="text-base font-black text-white transition-colors group-hover:text-bronze-300">
+                  <LocalizedText id={key as "goalVitality" | "goalWellness" | "goalProstate" | "goalEnergy" | "goalBalance" | "goalSleep"} />
+                </span>
               </Link>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="section">
-        <div className="container">
-          <p className="badge mb-3"><LocalizedText id="bundles" /></p>
-          <h2 className="mb-2 text-3xl font-black"><LocalizedText id="bundlesTitle" /></h2>
-          <LocalizedText id="bundlesIntro" as="p" className="mb-7 max-w-2xl text-black/62" />
-          <div className="grid gap-5 md:grid-cols-3">
+      <section className="section relative overflow-hidden border-b border-white/10 bg-[#12141a] text-white">
+        <div className="pointer-events-none absolute -top-40 right-1/4 h-96 w-96 rounded-full bg-bronze-500/10 blur-3xl" />
+        <div className="container relative z-10">
+          <p className="badge mb-3 border-white/10 bg-white/10 text-bronze-400"><LocalizedText id="bundles" /></p>
+          <h2 className="mb-2 text-3xl font-black text-white sm:text-4xl"><LocalizedText id="bundlesTitle" /></h2>
+          <LocalizedText id="bundlesIntro" as="p" className="mb-8 max-w-2xl text-white/70" />
+          <div className="grid gap-6 md:grid-cols-3">
             {bundles.map((bundle) => (
-              <article key={bundle.id} className="premium-panel p-5">
-                <BadgeCheck className="mb-4 text-bronze-600" />
-                <h3 className="text-xl font-black">{bundle.name}</h3>
-                <p className="mt-2 text-sm text-black/65"><SeedContent value={bundle.description} /></p>
-                <p className="mt-4 text-2xl font-black"><Money value={bundle.bundlePrice} /></p>
-                <p className="text-sm text-black/50 line-through"><Money value={bundle.regularCombinedPrice} /></p>
-                <Link href="/bundles" className="btn btn-primary mt-5">
-                  <LocalizedText id="heroBundles" />
-                </Link>
+              <article
+                key={bundle.id}
+                className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-6 text-white backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-bronze-500/50 hover:bg-white/[0.07] hover:shadow-2xl hover:shadow-black/50"
+              >
+                <div>
+                  <div className="mb-5 flex items-center justify-between">
+                    <span className="grid h-12 w-12 place-items-center rounded-2xl border border-bronze-500/30 bg-gradient-to-br from-bronze-400/20 to-bronze-600/30 text-bronze-400 shadow-md">
+                      <BadgeCheck size={26} />
+                    </span>
+                    <span className="badge border-bronze-500/30 bg-bronze-500/15 text-xs font-bold text-bronze-300 uppercase tracking-wider">
+                      Pack Avantage
+                    </span>
+                  </div>
+                  <h3 className="text-2xl font-black text-white transition-colors group-hover:text-bronze-400">{bundle.name}</h3>
+                  <div className="mt-3 text-sm leading-6 text-white/70 line-clamp-3"><SeedContent value={bundle.description} /></div>
+                </div>
+
+                <div className="mt-6 border-t border-white/10 pt-5">
+                  <div className="mb-4 flex items-end justify-between gap-3">
+                    <strong className="text-2xl font-black text-white"><Money value={bundle.bundlePrice} /></strong>
+                    <span className="text-sm text-white/50 line-through"><Money value={bundle.regularCombinedPrice} /></span>
+                  </div>
+                  <Link href="/bundles" className="btn btn-primary flex w-full items-center justify-center gap-2">
+                    <LocalizedText id="heroBundles" /> <ArrowRight size={17} />
+                  </Link>
+                </div>
               </article>
             ))}
           </div>
