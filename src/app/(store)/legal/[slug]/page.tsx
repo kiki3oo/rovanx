@@ -45,16 +45,16 @@ export default async function LegalPage({ params }: { params: Promise<{ slug: st
             priority
             unoptimized
             sizes="100vw"
-            className="object-cover object-top opacity-55 md:opacity-70"
+            className="object-cover object-[center_15%] md:object-[center_20%] opacity-90 md:opacity-95"
           />
-          {/* Depth gradients for optimal text contrast and dark continuity */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#12141a] via-[#12141a]/55 to-[#12141a]/45" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#12141a]/75 via-transparent to-[#12141a]/75" />
+          {/* Gentle cinematic lighting so the face and photo are clearly visible */}
+          <div className="absolute inset-0 bg-black/35" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#12141a] via-transparent to-[#12141a]/30" />
         </div>
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-bronze-500/70 to-transparent" />
 
         <div className="container relative z-10">
-          <LegalView slug="about" isDarkTheme={true} />
+          <LegalView slug="about" isDarkTheme={true} isTransparent={true} />
         </div>
       </div>
     );
