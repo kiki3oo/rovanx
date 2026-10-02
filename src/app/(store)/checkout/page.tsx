@@ -56,83 +56,102 @@ export default function CheckoutPage() {
   }
 
   return (
-    <section className="section">
-      <div className="container">
-        <p className="badge mb-3">{t("checkoutBadge")}</p>
+    <section className="relative min-h-[85vh] bg-[#12141a] text-white overflow-hidden py-12 md:py-16">
+      <div className="pointer-events-none absolute -top-40 right-1/4 h-96 w-96 rounded-full bg-bronze-500/10 blur-3xl" />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-bronze-500/70 to-transparent" />
+      <div className="container relative z-10">
+        <p className="badge mb-3 border-white/10 bg-white/10 text-bronze-400">{t("checkoutBadge")}</p>
         <div className="mb-8 max-w-3xl">
-          <h1 className="text-4xl font-black">{t("checkoutTitle")}</h1>
-          <p className="mt-3 text-black/62">{t("checkoutIntro")}</p>
+          <h1 className="text-4xl font-black text-white sm:text-5xl">{t("checkoutTitle")}</h1>
+          <p className="mt-3 text-white/75">{t("checkoutIntro")}</p>
         </div>
         {lines.length ? (
           <div className="grid gap-6 lg:grid-cols-[1fr_380px]">
-            <form action={submit} className="surface-card grid gap-4 p-5">
-              <div className="grid gap-3 rounded-md bg-bronze-500/10 p-4 text-sm text-black/70 sm:grid-cols-3">
+            <form action={submit} className="grid gap-5 rounded-2xl border border-white/10 bg-white/[0.04] p-6 text-white backdrop-blur-md shadow-2xl sm:p-8">
+              <div className="grid gap-3 rounded-xl border border-bronze-500/30 bg-bronze-500/10 p-4 text-sm text-bronze-300 sm:grid-cols-3">
                 {[
                   [LockKeyhole, t("protectedData")],
                   [PhoneCall, t("callConfirm")],
                   [Truck, t("shipAfterValidation")]
                 ].map(([Icon, text]) => (
                   <span key={String(text)} className="flex items-center gap-2 font-bold">
-                    <Icon size={16} className="text-bronze-600" />
+                    <Icon size={16} className="text-bronze-400" />
                     {text as string}
                   </span>
                 ))}
               </div>
-              <label className="field">
+              <label className="field text-sm font-bold text-white/90">
                 <span>{t("fullName")}</span>
-                <input className="input" name="fullName" required />
+                <input
+                  className="rounded-xl border border-white/15 bg-white/[0.05] p-3 text-white placeholder:text-white/35 backdrop-blur-sm focus:border-bronze-400 focus:outline-none"
+                  name="fullName"
+                  required
+                />
               </label>
-              <label className="field">
+              <label className="field text-sm font-bold text-white/90">
                 <span>{t("phone")}</span>
-                <input className="input" name="phone" required inputMode="tel" />
+                <input
+                  className="rounded-xl border border-white/15 bg-white/[0.05] p-3 text-white placeholder:text-white/35 backdrop-blur-sm focus:border-bronze-400 focus:outline-none"
+                  name="phone"
+                  required
+                  inputMode="tel"
+                />
               </label>
-              <label className="field">
+              <label className="field text-sm font-bold text-white/90">
                 <span>{locale === "ar" ? "العنوان أو المدينة" : "Adresse ou Ville de livraison"}</span>
                 <textarea
-                  className="textarea"
+                  className="min-h-[100px] rounded-xl border border-white/15 bg-white/[0.05] p-3 text-white placeholder:text-white/35 backdrop-blur-sm focus:border-bronze-400 focus:outline-none"
                   name="address"
                   required
                   placeholder={locale === "ar" ? "اكتب عنوانك أو مدينتك وحيك هنا..." : "Ex: Casablanca, Quartier Maârif..."}
                 />
               </label>
-              <label className="field">
+              <label className="field text-sm font-bold text-white/90">
                 <span>{t("addressDetails")}</span>
-                <input className="input" name="addressDetails" />
+                <input
+                  className="rounded-xl border border-white/15 bg-white/[0.05] p-3 text-white placeholder:text-white/35 backdrop-blur-sm focus:border-bronze-400 focus:outline-none"
+                  name="addressDetails"
+                />
               </label>
-              <label className="field">
+              <label className="field text-sm font-bold text-white/90">
                 <span>{t("notes")}</span>
-                <textarea className="textarea" name="notes" />
+                <textarea
+                  className="min-h-[80px] rounded-xl border border-white/15 bg-white/[0.05] p-3 text-white placeholder:text-white/35 backdrop-blur-sm focus:border-bronze-400 focus:outline-none"
+                  name="notes"
+                />
               </label>
-              {error ? <p className="rounded-md bg-red-50 p-3 text-sm text-red-700">{error}</p> : null}
-              <button className="btn btn-primary" disabled={loading}>
+              {error ? <p className="rounded-xl border border-red-500/30 bg-red-500/15 p-3 text-sm font-bold text-red-300">{error}</p> : null}
+              <button className="btn btn-primary mt-2 w-full py-4 text-base font-bold shadow-lg" disabled={loading}>
                 {loading ? t("creating") : t("confirmOrder")}
               </button>
             </form>
-            <aside className="premium-panel h-fit p-5">
-              <h2 className="text-xl font-black">{t("summary")}</h2>
+            <aside className="h-fit rounded-2xl border border-white/10 bg-white/[0.04] p-6 text-white backdrop-blur-md shadow-2xl">
+              <h2 className="text-xl font-black text-white">{t("summary")}</h2>
               <div className="mt-4 grid gap-3">
                 {lines.map((line) => (
-                  <div key={line.product.id} className="flex justify-between gap-4 text-sm">
+                  <div key={line.product.id} className="flex justify-between gap-4 text-sm text-white/85">
                     <span>
                       {line.product.name} x {line.quantity}
                     </span>
-                    <strong><Money value={line.product.price * line.quantity} /></strong>
+                    <strong className="text-white"><Money value={line.product.price * line.quantity} /></strong>
                   </div>
                 ))}
               </div>
-              <div className="mt-4 flex justify-between border-t border-black/10 pt-4">
-                <span>{t("totalCod")}</span>
-                <strong><Money value={subtotal} /></strong>
+              <div className="mt-5 flex justify-between border-t border-white/10 pt-4">
+                <span className="text-white/80">{t("totalCod")}</span>
+                <strong className="text-2xl font-black text-white"><Money value={subtotal} /></strong>
               </div>
-              <div className="mt-5 grid gap-3 text-sm text-black/65">
-                <span className="flex items-center gap-2"><ShieldCheck size={16} className="text-bronze-600" /> {t("noOnlinePayment")}</span>
-                <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-bronze-600" /> {t("callBeforePrep")}</span>
-                <span className="flex items-center gap-2"><Truck size={16} className="text-bronze-600" /> {t("deliveryByAvailability")}</span>
+              <div className="mt-6 grid gap-3 text-sm text-white/70">
+                <span className="flex items-center gap-2"><ShieldCheck size={16} className="text-bronze-400" /> {t("noOnlinePayment")}</span>
+                <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-bronze-400" /> {t("callBeforePrep")}</span>
+                <span className="flex items-center gap-2"><Truck size={16} className="text-bronze-400" /> {t("deliveryByAvailability")}</span>
               </div>
             </aside>
           </div>
         ) : (
-          <div className="premium-panel p-8">{t("addProductBeforeCheckout")}</div>
+          <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-10 text-center text-white backdrop-blur-md">
+            <p className="text-lg text-white/75">{t("addProductBeforeCheckout")}</p>
+          </div>
         )}
       </div>
     </section>
