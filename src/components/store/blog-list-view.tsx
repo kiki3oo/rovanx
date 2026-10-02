@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, BookOpen, Clock, Search, Sparkles } from "lucide-react";
+import Image from "next/image";
+import { ArrowRight, BookOpen, Clock, Search } from "lucide-react";
 import { usePreferences } from "@/components/store/preferences-provider";
 import type { BlogPost } from "@/lib/blog-data";
 
@@ -25,7 +26,23 @@ export function BlogListView({ posts }: BlogListViewProps) {
 
   return (
     <section className="relative min-h-[85vh] bg-[#12141a] text-white overflow-hidden py-12 md:py-16">
-      <div className="pointer-events-none absolute -top-40 right-1/4 h-96 w-96 rounded-full bg-bronze-500/10 blur-3xl" />
+      {/* Background Atmosphere */}
+      <div className="absolute inset-0 z-0 pointer-events-none select-none overflow-hidden">
+        <Image
+          src="/hero/rovanx-blog-bg.webp"
+          alt="ROVANX Blog & Conseils"
+          fill
+          priority
+          unoptimized
+          sizes="100vw"
+          className="object-cover object-top opacity-55 md:opacity-70"
+        />
+        {/* Subtle depth gradients for readability & dark continuity */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#12141a] via-[#12141a]/60 to-[#12141a]/45" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#12141a]/80 via-transparent to-[#12141a]/80" />
+      </div>
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-bronze-500/70 to-transparent" />
+
       <div className="container relative z-10">
         <div className="mb-10 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
           <div>
