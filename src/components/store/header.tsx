@@ -44,7 +44,7 @@ export function Header() {
           </div>
           <Link
             href="/cart"
-            className="flex h-10 items-center gap-2 rounded-lg border border-[#8c162c]/40 bg-gradient-to-b from-[#3d0912] to-[#24060b] px-3.5 text-white shadow-md transition-all hover:border-[#a81c37] hover:bg-[#500c19]"
+            className="flex h-10 items-center gap-2 rounded-lg border border-[#991b31]/60 bg-gradient-to-b from-[#5a0d1c] via-[#480a16] to-[#33070f] px-3.5 text-white shadow-md transition-all hover:border-[#c22240] hover:from-[#6e1022] hover:to-[#420914]"
             aria-label={t("cart")}
           >
             <ShoppingBag size={18} className="text-bronze-300" />
@@ -53,7 +53,7 @@ export function Header() {
             </span>
           </Link>
           <button
-            className="flex h-10 w-10 items-center justify-center rounded-lg border border-[#8c162c]/40 bg-gradient-to-b from-[#3d0912] to-[#24060b] text-white shadow-md transition-all hover:border-[#a81c37] hover:bg-[#500c19] md:hidden"
+            className="flex h-10 w-10 items-center justify-center rounded-lg border border-[#991b31]/60 bg-gradient-to-b from-[#5a0d1c] via-[#480a16] to-[#33070f] text-white shadow-md transition-all hover:border-[#c22240] hover:from-[#6e1022] hover:to-[#420914] md:hidden"
             onClick={() => setOpen(!open)}
             aria-label={t("categories")}
           >
@@ -63,7 +63,7 @@ export function Header() {
       </div>
       {open ? (
         <nav className="border-t border-[#5e0d1b]/40 bg-[#170306]/98 px-4 pb-5 pt-3 backdrop-blur-2xl md:hidden">
-          <div className="mb-3 rounded-xl border border-[#8c162c]/30 bg-black/40 p-2 sm:hidden">
+          <div className="mb-3 rounded-xl border border-[#991b31]/40 bg-[#2d070e]/80 p-2 sm:hidden">
             <PreferenceSwitcher />
           </div>
           <div className="grid gap-2">
@@ -71,7 +71,7 @@ export function Header() {
               <Link
                 key={key}
                 href={href}
-                className="flex items-center justify-between rounded-xl border border-[#8c162c]/30 bg-gradient-to-r from-[#2e070e] to-[#1c0407] px-4 py-3 font-bold text-white transition-all hover:border-[#a81c37]/60 hover:bg-[#420a14]"
+                className="flex items-center justify-between rounded-xl border border-[#991b31]/40 bg-gradient-to-r from-[#480a16] to-[#2b060d] px-4 py-3 font-bold text-white transition-all hover:border-[#c22240]/60 hover:bg-[#5a0d1c]"
                 onClick={() => setOpen(false)}
               >
                 <span>{t(key)}</span>
