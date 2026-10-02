@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Menu, ShoppingBag } from "lucide-react";
+import { Menu, ShoppingBag, X } from "lucide-react";
 import { useState } from "react";
 import { RovanxLogo } from "@/components/brand/rovanx-logo";
 import { useCart } from "@/components/store/cart-provider";
@@ -22,14 +22,18 @@ export function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-black/10 bg-[#f5f0e7]/92 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 border-b border-[#5e0d1b]/40 bg-gradient-to-r from-[#170306]/98 via-[#24060c]/96 to-[#170306]/98 shadow-[0_4px_30px_rgba(23,3,6,0.7)] backdrop-blur-xl">
       <div className="container flex min-h-20 items-center justify-between gap-3 py-2 md:min-h-24">
         <Link href="/" className="flex items-center py-1" aria-label="ROVANX home">
-          <RovanxLogo className="h-14 w-auto sm:h-[72px]" priority />
+          <RovanxLogo className="h-14 w-auto sm:h-[72px]" priority tone="light" />
         </Link>
-        <nav className="hidden items-center rounded-full border border-black/10 bg-white/72 px-2 py-2 text-sm font-bold shadow-sm md:flex">
+        <nav className="hidden items-center rounded-full border border-[#8c162c]/40 bg-gradient-to-r from-[#3b0811]/90 via-[#4e0c17]/90 to-[#3b0811]/90 p-1.5 text-sm font-bold shadow-[0_4px_20px_rgba(61,8,17,0.35)] backdrop-blur-md md:flex">
           {nav.map(([key, href]) => (
-            <Link key={key} href={href} className="rounded-full px-3 py-2 text-graphite-900/75 hover:bg-bronze-500/12 hover:text-bronze-600">
+            <Link
+              key={key}
+              href={href}
+              className="rounded-full px-4 py-1.5 text-white/85 transition-all hover:bg-[#8c162c]/45 hover:text-white hover:shadow-sm"
+            >
               {t(key)}
             </Link>
           ))}
@@ -38,34 +42,43 @@ export function Header() {
           <div className="hidden sm:block">
             <PreferenceSwitcher />
           </div>
-          <Link href="/cart" className="btn btn-secondary w-auto px-3 shadow-sm" aria-label={t("cart")}>
-            <ShoppingBag size={18} />
-            <span className="text-sm">{count}</span>
+          <Link
+            href="/cart"
+            className="flex h-10 items-center gap-2 rounded-lg border border-[#8c162c]/40 bg-gradient-to-b from-[#3d0912] to-[#24060b] px-3.5 text-white shadow-md transition-all hover:border-[#a81c37] hover:bg-[#500c19]"
+            aria-label={t("cart")}
+          >
+            <ShoppingBag size={18} className="text-bronze-300" />
+            <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-bronze-500 px-1.5 text-xs font-black text-graphite-950">
+              {count}
+            </span>
           </Link>
           <button
-            className="btn btn-secondary w-auto px-3 md:hidden"
+            className="flex h-10 w-10 items-center justify-center rounded-lg border border-[#8c162c]/40 bg-gradient-to-b from-[#3d0912] to-[#24060b] text-white shadow-md transition-all hover:border-[#a81c37] hover:bg-[#500c19] md:hidden"
             onClick={() => setOpen(!open)}
             aria-label={t("categories")}
           >
-            <Menu size={18} />
+            {open ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </div>
       {open ? (
-        <nav className="container grid gap-2 pb-4 md:hidden">
-          <div className="surface-card p-2 sm:hidden">
+        <nav className="border-t border-[#5e0d1b]/40 bg-[#170306]/98 px-4 pb-5 pt-3 backdrop-blur-2xl md:hidden">
+          <div className="mb-3 rounded-xl border border-[#8c162c]/30 bg-black/40 p-2 sm:hidden">
             <PreferenceSwitcher />
           </div>
-          {nav.map(([key, href]) => (
-            <Link
-              key={key}
-              href={href}
-              className="surface-card px-3 py-3 font-semibold"
-              onClick={() => setOpen(false)}
-            >
-              {t(key)}
-            </Link>
-          ))}
+          <div className="grid gap-2">
+            {nav.map(([key, href]) => (
+              <Link
+                key={key}
+                href={href}
+                className="flex items-center justify-between rounded-xl border border-[#8c162c]/30 bg-gradient-to-r from-[#2e070e] to-[#1c0407] px-4 py-3 font-bold text-white transition-all hover:border-[#a81c37]/60 hover:bg-[#420a14]"
+                onClick={() => setOpen(false)}
+              >
+                <span>{t(key)}</span>
+                <span className="text-xs text-bronze-400">→</span>
+              </Link>
+            ))}
+          </div>
         </nav>
       ) : null}
     </header>
