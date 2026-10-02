@@ -29,6 +29,11 @@ export default async function HomePage() {
     prisma.bundle.findMany({ where: { active: true }, take: 3, include: { items: { include: { product: true } } } }).catch(() => [])
   ]);
 
+  let displayFeatured = featured;
+  if (!displayFeatured || displayFeatured.length === 0) {
+    displayFeatured = await prisma.product.findMany({ where: { active: true }, take: 6, orderBy: { createdAt: "asc" } }).catch(() => []);
+  }
+
   return (
     <>
       <section className="brand-hero relative overflow-hidden py-12 text-white md:py-20">
@@ -125,21 +130,21 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="section relative overflow-hidden bg-[#12141a] text-white">
-        {/* Background Atmosphere */}
+      <section className="section relative min-h-[460px] overflow-hidden bg-[#12141a] text-white">
+        {/* Background Atmosphere - Full Wide Cinematic Coverage */}
         <div className="absolute inset-0 z-0 pointer-events-none select-none overflow-hidden">
           <Image
-            src="/hero/rovanx-bestsellers-bg.webp"
+            src="/hero/rovanx-bestsellers-wide.webp"
             alt="ROVANX Best Sellers"
             fill
             priority
             unoptimized
             sizes="100vw"
-            className="object-cover object-top opacity-65 md:opacity-80"
+            className="object-cover object-center opacity-75 md:opacity-85"
           />
-          {/* Subtle depth gradients for readability & dark continuity */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#12141a] via-[#12141a]/50 to-[#12141a]/40" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#12141a]/70 via-transparent to-[#12141a]/70" />
+          {/* Subtle depth gradients for readability while keeping the wide image fully visible */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#12141a] via-[#12141a]/40 to-[#12141a]/30" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#12141a]/35 via-transparent to-[#12141a]/35" />
         </div>
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-bronze-500/70 to-transparent" />
 
@@ -155,7 +160,7 @@ export default async function HomePage() {
             </Link>
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {featured.map((product) => (
+            {displayFeatured.map((product) => (
               <ProductCard key={product.id} product={product} darkTheme />
             ))}
           </div>
