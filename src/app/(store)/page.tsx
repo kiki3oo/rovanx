@@ -135,11 +135,11 @@ export default async function HomePage() {
             priority
             unoptimized
             sizes="100vw"
-            className="object-cover object-top opacity-60 md:opacity-75"
+            className="object-cover object-top opacity-65 md:opacity-80"
           />
           {/* Subtle depth gradients for readability & dark continuity */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#12141a] via-[#12141a]/55 to-[#12141a]/45" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#12141a]/80 via-transparent to-[#12141a]/80" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#12141a] via-[#12141a]/50 to-[#12141a]/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#12141a]/70 via-transparent to-[#12141a]/70" />
         </div>
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-bronze-500/70 to-transparent" />
 
@@ -156,7 +156,7 @@ export default async function HomePage() {
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {featured.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product.id} product={product} darkTheme />
             ))}
           </div>
         </div>
