@@ -125,19 +125,36 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="section">
-        <div className="container">
-          <div className="mb-7 grid gap-4 md:grid-cols-[1fr_auto] md:items-end">
+      <section className="section relative overflow-hidden bg-[#12141a] text-white">
+        {/* Background Atmosphere */}
+        <div className="absolute inset-0 z-0 pointer-events-none select-none overflow-hidden">
+          <Image
+            src="/hero/rovanx-bestsellers-bg.webp"
+            alt="ROVANX Best Sellers"
+            fill
+            priority
+            unoptimized
+            sizes="100vw"
+            className="object-cover object-top opacity-60 md:opacity-75"
+          />
+          {/* Subtle depth gradients for readability & dark continuity */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#12141a] via-[#12141a]/55 to-[#12141a]/45" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#12141a]/80 via-transparent to-[#12141a]/80" />
+        </div>
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-bronze-500/70 to-transparent" />
+
+        <div className="container relative z-10">
+          <div className="mb-8 grid gap-4 md:grid-cols-[1fr_auto] md:items-end">
             <div>
-              <p className="badge mb-3"><LocalizedText id="bestSellers" /></p>
-              <h2 className="text-3xl font-black"><LocalizedText id="premiumPick" /></h2>
-              <LocalizedText id="bestSellersText" as="p" className="mt-2 max-w-xl text-black/62" />
+              <p className="badge mb-3 border-white/10 bg-white/10 text-bronze-500"><LocalizedText id="bestSellers" /></p>
+              <h2 className="text-3xl font-black text-white sm:text-4xl"><LocalizedText id="premiumPick" /></h2>
+              <LocalizedText id="bestSellersText" as="p" className="mt-2 max-w-xl text-white/72" />
             </div>
-            <Link href="/shop" className="btn btn-secondary">
+            <Link href="/shop" className="btn border border-white/20 bg-white/10 text-white hover:bg-white/15">
               <LocalizedText id="viewProducts" /> <ArrowRight size={17} />
             </Link>
           </div>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {featured.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
