@@ -250,16 +250,26 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section border-t border-white/10 bg-[#12141a] text-white">
         <div className="container">
-          <p className="badge mb-3"><LocalizedText id="education" /></p>
-          <h2 className="mb-7 text-3xl font-black"><LocalizedText id="selectedArticles" /></h2>
+          <div className="mb-8 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
+            <div>
+              <p className="badge mb-3 border-white/10 bg-white/10 text-bronze-400"><LocalizedText id="education" /></p>
+              <h2 className="text-3xl font-black text-white sm:text-4xl"><LocalizedText id="selectedArticles" /></h2>
+            </div>
+            <Link
+              href="/blog"
+              className="btn border border-white/20 bg-white/10 text-white hover:bg-white/15 flex items-center gap-2"
+            >
+              <LocalizedText id="selectedArticles" /> <ArrowRight size={17} />
+            </Link>
+          </div>
           <HomeBlogArticles posts={BLOG_POSTS.slice(0, 3)} />
         </div>
       </section>
 
-      <section className="section bg-white">
-        <div className="container dark-surface grid gap-5 rounded-lg p-7 text-white md:grid-cols-[1fr_auto] md:items-center">
+      <section className="section border-t border-white/10 bg-[#12141a]">
+        <div className="container dark-surface grid gap-5 rounded-2xl border border-white/10 p-7 text-white md:grid-cols-[1fr_auto] md:items-center">
           <div>
             <h2 className="text-3xl font-black"><LocalizedText id="readyTitle" /></h2>
             <LocalizedText id="readyText" as="p" className="mt-2 text-white/65" />
