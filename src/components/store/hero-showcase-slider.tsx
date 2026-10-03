@@ -14,6 +14,11 @@ const slides = [
     id: "royal-force",
     title: "ROVANX Royal Force",
     src: "/hero/rovanx-hero-showcase-royal-force.webp"
+  },
+  {
+    id: "expert-choice",
+    title: "ROVANX Expert Choice",
+    src: "/hero/rovanx-hero-showcase-expert.webp"
   }
 ];
 
