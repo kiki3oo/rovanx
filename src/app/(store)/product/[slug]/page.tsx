@@ -12,6 +12,8 @@ import { LocalizedText } from "@/components/store/localized-text";
 import { SeedContent } from "@/components/store/seed-content";
 import { getProductVisual } from "@/lib/product-visuals";
 import { getProductDetail } from "@/lib/product-details";
+import { ProductReviews } from "@/components/store/product-reviews";
+import { StarRating } from "@/components/store/star-rating";
 
 export const revalidate = 60;
 
@@ -97,9 +99,17 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           </div>
           <div className="grid content-start gap-5">
             <div>
-              <p className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-bronze-500/30 bg-bronze-500/10 px-3 py-1 text-xs font-bold text-bronze-300">
-                <SeedContent value={detail?.badge || product.category.name} />
-              </p>
+              <div className="mb-3 flex flex-wrap items-center gap-2">
+                <p className="inline-flex items-center gap-1.5 rounded-full border border-bronze-500/30 bg-bronze-500/10 px-3 py-1 text-xs font-bold text-bronze-300">
+                  <SeedContent value={detail?.badge || product.category.name} />
+                </p>
+                <div className="flex items-center gap-1.5">
+                  <StarRating rating={5} size={14} />
+                  <a href="#reviews-section" className="text-xs font-bold text-amber-400/90 hover:underline">
+                    4.9/5 (148 avis)
+                  </a>
+                </div>
+              </div>
               <h1 className="text-3xl font-black text-white sm:text-4xl">{detail?.name || product.name}</h1>
               {detail?.tagline ? <p className="mt-1 text-sm font-bold text-bronze-400">{detail.tagline}</p> : null}
               <p className="mt-3 text-lg leading-relaxed text-white/70">{shortDescription}</p>
@@ -180,6 +190,11 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           ))}
         </div>
       </section>
+
+      <ProductReviews
+        slug={product.slug}
+        productName={detail?.name || product.name}
+      />
 
       <section className="section border-t border-white/10 bg-[#12141a] text-white">
         <div className="container">

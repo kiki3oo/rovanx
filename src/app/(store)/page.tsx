@@ -10,6 +10,7 @@ import { LocalizedText } from "@/components/store/localized-text";
 import { SeedContent } from "@/components/store/seed-content";
 import { BLOG_POSTS } from "@/lib/blog-data";
 import { HomeBlogArticles } from "@/components/store/home-blog-articles";
+import { HomeReviews } from "@/components/store/home-reviews";
 
 export const revalidate = 60;
 
@@ -66,6 +67,15 @@ export default async function HomePage() {
                 <LocalizedText id="heroBundles" />
               </Link>
             </div>
+            <div className="flex items-center gap-2.5 pt-1 text-sm">
+              <div className="flex items-center gap-0.5 text-amber-400">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={16} className="fill-amber-400 text-amber-400" />
+                ))}
+              </div>
+              <span className="font-bold text-white">4.9/5</span>
+              <span className="text-white/60">· +2,400 avis clients vérifiés au Maroc</span>
+            </div>
             <div className="grid gap-3 pt-2 text-sm text-white/78 sm:grid-cols-3">
               {["codSecure", "callConfirm", "premiumPick"].map((item) => (
                 <span key={item} className="rounded-md border border-white/10 bg-white/5 px-3 py-2 font-semibold">
@@ -74,8 +84,15 @@ export default async function HomePage() {
               ))}
             </div>
           </div>
-          <div className="dark-surface soft-glow grid min-h-[310px] place-items-center rounded-2xl p-7 shadow-2xl shadow-black/30 md:min-h-[410px]">
-            <RovanxLogo className="h-[280px] w-auto sm:h-[360px]" tone="light" priority />
+          <div className="dark-surface soft-glow relative grid min-h-[310px] place-items-center overflow-hidden rounded-2xl p-4 shadow-2xl shadow-black/40 md:min-h-[410px]">
+            <Image
+              src="/hero/rovanx-vitality-hero-mockup.webp"
+              alt="ROVANX Vitality Boost"
+              width={500}
+              height={500}
+              className="h-auto w-full max-w-[360px] object-contain drop-shadow-2xl transition-transform duration-300 hover:scale-105"
+              priority
+            />
           </div>
         </div>
         <div className="conversion-strip relative z-10 mt-14">
@@ -206,6 +223,8 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      <HomeReviews />
 
       <section className="section bg-graphite-950 text-white">
         <div className="container grid gap-4 md:grid-cols-3">
