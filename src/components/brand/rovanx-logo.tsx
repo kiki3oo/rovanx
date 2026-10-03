@@ -19,8 +19,8 @@ export function RovanxLogo({
         className={`object-contain transition-transform duration-200 drop-shadow-[0_4px_12px_rgba(0,0,0,0.2)] ${className}`}
         src="/brand/rovanx-mark-v2.webp"
         alt="ROVANX Lion Emblem"
-        width={360}
-        height={320}
+        width={535}
+        height={597}
         priority={priority}
         unoptimized
       />
@@ -36,8 +36,8 @@ export function RovanxLogo({
       } ${className}`}
       src="/brand/rovanx-logo-v2.webp"
       alt="ROVANX Men's Vitality"
-      width={422}
-      height={512}
+      width={906}
+      height={804}
       priority={priority}
       unoptimized
     />

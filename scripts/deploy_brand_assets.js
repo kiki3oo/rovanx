@@ -2,7 +2,7 @@ const sharp = require('sharp');
 const path = require('path');
 
 async function deployFinitionBrandAssets() {
-  const inputPath = '/Users/mcm/.gemini/antigravity/brain/978a2e5c-0bcd-4dc1-9f56-74c7555ffccb/.user_uploaded/media_1790714827753.png';
+  const inputPath = '/Users/mcm/.gemini/antigravity/brain/978a2e5c-0bcd-4dc1-9f56-74c7555ffccb/.user_uploaded/media_1791066495541.png';
   const publicBrand = '/Users/mcm/Desktop/rovanx-main/public/brand';
   const publicDir = '/Users/mcm/Desktop/rovanx-main/public';
 
@@ -13,12 +13,12 @@ async function deployFinitionBrandAssets() {
   const isBg = new Uint8Array(w * h);
   const queue = [];
 
-  // Seed borders
+  // 1. Seed borders
   for (let x = 0; x < w; x++) {
     for (const y of [0, h - 1]) {
       const idx = y * w + x;
       const p = idx * 4;
-      if (data[p] === 255 && data[p+1] === 255 && data[p+2] === 255 && isBg[idx] === 0) {
+      if (data[p] >= 245 && data[p+1] >= 245 && data[p+2] >= 245 && isBg[idx] === 0) {
         isBg[idx] = 1;
         queue.push(idx);
       }
@@ -28,39 +28,35 @@ async function deployFinitionBrandAssets() {
     for (const x of [0, w - 1]) {
       const idx = y * w + x;
       const p = idx * 4;
-      if (data[p] === 255 && data[p+1] === 255 && data[p+2] === 255 && isBg[idx] === 0) {
+      if (data[p] >= 245 && data[p+1] >= 245 && data[p+2] >= 245 && isBg[idx] === 0) {
         isBg[idx] = 1;
         queue.push(idx);
       }
     }
   }
 
-  // All letter seeds:
-  // - O in ROVANX (245, 777)
-  // - R in ROVANX (124, 763)
-  // - A in ROVANX (473, 777)
-  // - E in MEN'S (250, 873)
-  // - S in MEN'S (349, 872)
-  // - A in VITALITY (527, 853)
+  // 2. Letter counters:
+  // - O in ROVANX (267, 683)
+  // - R in ROVANX (126, 664)
+  // - A in ROVANX (541, 680)
+  // - A in VITALITY (606, 788)
   const letterSeeds = [
-    [245, 777], // O in ROVANX
-    [124, 763], // R in ROVANX
-    [473, 777], // A in ROVANX
-    [250, 873], // E in MEN'S
-    [349, 872], // S in MEN'S
-    [527, 853]  // A in VITALITY
+    [267, 683], // O in ROVANX
+    [126, 664], // R in ROVANX
+    [541, 680], // A in ROVANX
+    [606, 788]  // A in VITALITY
   ];
 
   for (const [sx, sy] of letterSeeds) {
     const idx = sy * w + sx;
     const p = idx * 4;
-    if (data[p] >= 235 && data[p+1] >= 235 && data[p+2] >= 235 && isBg[idx] === 0) {
+    if (data[p] >= 230 && data[p+1] >= 230 && data[p+2] >= 230 && isBg[idx] === 0) {
       isBg[idx] = 1;
       queue.push(idx);
     }
   }
 
-  // Flood fill
+  // 3. Flood fill
   let head = 0;
   while (head < queue.length) {
     const idx = queue[head++];
@@ -70,7 +66,7 @@ async function deployFinitionBrandAssets() {
         const nidx = ny * w + nx;
         if (isBg[nidx] === 0) {
           const p = nidx * 4;
-          const thresh = y > 680 ? 235 : 252;
+          const thresh = y > 600 ? 230 : 246;
           if (data[p] >= thresh && data[p+1] >= thresh && data[p+2] >= thresh) {
             isBg[nidx] = 1;
             queue.push(nidx);
@@ -82,7 +78,7 @@ async function deployFinitionBrandAssets() {
 
   console.log(`Marked ${queue.length} background pixels.`);
 
-  // Create clean RGBA buffer
+  // 4. Clean RGBA buffer
   const rgba = Buffer.alloc(w * h * 4);
   for (let i = 0; i < w * h; i++) {
     const p = i * 4;
@@ -99,7 +95,7 @@ async function deployFinitionBrandAssets() {
     }
   }
 
-  // Anti-alias fringe adjacent to background
+  // 5. Anti-alias fringe adjacent to background
   for (let y = 1; y < h - 1; y++) {
     for (let x = 1; x < w - 1; x++) {
       const idx = y * w + x;
@@ -111,7 +107,7 @@ async function deployFinitionBrandAssets() {
         if (bgNeighbors > 0) {
           const p = idx * 4;
           const r = rgba[p], g = rgba[p+1], b = rgba[p+2];
-          if (r >= 235 && g >= 235 && b >= 235) {
+          if (r >= 220 && g >= 220 && b >= 220) {
             rgba[p+3] = Math.round(255 * (4 - bgNeighbors) / 4);
           }
         }
@@ -120,6 +116,7 @@ async function deployFinitionBrandAssets() {
   }
 
   const masterPng = await sharp(rgba, { raw: { width: w, height: h, channels: 4 } })
+    .extract({ left: 54, top: 15, width: 906, height: 804 })
     .png({ compressionLevel: 9 })
     .toBuffer();
 
@@ -127,23 +124,27 @@ async function deployFinitionBrandAssets() {
     .webp({ quality: 95, effort: 6 })
     .toBuffer();
 
-  const markWebp = await sharp(masterPng)
-    .extract({ left: 170, top: 35, width: 528, height: 680 })
+  const markPng = await sharp(rgba, { raw: { width: w, height: h, channels: 4 } })
+    .extract({ left: 260, top: 18, width: 535, height: 597 })
+    .png({ compressionLevel: 9 })
+    .toBuffer();
+
+  const markWebp = await sharp(markPng)
     .webp({ quality: 95, effort: 6 })
     .toBuffer();
 
-  // Save all variants (both root and cache-busted v2)
+  // Save all variants
   console.log('Writing public/brand logo and mark files...');
   await sharp(masterPng).toFile(path.join(publicBrand, 'rovanx-logo.png'));
   await sharp(masterPng).toFile(path.join(publicBrand, 'rovanx-logo-v2.png'));
   await sharp(masterWebp).toFile(path.join(publicBrand, 'rovanx-logo.webp'));
   await sharp(masterWebp).toFile(path.join(publicBrand, 'rovanx-logo-v2.webp'));
+  await sharp(markPng).toFile(path.join(publicBrand, 'rovanx-mark.png'));
   await sharp(markWebp).toFile(path.join(publicBrand, 'rovanx-mark.webp'));
   await sharp(markWebp).toFile(path.join(publicBrand, 'rovanx-mark-v2.webp'));
 
   console.log('Writing public/icon.png (192x192)...');
-  const lionMark = await sharp(masterPng)
-    .extract({ left: 175, top: 40, width: 518, height: 665 })
+  const lionIcon = await sharp(markPng)
     .resize(176, 176, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
     .toBuffer();
 
@@ -155,7 +156,7 @@ async function deployFinitionBrandAssets() {
       background: { r: 15, g: 17, b: 23, alpha: 1 }
     }
   })
-    .composite([{ input: lionMark, gravity: 'center' }])
+    .composite([{ input: lionIcon, gravity: 'center' }])
     .png()
     .toFile(path.join(publicDir, 'icon.png'));
 
@@ -165,7 +166,7 @@ async function deployFinitionBrandAssets() {
     .png()
     .toFile(path.join(publicDir, 'favicon.png'));
 
-  console.log('All finished brand assets deployed successfully!');
+  console.log('All brand assets deployed successfully!');
 }
 
 deployFinitionBrandAssets().catch(err => {
