@@ -84,12 +84,12 @@ export default async function HomePage() {
               ))}
             </div>
           </div>
-          <div className="group relative flex min-h-[320px] items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-1.5 shadow-2xl shadow-black/50 backdrop-blur-md md:min-h-[420px]">
+          <div className="group relative flex aspect-square w-full max-w-[540px] mx-auto items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-1.5 shadow-2xl shadow-black/50 backdrop-blur-md">
             <Image
               src="/hero/rovanx-hero-showcase.webp"
               alt="ROVANX Vitality Ultra"
               width={1024}
-              height={682}
+              height={1024}
               className="h-full w-full rounded-xl object-cover shadow-2xl transition-transform duration-500 group-hover:scale-[1.02]"
               priority
             />
