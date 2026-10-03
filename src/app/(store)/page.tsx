@@ -84,13 +84,13 @@ export default async function HomePage() {
               ))}
             </div>
           </div>
-          <div className="dark-surface soft-glow relative grid min-h-[310px] place-items-center overflow-hidden rounded-2xl p-4 shadow-2xl shadow-black/40 md:min-h-[410px]">
+          <div className="group relative flex min-h-[320px] items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-1.5 shadow-2xl shadow-black/50 backdrop-blur-md md:min-h-[420px]">
             <Image
-              src="/hero/rovanx-vitality-hero-mockup.webp"
-              alt="ROVANX Vitality Boost"
-              width={500}
-              height={500}
-              className="h-auto w-full max-w-[360px] object-contain drop-shadow-2xl transition-transform duration-300 hover:scale-105"
+              src="/hero/rovanx-hero-showcase.webp"
+              alt="ROVANX Vitality Ultra"
+              width={1024}
+              height={682}
+              className="h-full w-full rounded-xl object-cover shadow-2xl transition-transform duration-500 group-hover:scale-[1.02]"
               priority
             />
           </div>
