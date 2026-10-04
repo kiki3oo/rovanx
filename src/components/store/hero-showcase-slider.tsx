@@ -19,6 +19,11 @@ const slides = [
     id: "royal-force-adventure",
     title: "ROVANX Royal Force - قوة طبيعية للرجل",
     src: "/hero/rovanx-hero-showcase-adventure-rf.webp"
+  },
+  {
+    id: "royal-force-testimonial",
+    title: "ROVANX Royal Force - تجربة حقيقية ونتائج قبل وبعد",
+    src: "/hero/rovanx-hero-showcase-testimonial.webp"
   }
 ];
 
