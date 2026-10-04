@@ -16,12 +16,12 @@ export const metadata: Metadata = {
   description: "ROVANX, marque marocaine de vitalite et bien-etre masculin.",
   icons: {
     icon: [
-      { url: "/favicon.png?v=5", sizes: "32x32", type: "image/png" },
-      { url: "/icon.png?v=5", sizes: "192x192", type: "image/png" },
-      { url: "/favicon.svg?v=5", type: "image/svg+xml" }
+      { url: "/favicon.png?v=7", sizes: "32x32", type: "image/png" },
+      { url: "/icon.png?v=7", sizes: "192x192", type: "image/png" },
+      { url: "/favicon.svg?v=7", type: "image/svg+xml" }
     ],
-    shortcut: "/favicon.png?v=5",
-    apple: "/apple-touch-icon.png?v=5"
+    shortcut: "/favicon.png?v=7",
+    apple: "/apple-touch-icon.png?v=7"
   },
   robots: {
     index: true,
