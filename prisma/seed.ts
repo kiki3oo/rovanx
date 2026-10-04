@@ -50,13 +50,13 @@ async function main() {
   );
 
   const products = [
-    ["ROVANX Vitality 60", "rovanx-vitality-60", "ROV-VIT-60", ProductRole.MAIN_HERO, "vitality", 299, null, true, true],
-    ["ROVANX Vitality 30", "rovanx-vitality-30", "ROV-VIT-30", ProductRole.ENTRY, "vitality", 249, null, false, true],
-    ["ROVANX Prostate", "rovanx-prostate", "ROV-PRO-01", ProductRole.HERO, "prostate", 299, null, false, true],
-    ["ROVANX Maca Max 60", "rovanx-maca-max", "ROV-MAC-01", ProductRole.HERO, "energy", 299, null, false, true],
-    ["ROVANX Ginseng 30", "rovanx-ginseng", "ROV-GIN-01", ProductRole.UPSELL, "energy", 249, null, false, true],
-    ["ROVANX Control Oil", "rovanx-control-oil", "ROV-OIL-01", ProductRole.HERO, "men-s-wellness", 249, 199, false, true],
-    ["ROVANX Vital Protein 250g", "rovanx-vital-protein", "ROV-PROT-01", ProductRole.HERO, "supplements", 399, 299, false, true],
+    ["ROVANX Vitality Ultra", "rovanx-vitality-60", "ROV-VIT-60", ProductRole.MAIN_HERO, "vitality", 299, null, true, true],
+    ["ROVANX Vitality Boost", "rovanx-vitality-30", "ROV-VIT-30", ProductRole.ENTRY, "vitality", 249, null, false, true],
+    ["ROVANX Prosta Guard", "rovanx-prostate", "ROV-PRO-01", ProductRole.HERO, "prostate", 299, null, false, true],
+    ["ROVANX Royal Force", "rovanx-maca-max", "ROV-MAC-01", ProductRole.HERO, "energy", 299, null, false, true],
+    ["ROVANX Testo Drive", "rovanx-ginseng", "ROV-GIN-01", ProductRole.UPSELL, "energy", 249, null, false, true],
+    ["ROVANX Control Flow", "rovanx-control-oil", "ROV-OIL-01", ProductRole.HERO, "men-s-wellness", 249, 199, false, true],
+    ["ROVANX Vital Protein", "rovanx-vital-protein", "ROV-PROT-01", ProductRole.HERO, "supplements", 399, 299, false, true],
     ["ROVANX Daily Men", "rovanx-daily-men", "ROV-DAY-01", ProductRole.CROSS_SELL, "men-s-wellness", 199, null, false, false],
     ["ROVANX Balance", "rovanx-balance", "ROV-BAL-01", ProductRole.CROSS_SELL, "balance", 229, 199, false, false],
     ["ROVANX Magnesium", "rovanx-magnesium", "ROV-MAG-01", ProductRole.UPSELL, "supplements", 189, 169, false, false],
@@ -76,7 +76,7 @@ async function main() {
   for (const [name, slug, sku, role, categorySlug, regularPrice, salePrice, hero, featured] of products) {
     await prisma.product.upsert({
       where: { slug },
-      update: {},
+      update: { name },
       create: {
         name,
         slug,
@@ -149,9 +149,9 @@ async function main() {
   }
 
   const rules = [
-    ["rovanx-vitality-60", "rovanx-maca-max", "Ajoutez Maca Max a votre commande"],
-    ["rovanx-vitality-30", "rovanx-vitality-60", "Passez au format Vitality 60"],
-    ["rovanx-maca-max", "rovanx-ginseng", "Completez avec Ginseng"],
+    ["rovanx-vitality-60", "rovanx-maca-max", "Ajoutez Royal Force a votre commande"],
+    ["rovanx-vitality-30", "rovanx-vitality-60", "Passez au format Vitality Ultra"],
+    ["rovanx-maca-max", "rovanx-ginseng", "Completez avec Testo Drive"],
     ["rovanx-balance", "rovanx-magnesium", "Ajoutez Magnesium a votre routine"],
     ["rovanx-sleep", "rovanx-magnesium", "Associez Sleep et Magnesium"],
     ["rovanx-magnesium", "rovanx-multi", "Ajoutez Multi"],

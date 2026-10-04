@@ -57,6 +57,9 @@ const seedTranslations: Record<string, Record<SupportedLocale, string>> = {
     ar: "عرض إضافي دون رسوم توصيل إضافية.", fr: "Offre supplémentaire sans frais de livraison additionnels.",
     en: "Additional offer with no extra delivery fee."
   },
+  "Ajoutez Royal Force a votre commande": { ar: "أضف Royal Force إلى طلبك", fr: "Ajoutez Royal Force à votre commande", en: "Add Royal Force to your order" },
+  "Passez au format Vitality Ultra": { ar: "انتقل إلى Vitality Ultra", fr: "Passez au format Vitality Ultra", en: "Upgrade to Vitality Ultra" },
+  "Completez avec Testo Drive": { ar: "أكمل طلبك بـ Testo Drive", fr: "Complétez avec Testo Drive", en: "Complete your order with Testo Drive" },
   "Ajoutez Maca Max a votre commande": { ar: "أضف Maca Max إلى طلبك", fr: "Ajoutez Maca Max à votre commande", en: "Add Maca Max to your order" },
   "Passez au format Vitality 60": { ar: "انتقل إلى Vitality 60", fr: "Passez au format Vitality 60", en: "Upgrade to Vitality 60" },
   "Completez avec Ginseng": { ar: "أكمل طلبك بـ Ginseng", fr: "Complétez avec Ginseng", en: "Complete your order with Ginseng" },

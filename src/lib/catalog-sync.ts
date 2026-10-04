@@ -37,7 +37,7 @@ type SeedProduct = {
 
 const CATALOG_PRODUCTS: SeedProduct[] = [
   {
-    name: "ROVANX Vitality 60",
+    name: "ROVANX Vitality Ultra",
     slug: "rovanx-vitality-60",
     sku: "ROV-VIT-60",
     role: ProductRole.MAIN_HERO,
@@ -49,7 +49,7 @@ const CATALOG_PRODUCTS: SeedProduct[] = [
     active: true
   },
   {
-    name: "ROVANX Vitality 30",
+    name: "ROVANX Vitality Boost",
     slug: "rovanx-vitality-30",
     sku: "ROV-VIT-30",
     role: ProductRole.ENTRY,
@@ -61,7 +61,7 @@ const CATALOG_PRODUCTS: SeedProduct[] = [
     active: true
   },
   {
-    name: "ROVANX Prostate",
+    name: "ROVANX Prosta Guard",
     slug: "rovanx-prostate",
     sku: "ROV-PRO-01",
     role: ProductRole.HERO,
@@ -73,7 +73,7 @@ const CATALOG_PRODUCTS: SeedProduct[] = [
     active: true
   },
   {
-    name: "ROVANX Maca Max 60",
+    name: "ROVANX Royal Force",
     slug: "rovanx-maca-max",
     sku: "ROV-MAC-01",
     role: ProductRole.HERO,
@@ -85,7 +85,7 @@ const CATALOG_PRODUCTS: SeedProduct[] = [
     active: true
   },
   {
-    name: "ROVANX Ginseng 30",
+    name: "ROVANX Testo Drive",
     slug: "rovanx-ginseng",
     sku: "ROV-GIN-01",
     role: ProductRole.UPSELL,
@@ -97,7 +97,7 @@ const CATALOG_PRODUCTS: SeedProduct[] = [
     active: true
   },
   {
-    name: "ROVANX Control Oil",
+    name: "ROVANX Control Flow",
     slug: "rovanx-control-oil",
     sku: "ROV-OIL-01",
     role: ProductRole.HERO,
@@ -109,7 +109,7 @@ const CATALOG_PRODUCTS: SeedProduct[] = [
     active: true
   },
   {
-    name: "ROVANX Vital Protein 250g",
+    name: "ROVANX Vital Protein",
     slug: "rovanx-vital-protein",
     sku: "ROV-PROT-01",
     role: ProductRole.HERO,
