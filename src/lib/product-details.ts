@@ -12,7 +12,7 @@ export type ProductDetailInfo = {
 
 export const PRODUCT_DETAILS: Record<string, ProductDetailInfo> = {
   "rovanx-vitality-60": {
-    name: "ROVANX Vitality Ultra",
+    name: "Vitality Ultra",
     badge: "Cure Complète 2 Mois",
     tagline: "Formule Complète d'Endurance et de Vitalité Masculine",
     shortDescription:
@@ -33,7 +33,7 @@ export const PRODUCT_DETAILS: Record<string, ProductDetailInfo> = {
       "Formulé et fabriqué selon les bonnes pratiques de fabrication (BPF / GMP). Traçabilité rigoureuse et contrôle de pureté garanti à chaque lot."
   },
   "rovanx-vitality-30": {
-    name: "ROVANX Vitality Boost",
+    name: "Vitality Boost",
     badge: "Cure Découverte 1 Mois",
     tagline: "Format Découverte Vitalité & Tonus Quotidien",
     shortDescription:
@@ -54,7 +54,7 @@ export const PRODUCT_DETAILS: Record<string, ProductDetailInfo> = {
       "Normes de fabrication BPF / GMP. Ingrédients certifiés conformes aux standards de sécurité sanitaire."
   },
   "rovanx-prostate": {
-    name: "ROVANX Prosta Guard",
+    name: "Prosta Guard",
     badge: "Confort Urinaire & Protection",
     tagline: "Soutien Avancé de la Prostate et du Flux Urinaire",
     shortDescription:
@@ -75,7 +75,7 @@ export const PRODUCT_DETAILS: Record<string, ProductDetailInfo> = {
       "Fabriqué sous contrôle qualité strict selon les normes BPF / GMP. Absence garantie de contaminants et de métaux lourds."
   },
   "rovanx-maca-max": {
-    name: "ROVANX Royal Force",
+    name: "Royal Force",
     badge: "Haute Concentration 10:1",
     tagline: "Extrait Pur Concentré de Maca Noire Péruvienne",
     shortDescription:
@@ -96,7 +96,7 @@ export const PRODUCT_DETAILS: Record<string, ProductDetailInfo> = {
       "Standard international BPF / GMP. Traçabilité des matières premières garantie de la récolte au conditionnement."
   },
   "rovanx-ginseng": {
-    name: "ROVANX Testo Drive",
+    name: "Testo Drive",
     badge: "Ginseng Rouge Titré 20%",
     tagline: "Panax Ginseng C.A. Meyer Haute Puissance",
     shortDescription:
@@ -117,7 +117,7 @@ export const PRODUCT_DETAILS: Record<string, ProductDetailInfo> = {
       "Certifié conforme aux normes BPF / GMP. Pureté et concentration en ginsénosides vérifiées en laboratoire."
   },
   "rovanx-control-oil": {
-    name: "ROVANX Control Flow",
+    name: "Control Flow",
     badge: "Formule Contrôle & Retard Naturel",
     tagline: "Sérum Naturel de Contrôle & d'Endurance Masculine",
     shortDescription:
@@ -138,7 +138,7 @@ export const PRODUCT_DETAILS: Record<string, ProductDetailInfo> = {
       "Formulation cosmétique élaborée selon les normes de sécurité dermatologique BPF. Ingrédients 100% naturels et testés en laboratoire."
   },
   "rovanx-vital-protein": {
-    name: "ROVANX Vital Protein",
+    name: "Vital Protein",
     badge: "Complexe 6-en-1 Puissance & Énergie",
     tagline: "Protéine Fonctionnelle Haute Performance Masculine",
     shortDescription:

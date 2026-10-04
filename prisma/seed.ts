@@ -50,13 +50,13 @@ async function main() {
   );
 
   const products = [
-    ["ROVANX Vitality Ultra", "rovanx-vitality-60", "ROV-VIT-60", ProductRole.MAIN_HERO, "vitality", 299, null, true, true],
-    ["ROVANX Vitality Boost", "rovanx-vitality-30", "ROV-VIT-30", ProductRole.ENTRY, "vitality", 249, null, false, true],
-    ["ROVANX Prosta Guard", "rovanx-prostate", "ROV-PRO-01", ProductRole.HERO, "prostate", 299, null, false, true],
-    ["ROVANX Royal Force", "rovanx-maca-max", "ROV-MAC-01", ProductRole.HERO, "energy", 299, null, false, true],
-    ["ROVANX Testo Drive", "rovanx-ginseng", "ROV-GIN-01", ProductRole.UPSELL, "energy", 249, null, false, true],
-    ["ROVANX Control Flow", "rovanx-control-oil", "ROV-OIL-01", ProductRole.HERO, "men-s-wellness", 249, 199, false, true],
-    ["ROVANX Vital Protein", "rovanx-vital-protein", "ROV-PROT-01", ProductRole.HERO, "supplements", 399, 299, false, true],
+    ["Vitality Ultra", "rovanx-vitality-60", "ROV-VIT-60", ProductRole.MAIN_HERO, "vitality", 299, null, true, true],
+    ["Vitality Boost", "rovanx-vitality-30", "ROV-VIT-30", ProductRole.ENTRY, "vitality", 249, null, false, true],
+    ["Prosta Guard", "rovanx-prostate", "ROV-PRO-01", ProductRole.HERO, "prostate", 299, null, false, true],
+    ["Royal Force", "rovanx-maca-max", "ROV-MAC-01", ProductRole.HERO, "energy", 299, null, false, true],
+    ["Testo Drive", "rovanx-ginseng", "ROV-GIN-01", ProductRole.UPSELL, "energy", 249, null, false, true],
+    ["Control Flow", "rovanx-control-oil", "ROV-OIL-01", ProductRole.HERO, "men-s-wellness", 249, 199, false, true],
+    ["Vital Protein", "rovanx-vital-protein", "ROV-PROT-01", ProductRole.HERO, "supplements", 399, 299, false, true],
     ["ROVANX Daily Men", "rovanx-daily-men", "ROV-DAY-01", ProductRole.CROSS_SELL, "men-s-wellness", 199, null, false, false],
     ["ROVANX Balance", "rovanx-balance", "ROV-BAL-01", ProductRole.CROSS_SELL, "balance", 229, 199, false, false],
     ["ROVANX Magnesium", "rovanx-magnesium", "ROV-MAG-01", ProductRole.UPSELL, "supplements", 189, 169, false, false],
