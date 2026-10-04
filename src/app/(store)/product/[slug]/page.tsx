@@ -10,10 +10,11 @@ import { ProductCard } from "@/components/store/product-card";
 import { buildMetadata } from "@/lib/seo";
 import { LocalizedText } from "@/components/store/localized-text";
 import { SeedContent } from "@/components/store/seed-content";
-import { getProductVisual } from "@/lib/product-visuals";
+import { getProductVisual, getProductGallery } from "@/lib/product-visuals";
 import { getProductDetail } from "@/lib/product-details";
 import { ProductReviews } from "@/components/store/product-reviews";
 import { StarRating } from "@/components/store/star-rating";
+import { ProductGallery } from "@/components/store/product-gallery";
 
 export const revalidate = 60;
 
@@ -59,6 +60,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
   const price = product.salePrice || product.regularPrice;
   const visual = getProductVisual(product.slug);
+  const gallery = getProductGallery(product.slug);
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -87,15 +89,11 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <section className="section bg-[#12141a] text-white">
         <div className="container grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
-          <div className="relative flex min-h-[430px] items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-6 shadow-2xl backdrop-blur-md">
-            {visual ? (
-              <img src={visual.src} alt={visual.alt} className="product-packshot product-packshot-page" />
-            ) : (
-              <div>
-                <p className="text-3xl font-black text-white">{product.name}</p>
-                <p className="mt-2 text-white/60"><LocalizedText id="visualPlaceholder" /></p>
-              </div>
-            )}
+          <div className="flex items-start justify-center">
+            <ProductGallery
+              images={gallery}
+              productName={detail?.name || product.name}
+            />
           </div>
           <div className="grid content-start gap-5">
             <div>

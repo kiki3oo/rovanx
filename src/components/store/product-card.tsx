@@ -36,7 +36,7 @@ export function ProductCard({
             <img
               src={visual.src}
               alt={visual.alt}
-              className="product-packshot product-packshot-card drop-shadow-[0_20px_25px_rgba(0,0,0,0.5)] transition-transform duration-500 group-hover:scale-105"
+              className="product-packshot product-packshot-card rounded-xl drop-shadow-[0_20px_25px_rgba(0,0,0,0.5)] transition-transform duration-500 group-hover:scale-105"
             />
           ) : (
             <span className="max-w-[13ch] text-balance text-xl font-black leading-tight text-white">{product.name}</span>
@@ -109,7 +109,7 @@ export function ProductCard({
         className={`product-visual m-3 min-h-[260px] overflow-hidden ${visual ? "product-visual-image" : ""}`}
       >
         {visual ? (
-          <img src={visual.src} alt={visual.alt} className="product-packshot product-packshot-card" />
+          <img src={visual.src} alt={visual.alt} className="product-packshot product-packshot-card rounded-xl" />
         ) : (
           <span className="max-w-[13ch] text-balance text-xl font-black leading-tight">{product.name}</span>
         )}
