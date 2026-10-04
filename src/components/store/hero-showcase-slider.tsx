@@ -6,19 +6,19 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const slides = [
   {
-    id: "vitality-ultra",
-    title: "ROVANX Vitality Ultra",
-    src: "/hero/rovanx-hero-showcase-v2.webp"
-  },
-  {
-    id: "royal-force",
-    title: "ROVANX Royal Force",
-    src: "/hero/rovanx-hero-showcase-royal-force.webp"
-  },
-  {
     id: "expert-choice",
-    title: "ROVANX Expert Choice",
+    title: "ROVANX Expert Choice - خيار الخبراء",
     src: "/hero/rovanx-hero-showcase-expert.webp"
+  },
+  {
+    id: "royal-force-couple",
+    title: "ROVANX Royal Force - استعد قوتك وأنطلق من جديد",
+    src: "/hero/rovanx-hero-showcase-couple-rf.webp"
+  },
+  {
+    id: "royal-force-adventure",
+    title: "ROVANX Royal Force - قوة طبيعية للرجل",
+    src: "/hero/rovanx-hero-showcase-adventure-rf.webp"
   }
 ];
 

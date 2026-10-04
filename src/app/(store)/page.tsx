@@ -11,6 +11,7 @@ import { SeedContent } from "@/components/store/seed-content";
 import { BLOG_POSTS } from "@/lib/blog-data";
 import { HomeBlogArticles } from "@/components/store/home-blog-articles";
 import { HomeReviews } from "@/components/store/home-reviews";
+import { HeroShowcaseSlider } from "@/components/store/hero-showcase-slider";
 
 export const revalidate = 60;
 
@@ -84,17 +85,7 @@ export default async function HomePage() {
               ))}
             </div>
           </div>
-          <div className="group relative flex aspect-square w-full max-w-[540px] mx-auto items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-1.5 shadow-2xl shadow-black/50 backdrop-blur-md">
-            <Image
-              src="/hero/rovanx-hero-showcase-expert.webp"
-              alt="ROVANX Royal Force - خيار الخبراء لدعم قوة الرجل"
-              width={1024}
-              height={1024}
-              className="h-full w-full rounded-xl object-cover shadow-2xl transition-transform duration-500 group-hover:scale-[1.02]"
-              priority
-              unoptimized
-            />
-          </div>
+          <HeroShowcaseSlider />
         </div>
         <div className="conversion-strip relative z-10 mt-14">
           <div className="container grid gap-3 py-4 text-sm text-white/75 md:grid-cols-4">
