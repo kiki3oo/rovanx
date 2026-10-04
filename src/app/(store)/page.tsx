@@ -13,7 +13,8 @@ import { HomeBlogArticles } from "@/components/store/home-blog-articles";
 import { HomeReviews } from "@/components/store/home-reviews";
 import { HeroShowcaseSlider } from "@/components/store/hero-showcase-slider";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export const metadata = buildMetadata({
   title: "ROVANX | Men's Vitality & Wellness",

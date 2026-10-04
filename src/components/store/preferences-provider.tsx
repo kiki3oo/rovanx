@@ -364,18 +364,23 @@ function writeCookie(name: string, value: string) {
 }
 
 export function PreferencesProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocaleState] = useState<SupportedLocale>("fr");
+  const [locale, setLocaleState] = useState<SupportedLocale>("ar");
   const [currency, setCurrencyState] = useState<SupportedCurrency>("MAD");
 
   useEffect(() => {
-    const savedLocale = safeGetStorage(localeKey);
+    const savedLocale = safeGetStorage(localeKey) || readCookie(localeKey);
     const savedCurrency = safeGetStorage(currencyKey);
     const defaultCurrency = readCookie(currencyDefaultCookie);
     // Hydrate browser preferences after mount so SSR markup stays stable.
     if (savedLocale === "ary") safeSetStorage(localeKey, "ar");
     const nextLocale = savedLocale === "ary" ? "ar" : savedLocale;
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    if (isSupportedLocale(nextLocale)) setLocaleState(nextLocale);
+    if (isSupportedLocale(nextLocale)) {
+      setLocaleState(nextLocale);
+    } else {
+      setLocaleState("ar");
+      safeSetStorage(localeKey, "ar");
+      writeCookie(localeKey, "ar");
+    }
     if (isSupportedCurrency(savedCurrency)) {
       setCurrencyState(savedCurrency);
     } else if (isSupportedCurrency(defaultCurrency)) {
@@ -389,6 +394,7 @@ export function PreferencesProvider({ children }: { children: React.ReactNode })
     setLocale(nextLocale) {
       setLocaleState(nextLocale);
       safeSetStorage(localeKey, nextLocale);
+      writeCookie(localeKey, nextLocale);
       try {
         document.documentElement.lang = nextLocale === "ar" ? "ar-MA" : nextLocale;
         document.documentElement.dir = nextLocale === "ar" ? "rtl" : "ltr";

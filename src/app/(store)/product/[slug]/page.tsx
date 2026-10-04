@@ -12,7 +12,8 @@ import { getProductVisual, getProductGallery } from "@/lib/product-visuals";
 import { getProductDetail } from "@/lib/product-details";
 import { ProductGallery } from "@/components/store/product-gallery";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export async function generateStaticParams() {
   const products = await prisma.product.findMany({ select: { slug: true }, where: { active: true } }).catch(() => []);

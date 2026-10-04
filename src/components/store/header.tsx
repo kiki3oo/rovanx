@@ -38,10 +38,8 @@ export function Header() {
             </Link>
           ))}
         </nav>
-        <div className="flex items-center gap-2">
-          <div className="hidden sm:block">
-            <PreferenceSwitcher />
-          </div>
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          <PreferenceSwitcher />
           <Link
             href="/cart"
             className="flex h-10 items-center gap-2 rounded-lg border border-[#991b31]/60 bg-gradient-to-b from-[#5a0d1c] via-[#480a16] to-[#33070f] px-3.5 text-white shadow-md transition-all hover:border-[#c22240] hover:from-[#6e1022] hover:to-[#420914]"

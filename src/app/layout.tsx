@@ -31,7 +31,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" dir="ltr">
+    <html lang="ar" dir="rtl">
       <head>
         <TrackingScripts />
       </head>

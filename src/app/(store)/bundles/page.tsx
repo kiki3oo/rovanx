@@ -7,7 +7,8 @@ import { LocalizedText } from "@/components/store/localized-text";
 import { SeedContent } from "@/components/store/seed-content";
 import { AddBundleButton } from "@/components/store/add-bundle-button";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export const metadata = buildMetadata({
   title: "Bundles",

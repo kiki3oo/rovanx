@@ -7,11 +7,11 @@ export function PreferenceSwitcher() {
   const { currency, locale, setCurrency, setLocale, t } = usePreferences();
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-1.5 sm:gap-2">
       <label className="sr-only" htmlFor="locale-switcher">{t("language")}</label>
       <select
         id="locale-switcher"
-        className="h-10 cursor-pointer rounded-lg border border-[#991b31]/60 bg-gradient-to-b from-[#5a0d1c] via-[#480a16] to-[#33070f] px-3 text-xs font-bold text-white shadow-md backdrop-blur-md transition-all hover:border-[#c22240] hover:from-[#6e1022] hover:to-[#420914] focus:border-[#c22240] focus:outline-none"
+        className="h-9 sm:h-10 cursor-pointer rounded-lg border border-[#991b31]/60 bg-gradient-to-b from-[#5a0d1c] via-[#480a16] to-[#33070f] px-2 sm:px-3 text-xs font-bold text-white shadow-md backdrop-blur-md transition-all hover:border-[#c22240] hover:from-[#6e1022] hover:to-[#420914] focus:border-[#c22240] focus:outline-none"
         value={locale}
         onChange={(event) => setLocale(event.target.value as SupportedLocale)}
       >
@@ -24,7 +24,7 @@ export function PreferenceSwitcher() {
       <label className="sr-only" htmlFor="currency-switcher">{t("currency")}</label>
       <select
         id="currency-switcher"
-        className="h-10 cursor-pointer rounded-lg border border-[#991b31]/60 bg-gradient-to-b from-[#5a0d1c] via-[#480a16] to-[#33070f] px-3 text-xs font-bold text-white shadow-md backdrop-blur-md transition-all hover:border-[#c22240] hover:from-[#6e1022] hover:to-[#420914] focus:border-[#c22240] focus:outline-none"
+        className="hidden sm:block h-10 cursor-pointer rounded-lg border border-[#991b31]/60 bg-gradient-to-b from-[#5a0d1c] via-[#480a16] to-[#33070f] px-3 text-xs font-bold text-white shadow-md backdrop-blur-md transition-all hover:border-[#c22240] hover:from-[#6e1022] hover:to-[#420914] focus:border-[#c22240] focus:outline-none"
         value={currency}
         onChange={(event) => setCurrency(event.target.value as typeof currency)}
       >
