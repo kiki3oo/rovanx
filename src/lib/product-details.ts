@@ -13,24 +13,22 @@ export type ProductDetailInfo = {
 export const PRODUCT_DETAILS: Record<string, ProductDetailInfo> = {
   "rovanx-vitality-60": {
     name: "Vitality Ultra",
-    badge: "Cure Complète 2 Mois",
-    tagline: "Formule Complète d'Endurance et de Vitalité Masculine",
+    badge: "60 capsules",
+    tagline: "Complément alimentaire pour hommes",
     shortDescription:
-      "Complexe exclusif associant extraits concentrés de Maca péruvienne, Panax Ginseng, Zinc chélaté et Vitamines B. Conçu pour stimuler l'énergie physique, la vitalité quotidienne et la résistance au surmenage.",
+      "Une formule pour accompagner la vitalité masculine au quotidien. Retrouvez la composition et les conseils d'utilisation indiqués sur l'étiquette.",
     benefits: [
-      "Énergie & Endurance : Réduit la fatigue physique et intellectuelle grâce à la synergie du Ginseng et des vitamines B.",
-      "Équilibre Hormonal : Le Zinc chélaté contribue au maintien d'un taux normal de vitalité masculine dans l'organisme.",
-      "Soutien Adaptogène : La Maca aide le corps à s'adapter au stress quotidien sans effet excitant ni nervosité.",
-      "Formule 100% Végétale : Gélules d'origine végétale, sans gluten, sans OGM, sans colorants artificiels."
+      "Format de 60 capsules.",
+      "Conseils d'utilisation : 1 à 2 capsules par jour, après le repas, avec un verre d'eau."
     ],
     ingredients:
-      "Extrait sec de racine de Maca (Lepidium meyenii) 500mg, Extrait sec de Panax Ginseng rouge 200mg (titré à 15% en ginsénosides), Zinc (bisglycinate chélaté) 15mg (150% VNR), Vitamine B6 2.8mg (200% VNR), Vitamine B12 5µg, Magnésium marin 100mg. Gélule d'origine végétale (HPMC).",
+      "Extraits de ginseng, maca et tongkat ali, gluconate de zinc, vitamine B3, pollen de palmier, gelée royale, vitamine B10 (PABA), citrate de magnésium, taurine, L-arginine, propolis, glycérine, sorbitol, arôme miel et eau. Vérifiez la composition sur l'emballage reçu.",
     usageInstructions:
-      "Prendre 2 gélules par jour le matin avec un grand verre d'eau au cours du petit-déjeuner. Pour des résultats optimaux et durables, une cure régulière de 60 jours est recommandée.",
+      "Prendre 1 à 2 capsules par jour, après le repas, avec un verre d'eau. Respectez les indications figurant sur l'emballage.",
     warnings:
-      "Complément alimentaire destiné à l'adulte. Ne pas dépasser la dose journalière recommandée. Ne se substitue pas à une alimentation variée et équilibrée ni à un mode de vie sain. Tenir hors de portée des jeunes enfants.",
+      "Tenir hors de portée des enfants. Ne pas dépasser la dose journalière recommandée. Ne remplace pas une alimentation variée et équilibrée. En cas de grossesse, d'allaitement, de maladie ou de traitement médical, demandez conseil à un professionnel de santé.",
     regulatoryInformation:
-      "Formulé et fabriqué selon les bonnes pratiques de fabrication (BPF / GMP). Traçabilité rigoureuse et contrôle de pureté garanti à chaque lot."
+      "Ce complément alimentaire n'est pas un médicament. Il ne sert pas à diagnostiquer, traiter ou prévenir une maladie."
   },
   "rovanx-vitality-30": {
     name: "Vitality Boost",

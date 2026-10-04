@@ -1,9 +1,7 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { CheckCircle2, Clock3, PhoneCall, ShieldCheck, Truck } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { AddToCartButton } from "@/components/store/add-to-cart-button";
-import { BuyNowButton } from "@/components/store/buy-now-button";
 import { DirectCodForm } from "@/components/store/direct-cod-form";
 import { Money } from "@/components/store/money";
 import { ProductCard } from "@/components/store/product-card";
@@ -12,8 +10,6 @@ import { LocalizedText } from "@/components/store/localized-text";
 import { SeedContent } from "@/components/store/seed-content";
 import { getProductVisual, getProductGallery } from "@/lib/product-visuals";
 import { getProductDetail } from "@/lib/product-details";
-import { ProductReviews } from "@/components/store/product-reviews";
-import { StarRating } from "@/components/store/star-rating";
 import { ProductGallery } from "@/components/store/product-gallery";
 
 export const revalidate = 60;
@@ -101,12 +97,6 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 <p className="inline-flex items-center gap-1.5 rounded-full border border-bronze-500/30 bg-bronze-500/10 px-3 py-1 text-xs font-bold text-bronze-300">
                   <SeedContent value={detail?.badge || product.category.name} />
                 </p>
-                <div className="flex items-center gap-1.5">
-                  <StarRating rating={5} size={14} />
-                  <a href="#reviews-section" className="text-xs font-bold text-amber-400/90 hover:underline">
-                    4.9/5 (148 avis)
-                  </a>
-                </div>
               </div>
               <h1 className="text-3xl font-black text-white sm:text-4xl">{detail?.name || product.name}</h1>
               {detail?.tagline ? <p className="mt-1 text-sm font-bold text-bronze-400">{detail.tagline}</p> : null}
@@ -134,25 +124,16 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                   regularPrice: product.regularPrice
                 }}
               />
-              <BuyNowButton
-                product={{
-                  id: product.id,
-                  name: product.name,
-                  slug: product.slug,
-                  sku: product.sku,
-                  price,
-                  regularPrice: product.regularPrice
-                }}
-              />
+              <a href="#cod-form" className="btn flex min-h-11 items-center justify-center border border-bronze-400 bg-bronze-500 text-center font-bold text-graphite-950 hover:bg-bronze-400">
+                <LocalizedText id="orderNow" />
+              </a>
             </div>
-            <div className="grid gap-2.5 rounded-xl border border-bronze-500/25 bg-white/[0.03] p-4 text-sm text-white/80 backdrop-blur-md">
+            <div className="grid gap-2.5 border-t border-white/10 pt-4 text-sm text-white/80">
               <div className="flex items-center gap-2 font-black text-white">
                 <ShieldCheck size={18} className="text-bronze-400" />
-                <span>Garantie Qualité & Authenticité ROVANX</span>
+                <LocalizedText id="cashOnDelivery" />
               </div>
-              <p className="text-xs leading-relaxed text-white/70">
-                Formule originale certifiée, extraits standardisés et contrôlés. Emballage scellé et expédition sous 24/48h partout au Maroc avec paiement en espèces à la livraison.
-              </p>
+              <p className="text-sm leading-relaxed text-white/70"><LocalizedText id="cashOnDeliveryText" /> <LocalizedText id="callBeforePrep" />.</p>
               <div className="flex flex-wrap gap-2 pt-1">
                 {["noOnlinePayment", "callBeforePrep", "support"].map((item) => (
                   <span key={item} className="rounded-full border border-bronze-500/20 bg-bronze-500/10 px-3 py-1 text-xs font-bold text-bronze-300">
@@ -189,11 +170,6 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         </div>
       </section>
 
-      <ProductReviews
-        slug={product.slug}
-        productName={detail?.name || product.name}
-      />
-
       <section className="section border-t border-white/10 bg-[#12141a] text-white">
         <div className="container">
           <h2 className="mb-6 text-3xl font-black text-white"><LocalizedText id="relatedProducts" /></h2>
@@ -206,9 +182,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       </section>
 
       <div className="sticky bottom-0 z-30 border-t border-white/10 bg-[#12141a]/95 p-3 backdrop-blur-md md:hidden">
-        <AddToCartButton
-          product={{ id: product.id, name: product.name, slug: product.slug, sku: product.sku, price, regularPrice: product.regularPrice }}
-        />
+        <a href="#cod-form" className="btn btn-primary flex min-h-12 w-full items-center justify-center font-bold">
+          <LocalizedText id="orderNow" /> · <Money value={price} />
+        </a>
       </div>
     </>
   );
