@@ -99,8 +99,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 </p>
               </div>
               <h1 className="text-3xl font-black text-white sm:text-4xl">{detail?.name || product.name}</h1>
-              {detail?.tagline ? <p className="mt-1 text-sm font-bold text-bronze-400">{detail.tagline}</p> : null}
-              <p className="mt-3 text-lg leading-relaxed text-white/70">{shortDescription}</p>
+              {detail?.tagline ? <p className="mt-1 text-sm font-bold text-bronze-400"><SeedContent value={detail.tagline} /></p> : null}
+              <p className="mt-3 text-lg leading-relaxed text-white/70"><SeedContent value={shortDescription} /></p>
             </div>
             <div className="grid gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-5 shadow-xl backdrop-blur-md">
               <div className="flex flex-wrap items-end gap-3">
@@ -164,7 +164,13 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             <div key={String(title)} className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 text-white shadow-xl backdrop-blur-md">
               <Icon className="mb-4 text-bronze-400" />
               <h2 className="text-lg font-black text-white"><LocalizedText id={title as "benefits" | "ingredients" | "instructions" | "warnings" | "regulatory" | "deliveryCod"} /></h2>
-              <div className="mt-2 text-sm leading-relaxed text-white/70">{content ? <SeedContent value={content as string} /> : <LocalizedText id={title === "deliveryCod" ? "bundleShippingText" : "productInfoPending"} />}</div>
+              <div className="mt-2 text-sm leading-relaxed text-white/70">
+                {title === "benefits" && detail ? (
+                  <ul className="list-disc space-y-2 ps-5">
+                    {detail.benefits.map((benefit) => <li key={benefit}><SeedContent value={benefit} /></li>)}
+                  </ul>
+                ) : content ? <SeedContent value={content as string} /> : <LocalizedText id={title === "deliveryCod" ? "bundleShippingText" : "productInfoPending"} />}
+              </div>
             </div>
           ))}
         </div>

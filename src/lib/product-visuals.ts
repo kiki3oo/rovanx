@@ -31,7 +31,7 @@ const productVisuals: Record<string, ProductVisual[]> = {
   "rovanx-vitality-60": [
     {
       src: "/products/rovanx-vitality-60.webp",
-      alt: "Vitality Ultra - Cure Complète 60 Gélules"
+      alt: "Vitality Ultra - flacon de 60 capsules"
     }
   ],
   "rovanx-vitality-30": [

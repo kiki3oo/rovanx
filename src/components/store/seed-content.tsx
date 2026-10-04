@@ -3,6 +3,39 @@
 import { usePreferences, type SupportedLocale } from "@/components/store/preferences-provider";
 
 const seedTranslations: Record<string, Record<SupportedLocale, string>> = {
+  "60 capsules": { ar: "60 كبسولة", fr: "60 capsules", en: "60 capsules" },
+  "Complément alimentaire pour hommes": { ar: "مكمل غذائي للرجال", fr: "Complément alimentaire pour hommes", en: "Food supplement for men" },
+  "Une formule pour accompagner la vitalité masculine au quotidien. Retrouvez la composition et les conseils d'utilisation indiqués sur l'étiquette.": {
+    ar: "تركيبة لدعم الحيوية اليومية للرجال. تعرّف على المكونات وطريقة الاستعمال الموضحتين على الملصق.",
+    fr: "Une formule pour accompagner la vitalité masculine au quotidien. Retrouvez la composition et les conseils d'utilisation indiqués sur l'étiquette.",
+    en: "A formula to support men's everyday vitality. See the ingredients and directions on the label."
+  },
+  "Format de 60 capsules.": { ar: "عبوة تحتوي على 60 كبسولة.", fr: "Format de 60 capsules.", en: "Pack of 60 capsules." },
+  "Conseils d'utilisation : 1 à 2 capsules par jour, après le repas, avec un verre d'eau.": {
+    ar: "طريقة الاستعمال: كبسولة إلى كبسولتين يومياً بعد الطعام مع كوب من الماء.",
+    fr: "Conseils d'utilisation : 1 à 2 capsules par jour, après le repas, avec un verre d'eau.",
+    en: "Directions: 1 to 2 capsules daily after a meal with a glass of water."
+  },
+  "Extraits de ginseng, maca et tongkat ali, gluconate de zinc, vitamine B3, pollen de palmier, gelée royale, vitamine B10 (PABA), citrate de magnésium, taurine, L-arginine, propolis, glycérine, sorbitol, arôme miel et eau. Vérifiez la composition sur l'emballage reçu.": {
+    ar: "مستخلصات الجينسنغ والماكا وتونغكات علي، غلوكونات الزنك، فيتامين ب3، حبوب لقاح النخيل، غذاء ملكات النحل، فيتامين ب10 (PABA)، سترات المغنيسيوم، تورين، إل-أرجينين، عكبر، غليسرين، سوربيتول، نكهة العسل وماء. يرجى التحقق من التركيبة على العبوة المستلمة.",
+    fr: "Extraits de ginseng, maca et tongkat ali, gluconate de zinc, vitamine B3, pollen de palmier, gelée royale, vitamine B10 (PABA), citrate de magnésium, taurine, L-arginine, propolis, glycérine, sorbitol, arôme miel et eau. Vérifiez la composition sur l'emballage reçu.",
+    en: "Ginseng, maca and tongkat ali extracts, zinc gluconate, vitamin B3, palm pollen, royal jelly, vitamin B10 (PABA), magnesium citrate, taurine, L-arginine, propolis, glycerin, sorbitol, honey flavor and water. Check the ingredients on the delivered package."
+  },
+  "Prendre 1 à 2 capsules par jour, après le repas, avec un verre d'eau. Respectez les indications figurant sur l'emballage.": {
+    ar: "تؤخذ كبسولة إلى كبسولتين يومياً بعد الطعام مع كوب من الماء. يُرجى اتباع التعليمات الموجودة على العبوة.",
+    fr: "Prendre 1 à 2 capsules par jour, après le repas, avec un verre d'eau. Respectez les indications figurant sur l'emballage.",
+    en: "Take 1 to 2 capsules daily after a meal with a glass of water. Follow the directions on the package."
+  },
+  "Tenir hors de portée des enfants. Ne pas dépasser la dose journalière recommandée. Ne remplace pas une alimentation variée et équilibrée. En cas de grossesse, d'allaitement, de maladie ou de traitement médical, demandez conseil à un professionnel de santé.": {
+    ar: "يُحفظ بعيداً عن متناول الأطفال. لا تتجاوز الجرعة اليومية الموصى بها. لا يُغني عن نظام غذائي متنوع ومتوازن. في حال الحمل أو الرضاعة أو المرض أو تناول أدوية، استشر مختصاً صحياً.",
+    fr: "Tenir hors de portée des enfants. Ne pas dépasser la dose journalière recommandée. Ne remplace pas une alimentation variée et équilibrée. En cas de grossesse, d'allaitement, de maladie ou de traitement médical, demandez conseil à un professionnel de santé.",
+    en: "Keep out of reach of children. Do not exceed the recommended daily dose. Not a substitute for a varied, balanced diet. If pregnant, nursing, ill or taking medication, consult a healthcare professional."
+  },
+  "Ce complément alimentaire n'est pas un médicament. Il ne sert pas à diagnostiquer, traiter ou prévenir une maladie.": {
+    ar: "هذا المكمل الغذائي ليس دواءً، ولا يُستخدم لتشخيص الأمراض أو علاجها أو الوقاية منها.",
+    fr: "Ce complément alimentaire n'est pas un médicament. Il ne sert pas à diagnostiquer, traiter ou prévenir une maladie.",
+    en: "This food supplement is not a medicine and is not intended to diagnose, treat or prevent disease."
+  },
   "Vitality": { ar: "الحيوية", fr: "Vitalité", en: "Vitality" },
   "Men's Wellness": { ar: "صحة الرجل", fr: "Bien-être masculin", en: "Men's wellness" },
   "Prostate": { ar: "البروستاتا", fr: "Prostate", en: "Prostate" },
