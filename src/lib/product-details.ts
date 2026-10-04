@@ -32,129 +32,117 @@ export const PRODUCT_DETAILS: Record<string, ProductDetailInfo> = {
   },
   "rovanx-vitality-30": {
     name: "Vitality Boost",
-    badge: "Cure Découverte 1 Mois",
-    tagline: "Format Découverte Vitalité & Tonus Quotidien",
+    badge: "30 capsules",
+    tagline: "Complément alimentaire pour hommes",
     shortDescription:
-      "Le format découverte 30 jours de notre formule signature Vitality. Un concentré de Maca, Ginseng et Zinc pour retrouver dynamisme et tonus dès les premières semaines.",
+      "Une formule tonifiante pour accompagner la vitalité et l'endurance masculine au quotidien. Retrouvez la composition et les conseils d'utilisation indiqués sur l'étiquette.",
     benefits: [
-      "Action Rapide : Dès les 10 premiers jours, sensation de réveil plus facile et meilleure endurance.",
-      "Vitalité Naturelle : Formule équilibrée qui nourrit l'organisme en micronutriments essentiels.",
-      "Format Pratique : Idéal pour tester l'efficacité ROVANX avant d'engager une cure complète de 60 jours.",
-      "Haute Tolérance : Digestibilité optimale sans acidité ni inconfort gastrique."
+      "Format de 30 capsules.",
+      "Conseils d'utilisation : 1 à 2 capsules par jour, après le repas, avec un verre d'eau."
     ],
     ingredients:
-      "Extrait sec de racine de Maca 500mg, Extrait sec de Panax Ginseng rouge 200mg, Zinc bisglycinate 15mg, Vitamine B6 2.8mg, Vitamine B12 5µg, Magnésium marin 100mg. Gélule végétale.",
+      "Extraits de maca péruvienne, ginseng rouge coréen, tribulus terrestris, gluconate de zinc, vitamines B6 et B12, magnésium marin. Gélule végétale. Vérifiez la composition sur l'emballage reçu.",
     usageInstructions:
-      "Prendre 1 à 2 gélules par jour le matin avec un verre d'eau au cours d'un repas. Boîte de 30 gélules pour 15 à 30 jours d'utilisation.",
+      "Prendre 1 à 2 capsules par jour, après le repas, avec un verre d'eau. Respectez les indications figurant sur l'emballage.",
     warnings:
-      "Complément alimentaire réservé à l'adulte. Respecter la dose recommandée. Conserver dans un endroit sec et frais à l'abri de l'humidité.",
+      "Tenir hors de portée des enfants. Ne pas dépasser la dose journalière recommandée. Ne remplace pas une alimentation variée et équilibrée. En cas de grossesse, d'allaitement, de maladie ou de traitement médical, demandez conseil à un professionnel de santé.",
     regulatoryInformation:
-      "Normes de fabrication BPF / GMP. Ingrédients certifiés conformes aux standards de sécurité sanitaire."
+      "Ce complément alimentaire n'est pas un médicament. Il ne sert pas à diagnostiquer, traiter ou prévenir une maladie."
   },
   "rovanx-prostate": {
     name: "Prosta Guard",
-    badge: "Confort Urinaire & Protection",
-    tagline: "Soutien Avancé de la Prostate et du Flux Urinaire",
+    badge: "120 ml",
+    tagline: "Soutien et confort de la prostate pour hommes",
     shortDescription:
-      "Synergie protectrice combinant Saw Palmetto (Palmier nain), extrait de pépins de courge, Lycopène et Zinc. Formulé pour soutenir la fonction prostatique normale et préserver le confort urinaire chez l'homme dès 40 ans.",
+      "Une formule ciblée pour soutenir la santé de la prostate et préserver le confort urinaire masculin. Retrouvez la composition et les conseils d'utilisation indiqués sur l'étiquette.",
     benefits: [
-      "Confort Nocturne : Réduit significativement la fréquence des réveils nocturnes pour un sommeil réparateur.",
-      "Flux & Débit Normal : Soutient un débit urinaire régulier et diminue la sensation d'inconfort ou de vidange incomplète.",
-      "Bouclier Antioxydant : Le Zinc et le Lycopène protègent les tissus prostatiques contre le vieillissement cellulaire prématuré.",
-      "Plantes Standardisées : Dosage scientifiquement calibré pour une action douce, progressive et sans accoutumance."
+      "Flacon de 120 ml.",
+      "Conseils d'utilisation : 5 ml par jour avec le bouchon doseur, de préférence après le repas."
     ],
     ingredients:
-      "Extrait de baies de Saw Palmetto (Serenoa repens) 320mg (titré à 85% en acides gras libres), Extrait concentré de pépins de courge (Cucurbita pepo) 150mg, Lycopène naturel de tomate 10mg, Zinc (gluconate) 10mg (100% VNR), Sélénium 55µg. Gélule végétale.",
+      "Extraits de baies de Saw Palmetto, écorce de Pygeum Africanum, huile de graines de courge, lycopène, gluconate de zinc. Vérifiez la composition sur l'emballage reçu.",
     usageInstructions:
-      "Prendre 1 à 2 gélules par jour avec un grand verre d'eau, de préférence le soir au dîner. Une cure continue de 60 à 90 jours est recommandée pour un confort durable.",
+      "Prendre 5 ml par jour à l'aide du bouchon doseur, après un repas. Agiter avant utilisation. Respectez les indications figurant sur l'emballage.",
     warnings:
-      "Complément alimentaire réservé à l'homme adulte. Demandez conseil à votre médecin ou pharmacien en cas de traitement médical en cours. Ne pas dépasser la dose conseillée.",
+      "Tenir hors de portée des enfants. Ne pas dépasser la dose journalière recommandée. Ne remplace pas une alimentation variée et équilibrée. En cas de traitement médical ou de troubles urinaires sévères, consultez un médecin.",
     regulatoryInformation:
-      "Fabriqué sous contrôle qualité strict selon les normes BPF / GMP. Absence garantie de contaminants et de métaux lourds."
+      "Ce complément alimentaire n'est pas un médicament. Il ne sert pas à diagnostiquer, traiter ou prévenir une maladie."
   },
   "rovanx-maca-max": {
     name: "Royal Force",
-    badge: "Haute Concentration 10:1",
-    tagline: "Extrait Pur Concentré de Maca Noire Péruvienne",
+    badge: "30 capsules",
+    tagline: "Complément alimentaire pour hommes",
     shortDescription:
-      "Concentré purifié 10:1 de racine de Maca des Andes. Apport ultra-concentré en acides aminés, vitamines et minéraux pour stimuler l'endurance, la puissance musculaire et la vitalité générale.",
+      "Une formule concentrée pour stimuler la puissance, l'endurance et l'énergie masculine au quotidien. Retrouvez la composition et les conseils d'utilisation indiqués sur l'étiquette.",
     benefits: [
-      "Endurance Renforcée : Idéal pour les hommes actifs, sportifs ou soumis à des journées intenses.",
-      "Tonicité & Force : Soutient la vitalité générale et aide à surmonter les baisses de régime passées 40 ans.",
-      "Extrait Titré 10:1 : 500mg d'extrait équivalent à 5000mg de plante sèche pour une puissance maximale.",
-      "100% Naturel : Racine de Maca sélectionnée, séchée naturellement sans additifs de synthèse."
+      "Format de 30 capsules.",
+      "Conseils d'utilisation : 1 à 2 capsules par jour, après le repas, avec un verre d'eau."
     ],
     ingredients:
-      "Extrait sec de racine de Maca péruvienne (Lepidium meyenii) 500mg (ratio 10:1, équivalent 5000mg de plante), Vitamine C 80mg (100% VNR), Zinc 10mg. Gélule végétale.",
+      "Extrait concentré de racine de Maca, extrait de Tribulus Terrestris, extrait de Ginseng rouge, gluconate de zinc, vitamines B6 et B12. Vérifiez la composition sur l'emballage reçu.",
     usageInstructions:
-      "Prendre 2 gélules par jour le matin avec un grand verre d'eau. Cure conseillée de 30 à 60 jours.",
+      "Prendre 1 à 2 capsules par jour, après le repas, avec un verre d'eau. Respectez les indications figurant sur l'emballage.",
     warnings:
-      "Réservé à l'adulte. Conserver à l'abri de la chaleur et de l'humidité. Tenir hors de portée des enfants.",
+      "Tenir hors de portée des enfants. Ne pas dépasser la dose journalière recommandée. Ne remplace pas une alimentation variée et équilibrée. En cas de grossesse, d'allaitement, de maladie ou de traitement médical, demandez conseil à un professionnel de santé.",
     regulatoryInformation:
-      "Standard international BPF / GMP. Traçabilité des matières premières garantie de la récolte au conditionnement."
+      "Ce complément alimentaire n'est pas un médicament. Il ne sert pas à diagnostiquer, traiter ou prévenir une maladie."
   },
   "rovanx-ginseng": {
     name: "Testo Drive",
-    badge: "Ginseng Rouge Titré 20%",
-    tagline: "Panax Ginseng C.A. Meyer Haute Puissance",
+    badge: "30 capsules",
+    tagline: "Complément alimentaire pour hommes",
     shortDescription:
-      "Extrait hautement titré à 20% en ginsénosides bio-actifs. Le stimulant adaptogène royal pour la concentration intellectuelle, la clarté mentale et la résistance à l'effort physique.",
+      "Une formule puissante associant le ginseng rouge et la rhodiola pour dynamiser la résistance physique et mentale. Retrouvez la composition et les conseils d'utilisation indiqués sur l'étiquette.",
     benefits: [
-      "Anti-Fatigue Puissant : Combat la fatigue passagère et redonne du tonus sans palpitations ni nervosité.",
-      "Clarté Mentale : Favorise la concentration, la vigilance et la mémoire face au stress professionnel.",
-      "Défenses Naturelles : Contribue au bon fonctionnement du système immunitaire masculin.",
-      "Ginseng Rouge Traditionnel : Sélection de racines matures de 6 ans pour une richesse optimale en principes actifs."
+      "Format de 30 capsules.",
+      "Conseils d'utilisation : 1 capsule par jour le matin, après le repas, avec un verre d'eau."
     ],
     ingredients:
-      "Extrait sec de racine de Panax Ginseng 300mg (titré à 20% en ginsénosides totaux), Vitamine B1 1.1mg, Vitamine B2 1.4mg, Vitamine B6 1.4mg. Gélule végétale.",
+      "Extrait sec de Panax Ginseng rouge coréen, extrait de Rhodiola Rosea, zinc, vitamines B1, B2, B6. Gélule végétale. Vérifiez la composition sur l'emballage reçu.",
     usageInstructions:
-      "Prendre 1 gélule par jour le matin avec un verre d'eau au petit-déjeuner. Cure de 30 jours renouvelable.",
+      "Prendre 1 capsule par jour le matin, après le repas, avec un grand verre d'eau. Respectez les indications figurant sur l'emballage.",
     warnings:
-      "Déconseillé aux personnes sous traitement antidiabétique sans avis médical. Ne pas dépasser la dose recommandée.",
+      "Tenir hors de portée des enfants. Ne pas dépasser la dose journalière recommandée. Déconseillé aux personnes sous traitement antidiabétique sans avis médical. Ne remplace pas une alimentation variée et équilibrée.",
     regulatoryInformation:
-      "Certifié conforme aux normes BPF / GMP. Pureté et concentration en ginsénosides vérifiées en laboratoire."
+      "Ce complément alimentaire n'est pas un médicament. Il ne sert pas à diagnostiquer, traiter ou prévenir une maladie."
   },
   "rovanx-control-oil": {
     name: "Control Flow",
-    badge: "Formule Contrôle & Retard Naturel",
-    tagline: "Sérum Naturel de Contrôle & d'Endurance Masculine",
+    badge: "60 ml",
+    tagline: "Huile naturelle pour hommes",
     shortDescription:
-      "Huile de massage naturelle et ciblée pour améliorer le contrôle intime et prolonger la durée du plaisir masculin. Formulée à base d'huiles végétales nobles et d'extraits botaniques actifs sans effet anesthésiant total.",
+      "Une formule d'huiles naturelles enrichie au clou de girofle et ginseng pour le confort, la maîtrise et l'endurance masculine. Retrouvez la composition et les conseils d'utilisation indiqués sur l'étiquette.",
     benefits: [
-      "Contrôle & Maîtrise : Aide à retarder l'éjaculation et prolonge significativement l'endurance intime.",
-      "Sensation Naturelle Intacte : Agit par apaisement ciblé sans engourdissement excessif ni perte de sensibilité.",
-      "100% Végétal & Pur : Synergie d'huile de clou de girofle, extrait de Panax Ginseng et huile d'amande douce.",
-      "Facile d'Utilisation : Flacon compte-gouttes précis de 30ml, absorption rapide et sans résidu gras désagréable."
+      "Flacon de 60 ml avec pipette compte-gouttes.",
+      "Conseils d'utilisation : 3 à 5 gouttes en massage doux, 15 à 20 minutes avant le rapport."
     ],
     ingredients:
-      "Huile de clou de girofle (Syzygium aromaticum) titrée en eugénol naturel, extrait de Panax Ginseng rouge, huile d'amande douce vierge (Prunus amygdalus dulcis), huile essentielle de menthe douce, acétate de vitamine E (antioxydant). Sans parfum synthétique ni parabènes.",
+      "Huile de clou de girofle, extrait de Panax Ginseng, huile d'amande douce, extraits de plantes naturelles, acétate de vitamine E. Sans parfum synthétique. Vérifiez la composition sur l'emballage reçu.",
     usageInstructions:
-      "Appliquer 3 à 5 gouttes sur la zone souhaitée 15 à 20 minutes avant le rapport intime. Masser doucement en mouvements circulaires jusqu'à pénétration. Rincer à l'eau claire si nécessaire.",
+      "Appliquer 3 à 5 gouttes sur la zone intime 15 à 20 minutes avant l'acte. Masser délicatement jusqu'à absorption complète. Usage externe uniquement.",
     warnings:
-      "Usage externe exclusivement. Effectuer un test cutané sur l'avant-bras avant la première utilisation. Ne pas appliquer sur une peau lésée ou irritée. Tenir hors de portée des enfants.",
+      "Usage externe exclusivement. Faire un test cutané avant la première utilisation. Ne pas appliquer sur une peau irritée ou présentant des lésions. Tenir hors de portée des enfants.",
     regulatoryInformation:
-      "Formulation cosmétique élaborée selon les normes de sécurité dermatologique BPF. Ingrédients 100% naturels et testés en laboratoire."
+      "Produit cosmétique pour le bien-être masculin. Respectez les conseils d'utilisation figurant sur l'emballage."
   },
   "rovanx-vital-protein": {
     name: "Vital Protein",
-    badge: "Complexe 6-en-1 Puissance & Énergie",
-    tagline: "Protéine Fonctionnelle Haute Performance Masculine",
+    badge: "250 g",
+    tagline: "Poudre nutritionnelle pour hommes",
     shortDescription:
-      "Complément protéiné premium combinant isolat de Whey de haute digestibilité, L-Arginine activatrice d'oxyde nitrique, extraits concentrés de Maca noire 10:1 et Panax Ginseng. Développé pour nourrir la masse musculaire, décupler l'énergie quotidienne et stimuler la circulation sanguine.",
+      "Un complexe nutritif haute performance associant protéines de Whey, Maca, Ginseng et Zinc pour soutenir l'énergie, les muscles et la vitalité. Retrouvez la composition et les conseils d'utilisation indiqués sur l'étiquette.",
     benefits: [
-      "Circulation & Puissance : La L-Arginine pure stimule la production d'oxyde nitrique pour un flux sanguin et une vigueur optimaux.",
-      "Masse Musculaire & Force : Riche en acides aminés essentiels issus de la Whey protéine pour soutenir la tonicité physique.",
-      "Vitalité Globale : La Maca 10:1 et le Ginseng rouge éliminent l'épuisement physique et renforcent la résistance à l'effort.",
-      "Formule Saine : 0 sucre ajouté, délicatement édulcoré à la stévia naturelle, saveur chocolat douce et facile à digérer."
+      "Pot de 250 g avec cuillère doseuse.",
+      "Conseils d'utilisation : 1 cuillère par jour dans 200 ml d'eau ou de lait, le matin ou avant l'effort."
     ],
     ingredients:
-      "Isolat et concentré de protéines de lactosérum (Whey Protein), L-Arginine Base pure 1500mg, extrait sec de racine de Maca 10:1 (Lepidium meyenii) 500mg, extrait sec de Panax Ginseng rouge 4% 250mg, Zinc (bisglycinate chélaté) 10mg, Vitamine B12 2.5µg, gomme d'acacia naturelle, arôme naturel, édulcorant naturel (glycosides de stéviol / Stévia).",
+      "Protéines de lactosérum (Whey Protein), extrait de Maca, extrait de Panax Ginseng, L-Arginine, gluconate de zinc, vitamine B12, arôme naturel. Vérifiez la composition sur l'emballage reçu.",
     usageInstructions:
-      "Mélanger 1 cuillère doseuse (10g) dans 200ml d'eau fraîche, de lait ou de smoothie. Consommer une fois par jour le matin ou 30 minutes avant l'effort physique ou l'activité intime.",
+      "Mélanger 1 cuillère (environ 10g) dans 200 ml d'eau fraîche, de lait ou de smoothie. Consommer une fois par jour le matin ou avant l'entraînement. Bien mélanger au shaker.",
     warnings:
-      "Complément alimentaire destiné à l'adulte. Ne pas dépasser la dose recommandée. Déconseillé aux personnes sous traitement médical lourd sans avis préalable. Conserver au sec à l'abri de la chaleur.",
+      "Tenir hors de portée des enfants. Ne pas dépasser la dose journalière recommandée. Ne remplace pas une alimentation variée et équilibrée. Conserver dans un endroit sec et frais.",
     regulatoryInformation:
-      "Conforme aux normes de fabrication pharmaceutique BPF / GMP. Qualité et pureté nutritionnelle garanties sans substances interdites."
+      "Ce complément alimentaire n'est pas un médicament. Il ne sert pas à diagnostiquer, traiter ou prévenir une maladie."
   }
 };
 

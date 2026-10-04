@@ -7,25 +7,25 @@ const productVisuals: Record<string, ProductVisual[]> = {
   "rovanx-control-oil": [
     {
       src: "/products/rovanx-control-oil.webp",
-      alt: "Control Flow - Formule Complète & Ingrédients Actifs"
+      alt: "Control Flow - flacon de 60 ml"
     }
   ],
   "rovanx-prostate": [
     {
       src: "/products/rovanx-prostate.webp",
-      alt: "Prosta Guard - Soutien Prostate & Ingrédients Actifs"
+      alt: "Prosta Guard - flacon de 120 ml"
     }
   ],
   "rovanx-maca-max": [
     {
       src: "/products/rovanx-maca-max.webp",
-      alt: "Royal Force - Extrait Concentré & Ingrédients Naturels"
+      alt: "Royal Force - flacon de 30 capsules"
     }
   ],
   "rovanx-vital-protein": [
     {
       src: "/products/rovanx-vital-protein.webp",
-      alt: "Vital Protein - Formule 6-en-1 Poudre Protéinée"
+      alt: "Vital Protein - pot de 250 g"
     }
   ],
   "rovanx-vitality-60": [
@@ -37,13 +37,13 @@ const productVisuals: Record<string, ProductVisual[]> = {
   "rovanx-vitality-30": [
     {
       src: "/products/rovanx-vitality-30.webp",
-      alt: "Vitality Boost - Format Découverte 30 Gélules"
+      alt: "Vitality Boost - flacon de 30 capsules"
     }
   ],
   "rovanx-ginseng": [
     {
       src: "/products/rovanx-ginseng.webp",
-      alt: "Testo Drive - Ginseng Rouge & Rhodiola 30 Gélules"
+      alt: "Testo Drive - flacon de 30 capsules"
     }
   ]
 };
