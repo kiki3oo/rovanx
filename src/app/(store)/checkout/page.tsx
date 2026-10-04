@@ -98,12 +98,12 @@ export default function CheckoutPage() {
                 />
               </label>
               <label className="field text-sm font-bold text-white/90">
-                <span>{locale === "ar" ? "العنوان أو المدينة" : "Adresse ou Ville de livraison"}</span>
+                <span>{locale === "ar" ? "العنوان" : "Adresse de livraison"}</span>
                 <textarea
                   className="min-h-[100px] rounded-xl border border-white/15 bg-white/[0.05] p-3 text-white placeholder:text-white/35 backdrop-blur-sm focus:border-bronze-400 focus:outline-none"
                   name="address"
                   required
-                  placeholder={locale === "ar" ? "اكتب عنوانك أو مدينتك وحيك هنا..." : "Ex: Casablanca, Quartier Maârif..."}
+                  placeholder={locale === "ar" ? "اكتب عنوانك وحيك هنا..." : "Ex: Quartier Maârif, rue..."}
                 />
               </label>
               <label className="field text-sm font-bold text-white/90">

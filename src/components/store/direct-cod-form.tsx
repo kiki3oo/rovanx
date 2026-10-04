@@ -50,7 +50,7 @@ export function DirectCodForm({
     const payload = {
       fullName: formData.get("fullName"),
       phone: formData.get("phone"),
-      city: formData.get("city"),
+      city: "À confirmer",
       address: formData.get("address"),
       addressDetails: formData.get("addressDetails") || undefined,
       notes: formData.get("notes") || undefined,
@@ -183,19 +183,6 @@ export function DirectCodForm({
           <span className={`text-xs ${darkTheme ? "text-white/50" : "text-black/55"}`}>
             {isArabic ? "سنتصل بك لتأكيد الطلب قبل الشحن." : isEnglish ? "We'll call you to confirm before shipping." : "Nous vous appellerons pour confirmer avant l'envoi."}
           </span>
-        </label>
-
-        <label className="flex flex-col gap-1.5">
-          <span className={`font-bold ${darkTheme ? "text-white/90" : "text-black/85"}`}>
-            {isArabic ? "المدينة *" : isEnglish ? "City *" : "Ville *"}
-          </span>
-          <input
-            className={darkTheme ? "w-full rounded-xl border border-white/15 bg-white/[0.05] p-3 text-base text-white placeholder:text-white/35 focus:border-bronze-400 focus:outline-none" : "input text-base"}
-            name="city"
-            placeholder={isArabic ? "مثال: الدار البيضاء" : isEnglish ? "e.g. Casablanca" : "Ex : Casablanca"}
-            required
-            autoComplete="address-level2"
-          />
         </label>
 
         <label className="flex flex-col gap-1.5">
