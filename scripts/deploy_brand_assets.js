@@ -1,5 +1,6 @@
 const sharp = require('sharp');
 const path = require('path');
+const fs = require('fs');
 
 async function deployFinitionBrandAssets() {
   const inputPath = '/Users/mcm/.gemini/antigravity/brain/978a2e5c-0bcd-4dc1-9f56-74c7555ffccb/.user_uploaded/media_1791066495541.png';
@@ -143,30 +144,44 @@ async function deployFinitionBrandAssets() {
   await sharp(markWebp).toFile(path.join(publicBrand, 'rovanx-mark.webp'));
   await sharp(markWebp).toFile(path.join(publicBrand, 'rovanx-mark-v2.webp'));
 
-  console.log('Writing public/icon.png (192x192)...');
-  const lionIcon = await sharp(markPng)
-    .resize(176, 176, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+  console.log('Writing public/icon.png and src/app/icon.png (192x192 transparent)...');
+  const lionIcon192 = await sharp(markPng)
+    .resize(184, 184, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
     .toBuffer();
 
-  await sharp({
+  const icon192 = await sharp({
     create: {
       width: 192,
       height: 192,
       channels: 4,
-      background: { r: 15, g: 17, b: 23, alpha: 1 }
+      background: { r: 0, g: 0, b: 0, alpha: 0 }
     }
   })
-    .composite([{ input: lionIcon, gravity: 'center' }])
+    .composite([{ input: lionIcon192, gravity: 'center' }])
     .png()
-    .toFile(path.join(publicDir, 'icon.png'));
+    .toBuffer();
 
-  console.log('Writing public/favicon.png (32x32)...');
-  await sharp(path.join(publicDir, 'icon.png'))
+  await sharp(icon192).toFile(path.join(publicDir, 'icon.png'));
+  await sharp(icon192).toFile('/Users/mcm/Desktop/rovanx-main/src/app/icon.png');
+  await sharp(icon192).resize(180, 180).toFile(path.join(publicDir, 'apple-touch-icon.png'));
+
+  console.log('Writing public/favicon.png (32x32 transparent)...');
+  const favicon32 = await sharp(icon192)
     .resize(32, 32)
     .png()
-    .toFile(path.join(publicDir, 'favicon.png'));
+    .toBuffer();
+  await sharp(favicon32).toFile(path.join(publicDir, 'favicon.png'));
+  fs.writeFileSync(path.join(publicDir, 'favicon.ico'), favicon32);
 
-  console.log('All brand assets deployed successfully!');
+  console.log('Writing public/favicon.svg (transparent SVG)...');
+  const svgMarkBase64 = (await sharp(markPng).resize(180, 180, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } }).png().toBuffer()).toString('base64');
+  const svgContent = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
+  <image href="data:image/png;base64,${svgMarkBase64}" x="0" y="0" width="180" height="180"/>
+</svg>
+`;
+  fs.writeFileSync(path.join(publicDir, 'favicon.svg'), svgContent, 'utf8');
+
+  console.log('All brand assets deployed transparently!');
 }
 
 deployFinitionBrandAssets().catch(err => {
