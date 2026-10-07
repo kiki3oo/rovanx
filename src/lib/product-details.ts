@@ -131,10 +131,12 @@ export const PRODUCT_DETAILS: Record<string, ProductDetailInfo> = {
   "rovanx-vital-protein": {
     name: "Vital Protein",
     badge: "250 g",
-    tagline: "Poudre nutritionnelle pour hommes",
+    tagline: "Formule Énergie, Volume & Vitalité Masculine - Vital Protein",
     shortDescription:
-      "Un complexe nutritif haute performance associant protéines de Whey, Maca, Ginseng et Zinc pour soutenir l'énergie, les muscles et la vitalité. Retrouvez la composition et les conseils d'utilisation indiqués sur l'étiquette.",
+      "Un complexe nutritif haute performance associant protéines de Whey, Maca, Ginseng et L-Arginine pour stimuler le flux sanguin, soutenir la vitalité intime et le volume.",
     benefits: [
+      "ضخ قوي للدم لدعم زيادة حجم وسمك القضيب وصلابة قوية كتحس بيها الزوجة ديالك.",
+      "طاقة وقوة بدنية فائقة باش تمتع الزوجة ديالك فالعلاقة الحميمية ديالكم وتعيشو متعة حقيقية.",
       "Pot de 250 g avec cuillère doseuse.",
       "Conseils d'utilisation : 1 cuillère par jour dans 200 ml d'eau ou de lait, le matin ou avant l'effort."
     ],

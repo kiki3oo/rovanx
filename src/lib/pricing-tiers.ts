@@ -327,8 +327,8 @@ const PRODUCT_PRICING_CONFIGS: Record<string, PricingConfig> = {
         savingsFr: null,
         badgeAr: null,
         badgeFr: null,
-        subAr: "250 غرام - واي بروتين + ماكا وزينك",
-        subFr: "250 g - Whey Protein + Maca & Zinc",
+        subAr: "250 غرام - طاقة وزيادة فالحجم وصلابة قوية",
+        subFr: "250 g - Énergie, volume & érection ferme",
         titleAr: "عبوة واحدة",
         titleFr: "1 pot",
         freeShipping: false
@@ -341,8 +341,8 @@ const PRODUCT_PRICING_CONFIGS: Record<string, PricingConfig> = {
         savingsFr: "Économisez 100 DH",
         badgeAr: "⭐ الأكثر طلباً",
         badgeFr: "⭐ Plus populaire",
-        subAr: "500 غرام - بناء عضلي وطاقة متجددة",
-        subFr: "500 g - Force musculaire & vitalité",
+        subAr: "500 غرام - كورس شهرين لزيادة حجم القضيب وإسعاد الزوجة",
+        subFr: "500 g - Volume maximal & plaisir du couple",
         titleAr: "عبوتان",
         titleFr: "2 pots",
         freeShipping: true
@@ -355,8 +355,8 @@ const PRODUCT_PRICING_CONFIGS: Record<string, PricingConfig> = {
         savingsFr: "Économisez 250 DH",
         badgeAr: "🏆 أفضل توفير",
         badgeFr: "🏆 Meilleure offre",
-        subAr: "750 غرام - كورس رياضي متكامل",
-        subFr: "750 g - Programme performance complet",
+        subAr: "750 غرام - كورس شامل لأقصى حجم ومتعة حميمية مستمرة",
+        subFr: "750 g - Programme complet volume & vitalité",
         titleAr: "3 عبوات",
         titleFr: "3 pots",
         freeShipping: true

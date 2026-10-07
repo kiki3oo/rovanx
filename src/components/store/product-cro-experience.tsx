@@ -720,119 +720,131 @@ const CRO_EXPERIENCES: Record<string, CROConfig> = {
     trustItems: [
       {
         icon: Award,
-        titleAr: "واي بروتين نقي 100%",
-        titleFr: "Whey Protein Pure",
-        subAr: "بناء عضلي واسترجاع سريع",
-        subFr: "Construction musculaire & récupération"
+        titleAr: "زيادة حجم وسمك القضيب",
+        titleFr: "Volume & Épaisseur Masculine",
+        subAr: "ضخ دموي قوي وتمدد واضح للأنسجة",
+        subFr: "Afflux sanguin puissant & fermeté"
       },
       {
         icon: Zap,
-        titleAr: "مدعم بالماكا والزنك والجينسينغ",
-        titleFr: "Enrichi Maca & Zinc",
-        subAr: "طاقة مضاعفة وحيوية رياضية",
-        subFr: "Énergie et vitalité sportive"
+        titleAr: "متعة وإسعاد الزوجة",
+        titleFr: "Plaisir & Épanouissement du Couple",
+        subAr: "باش تمتع الزوجة ديالك فالعلاقة الحميمية",
+        subFr: "Combler votre partenaire pleinement"
       },
       {
         icon: Lock,
-        titleAr: "تغليف محكم وجودة مضمونة",
-        titleFr: "Qualité scellée 100%",
-        subAr: "عبوة 250 غرام مع ملعقة قياس",
-        subFr: "Pot 250 g avec cuillère doseuse"
+        titleAr: "طاقة متواصلة بدون عياء",
+        titleFr: "Énergie & Endurance Intime",
+        subAr: "مركب الماكا، L-Arginine والزنك",
+        subFr: "Maca concentrée, Arginine & Zinc"
       },
       {
         icon: Eye,
-        titleAr: "معاينة قبل الدفع",
+        titleAr: "معاينة قبل الدفع وسرية تامة",
         titleFr: "Vérifiez avant de payer",
-        subAr: "افحص علبتك مع موزع الطلبية",
-        subFr: "Contrôlez le colis avec le livreur"
+        subAr: "طرد مغلف بسريّة وافحص قبل الخلاص",
+        subFr: "Colis 100% discret & contrôle à la livraison"
       }
     ],
-    headlineAr: "المكمل الغذائي الشامل للرياضيين.. بروتين نقي مع طاقة الماكا والزنك",
-    headlineFr: "La protéine haute performance pour les hommes actifs",
-    subheadlineAr: "مركب غذائي يجمع بين بروتين مصل اللبن عالي القيمة البيولوجية وخلاصات الماكا والجينسينغ لدعم العضلات، الطاقة، والاسترجاع.",
-    subheadlineFr: "Alliance unique de Whey de haute qualité, Maca, Ginseng et Zinc pour sculpter votre physique et booster votre vitalité.",
+    headlineAr: "طاقة جبارة وزيادة فحجم القضيب.. باش تمتع الزوجة ديالك فالعلاقة الحميمية ديالكم وتعيشو قمة اللذة",
+    headlineFr: "Puissance Maximale & Volume Masculin pour Combler Votre Partenaire",
+    subheadlineAr: "مركب غذائي نشط يجمع بين بروتين مصل اللبن النقي، الماكا، خلاصة الجينسينغ و L-Arginine؛ لتوسيع الأوعية وضخ الدم بقوة لتحقيق زيادة ملحوظة في حجم وسمك القضيب وصلابة قوية، وتوفير طاقة بدنية لا تنفد باش تسعد الزوجة ديالك وتعيشو علاقة ممتعة وطويلة للطرفين.",
+    subheadlineFr: "Formule active enrichie en Whey Pure, L-Arginine, Maca et Ginseng : stimule l'afflux sanguin pour maximiser le volume, la fermeté et l'endurance afin d'offrir un plaisir intense et partagé.",
     comparison: {
       beforeAr: [
-        "ألم وتشنج عضلي يطول لعدة أيام بعد الحصص التدريبية",
-        "بطء فالاسترجاع العضلي والإحساس بالعياء فاليوم الموالي",
-        "بروتينات تجارية مسببة لانتفاخ المعدة وصعوبة الهضم"
+        "حجم عادي وضعف في الانتصاب مع ارتخاء سريع يسبب الحرج أمام الزوجة",
+        "عياء وسخفة سريعة قبل إشباع رغبة الزوجة فالعلاقة الحميمية",
+        "قلة الثقة بالنفس والتوتر النفسي قبل وأثناء اللقاء الحميمي"
       ],
       beforeFr: [
-        "Courbatures persistantes et récupération musculaire lente",
-        "Fatigue le lendemain de l'entraînement diminuant la régularité",
-        "Protéines bas de gamme causant des ballonnements et lourdeurs digestives"
+        "Manque de volume, érections molles et perte de confiance",
+        "Fatigue rapide et incapacité à satisfaire pleinement sa partenaire",
+        "Frustration et stress intime diminuant le plaisir partagé"
       ],
       afterAr: [
-        "استرجاع عضلي سريع جداً وتغذية فورية للألياف العضلية",
-        "خفة وسهولة هضم تامة مع مذاق طبيعي رائع",
-        "طاقة بدنية متجددة وبناء عضلي نظيف وقوي"
+        "زيادة واضحة فحجم وسمك القضيب مع صلابة حديدية كتحس بيها الزوجة فوراً",
+        "طاقة وقوة بدنية هائلة باش تمتع الزوجة ديالك وتطولو فالعلاقة بدون سخفة",
+        "ثقة مطلقة برجولتك، وانسجام حميمي وسعادة كاملة تجمعك مع الزوجة ديالك"
       ],
       afterFr: [
-        "Récupération accélérée et régénération musculaire rapide",
-        "Digestion ultra-légère sans aucun ballonnement",
-        "Force, développement musculaire sec et vitalité globale"
+        "Volume et fermeté décuplés, ressenti immédiat par votre partenaire",
+        "Énergie inépuisable pour prolonger le plaisir et combler votre couple",
+        "Assurance virile totale et moments d'intimité inoubliables"
       ]
     },
     ingredients: [
       {
-        nameAr: "بروتين مصل اللبن النقي (Whey Protein)",
-        nameFr: "Whey Protein Concentrate",
-        roleAr: "بناء وإصلاح الأنسجة العضلية",
-        roleFr: "Développement & Réparation",
-        descAr: "مصدر غني بالأحماض الأمينية متفرعة السلسلة (BCAAs) وسريع الامتصاص بعد الجهد.",
-        descFr: "Riche en BCAA et acides aminés essentiels à assimilation rapide.",
-        badgeAr: "قيمة بيولوجية عالية",
-        badgeFr: "Haute valeur"
+        nameAr: "بروتين مصل اللبن و L-Arginine المنشط",
+        nameFr: "Whey Protein & L-Arginine Active",
+        roleAr: "ضخ الدم وتمدد الأنسجة وزيادة حجم القضيب",
+        roleFr: "Vasodilatation & Volume Maximal",
+        descAr: "يعمل L-Arginine على مضاعفة إنتاج أكسيد النيتريك وتوسيع الأوعية الدموية لضخ كميات هائلة من الدم، مما يوسع الأنسجة الكهفية ويزيد من حجم وسمك وصلابة القضيب أثناء العلاقة.",
+        descFr: "Booste la production d'oxyde nitrique, dilatant les corps caverneux pour un afflux sanguin massif et un gain visible de fermeté et de volume.",
+        badgeAr: "ضخ دموي فائق",
+        badgeFr: "Afflux maximal"
       },
       {
-        nameAr: "خلاصة الماكا والجينسينغ",
-        nameFr: "Extraits de Maca & Ginseng",
-        roleAr: "طاقة حركية وتحمل أثناء التمرين",
-        roleFr: "Puissance & Endurance",
-        descAr: "تمنحك باور حقيقي وقدرة على رفع الأوزان ومقاومة التعب الرياضي.",
-        descFr: "Fournit une endurance musculaire prolongée et un tonus durable.",
-        badgeAr: "مجمع طاقي",
-        badgeFr: "Complexe tonus"
+        nameAr: "خلاصة الماكا البيروفية والجينسينغ",
+        nameFr: "Extraits de Maca Noire & Ginseng",
+        roleAr: "طاقة حميمية وإسعاد الزوجة",
+        roleFr: "Endurance & Plaisir Partagé",
+        descAr: "تمنحك طاقة بدنية مستمرة ورغبة قوية وقدرة على المتابعة بدون أي إرهاق، باش تمتع الزوجة ديالك فالعلاقة الحميمية ديالكم وتعيشو قمة النشوة والسعادة الزوجية.",
+        descFr: "Fournit une vitalité infatigable et une endurance élevée pour prolonger l'acte et satisfaire intensément votre partenaire.",
+        badgeAr: "طاقة ورغبة",
+        badgeFr: "Énergie pure"
       },
       {
-        nameAr: "الزنك وإل-أرجينين وفيتامين B12",
-        nameFr: "Zinc, L-Arginine & B12",
-        roleAr: "ضخ الدم وتخليق البروتين",
-        roleFr: "Synthèse protéique & Congestion",
-        descAr: "يعزز إنتاج أكسيد النيتريك لتوسيع الأوعية ودعم الامتصاص الأمثل للمغذيات.",
-        descFr: "Optimise la vasodilatation et la synthèse naturelle de testostérone.",
-        badgeAr: "امتصاص مضاعف",
-        badgeFr: "Absorption max"
+        nameAr: "الزنك المركز وفيتامين B12",
+        nameFr: "Zinc Hautement Assimilable & Vitamine B12",
+        roleAr: "دعم التستوستيرون والصلابة المستمرة",
+        roleFr: "Testostérone & Fermeté Durable",
+        descAr: "يدعم توازن هرمون الذكورة الطبيعي، ويقوي جودة الانتصاب ويحافظ على الحيوية والنشاط العضلي طوال اليوم بدون هبوط.",
+        descFr: "Soutient la synthèse naturelle de testostérone et le maintien d'une vigueur masculine optimale au quotidien.",
+        badgeAr: "حيوية ذكورية",
+        badgeFr: "Vigueur virile"
       }
     ],
     timeline: [
       {
         phaseAr: "الأسبوع الأول",
         phaseFr: "Semaine 1",
-        timeAr: "خفة واسترجاع سريع",
-        timeFr: "Récupération immédiate",
-        descAr: "زوال آلام التشنج العضلي وخفة تامة في الهضم مع زيادة النشاط."
+        timeAr: "طاقة فورية وصلابة قوية",
+        timeFr: "Vitalité & Érection ferme",
+        descAr: "كتلاحظ نشاط بدني متجدد وزوال السخفة، مع ضخ دموي أسرع وانتصاب صلب وقوي من أول الأيام."
       },
       {
-        phaseAr: "الأسابيع 2 - 4",
+        phaseAr: "الأسابيع 2 إلى 4",
         phaseFr: "Semaines 2 à 4",
-        timeAr: "صلابة وقوة عضلية",
-        timeFr: "Force & Volume musculaire",
-        descAr: "تحسن ملحوظ في الأوزان والأداء الرياضي، وبناء كتلة عضلية صافية ونشيطة."
+        timeAr: "زيادة الحجم وإسعاد كامل للزوجة",
+        timeFr: "Volume visible & Plaisir total",
+        descAr: "امتلاء واضح وزيادة ملحوظة فسمك وحجم القضيب، مع طاقة وقدرة استثنائية باش تمتع الزوجة ديالك فالعلاقة وتعيشو قمة اللذة والانسجام."
       }
     ],
     faqs: [
       {
-        qAr: "كيفاش كنستعمل Vital Protein؟",
-        qFr: "Comment consommer Vital Protein ?",
-        aAr: "اخلط ملعقة واحدة (المرفقة مع العبوة، حوالي 10 غرام) في 200 مل من الماء البارد أو الحليب، واشربها صباحاً أو مباشرة بعد التمرين.",
-        aFr: "Mélanger 1 cuillère (environ 10g) dans 200 ml d'eau fraîche ou de lait, le matin ou après la séance."
+        qAr: "واش كيعاون فعلاً فزيادة حجم وسمك القضيب؟",
+        qFr: "Aide-t-il réellement à augmenter le volume et l'épaisseur ?",
+        aAr: "نعم! المزيج المركز من L-Arginine والماكا وبروتين مصل اللبن كيحفز أكسيد النيتريك اللي كيوسع الأوعية الدموية وكيخلي الدم يتدفق بكثافة للأنسجة الكهفية، هادشي كيعطي تمدد ملحوظ وزيادة واضحة فالسمك والحجم مع صلابة حديدية كتلاحظها نتا والزوجة ديالك.",
+        aFr: "Oui ! La synergie entre la L-Arginine, la Maca et les protéines stimule la vasodilatation et l'afflux sanguin dans les corps caverneux, entraînant un élargissement naturel, une fermeté accrue et un volume visible."
       },
       {
-        qAr: "واش كيدير انتفاخ فالمعدة؟",
-        qFr: "Est-ce facile à digérer ?",
-        aAr: "لا نهائياً، تركيبته مصفاة ونقية جداً وخفيفة على المعدة وسريعة الامتصاص بدون أي غازات أو ثقل.",
-        aFr: "Très digeste et sans lourdeur d'estomac grâce à sa pureté et sa dissolution instantanée."
+        qAr: "كيفاش كيعاون باش نمتع الزوجة ديالي فالعلاقة الحميمية ديالنا؟",
+        qFr: "Comment aide-t-il à combler et satisfaire ma partenaire ?",
+        aAr: "كيعطيك انتصاب صلب وقوي مع زيادة فالحجم والسمك كتحس بيها الزوجة فوراً، بالإضافة لطاقة بدنية ولياقة متواصلة بدون أي سخفة، باش تقدر تطول العلاقة وتوصلها لأعلى درجات النشوة والمتعة المشتركة.",
+        aFr: "En offrant une fermeté robuste, un volume plus généreux et une endurance physique sans faille, il permet de prolonger les moments d'intimité et d'amener votre conjointe à un épanouissement complet."
+      },
+      {
+        qAr: "كيفاش كنستعمل Vital Protein؟",
+        qFr: "Comment consommer Vital Protein ?",
+        aAr: "اخلط ملعقة واحدة (المرفقة بالعبوة، حوالي 10 غرام) في 200 مل من الماء البارد أو الحليب. اشربها مرة واحدة يومياً فالصباح أو قبل العلاقة الحميمية أو التمرين.",
+        aFr: "Mélanger 1 cuillère doseuse (environ 10g) dans 200 ml d'eau ou de lait, une fois par jour le matin ou avant votre moment intime / séance."
+      },
+      {
+        qAr: "واش كيوصل الطرد بسريّة تامة وهل يمكن الفحص قبل الدفع؟",
+        qFr: "La livraison est-elle discrète avec vérification possible ?",
+        aAr: "نعم 100%! الطرد كيوصلك مغلف فكرتونة عادية بدون أي اسم أو إشارة لطبيعة المنتج، وعندك الحق تفحص العلبة وتتأكد منها قدام الموزع قبل ما تدفع أي درهم.",
+        aFr: "Discrétion totale à 100%. Emballage neutre sans mention du produit. Vous pouvez inspecter votre colis avant de payer le livreur."
       }
     ]
   }

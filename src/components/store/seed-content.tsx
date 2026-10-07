@@ -8,6 +8,11 @@ const seedTranslations: Record<string, Record<SupportedLocale, string>> = {
     fr: "Formule Retardante Naturelle - Control Flow",
     en: "Natural Climax Delay & Intimate Control - Control Flow"
   },
+  "Formule Énergie, Volume & Vitalité Masculine - Vital Protein": {
+    ar: "طاقة، زيادة فحجم القضيب وصلابة خارقة باش تمتع الزوجة ديالك فالعلاقة الحميمية ديالكم",
+    fr: "Formule Énergie, Volume & Vitalité Masculine - Vital Protein",
+    en: "Male Energy, Size & Intimate Power Formula - Vital Protein"
+  },
   "Formule Puissance & Endurance Masculine - Vitality Ultra": {
     ar: "صلابة، زيادة فالحجم واستمرارية فائقة باش تمتع الزوجة ديالك فالعلاقة الحميمية وتعيشو أسعد اللحظات",
     fr: "Formule Puissance, Volume & Endurance Masculine - Vitality Ultra",
@@ -162,10 +167,10 @@ const seedTranslations: Record<string, Record<SupportedLocale, string>> = {
     fr: "Produit cosmétique pour le bien-être masculin. Respectez les conseils d'utilisation figurant sur l'emballage.",
     en: "Natural cosmetic product for men's wellness. Follow the directions on the package."
   },
-  "Un complexe nutritif haute performance associant protéines de Whey, Maca, Ginseng et Zinc pour soutenir l'énergie, les muscles et la vitalité. Retrouvez la composition et les conseils d'utilisation indiqués sur l'étiquette.": {
-    ar: "مركب غذائي عالي الجودة يجمع بين بروتين الواي والماكا والجنسنج والزنك لدعم الطاقة وبناء العضلات والحيوية. تعرّف على المكونات وطريقة الاستعمال الموضحتين على الملصق.",
-    fr: "Un complexe nutritif haute performance associant protéines de Whey, Maca, Ginseng et Zinc pour soutenir l'énergie, les muscles et la vitalité. Retrouvez la composition et les conseils d'utilisation indiqués sur l'étiquette.",
-    en: "A high-performance nutrient complex combining Whey protein, Maca, Ginseng, and Zinc to support energy, muscles, and vitality. See the ingredients and directions on the label."
+  "Un complexe nutritif haute performance associant protéines de Whey, Maca, Ginseng et L-Arginine pour stimuler le flux sanguin, soutenir la vitalité intime et le volume.": {
+    ar: "مركب غذائي عالي الفعالية يجمع بين بروتين مصل اللبن النقي، الماكا المركزة، الجينسنغ و L-Arginine لتحفيز تدفق الدم بقوة نحو الأنسجة وزيادة حجم وسمك القضيب مع صلابة حديدية، باش تمتع الزوجة ديالك فالعلاقة الحميمية ديالكم وتعيشو لحظات من المتعة والانسجام التام.",
+    fr: "Un complexe nutritif haute performance associant protéines de Whey, Maca, Ginseng et L-Arginine pour stimuler le flux sanguin, soutenir la vitalité intime et le volume.",
+    en: "A high-performance nutrient complex combining Whey protein, Maca, Ginseng, and L-Arginine to stimulate blood flow, support intimate vitality and volume."
   },
   "Conseils d'utilisation : 1 cuillère par jour dans 200 ml d'eau ou de lait, le matin ou avant l'effort.": {
     ar: "طريقة الاستعمال: ملعقة واحدة يومياً في 200 مل من الماء أو الحليب، صباحاً أو قبل المجهود.",
