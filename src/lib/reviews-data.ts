@@ -24,11 +24,11 @@ export const REVIEWS_DATA: CustomerReview[] = [
     rating: 5,
     date: "Il y a 3 jours",
     title: "Franchement résultat incroyable dès la 1ère semaine",
-    titleAr: "بصراحة نتيجة ممتازة من الأسبوع الأول",
-    comment: "Kount kan7ess b3aya kbir f akhir nhar m3a lkhedma w stress. Men ba3d 10 jours dyal Vitality Ultra, l'énergie raj3at lia bchkel kbir w نشاط طالع النهار كامل. Produit original m3a l'emballage scellé w livraison wslet f 24h f Casa. Merci l'équipe ROVANX !",
-    commentAr: "كنت كنحس بعياء كبير فآخر النهار مع الخدمة والستريس. من بعد 10 أيام ديال Vitality Ultra، الطاقة رجعات ليا بشكل كبير والنشاط طالع النهار كامل. التوصيل وصل فـ 24 ساعة فكازا والعلبة مسدودة وموثقة. شكراً لفريق روفانكس!",
+    titleAr: "صلابة واستمرارية.. الزوجة ديالي فرحانة بزاف بالنتيجة",
+    comment: "Kount kan7ess b3aya kbir w fatigue f l'intimité m3a lkhedma w stress. Men ba3d 10 jours dyal Vitality Ultra, l'endurance w la fermeté wlaw top. Zawja dyali la7dat far9 kbir w rja3 l'plaisir binatna. Produit original m3a l'emballage scellé w livraison wslet f 24h f Casa. Merci ROVANX !",
+    commentAr: "كنت كنعاني من عياء كبير وسرعة القذف مع ضغط الخدمة. من بعد 10 أيام ديال Vitality Ultra، الصلابة ولات قوية بزاف والتحمل زاد. الزوجة ديالي لاحظات فرق شاسع ورجعات المتعة والنشاط لعلاقتنا الحميمية. التوصيل وصل فـ 24 ساعة فكازا والعلبة مسدودة وموثقة. شكراً لفريق روفانكس!",
     verifiedBuyer: true,
-    highlight: "Énergie & Vitalité"
+    highlight: "صلابة وإسعاد الزوجة"
   },
   {
     id: "rev-2",
@@ -54,11 +54,11 @@ export const REVIEWS_DATA: CustomerReview[] = [
     rating: 5,
     date: "Il y a 1 semaine",
     title: "C'est ma 2ème commande, la différence est nette",
-    titleAr: "هادي تاني طلبية ليا، الفرق واضح بزاف",
-    comment: "Hadhi la 2ème boîte li kanakhod. الفرق كيبان فـ l'endurance w récupération mor sport w khedma. Had lmara khdit pack dyal 2 boîtes b réduction. Produit marocain b standard international, bravo !",
-    commentAr: "هادي تاني علبة كناخدها. الفرق كيبان فالتحمل والاسترجاع مورا الرياضة والخدمة. هاد المرة خديت باك ديال 2 علب بالتخفيض. منتج بمواصفات دولية وفخر كبير، برافو!",
+    titleAr: "هادي تاني طلبية ليا.. متعة حميمية وثقة رجعات 100%",
+    comment: "Hadhi la 2ème boîte li kanakhod. الفرق كيبان فـ l'endurance w la fermeté. Kaddir l'plaisir l zawja dyalek bla 3ya w bla stress. Had lmara khdit pack dyal 2 boîtes b réduction. Produit marocain b standard international, bravo !",
+    commentAr: "هادي تاني علبة كناخدها. الفرق كبير بزاف فالتحمل والصلابة فالفراش، كتقدر تمتع الزوجة ديالك بدون داك الإرهاق ولا الإحراج اللي كان كيعصبني. هاد المرة خديت باك ديال 2 علب بالتخفيض وتوصيل مجاني. منتج أصلي وفخر كبير، برافو!",
     verifiedBuyer: true,
-    highlight: "Fidélité & Rachat"
+    highlight: "ثقة ومتعة متبادلة"
   },
   {
     id: "rev-4",

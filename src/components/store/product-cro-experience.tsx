@@ -60,18 +60,18 @@ const CRO_EXPERIENCES: Record<string, CROConfig> = {
   "rovanx-vitality-60": {
     trustItems: [
       {
-        icon: Zap,
-        titleAr: "طاقة ونشاط مستمر",
-        titleFr: "Énergie continue",
-        subAr: "من الصباح حتى الليل بدون خمول",
-        subFr: "Du matin au soir sans baisse"
+        icon: Flame,
+        titleAr: "صلابة وقوة استثنائية",
+        titleFr: "Fermeté & Puissance",
+        subAr: "أداء رجالي قوي يدوم طويلاً",
+        subFr: "Performance masculine durable"
       },
       {
-        icon: Activity,
-        titleAr: "تركيز واسترجاع بدني",
-        titleFr: "Endurance & Récupération",
-        subAr: "مقاومة الإجهاد وضغط العمل",
-        subFr: "Résistance au stress et à la fatigue"
+        icon: HeartPulse,
+        titleAr: "إمتاع وإسعاد الزوجة ديالك",
+        titleFr: "Plaisir & Harmonie du couple",
+        subAr: "علاقة حميمية ممتعة ومرضية للطرفين",
+        subFr: "Satisfaction mutuelle assurée"
       },
       {
         icon: Lock,
@@ -88,107 +88,107 @@ const CRO_EXPERIENCES: Record<string, CROConfig> = {
         subFr: "Contrôlez le colis avec le livreur"
       }
     ],
-    headlineAr: "استرجع طاقتك الكاملة ونشاطك اليومي بدون أي خمول أو إرهاق",
-    headlineFr: "Retrouvez votre pleine énergie et endurance au quotidien",
-    subheadlineAr: "تركيبة علمية متطورة تجمع بين أقوى مستخلصات الجينسينغ، الماكا، تونغكات علي، والزنك لدعم الحيوية الفائقة.",
-    subheadlineFr: "Une synergie d'extraits purs de Ginseng, Maca, Tongkat Ali et Zinc pour une vitalité masculine au sommet.",
+    headlineAr: "استرجع فحولتك وصلابتك الكاملة.. باش تمتع الزوجة ديالك فالعلاقة الحميمية ديالكم وتعيشو أسعد اللحظات",
+    headlineFr: "Retrouvez votre pleine puissance et endurance pour combler votre partenaire",
+    subheadlineAr: "تركيبة طبيعية فائقة القوة صُممت خصيصاً لتعزيز الصلابة، التحمل، والتحكم المستمر، باش تمتع الزوجة ديالك وتخليها راضية وفرحانة بيك في كل لقاء حميمي.",
+    subheadlineFr: "Une formule naturelle concentrée (Ginseng rouge, Maca, Tongkat Ali, Zinc) pour une fermeté durable et un épanouissement intime absolu.",
     comparison: {
       beforeAr: [
-        "إحساس دائم بالتعب وثقل الجسم ابتداءً من منتصف النهار",
-        "تشتت فالتركيز وضبابية ذهنية خلال ساعات العمل الشاقة",
-        "استرجاع بطيء بعد التمارين الرياضية أو المجهود البدني",
-        "تراجع الحماس والرغبة والنشاط العام"
+        "تراجع الصلابة وسرعة القذف والإرهاق قبل ما توصل الزوجة ديالك للمتعة والنشوة الكاملة",
+        "إحساس مستمر بالإحراج ونقص الثقة والتردد قدام شريكة حياتك فالفراش",
+        "تأثير ضغوط العمل والتعب اليومي على الرغبة الحميمية والبرود بين الزوجين",
+        "خوف دائم وقلق نفسي يفسد عليك وعلى الزوجة ديالك الاستمتاع بالعلاقة"
       ],
       beforeFr: [
-        "Fatigue constante et baisse d'énergie dès le milieu de journée",
-        "Difficulté de concentration et brouillard mental au travail",
-        "Récupération lente après le sport ou une journée intense",
-        "Baisse générale de tonus, de vitalité et de motivation"
+        "Baisse de fermeté et fatigue rapide avant d'avoir comblé votre partenaire",
+        "Frustration, manque de confiance et appréhension au moment intime",
+        "Impact du stress et de la fatigue du travail sur le désir et la libido",
+        "Pression psychologique gâchant le plaisir partagé dans le couple"
       ],
       afterAr: [
-        "طاقة بدنية ثابتة ومستقرة طوال اليوم من الاستيقاظ حتى المساء",
-        "صفاء ذهني عالي وقدرة على الإنتاجية بدون الحاجة للمنبهات",
-        "استرجاع عضلي سريع ونشاط وحيوية متجددة",
-        "حيوية ذكورية فائقة وثقة تامة فالنفس"
+        "صلابة حديدية واستمرارية قوية باش تمتع الزوجة ديالك وتخليها راضية ومفتخرة بيك",
+        "تحكم كامل وقدرة على إطالة وقت العلاقة وتكرارها بكل نشاط وبدون عياء",
+        "استعادة الثقة والرجولة الكاملة وتجديد مشاعر الحب والتقارب بين الزوجين",
+        "متعة متبادلة وراحة نفسية واطمئنان تام في كل ليلة حميمية"
       ],
       afterFr: [
-        "Énergie stable et durable du réveil jusqu'au soir",
-        "Clarté mentale et productivité sans stimulants excessifs",
-        "Récupération physique accélérée et dynamisme constant",
-        "Vitalité masculine optimale et confiance retrouvée"
+        "Fermeté maximale et endurance prolongée pour combler pleinement votre partenaire",
+        "Maîtrise totale et capacité de prolonger l'acte avec vitalité et sans fatigue",
+        "Confiance et virilité absolue renouvelant la flamme et l'harmonie intime",
+        "Plaisir intense et partagé apportant sérénité et bonheur conjugal"
       ]
     },
     ingredients: [
       {
         nameAr: "الجينسينغ الكوري الأحمر (Panax Ginseng)",
         nameFr: "Ginseng Rouge Coréen",
-        roleAr: "تنشيط الدورة الدموية ومقاومة الإجهاد",
-        roleFr: "Tonus & Circulation",
-        descAr: "يعزز تدفق الأكسجين في الأنسجة ويقوي جهاز المناعة ويحارب العياء العصبي والبدني.",
-        descFr: "Stimule la microcirculation, combat l'épuisement physique et mental.",
+        roleAr: "تنشيط التدفق الدموي وصلابة استثنائية",
+        roleFr: "Circulation & Érection ferme",
+        descAr: "يساعد على ضخ الدم بقوة في الأوردة الحيوية لتحقيق صلابة قوية وثابتة تدوم طوال فترة العلاقة مع الزوجة.",
+        descFr: "Stimule l'afflux sanguin pour une fermeté vigoureuse et durable tout au long du rapport.",
         badgeAr: "مستخلص نقي",
         badgeFr: "Extrait pur"
       },
       {
         nameAr: "الماكا البيروفية النقية (Lepidium Meyenii)",
         nameFr: "Maca Péruvienne",
-        roleAr: "طاقة وتحمل بدني هائل",
+        roleAr: "طاقة وتحمل مستمر لإسعاد شريكة الحياة",
         roleFr: "Endurance & Vigueur",
-        descAr: "نبتة جبال الأنديز الشهيرة الغنية بالأحماض الأمينية التي ترفع مستويات التحمل والنشاط.",
-        descFr: "Racine andine riche en acides aminés essentiels soutenant l'endurance.",
+        descAr: "نبتة جبال الأنديز الشهيرة التي ترفع القدرة البدنية وتمنحك النفس الطويل للتحكم وإمتاع الزوجة ديالك بدون تعب.",
+        descFr: "Racine andine légendaire augmentant la résistance physique et le souffle pour durer sans faiblir.",
         badgeAr: "تركيز عالي",
         badgeFr: "Haute concentration"
       },
       {
         nameAr: "تونغكات علي (Tongkat Ali)",
         nameFr: "Tongkat Ali (Eurycoma)",
-        roleAr: "دعم التوازن الهرموني الذكوري",
-        roleFr: "Équilibre hormonal masculin",
-        descAr: "عشبة تقليدية فعالة في تعزيز مستويات النشاط الذكوري الطبيعي وبناء القوة.",
-        descFr: "Plante ancestrale soutenant la vigueur et la force masculine naturelle.",
+        roleAr: "تعزيز هرمون الذكورة والفحولة الطبيعية",
+        roleFr: "Testostérone & Virilité",
+        descAr: "عشبة تقليدية فعالة في تعزيز مستويات النشاط الذكوري الطبيعي وبناء قوة وصلابة حقيقية في اللحظات المهمة.",
+        descFr: "Plante ancestrale soutenant les niveaux naturels de testostérone et la puissance masculine.",
         badgeAr: "أصلي 100%",
         badgeFr: "100% Authentique"
       },
       {
-        nameAr: "غلوكونات الزنك والمغنيسيوم وفيتامينات B",
-        nameFr: "Zinc, Magnésium & Vitamines B",
-        roleAr: "محرك الأيض الخلوي وتوليد الطاقة",
-        roleFr: "Métabolisme énergétique",
-        descAr: "عناصر أساسية تضمن امتصاص العناصر الغذائية وتحويلها إلى طاقة عضلية وذهنية نقية.",
-        descFr: "Cofacteurs enzymatiques indispensables à la production d'ATP et à la vitalité.",
+        nameAr: "غلوكونات الزنك وحبوب لقاح النخيل وغذاء الملكات",
+        nameFr: "Zinc, Pollen de Palmier & Gelée Royale",
+        roleAr: "خصوبة وقوة وتجديد الرغبة الحميمية",
+        roleFr: "Vitalité séminale & Désir",
+        descAr: "مغذيات حيوية تعزز توازن الهرمونات وتضمن سرعة الاسترجاع للقدرة على تكرار العلاقة بدون إرهاق.",
+        descFr: "Synergie d'oligo-éléments et nutriments nobles pour une régénération rapide entre les rapports.",
         badgeAr: "توافر حيوي عالي",
         badgeFr: "Haute biodisponibilité"
       }
     ],
     timeline: [
       {
-        phaseAr: "المرحلة الأولى: زوال الخمول",
-        phaseFr: "Phase 1 : Réveil énergétique",
+        phaseAr: "المرحلة الأولى: يقظة ورغبة متجددة",
+        phaseFr: "Phase 1 : Éveil & Désir",
         timeAr: "الأيام 1 - 7",
         timeFr: "Jours 1 à 7",
-        descAr: "تتلاشى نوبات التعب المفاجئة في العصر، وتحس بنشاط سلس عند الاستيقاظ صباحاً."
+        descAr: "زوال التعب والخمول، تدفق نشاط وحرارة دافئة في الجسم مع ارتفاع ملحوظ في الرغبة الحميمية."
       },
       {
-        phaseAr: "المرحلة الثانية: ارتفاع التحمل والتركيز",
-        phaseFr: "Phase 2 : Endurance & Clarté",
+        phaseAr: "المرحلة الثانية: صلابة وتحكم يمتع الزوجة",
+        phaseFr: "Phase 2 : Fermeté & Maîtrise",
         timeAr: "الأسبوع 2 - 3",
         timeFr: "Semaines 2 à 3",
-        descAr: "تحسن واضح في القدرة على تحمل ساعات العمل الطويلة والجهد البدني، مع تصفية الذهن."
+        descAr: "صلابة قوية وتأخير ملحوظ للتعب يجعلك تتحكم في العلاقة وتمتع الزوجة ديالك بكل راحة واسترخاء."
       },
       {
-        phaseAr: "المرحلة الثالثة: الحيوية الشاملة والأداء",
-        phaseFr: "Phase 3 : Vitalité Optimale",
+        phaseAr: "المرحلة الثالثة: أداء رجالي مثالي وسعادة زوجية دائمة",
+        phaseFr: "Phase 3 : Harmonie Conjugale",
         timeAr: "الشهر 1 - 2",
         timeFr: "Mois 1 à 2",
-        descAr: "استقرار تام للطاقة الحيوية، استرجاع سريع بعد المجهود، وقوة وثقة يومية متجددة."
+        descAr: "استقرار كامل للصلابة والاستمرارية، ورضا تام متبادل يعيد الحميمية والشغف لبيتك الزوجي."
       }
     ],
     faqs: [
       {
-        qAr: "كيفاش نستعمل Vitality Ultra؟",
-        qFr: "Comment utiliser Vitality Ultra ?",
-        aAr: "تناول كبسولة إلى كبسولتين يومياً بعد وجبة الفطور أو الغداء مع كأس كبير من الماء.",
-        aFr: "Prendre 1 à 2 capsules par jour le matin ou au déjeuner avec un grand verre d'eau."
+        qAr: "واش كيعاون فعلاً باش نمتع الزوجة ديالي ونطول فالعلاقة؟",
+        qFr: "Aide-t-il vraiment à combler ma partenaire et durer plus longtemps ?",
+        aAr: "نعم بكل تأكيد! المكونات الفعالة (الجينسينغ الأحمر، الماكا، وتونغكات علي) تعمل على تقوية ضخ الدم وتحسين القدرة على التحكم، مما يمنحك الوقت الكافي والاستمرارية باش تمتع الزوجة ديالك وتوصلها للنشوة والمتعة الكاملة.",
+        aFr: "Oui absolument ! Les principes actifs agissent en synergie pour stimuler l'afflux sanguin et prolonger l'endurance afin d'apporter une pleine satisfaction à votre partenaire."
       },
       {
         qAr: "واش فيه أي مواد كيميائية أو آثار جانبية؟",
@@ -197,10 +197,10 @@ const CRO_EXPERIENCES: Record<string, CROConfig> = {
         aFr: "Non, formule 100% naturelle à base d'extraits de plantes, vitamines et minéraux sans effets indésirables."
       },
       {
-        qAr: "واش التغليف كيكون سري؟",
+        qAr: "واش التغليف كيكون سري ومحكم؟",
         qFr: "La livraison est-elle discrète ?",
-        aAr: "نعم، طرد كرتوني سري ومحكم بدون أي اسم محرج من الخارج، ويحق لك فحصه قبل الدفع للموزع.",
-        aFr: "Oui, colis scellé et totalement anonyme. Vous vérifiez le contenu avant de payer le livreur."
+        aAr: "نعم سرية تامة 100%! طرد كرتوني سري ومحكم بدون أي اسم محرج من الخارج، ويحق لك فحصه والتأكد من العلبة قبل الدفع للموزع.",
+        aFr: "Oui, colis scellé et totalement anonyme sans mention extérieure. Vous vérifiez le contenu avant de payer le livreur."
       }
     ]
   },

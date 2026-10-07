@@ -14,11 +14,11 @@ export const PRODUCT_DETAILS: Record<string, ProductDetailInfo> = {
   "rovanx-vitality-60": {
     name: "Vitality Ultra",
     badge: "60 capsules",
-    tagline: "Complément alimentaire pour hommes",
+    tagline: "Formule Puissance & Endurance Masculine - Vitality Ultra",
     shortDescription:
-      "Une formule pour accompagner la vitalité masculine au quotidien. Retrouvez la composition et les conseils d'utilisation indiqués sur l'étiquette.",
+      "Formule avancée Vitality Ultra pour la puissance, la fermeté et l'épanouissement intime du couple.",
     benefits: [
-      "Format de 60 capsules.",
+      "صلابة قوية وتحمل مستمر باش تمتع الزوجة ديالك فالعلاقة الحميمية وتعيشو أسعد اللحظات.",
       "Conseils d'utilisation : 1 à 2 capsules par jour, après le repas, avec un verre d'eau."
     ],
     ingredients:
