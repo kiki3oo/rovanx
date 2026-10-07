@@ -26,6 +26,10 @@ const productVisuals: Record<string, ProductVisual[]> = {
     {
       src: "/products/rovanx-vital-protein.webp?v=3",
       alt: "Vital Protein - pot de 250 g"
+    },
+    {
+      src: "/products/vital-protein-couple-bg.webp",
+      alt: "Vital Protein - باش تمتع الزوجة ديالك فالعلاقة الحميمية"
     }
   ],
   "rovanx-vitality-60": [

@@ -869,9 +869,9 @@ export function ProductCroExperience({ slug }: { slug: string }) {
           <img
             src="/products/vital-protein-couple-bg.webp"
             alt=""
-            className="h-full w-full object-cover object-center opacity-15"
+            className="h-full w-full object-cover object-center opacity-30 md:opacity-40"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0e1015] via-[#0e1015]/90 to-[#0e1015]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0e1015] via-transparent to-[#0e1015]" />
         </div>
       )}
       {/* 1. Trust & Reassurance Bar */}
@@ -909,6 +909,30 @@ export function ProductCroExperience({ slug }: { slug: string }) {
               {isArabic ? config.subheadlineAr : config.subheadlineFr}
             </p>
           </div>
+
+          {slug === "rovanx-vital-protein" && (
+            <div className="mt-8 overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-t from-black via-black/40 to-transparent shadow-2xl relative">
+              <div className="relative aspect-[16/9] sm:aspect-[21/9] w-full overflow-hidden">
+                <img
+                  src="/products/vital-protein-couple-bg.webp"
+                  alt="باش تمتع الزوجة ديالك فالعلاقة الحميمية"
+                  className="h-full w-full object-cover object-center"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0e1015] via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#0e1015]/80 via-transparent to-[#0e1015]/60" />
+                <div className="absolute bottom-4 sm:bottom-6 inset-x-4 sm:inset-x-6 z-10 max-w-xl text-start">
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-red-500/40 bg-red-500/20 px-3 py-1 text-xs font-bold text-red-300 backdrop-blur-md mb-2">
+                    ❤️ {isArabic ? "إسعاد الزوجة والوصول للنشوة الكاملة" : "Épanouissement Intime & Plaisir Partagé"}
+                  </span>
+                  <h3 className="text-lg sm:text-2xl font-black text-white leading-tight drop-shadow-md">
+                    {isArabic
+                      ? "باش تمتع الزوجة ديالك فالعلاقة الحميمية ديالكم.. وتعيشو قمة المتعة والانسجام"
+                      : "Comblez votre partenaire et vivez des moments d'intimité inoubliables"}
+                  </h3>
+                </div>
+              </div>
+            </div>
+          )}
 
           <div className="mt-10 grid gap-6 md:grid-cols-2">
             {/* Before */}
