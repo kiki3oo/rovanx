@@ -4,14 +4,14 @@ import { usePreferences, type SupportedLocale } from "@/components/store/prefere
 
 const seedTranslations: Record<string, Record<SupportedLocale, string>> = {
   "Formule Puissance & Endurance Masculine - Vitality Ultra": {
-    ar: "صلابة واستمرارية فائقة باش تمتع الزوجة ديالك فالعلاقة الحميمية وتعيشو أسعد اللحظات",
-    fr: "Formule Puissance & Endurance Masculine - Vitality Ultra",
-    en: "Male Power & Intimate Stamina Formula - Vitality Ultra"
+    ar: "صلابة، زيادة فالحجم واستمرارية فائقة باش تمتع الزوجة ديالك فالعلاقة الحميمية وتعيشو أسعد اللحظات",
+    fr: "Formule Puissance, Volume & Endurance Masculine - Vitality Ultra",
+    en: "Male Power, Volume & Intimate Stamina Formula - Vitality Ultra"
   },
   "Formule avancée Vitality Ultra pour la puissance, la fermeté et l'épanouissement intime du couple.": {
-    ar: "تركيبة طبيعية فائقة القوة للصلابة والتحمل، صُممت خصيصاً باش تمتع الزوجة ديالك فالعلاقة الحميمية ديالكم وتعيشو قمة المتعة والانسجام بدون أي تعب أو إحراج.",
-    fr: "Formule avancée Vitality Ultra pour la puissance, la fermeté et l'épanouissement intime du couple.",
-    en: "Advanced Vitality Ultra formula for stamina, firmness, and couple's intimate fulfillment."
+    ar: "تركيبة طبيعية فائقة القوة للصلابة وتمدد الأنسجة وزيادة الحجم والسمك، صُممت خصيصاً باش تمتع الزوجة ديالك فالعلاقة الحميمية ديالكم وتعيشو قمة المتعة والانسجام بدون أي تعب أو إحراج.",
+    fr: "Formule avancée Vitality Ultra pour la puissance, la fermeté, le volume et l'épanouissement intime du couple.",
+    en: "Advanced Vitality Ultra formula for stamina, firmness, volume, and couple's intimate fulfillment."
   },
   "60 capsules": { ar: "60 كبسولة", fr: "60 capsules", en: "60 capsules" },
   "Complément alimentaire pour hommes": { ar: "مكمل غذائي للرجال", fr: "Complément alimentaire pour hommes", en: "Food supplement for men" },

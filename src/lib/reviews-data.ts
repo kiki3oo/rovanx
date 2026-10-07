@@ -24,11 +24,11 @@ export const REVIEWS_DATA: CustomerReview[] = [
     rating: 5,
     date: "Il y a 3 jours",
     title: "Franchement résultat incroyable dès la 1ère semaine",
-    titleAr: "صلابة واستمرارية.. الزوجة ديالي فرحانة بزاف بالنتيجة",
-    comment: "Kount kan7ess b3aya kbir w fatigue f l'intimité m3a lkhedma w stress. Men ba3d 10 jours dyal Vitality Ultra, l'endurance w la fermeté wlaw top. Zawja dyali la7dat far9 kbir w rja3 l'plaisir binatna. Produit original m3a l'emballage scellé w livraison wslet f 24h f Casa. Merci ROVANX !",
-    commentAr: "كنت كنعاني من عياء كبير وسرعة القذف مع ضغط الخدمة. من بعد 10 أيام ديال Vitality Ultra، الصلابة ولات قوية بزاف والتحمل زاد. الزوجة ديالي لاحظات فرق شاسع ورجعات المتعة والنشاط لعلاقتنا الحميمية. التوصيل وصل فـ 24 ساعة فكازا والعلبة مسدودة وموثقة. شكراً لفريق روفانكس!",
+    titleAr: "صلابة وزيادة فالسمك.. الزوجة ديالي تفاجأت بالفرق الكبير",
+    comment: "Kount kan7ess b3aya kbir w fatigue f l'intimité m3a lkhedma w stress. Men ba3d 10 jours dyal Vitality Ultra, l'endurance, la fermeté w le volume wlaw top. Zawja dyali la7dat far9 kbir w rja3 l'plaisir binatna. Produit original m3a l'emballage scellé w livraison wslet f 24h f Casa. Merci ROVANX !",
+    commentAr: "كنت كنعاني من عياء وسرعة القذف وارتخاء فالحجم مع ضغط الخدمة. من بعد 12 يوم ديال Vitality Ultra، الصلابة ولات حديدية وتدفق الدم عطى امتلاء وزيادة واضحة فالسمك والطول. الزوجة ديالي تفاجأت وحسات بفرق شاسع فكل لقاء ورجعات المتعة الحقيقية لعلاقتنا. التوصيل وصل فـ 24 ساعة فكازا والعلبة مسدودة وموثقة. شكراً روفانكس!",
     verifiedBuyer: true,
-    highlight: "صلابة وإسعاد الزوجة"
+    highlight: "صلابة وزيادة فالسمك"
   },
   {
     id: "rev-2",

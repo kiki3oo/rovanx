@@ -61,10 +61,10 @@ const CRO_EXPERIENCES: Record<string, CROConfig> = {
     trustItems: [
       {
         icon: Flame,
-        titleAr: "صلابة وقوة استثنائية",
-        titleFr: "Fermeté & Puissance",
-        subAr: "أداء رجالي قوي يدوم طويلاً",
-        subFr: "Performance masculine durable"
+        titleAr: "صلابة وزيادة ملحوظة فالحجم",
+        titleFr: "Fermeté & Gain de Volume",
+        subAr: "تمدد الأنسجة وتدفق دموي كثيف",
+        subFr: "Afflux sanguin maximal et expansion"
       },
       {
         icon: HeartPulse,
@@ -88,44 +88,44 @@ const CRO_EXPERIENCES: Record<string, CROConfig> = {
         subFr: "Contrôlez le colis avec le livreur"
       }
     ],
-    headlineAr: "استرجع فحولتك وصلابتك الكاملة.. باش تمتع الزوجة ديالك فالعلاقة الحميمية ديالكم وتعيشو أسعد اللحظات",
-    headlineFr: "Retrouvez votre pleine puissance et endurance pour combler votre partenaire",
-    subheadlineAr: "تركيبة طبيعية فائقة القوة صُممت خصيصاً لتعزيز الصلابة، التحمل، والتحكم المستمر، باش تمتع الزوجة ديالك وتخليها راضية وفرحانة بيك في كل لقاء حميمي.",
-    subheadlineFr: "Une formule naturelle concentrée (Ginseng rouge, Maca, Tongkat Ali, Zinc) pour une fermeté durable et un épanouissement intime absolu.",
+    headlineAr: "استرجع فحولتك، صلابتك وزيادة الحجم.. باش تمتع الزوجة ديالك فالعلاقة الحميمية ديالكم وتعيشو أسعد اللحظات",
+    headlineFr: "Retrouvez puissance, fermeté et gain de volume pour combler votre partenaire",
+    subheadlineAr: "تركيبة طبيعية فائقة القوة صُممت خصيصاً لتعزيز الصلابة، تمدد الأنسجة وزيادة الحجم والسمك، والتحكم المستمر باش تمتع الزوجة ديالك وتخليها راضية وفرحانة بيك في كل لقاء حميمي.",
+    subheadlineFr: "Une formule naturelle concentrée (Ginseng rouge, Maca, Tongkat Ali, Zinc) pour une expansion tissulaire, fermeté maximale et épanouissement intime absolu.",
     comparison: {
       beforeAr: [
-        "تراجع الصلابة وسرعة القذف والإرهاق قبل ما توصل الزوجة ديالك للمتعة والنشوة الكاملة",
-        "إحساس مستمر بالإحراج ونقص الثقة والتردد قدام شريكة حياتك فالفراش",
+        "تراجع الصلابة وصغر الحجم عند الانتصاب مع ارتخاء سريع قبل إشباع رغبة الزوجة",
+        "عدم إحساس الزوجة بالامتلاء الكافي وسرعة القذف اللي كتسبب إحراج ونقص فالثقة",
         "تأثير ضغوط العمل والتعب اليومي على الرغبة الحميمية والبرود بين الزوجين",
         "خوف دائم وقلق نفسي يفسد عليك وعلى الزوجة ديالك الاستمتاع بالعلاقة"
       ],
       beforeFr: [
-        "Baisse de fermeté et fatigue rapide avant d'avoir comblé votre partenaire",
-        "Frustration, manque de confiance et appréhension au moment intime",
+        "Baisse de fermeté, volume réduit et fatigue rapide avant d'avoir comblé votre partenaire",
+        "Manque de plénitude ressenti par la partenaire et frustration au moment intime",
         "Impact du stress et de la fatigue du travail sur le désir et la libido",
         "Pression psychologique gâchant le plaisir partagé dans le couple"
       ],
       afterAr: [
-        "صلابة حديدية واستمرارية قوية باش تمتع الزوجة ديالك وتخليها راضية ومفتخرة بيك",
+        "انتصاب كامل وزيادة ملحوظة فالسمك والطول (ضخامة كتحس بيها الزوجة ديالك فوراً)",
+        "صلابة حديدية واستمرارية قوية باش تمتع الزوجة ديالك وتوصلها لأعلى درجات النشوة",
         "تحكم كامل وقدرة على إطالة وقت العلاقة وتكرارها بكل نشاط وبدون عياء",
-        "استعادة الثقة والرجولة الكاملة وتجديد مشاعر الحب والتقارب بين الزوجين",
-        "متعة متبادلة وراحة نفسية واطمئنان تام في كل ليلة حميمية"
+        "استعادة الثقة والرجولة الكاملة وتجديد مشاعر الحب والشغف بين الزوجين"
       ],
       afterFr: [
-        "Fermeté maximale et endurance prolongée pour combler pleinement votre partenaire",
+        "Érection complète et gain visible en circonférence et longueur ressenti immédiatement par la partenaire",
+        "Fermeté maximale et endurance prolongée pour combler pleinement votre couple",
         "Maîtrise totale et capacité de prolonger l'acte avec vitalité et sans fatigue",
-        "Confiance et virilité absolue renouvelant la flamme et l'harmonie intime",
-        "Plaisir intense et partagé apportant sérénité et bonheur conjugal"
+        "Confiance et virilité absolue renouvelant la flamme et l'harmonie intime"
       ]
     },
     ingredients: [
       {
         nameAr: "الجينسينغ الكوري الأحمر (Panax Ginseng)",
         nameFr: "Ginseng Rouge Coréen",
-        roleAr: "تنشيط التدفق الدموي وصلابة استثنائية",
-        roleFr: "Circulation & Érection ferme",
-        descAr: "يساعد على ضخ الدم بقوة في الأوردة الحيوية لتحقيق صلابة قوية وثابتة تدوم طوال فترة العلاقة مع الزوجة.",
-        descFr: "Stimule l'afflux sanguin pour une fermeté vigoureuse et durable tout au long du rapport.",
+        roleAr: "توسيع الأنسجة وزيادة الحجم والسمك",
+        roleFr: "Expansion tissulaire & Afflux sanguin",
+        descAr: "يحفز إنتاج أكسيد النيتريك لتوسيع الغرف الإسفنجية في القضيب، مما يتيح استيعاب تدفق دموي كثيف يعطي انتصاباً أضخم، أطول، وأكثر سمكاً وصلابة.",
+        descFr: "Stimule l'oxyde nitrique pour dilater les corps caverneux, permettant une rétention sanguine maximale pour un volume et une fermeté accrus.",
         badgeAr: "مستخلص نقي",
         badgeFr: "Extrait pur"
       },
@@ -166,28 +166,34 @@ const CRO_EXPERIENCES: Record<string, CROConfig> = {
         phaseFr: "Phase 1 : Éveil & Désir",
         timeAr: "الأيام 1 - 7",
         timeFr: "Jours 1 à 7",
-        descAr: "زوال التعب والخمول، تدفق نشاط وحرارة دافئة في الجسم مع ارتفاع ملحوظ في الرغبة الحميمية."
+        descAr: "تدفق نشاط وحرارة دافئة في الجسم، انتصاب صباحي قوي وارتفاع ملحوظ في الرغبة الحميمية."
       },
       {
-        phaseAr: "المرحلة الثانية: صلابة وتحكم يمتع الزوجة",
-        phaseFr: "Phase 2 : Fermeté & Maîtrise",
+        phaseAr: "المرحلة الثانية: صلابة وبداية زيادة الامتلاء والسمك",
+        phaseFr: "Phase 2 : Fermeté & Volume",
         timeAr: "الأسبوع 2 - 3",
         timeFr: "Semaines 2 à 3",
-        descAr: "صلابة قوية وتأخير ملحوظ للتعب يجعلك تتحكم في العلاقة وتمتع الزوجة ديالك بكل راحة واسترخاء."
+        descAr: "صلابة حديدية مع زيادة ملموسة فالسمك والامتلاء عند الانتصاب كتحس بيها الزوجة ديالك فكل إيلاج مع تحكم أطول فالعلاقة."
       },
       {
-        phaseAr: "المرحلة الثالثة: أداء رجالي مثالي وسعادة زوجية دائمة",
-        phaseFr: "Phase 3 : Harmonie Conjugale",
+        phaseAr: "المرحلة الثالثة: ضخامة الحجم، تحكم كامل وسعادة زوجية دائمة",
+        phaseFr: "Phase 3 : Épanouissement Total",
         timeAr: "الشهر 1 - 2",
         timeFr: "Mois 1 à 2",
-        descAr: "استقرار كامل للصلابة والاستمرارية، ورضا تام متبادل يعيد الحميمية والشغف لبيتك الزوجي."
+        descAr: "تمدد كامل للأنسجة واستقرار ملحوظ في الحجم والسمك والصلابة، مع متعة قصوى ورضا تام لشريكة الحياة."
       }
     ],
     faqs: [
       {
+        qAr: "واش Vitality Ultra كيساعد فعلاً فزيادة حجم وسمك القضيب؟",
+        qFr: "Vitality Ultra aide-t-il vraiment à augmenter la taille et le volume ?",
+        aAr: "نعم! المكونات الفعالة كالجينسينغ الأحمر الكوري، تونغكات علي، والماكا تعمل على تعزيز تدفق الدم وتوسيع الغرف الإسفنجية للأنسجة الكهفية، مما يعطي امتلاءً أقصى يترجم إلى زيادة حقيقية وملموسة فالسمك والطول أثناء الانتصاب كتحس بيها الزوجة ديالك بوضوح.",
+        aFr: "Oui ! Les principes actifs stimulent la microcirculation et l'expansion des corps caverneux, permettant une réplétion sanguine maximale qui se traduit par un gain net de circonférence et de fermeté ressenti par votre partenaire."
+      },
+      {
         qAr: "واش كيعاون فعلاً باش نمتع الزوجة ديالي ونطول فالعلاقة؟",
         qFr: "Aide-t-il vraiment à combler ma partenaire et durer plus longtemps ?",
-        aAr: "نعم بكل تأكيد! المكونات الفعالة (الجينسينغ الأحمر، الماكا، وتونغكات علي) تعمل على تقوية ضخ الدم وتحسين القدرة على التحكم، مما يمنحك الوقت الكافي والاستمرارية باش تمتع الزوجة ديالك وتوصلها للنشوة والمتعة الكاملة.",
+        aAr: "نعم بكل تأكيد! المكونات الفعالة تعمل على تقوية ضخ الدم وتحسين القدرة على التحكم، مما يمنحك الوقت الكافي والاستمرارية باش تمتع الزوجة ديالك وتوصلها للنشوة والمتعة الكاملة.",
         aFr: "Oui absolument ! Les principes actifs agissent en synergie pour stimuler l'afflux sanguin et prolonger l'endurance afin d'apporter une pleine satisfaction à votre partenaire."
       },
       {

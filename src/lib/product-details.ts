@@ -18,7 +18,8 @@ export const PRODUCT_DETAILS: Record<string, ProductDetailInfo> = {
     shortDescription:
       "Formule avancée Vitality Ultra pour la puissance, la fermeté et l'épanouissement intime du couple.",
     benefits: [
-      "صلابة قوية وتحمل مستمر باش تمتع الزوجة ديالك فالعلاقة الحميمية وتعيشو أسعد اللحظات.",
+      "صلابة حديدية وزيادة ملحوظة فالحجم والسمك كتحس بيها الزوجة ديالك فوراً.",
+      "استمرارية وتحكم عالي باش تمتع الزوجة ديالك وتعيشو علاقة حميمية ممتعة للطرفين.",
       "Conseils d'utilisation : 1 à 2 capsules par jour, après le repas, avec un verre d'eau."
     ],
     ingredients:
