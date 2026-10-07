@@ -173,12 +173,12 @@ export const REVIEWS_DATA: CustomerReview[] = [
     productName: "Control Flow",
     rating: 5,
     date: "Il y a 3 semaines",
-    title: "Discrétion totale et résultat impeccable",
-    titleAr: "سرية تامة ونتيجة ممتازة",
-    comment: "Colis 100% anonyme sans aucune mention extérieure gênante, ce qui était très important pour moi. Produit de grande qualité avec une odeur agréable et des résultats réels dès les premières utilisations.",
-    commentAr: "طرد سري 100% بدون أي كتابة محرجة من الخارج، وهادشي كان مهم بزاف بالنسبة ليا. جودة عالية ورائحة ممتازة والنتيجة كتبان من أولى الاستعمالات.",
+    title: "تأخير حقيقي للقذف وعلاقة أطول بكتير مع الزوجة",
+    titleAr: "تأخير حقيقي للقذف وعلاقة أطول بكتير مع الزوجة",
+    comment: "Colis 100% anonyme sans aucune mention extérieure gênante. Produit de très grande qualité : il retarde vraiment l'éjaculation sans aucun engourdissement, ce qui permet de prolonger l'acte avec ma femme et de savourer chaque moment ensemble.",
+    commentAr: "طرد سري 100% بدون أي كتابة محرجة من الخارج. والأهم من هادشي أن المفعول كيبان من أول مرة: كيعطيك تأخير حقيقي ومكتساليش دغيا، وهادشي خلا العلاقة مع مراتي تطول بزاف ونستمتعو بيها بجوج بدون أي فقدان للإحساس.",
     verifiedBuyer: true,
-    highlight: "Discrétion & Efficacité"
+    highlight: "تأخير القذف واستمتاع أطول"
   },
   {
     id: "rev-8",
@@ -293,12 +293,12 @@ export const REVIEWS_DATA: CustomerReview[] = [
     productName: "Control Flow - قارورتان",
     rating: 5,
     date: "Il y a 4 jours",
-    title: "تحكم كامل وراحة بال وسرية مطلقة",
-    titleAr: "تحكم كامل وراحة بال وسرية مطلقة",
-    comment: "الزيت طبيعي برائحة القرنفل الزكية. كيعطي تحكم ممتاز واستمرارية بدون أي تخدير مزعج أو حريق. التغليف سري ومحكم لباب الدار.",
-    commentAr: "الزيت طبيعي برائحة القرنفل الزكية. كيعطي تحكم ممتاز واستمرارية بدون أي تخدير مزعج أو حريق. التغليف سري ومحكم لباب الدار.",
+    title: "تحكم كامل وتأخير القذف.. ولينا كنستمتعو بالعلاقة بجوج",
+    titleAr: "تحكم كامل وتأخير القذف.. ولينا كنستمتعو بالعلاقة بجوج",
+    comment: "الزيت طبيعي برائحة القرنفل الزكية. كيعطي تحكم ممتاز وكيأخر القذف بزاف باش متساليش دغيا، والجميل أنه بدون أي تخدير مزعج أو حريق. الزوجة ديالي فرحانة بزاف بالتغيير والتغليف سري ومحكم.",
+    commentAr: "الزيت طبيعي برائحة القرنفل الزكية. كيعطي تحكم ممتاز وكيأخر القذف بزاف باش متساليش دغيا، والجميل أنه بدون أي تخدير مزعج أو حريق. الزوجة ديالي فرحانة بزاف بالتغيير والتغليف سري ومحكم.",
     verifiedBuyer: true,
-    highlight: "تحكم وراحة تامة"
+    highlight: "تحكم وتأخير ممتع"
   },
   {
     id: "rev-oil-3",

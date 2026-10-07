@@ -582,10 +582,17 @@ const CRO_EXPERIENCES: Record<string, CROConfig> = {
     trustItems: [
       {
         icon: Clock3,
-        titleAr: "تحكم واسترخاء طبيعي",
-        titleFr: "Contrôle & Maîtrise",
-        subAr: "استمرارية وثقة وهدوء تام",
-        subFr: "Endurance et sérénité absolue"
+        titleAr: "تأخير القذف والتحكم الكامل",
+        titleFr: "Retardant & Contrôle Absolu",
+        subAr: "كيأخرك باش متجيبش البليزير دغيا",
+        subFr: "Prolonge l'acte sans précipitation"
+      },
+      {
+        icon: HeartPulse,
+        titleAr: "علاقة طويلة وممتعة للطرفين",
+        titleFr: "Plaisir Partagé & Durable",
+        subAr: "باش تستمتع نتا والزوجة ديالك",
+        subFr: "Pour combler les deux partenaires"
       },
       {
         icon: Droplet,
@@ -596,73 +603,70 @@ const CRO_EXPERIENCES: Record<string, CROConfig> = {
       },
       {
         icon: Lock,
-        titleAr: "تغليف سري ومحكم 100%",
-        titleFr: "Discrétion totale 100%",
-        subAr: "طرد عادي بدون أي اسم محرج",
-        subFr: "Colis scellé sans mention"
-      },
-      {
-        icon: Eye,
-        titleAr: "معاينة قبل الدفع",
-        titleFr: "Vérifiez avant de payer",
-        subAr: "افحص علبتك مع موزع الطلبية",
-        subFr: "Vérification avec le livreur"
+        titleAr: "تغليف سري ومعاينة قبل الدفع",
+        titleFr: "Colis discret & Vérification",
+        subAr: "طرد عادي بدون أي إحراج",
+        subFr: "Discrétion totale garantie"
       }
     ],
-    headlineAr: "التحكم الكامل والاستمرارية.. ثقة وراحة بال مطلقة بزيوت طبيعية",
-    headlineFr: "Maîtrise, confort et endurance prolongée : la puissance des huiles naturelles",
-    subheadlineAr: "تركيبة موضعية فريدة غنية بزيت القرنفل والجينسينغ وزيت اللوز لتهدئة الحساسية المفرطة وتوفير تحكم طويل الأمد.",
-    subheadlineFr: "Une formule externe raffinée à l'huile de girofle, ginseng et amande douce pour une maîtrise parfaite.",
+    headlineAr: "تأخير القذف والتحكم الكامل.. باش تطول العلاقة مع الزوجة ديالك وتستمتعو بيها بجوج لأقصى حد",
+    headlineFr: "Contrôle de l'éjaculation et durée prolongée : pour savourer pleinement l'intimité à deux",
+    subheadlineAr: "زيت طبيعي مركب من خلاصة القرنفل والجينسينغ وزيت اللوز، كيهدئ الحساسية المفرطة وكيأخر القذف باش متساليش بالزربة، وكيمنحك النفس الطويل باش تعيشو علاقة حميمية طويلة، ممتعة، ومرضية ليك ولشريكة حياتك.",
+    subheadlineFr: "Une formule externe raffinée à l'huile de girofle et ginseng pour retarder l'éjaculation, prolonger la durée du rapport et profiter d'un plaisir mutuel intense.",
     comparison: {
       beforeAr: [
-        "توتر وقلق وتسرع يفسد اللحظات الحميمة",
-        "تجارب سيئة مع المراهم الكيميائية المسببة للتخدير وفقدان الإحساس",
-        "فقدان الثقة فالنفس والتردد المستمر"
+        "سرعة القذف والتسرع في الدقائق الأولى قبل ما تستمتع الزوجة ديالك",
+        "عدم القدرة على التحكم والإحساس بالإحراج ونقص الثقة قدام شريكة حياتك",
+        "تجارب سيئة مع المراهم الكيميائية المخدرة اللي كتفقدك الإحساس والمتعة تماماً",
+        "قصر وقت العلاقة اللي كيخلي الزوجة ممتنعاش وما وصلاش للنشوة الكاملة"
       ],
       beforeFr: [
-        "Stress, précipitation et appréhension lors des moments intimes",
+        "Éjaculation précoce et fin précipitée avant d'avoir pu combler votre partenaire",
+        "Perte de maîtrise, frustration et sentiment d'impuissance face au stress",
         "Mauvaises expériences avec des gels chimiques anesthésiants désagréables",
-        "Perte de confiance et frustration"
+        "Rapports trop courts empêchant votre conjointe d'atteindre l'orgasme"
       ],
       afterAr: [
-        "تحكم سلس وهدوء وثقة غير مسبوقة فالاستمرارية",
-        "إحساس طبيعي كامل بدون أي تخدير مزعج أو حريق",
-        "رائحة زكية، امتصاص سريع، وراحة واسترخاء للطرفين"
+        "تأخير ملموس وتحكم كامل باش متجيبش البليزير ديالك دغيا وتطول فالعلاقة",
+        "علاقة حميمية طويلة ومرتاحة كتخليك نتا ومارتك تستمتعو بكل دقيقة وبكل إيلاج",
+        "إحساس طبيعي كامل بدون أي تخدير مزعج أو حريق، مع الحفاظ على قمة اللذة",
+        "ثقة مطلقة وهدوء نفسي ورضا تام وفرحة كبيرة لشريكة حياتك"
       ],
       afterFr: [
-        "Maîtrise sereine, endurance prolongée et confiance absolue",
-        "Sensations naturelles intactes sans perte de sensibilité",
-        "Parfum subtil, pénétration rapide et confort partagé"
+        "Retardement notable et maîtrise sereine pour prolonger le rapport autant que souhaité",
+        "Moments intimes longs, complices et profondément épanouissants pour les deux partenaires",
+        "Sensations naturelles intactes sans perte de sensibilité ni effet anesthésiant",
+        "Confiance totale et satisfaction mutuelle absolue dans le couple"
       ]
     },
     ingredients: [
       {
         nameAr: "زيت القرنفل النقي (Eugenia Caryophyllata)",
         nameFr: "Huile Essentielle de Girofle",
-        roleAr: "تهدئة طبيعية وضبط الإشارات العصبية",
-        roleFr: "Apaisement & Contrôle naturel",
-        descAr: "يحتوي على الأوجينول الطبيعي الذي يهدئ الحساسية المفرطة بلطف دون أن يفقدك الإحساس الطبيعي.",
-        descFr: "Riche en eugénol naturel, il régule la sensibilité excessive avec douceur.",
+        roleAr: "تهدئة طبيعية وضبط الإشارات وتأخير القذف",
+        roleFr: "Régulation sensorielle & Retardant",
+        descAr: "يحتوي على الأوجينول الطبيعي الذي يهدئ الحساسية المفرطة بلطف وكيأخر وصول النشوة بسرعة دون أن يفقدك الإحساس الطبيعي.",
+        descFr: "Riche en eugénol naturel, il régule la sensibilité excessive et retarde le réflexe éjaculatoire en douceur.",
         badgeAr: "مقطر نقي",
         badgeFr: "Distillation pure"
       },
       {
         nameAr: "خلاصة الجينسينغ الموضعية",
         nameFr: "Extrait de Ginseng",
-        roleAr: "تنشيط الدورة الدموية والأنسجة",
+        roleAr: "تنشيط الدورة الدموية وثبات الصلابة",
         roleFr: "Tonus & Circulation locale",
-        descAr: "يعزز حيوية الأنسجة ويدعم صلابة واستقرار الأداء الموضعي.",
-        descFr: "Favorise la microcirculation et soutient la fermeté des tissus.",
+        descAr: "يعزز تدفق الدم ويضمن استمرار الانتصاب والصلابة القوية طوال فترة إطالة العلاقة مع الزوجة.",
+        descFr: "Favorise la microcirculation et maintient une fermeté vigoureuse durant tout le rapport prolongé.",
         badgeAr: "مستخلص طبيعي",
         badgeFr: "Extrait actif"
       },
       {
         nameAr: "زيت اللوز الحلو وفيتامين E",
         nameFr: "Huile d'Amande Douce & Vitamine E",
-        roleAr: "ترطيب وحماية ونعومة للبشرة",
-        roleFr: "Hydratation & Confort",
-        descAr: "قاعدة نباتية فائقة النعومة تغذي البشرة الحساسة وتسهل التدليك بدون أي لزوجة.",
-        descFr: "Base végétale ultra-douce garantissant une absorption optimale et sans résidu.",
+        roleAr: "ترطيب وحماية ونعومة فائقة للأنسجة",
+        roleFr: "Hydratation & Confort intime",
+        descAr: "قاعدة نباتية فائقة النعومة تغذي البشرة الحساسة وتسهل التدليك لامتصاص سريع بدون أي أثر دهني مزعج.",
+        descFr: "Base végétale ultra-douce garantissant une absorption optimale, sans résidu et sans irritation.",
         badgeAr: "عناية فائقة",
         badgeFr: "Soin doux"
       }
@@ -673,34 +677,40 @@ const CRO_EXPERIENCES: Record<string, CROConfig> = {
         phaseFr: "Dès la 1ère utilisation",
         timeAr: "مفعول سريع (15-20 دقيقة)",
         timeFr: "Action en 15-20 min",
-        descAr: "3 إلى 5 قطرات في تدليك لطيف تمنحك استرخاءً موضعياً وتحكماً ملحوظاً من المرة الأولى."
+        descAr: "3 إلى 5 قطرات بتدليك خفيف قبل 15 دقيقة تمنحك استرخاءً موضعياً وتأخيراً واضحاً للقذف يطول وقت الجماع من أول مرة."
       },
       {
-        phaseAr: "مع الانتظام",
+        phaseAr: "مع الانتظام وتكرار الاستعمال",
         phaseFr: "Avec la régularité",
-        timeAr: "راحة وثقة دائمة",
+        timeAr: "تحكم وهدوء دائم",
         timeFr: "Maîtrise durable",
-        descAr: "تزول رهبة التوتر والتسرع النفسي تماماً وتصبح قادراً على ضبط نفسك بكل هدوء وثقة."
+        descAr: "تزول رهبة التسرع النفسي تماماً وتصبح قادراً على ضبط وقت القذف بكل هدوء باش تستمتع نتا والزوجة ديالك لأطول فترة ممكنة."
       }
     ],
     faqs: [
       {
-        qAr: "كيفاش كنستعمل زيت Control Flow؟",
-        qFr: "Comment appliquer l'huile Control Flow ?",
-        aAr: "ضع 3 إلى 5 قطرات باستخدام القطارة المرفقة على المنطقة المعنية قبل 15 إلى 20 دقيقة، وقم بتدليك خفيف حتى يمتصه الجلد تماماً. (للاستعمال الخارجي فقط).",
-        aFr: "Appliquer 3 à 5 gouttes à l'aide de la pipette 15 à 20 minutes avant. Masser délicatement jusqu'à pénétration. Usage externe."
+        qAr: "واش كيعاون فعلاً باش نأخر القذف ونطول العلاقة مع الزوجة ديالي؟",
+        qFr: "Aide-t-il vraiment à retarder l'éjaculation et prolonger l'acte avec ma partenaire ?",
+        aAr: "نعم بكل تأكيد! هادي هي المهمة الأساسية لـ Control Flow. زيت القرنفل الطبيعي غني بالأوجينول اللي كيهدئ الحساسية المفرطة، وهادشي كيخليك تتحكم فالقذف وماتساليش دغيا، باش تعيشو علاقة حميمية طويلة وممتعة نتا والزوجة ديالك حتى تستمتعو بجوج وتوصلو للنشوة الكاملة.",
+        aFr: "Oui absolument ! C'est le rôle premier de Control Flow. L'eugénol naturel apaise l'hypersensibilité cutanée et permet de retarder l'éjaculation, offrant un rapport intime beaucoup plus long et intense pour combler les deux partenaires."
       },
       {
-        qAr: "واش كيخدر المنطقة ولا كيحرق؟",
+        qAr: "كيفاش كنستعمل زيت Control Flow؟",
+        qFr: "Comment appliquer l'huile Control Flow ?",
+        aAr: "ضع 3 إلى 5 قطرات باستخدام القطارة المرفقة على المنطقة الحساسة قبل 15 إلى 20 دقيقة من اللقاء، وقم بتدليك خفيف حتى يمتصه الجلد تماماً. (للاستعمال الخارجي فقط).",
+        aFr: "Appliquer 3 à 5 gouttes à l'aide de la pipette 15 à 20 minutes avant. Masser délicatement jusqu'à pénétration complète. Usage externe uniquement."
+      },
+      {
+        qAr: "واش كيخدر العضو ولا كيحرق؟",
         qFr: "Y a-t-il un effet d'anesthésie ou de brûlure ?",
-        aAr: "لا نهائياً! تركيبته طبيعية بدون ليدوكائين أو مواد كيميائية مخدرة. كيعطي إحساس دافئ ومريح وكيحافظ على كامل المتعة والإحساس الطبيعي.",
-        aFr: "Absolument pas ! Sans anesthésiant chimique (sans lidocaïne), il préserve 100% des sensations naturelles."
+        aAr: "لا نهائياً! تركيبته طبيعية 100% بدون ليدوكائين أو مواد كيميائية مخدرة. كيعطي إحساس دافئ ومريح وكيحافظ على كامل المتعة واللذة الطبيعية بدون أي فقدان للإحساس.",
+        aFr: "Absolument pas ! Sans anesthésiant chimique (sans lidocaïne), il préserve 100% du plaisir et des sensations naturelles sans brûlure ni engourdissement."
       },
       {
         qAr: "واش الطرد كيوصل مسدود وسري؟",
         qFr: "Le colis est-il discret ?",
-        aAr: "نعم سرية تامة 100%! الكرتونة عادية وبدون أي إشارة للمنتج أو طبيعته، والتوصيل لباب دارك مع إمكانية فحص العلبة قبل الدفع للموزع.",
-        aFr: "Discrétion totale 100%. Colis carton neutre sans mention du contenu. Vous pouvez vérifier la boîte avant de régler."
+        aAr: "نعم سرية تامة 100%! الكرتونة عادية وبدون أي إشارة للمنتج أو طبيعته، والتوصيل لباب دارك مع إمكانية فحص العلبة والتأكد منها قبل الدفع للموزع.",
+        aFr: "Discrétion totale 100%. Colis carton neutre sans mention du contenu. Vous pouvez vérifier la boîte avant de régler le livreur."
       }
     ]
   },

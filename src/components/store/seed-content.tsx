@@ -3,6 +3,11 @@
 import { usePreferences, type SupportedLocale } from "@/components/store/preferences-provider";
 
 const seedTranslations: Record<string, Record<SupportedLocale, string>> = {
+  "Formule Retardante Naturelle - Control Flow": {
+    ar: "تأخير القذف، تحكم طبيعي واستمرارية لعلاقة زوجية طويلة وممتعة",
+    fr: "Formule Retardante Naturelle - Control Flow",
+    en: "Natural Climax Delay & Intimate Control - Control Flow"
+  },
   "Formule Puissance & Endurance Masculine - Vitality Ultra": {
     ar: "صلابة، زيادة فالحجم واستمرارية فائقة باش تمتع الزوجة ديالك فالعلاقة الحميمية وتعيشو أسعد اللحظات",
     fr: "Formule Puissance, Volume & Endurance Masculine - Vitality Ultra",
@@ -128,7 +133,7 @@ const seedTranslations: Record<string, Record<SupportedLocale, string>> = {
     en: "Keep out of reach of children. Do not exceed recommended daily dose. Not advised for people on antidiabetic medication without medical advice. Not a substitute for a varied diet."
   },
   "Une formule d'huiles naturelles enrichie au clou de girofle et ginseng pour le confort, la maîtrise et l'endurance masculine. Retrouvez la composition et les conseils d'utilisation indiqués sur l'étiquette.": {
-    ar: "تركيبة من الزيوت الطبيعية مدعمة بالقرنفل والجنسنج لتعزيز الراحة والتحكم والقدرة لدى الرجال. تعرّف على المكونات وطريقة الاستعمال الموضحتين على الملصق.",
+    ar: "تركيبة طبيعية من زيوت القرنفل والجنسنج لتأخير القذف والتحكم الكامل باش متجيبش البليزير ديالك دغيا، وتخلي العلاقة الحميمية مع الزوجة ديالك طويلة وممتعة باش تستمتعو بيها بجوج لأقصى حد.",
     fr: "Une formule d'huiles naturelles enrichie au clou de girofle et ginseng pour le confort, la maîtrise et l'endurance masculine. Retrouvez la composition et les conseils d'utilisation indiqués sur l'étiquette.",
     en: "A natural oil formula enriched with clove and ginseng for male comfort, control and stamina. See the ingredients and directions on the label."
   },

@@ -110,10 +110,12 @@ export const PRODUCT_DETAILS: Record<string, ProductDetailInfo> = {
   "rovanx-control-oil": {
     name: "Control Flow",
     badge: "60 ml",
-    tagline: "Huile naturelle pour hommes",
+    tagline: "Formule Retardante Naturelle - Control Flow",
     shortDescription:
       "Une formule d'huiles naturelles enrichie au clou de girofle et ginseng pour le confort, la maîtrise et l'endurance masculine. Retrouvez la composition et les conseils d'utilisation indiqués sur l'étiquette.",
     benefits: [
+      "تأخير فعال للقذف والتحكم الكامل باش متجيبش البليزير ديالك دغيا وتطول فالعلاقة.",
+      "علاقة حميمية طويلة وممتعة باش تستمتع نتا والزوجة ديالك وتوصلو بجوج للنشوة الكاملة.",
       "Flacon de 60 ml avec pipette compte-gouttes.",
       "Conseils d'utilisation : 3 à 5 gouttes en massage doux, 15 à 20 minutes avant le rapport."
     ],
