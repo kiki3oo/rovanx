@@ -15,6 +15,7 @@ const config: Config = {
           100: "#ece4d7"
         },
         bronze: {
+          400: "#d4a362",
           500: "#b9823c",
           600: "#93652f"
         },

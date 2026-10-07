@@ -101,17 +101,21 @@ export function ProductReviews({
           </div>
 
           {/* Breakdown Bars */}
-          <div className="grid content-center gap-2 text-xs">
+          <div className="grid content-center gap-2.5 text-xs">
             {GLOBAL_REVIEW_STATS.ratingBreakdown.map((row) => (
               <div key={row.stars} className="flex items-center gap-3">
                 <span className="w-12 font-bold text-white">{row.stars} {isArabic ? "نجوم" : "étoiles"}</span>
                 <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-white/10">
                   <div
-                    className="h-full rounded-full bg-gradient-to-r from-bronze-400 to-amber-400"
-                    style={{ width: `${row.percentage}%` }}
+                    className="h-full rounded-full transition-all duration-500 shadow-sm shadow-amber-400/30"
+                    style={{
+                      width: `${row.percentage}%`,
+                      backgroundColor: "#f59e0b",
+                      backgroundImage: "linear-gradient(90deg, #d97706 0%, #f59e0b 50%, #fcd34d 100%)"
+                    }}
                   />
                 </div>
-                <span className="w-10 text-right text-white/60">{row.percentage}%</span>
+                <span className="w-10 text-right font-semibold text-white/70">{row.percentage}%</span>
               </div>
             ))}
           </div>
