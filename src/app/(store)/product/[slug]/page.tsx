@@ -11,6 +11,8 @@ import { SeedContent } from "@/components/store/seed-content";
 import { getProductVisual, getProductGallery } from "@/lib/product-visuals";
 import { getProductDetail } from "@/lib/product-details";
 import { ProductGallery } from "@/components/store/product-gallery";
+import { ProstaGuardExperience } from "@/components/store/prosta-guard-experience";
+import { ProductReviews } from "@/components/store/product-reviews";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -159,6 +161,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         </div>
       </section>
 
+      {product.slug === "rovanx-prostate" && <ProstaGuardExperience />}
+
       <section className="section border-t border-white/10 bg-[#0e1015] text-white">
         <div className="container grid gap-5 md:grid-cols-2">
           {productDetails.map(([Icon, title, content]) => (
@@ -176,6 +180,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           ))}
         </div>
       </section>
+
+      <ProductReviews slug={product.slug} productName={detail?.name || product.name} />
 
       <section className="section border-t border-white/10 bg-[#12141a] text-white">
         <div className="container">

@@ -28,6 +28,22 @@ export async function POST(request: Request) {
     };
   });
   const subtotal = items.reduce((sum, item) => sum + item.total, 0);
+
+  let discountTotal = 0;
+  let packNote: string | null = null;
+  if (items.length === 1 && items[0].product.slug === "rovanx-prostate") {
+    const qty = items[0].quantity;
+    if (qty === 2) {
+      discountTotal = 99; // 598 -> 499
+      packNote = "Pack 2 Flacons Prosta Guard (499 DH - Livraison Gratuite)";
+    } else if (qty === 3) {
+      discountTotal = 248; // 897 -> 649
+      packNote = "Pack 3 Flacons Prosta Guard (649 DH - Livraison Gratuite)";
+    }
+  }
+
+  const finalTotal = Math.max(0, subtotal - discountTotal);
+  const combinedNotes = [parsed.data.notes, packNote].filter(Boolean).join(" | ") || undefined;
   const phoneNorm = normalizeMoroccanPhone(parsed.data.phone);
   const reference = `ROV-${Date.now().toString(36).toUpperCase()}`;
 
@@ -54,9 +70,10 @@ export async function POST(request: Request) {
         reference,
         customerId: customer.id,
         subtotal,
-        total: subtotal,
+        discountTotal,
+        total: finalTotal,
         addressDetails: parsed.data.addressDetails,
-        notes: parsed.data.notes,
+        notes: combinedNotes,
         utmSource: parsed.data.utmSource,
         utmMedium: parsed.data.utmMedium,
         utmCampaign: parsed.data.utmCampaign,
