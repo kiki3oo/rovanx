@@ -863,9 +863,19 @@ export function ProductCroExperience({ slug }: { slug: string }) {
   if (!config) return null;
 
   return (
-    <div className="border-t border-white/10 bg-[#0e1015] text-white">
+    <div className="relative border-t border-white/10 bg-[#0e1015] text-white overflow-hidden">
+      {slug === "rovanx-vital-protein" && (
+        <div className="pointer-events-none absolute inset-0 z-0 select-none overflow-hidden">
+          <img
+            src="/products/vital-protein-couple-bg.webp"
+            alt=""
+            className="h-full w-full object-cover object-center opacity-15"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0e1015] via-[#0e1015]/90 to-[#0e1015]" />
+        </div>
+      )}
       {/* 1. Trust & Reassurance Bar */}
-      <section className="border-b border-white/10 bg-gradient-to-r from-bronze-950/40 via-bronze-900/20 to-bronze-950/40 py-6">
+      <section className="relative z-10 border-b border-white/10 bg-gradient-to-r from-bronze-950/40 via-bronze-900/20 to-bronze-950/40 py-6">
         <div className="container">
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             {config.trustItems.map((item, idx) => {
@@ -885,7 +895,7 @@ export function ProductCroExperience({ slug }: { slug: string }) {
       </section>
 
       {/* 2. Problem vs Solution */}
-      <section className="section py-14">
+      <section className="section relative z-10 py-14">
         <div className="container">
           <div className="mx-auto max-w-3xl text-center">
             <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-3.5 py-1 text-xs font-bold text-amber-400">
@@ -945,7 +955,7 @@ export function ProductCroExperience({ slug }: { slug: string }) {
       </section>
 
       {/* 3. Active Ingredients */}
-      <section className="section border-t border-white/10 bg-[#12141a] py-14">
+      <section className="section relative z-10 border-t border-white/10 bg-[#12141a]/60 py-14 backdrop-blur-sm">
         <div className="container">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-2xl font-black text-white sm:text-3xl">
@@ -988,7 +998,7 @@ export function ProductCroExperience({ slug }: { slug: string }) {
       </section>
 
       {/* 4. Timeline */}
-      <section className="section border-t border-white/10 py-14">
+      <section className="section relative z-10 border-t border-white/10 py-14">
         <div className="container">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-2xl font-black text-white sm:text-3xl">
@@ -1017,7 +1027,7 @@ export function ProductCroExperience({ slug }: { slug: string }) {
       </section>
 
       {/* 5. 100% Discreet Packaging Guarantee Box */}
-      <section className="section border-t border-white/10 bg-[#12141a] py-12">
+      <section className="section relative z-10 border-t border-white/10 bg-[#12141a]/80 py-12 backdrop-blur-sm">
         <div className="container">
           <div className="rounded-3xl border-2 border-bronze-500/40 bg-gradient-to-br from-bronze-950/40 via-graphite-950 to-bronze-950/30 p-8 shadow-2xl backdrop-blur-md">
             <div className="grid gap-6 md:grid-cols-3">
@@ -1078,7 +1088,7 @@ export function ProductCroExperience({ slug }: { slug: string }) {
       </section>
 
       {/* 6. FAQs */}
-      <section className="section border-t border-white/10 py-12">
+      <section className="section relative z-10 border-t border-white/10 py-12">
         <div className="container max-w-3xl">
           <div className="text-center">
             <span className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs font-bold text-white/70">
