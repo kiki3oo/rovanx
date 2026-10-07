@@ -863,19 +863,9 @@ export function ProductCroExperience({ slug }: { slug: string }) {
   if (!config) return null;
 
   return (
-    <div className="relative border-t border-white/10 bg-[#0e1015] text-white overflow-hidden">
-      {slug === "rovanx-vital-protein" && (
-        <div className="pointer-events-none absolute inset-0 z-0 select-none overflow-hidden">
-          <img
-            src="/products/vital-protein-bg.jpg"
-            alt=""
-            className="h-full w-full object-cover object-center opacity-60 md:opacity-75 brightness-110"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0e1015] via-transparent to-[#0e1015]" />
-        </div>
-      )}
+    <div className="border-t border-white/10 bg-[#0e1015] text-white">
       {/* 1. Trust & Reassurance Bar */}
-      <section className="relative z-10 border-b border-white/10 bg-gradient-to-r from-bronze-950/40 via-bronze-900/20 to-bronze-950/40 py-6">
+      <section className="border-b border-white/10 bg-gradient-to-r from-bronze-950/40 via-bronze-900/20 to-bronze-950/40 py-6">
         <div className="container">
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             {config.trustItems.map((item, idx) => {
