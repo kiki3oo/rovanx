@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import { CheckCircle2, Clock3, PhoneCall, ShieldCheck, Truck } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { AddToCartButton } from "@/components/store/add-to-cart-button";
@@ -87,23 +86,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <section className="section relative overflow-hidden bg-[#12141a] text-white">
-        {product.slug === "rovanx-vital-protein" && (
-          <div className="pointer-events-none absolute inset-0 z-0 select-none overflow-hidden">
-            <Image
-              src="/products/vital-protein-couple-bg.webp"
-              alt="Vital Protein Ambience"
-              fill
-              priority
-              unoptimized
-              sizes="100vw"
-              className="object-cover object-top sm:object-center opacity-65 md:opacity-75"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#12141a] via-transparent to-[#12141a]/70" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#12141a]/85 via-transparent to-[#12141a]/80" />
-          </div>
-        )}
-        <div className="container relative z-10 grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+      <section className="section bg-[#12141a] text-white">
+        <div className="container grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
           <div className="flex items-start justify-center">
             <ProductGallery
               images={gallery}
