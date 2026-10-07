@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Eye, Loader2, Lock, PhoneCall, ShieldCheck, Truck } from "lucide-react";
 import { Money } from "@/components/store/money";
 import { usePreferences } from "@/components/store/preferences-provider";
+import { getProductTiers, getSelectedTierInfo } from "@/lib/pricing-tiers";
 
 type DirectCodProduct = {
   id: string;
@@ -24,64 +25,18 @@ export function DirectCodForm({
 }) {
   const router = useRouter();
   const { locale, currency } = usePreferences();
-  const isProstate = product.slug === "rovanx-prostate";
-  const [quantity, setQuantity] = useState(isProstate ? 2 : 1);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-
   const isArabic = locale === "ar";
   const isEnglish = locale === "en";
 
-  let totalPrice = product.price * quantity;
-  let originalPrice: number | null = null;
-  let freeShipping = false;
+  const tiers = getProductTiers(product.slug, product.price, isArabic);
+  const [quantity, setQuantity] = useState(2);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  if (isProstate) {
-    if (quantity === 1) {
-      totalPrice = 299;
-      originalPrice = null;
-      freeShipping = false;
-    } else if (quantity === 2) {
-      totalPrice = 499;
-      originalPrice = 598;
-      freeShipping = true;
-    } else if (quantity === 3) {
-      totalPrice = 649;
-      originalPrice = 897;
-      freeShipping = true;
-    }
-  }
-
-  const prostateTiers = [
-    {
-      qty: 1,
-      title: isArabic ? "علبة واحدة" : "1 flacon",
-      sub: isArabic ? "120 مل - تجربة شهر" : "120 ml - 1 mois",
-      price: 299,
-      originalPrice: null,
-      freeShipping: false
-    },
-    {
-      qty: 2,
-      title: isArabic ? "علبتان (شهرين)" : "2 flacons (2 mois)",
-      sub: isArabic ? "240 مل - كورس موصى به" : "240 ml - Recommandé",
-      price: 499,
-      originalPrice: 598,
-      savings: isArabic ? "وفر 100 درهم" : "Économisez 100 DH",
-      badge: isArabic ? "⭐ الأكثر طلباً" : "⭐ Plus populaire",
-      freeShipping: true
-    },
-    {
-      qty: 3,
-      title: isArabic ? "3 علب (3 أشهر)" : "3 flacons (3 mois)",
-      sub: isArabic ? "360 مل - كورس كامل" : "360 ml - Cure complète",
-      price: 649,
-      originalPrice: 897,
-      savings: isArabic ? "وفر 250 درهم" : "Économisez 250 DH",
-      badge: isArabic ? "🏆 أفضل توفير" : "🏆 Meilleure offre",
-      freeShipping: true
-    }
-  ];
+  const selectedInfo = getSelectedTierInfo(product.slug, product.price, quantity, isArabic);
+  const totalPrice = selectedInfo.totalPrice;
+  const originalPrice = selectedInfo.originalPrice;
+  const freeShipping = selectedInfo.freeShipping;
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -164,115 +119,82 @@ export function DirectCodForm({
       <div className="mb-6">
         <label className={`mb-2.5 flex items-center justify-between text-xs font-black uppercase tracking-wider ${darkTheme ? "text-white/80" : "text-black/80"}`}>
           <span>{isArabic ? "اختر العرض المناسب لك:" : "Choisissez votre offre :"}</span>
-          {isProstate && (
-            <span className="text-[11px] font-bold text-amber-400">
-              {isArabic ? "⚡ تخفيض خاص وتوصيل مجاني للكميات" : "⚡ Réduction et livraison gratuite"}
-            </span>
-          )}
+          <span className="text-[11px] font-bold text-amber-400">
+            {isArabic ? "⚡ تخفيض خاص وتوصيل مجاني للكميات" : "⚡ Réduction et livraison gratuite"}
+          </span>
         </label>
-        {isProstate ? (
-          <div className="grid gap-3">
-            {prostateTiers.map((tier) => {
-              const isSelected = quantity === tier.qty;
-              return (
-                <button
-                  key={tier.qty}
-                  type="button"
-                  onClick={() => setQuantity(tier.qty)}
-                  aria-pressed={isSelected}
-                  className={`relative flex flex-col sm:flex-row sm:items-center sm:justify-between rounded-xl border-2 p-3.5 text-right transition-all cursor-pointer ${
-                    isSelected
-                      ? darkTheme
-                        ? "border-amber-400 bg-amber-500/15 shadow-lg shadow-amber-950/40 ring-1 ring-amber-400"
-                        : "border-amber-500 bg-amber-500/10 shadow-md ring-1 ring-amber-500"
-                      : darkTheme
-                        ? "border-white/10 bg-white/[0.03] hover:border-white/20"
-                        : "border-black/10 bg-sand-50/50 hover:border-black/20"
-                  }`}
-                >
-                  {tier.badge && (
-                    <span className="absolute -top-3 left-4 rounded-full bg-gradient-to-r from-amber-500 to-bronze-600 px-2.5 py-0.5 text-[11px] font-black text-white shadow-sm">
-                      {tier.badge}
-                    </span>
-                  )}
-                  <div className="flex items-center gap-3">
-                    <div
-                      className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 transition-colors ${
-                        isSelected
-                          ? "border-amber-400 bg-amber-400 text-graphite-950"
-                          : darkTheme ? "border-white/30" : "border-black/30"
-                      }`}
-                    >
-                      {isSelected && <span className="h-2 w-2 rounded-full bg-graphite-950" />}
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className={`text-base font-black ${isSelected ? (darkTheme ? "text-amber-300" : "text-amber-900") : (darkTheme ? "text-white" : "text-graphite-950")}`}>
-                          {tier.title}
-                        </span>
-                        {tier.savings && (
-                          <span className="rounded-full bg-red-500/20 px-2 py-0.5 text-[11px] font-black text-red-400">
-                            {tier.savings}
-                          </span>
-                        )}
-                      </div>
-                      <p className={`text-xs ${darkTheme ? "text-white/60" : "text-black/60"}`}>
-                        {tier.sub}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="mt-2 flex items-baseline justify-between sm:mt-0 sm:justify-end sm:gap-3">
-                    {tier.freeShipping && (
-                      <span className="text-[11px] font-bold text-emerald-400">
-                        {isArabic ? "توصيل مجاني" : "Livraison gratuite"}
-                      </span>
-                    )}
-                    <div className="flex items-baseline gap-1.5">
-                      {tier.originalPrice && (
-                        <span className="text-xs line-through text-white/40">
-                          <Money value={tier.originalPrice} />
-                        </span>
-                      )}
-                      <span className={`text-lg font-black ${isSelected ? (darkTheme ? "text-amber-300" : "text-amber-900") : (darkTheme ? "text-white" : "text-graphite-950")}`}>
-                        <Money value={tier.price} />
-                      </span>
-                    </div>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-        ) : (
-          <div className="grid gap-2.5 sm:grid-cols-3">
-            {[
-              { qty: 1, label: isArabic ? "علبة واحدة" : isEnglish ? "1 bottle" : "1 boîte" },
-              { qty: 2, label: isArabic ? "علبتان" : isEnglish ? "2 bottles" : "2 boîtes" },
-              { qty: 3, label: isArabic ? "3 علب" : isEnglish ? "3 bottles" : "3 boîtes" }
-            ].map((tier) => (
+        <div className="grid gap-3">
+          {tiers.map((tier) => {
+            const isSelected = quantity === tier.qty;
+            return (
               <button
                 key={tier.qty}
                 type="button"
                 onClick={() => setQuantity(tier.qty)}
-                aria-pressed={quantity === tier.qty}
-                className={`relative flex flex-col items-center justify-center rounded-xl border-2 p-3 text-center transition-all ${
-                  quantity === tier.qty
+                aria-pressed={isSelected}
+                className={`relative flex flex-col sm:flex-row sm:items-center sm:justify-between rounded-xl border-2 p-3.5 text-right transition-all cursor-pointer ${
+                  isSelected
                     ? darkTheme
-                      ? "border-bronze-500 bg-bronze-500/20 font-black text-bronze-300 shadow-sm"
-                      : "border-bronze-500 bg-bronze-500/10 font-black text-bronze-900 shadow-sm"
+                      ? "border-amber-400 bg-amber-500/15 shadow-lg shadow-amber-950/40 ring-1 ring-amber-400"
+                      : "border-amber-500 bg-amber-500/10 shadow-md ring-1 ring-amber-500"
                     : darkTheme
-                      ? "border-white/10 bg-white/[0.03] text-white/80 hover:border-white/20"
-                      : "border-black/10 bg-sand-50/50 text-black/75 hover:border-black/25"
+                      ? "border-white/10 bg-white/[0.03] hover:border-white/20"
+                      : "border-black/10 bg-sand-50/50 hover:border-black/20"
                 }`}
               >
-                <span className="text-sm font-bold">{tier.label}</span>
-                <span className={`mt-1 text-xs ${darkTheme ? "text-white/60" : "text-black/60"}`}>
-                  <Money value={product.price * tier.qty} />
-                </span>
+                {tier.badge && (
+                  <span className="absolute -top-3 left-4 rounded-full bg-gradient-to-r from-amber-500 to-bronze-600 px-2.5 py-0.5 text-[11px] font-black text-white shadow-sm">
+                    {tier.badge}
+                  </span>
+                )}
+                <div className="flex items-center gap-3">
+                  <div
+                    className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 transition-colors ${
+                      isSelected
+                        ? "border-amber-400 bg-amber-400 text-graphite-950"
+                        : darkTheme ? "border-white/30" : "border-black/30"
+                    }`}
+                  >
+                    {isSelected && <span className="h-2 w-2 rounded-full bg-graphite-950" />}
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className={`text-base font-black ${isSelected ? (darkTheme ? "text-amber-300" : "text-amber-900") : (darkTheme ? "text-white" : "text-graphite-950")}`}>
+                        {tier.title}
+                      </span>
+                      {tier.savings && (
+                        <span className="rounded-full bg-red-500/20 px-2 py-0.5 text-[11px] font-black text-red-400">
+                          {tier.savings}
+                        </span>
+                      )}
+                    </div>
+                    <p className={`text-xs ${darkTheme ? "text-white/60" : "text-black/60"}`}>
+                      {tier.sub}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-2 flex items-baseline justify-between sm:mt-0 sm:justify-end sm:gap-3">
+                  {tier.freeShipping && (
+                    <span className="text-[11px] font-bold text-emerald-400">
+                      {isArabic ? "توصيل مجاني" : "Livraison gratuite"}
+                    </span>
+                  )}
+                  <div className="flex items-baseline gap-1.5">
+                    {tier.originalPrice && (
+                      <span className="text-xs line-through text-white/40">
+                        <Money value={tier.originalPrice} />
+                      </span>
+                    )}
+                    <span className={`text-lg font-black ${isSelected ? (darkTheme ? "text-amber-300" : "text-amber-900") : (darkTheme ? "text-white" : "text-graphite-950")}`}>
+                      <Money value={tier.price} />
+                    </span>
+                  </div>
+                </div>
               </button>
-            ))}
-          </div>
-        )}
+            );
+          })}
+        </div>
       </div>
 
       <form onSubmit={handleSubmit} className="grid gap-4">
@@ -362,23 +284,17 @@ export function DirectCodForm({
           ) : null}
         </div>
 
-        {isProstate ? (
-          <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-3 text-xs text-white">
-            <div className="flex items-center gap-2 font-bold text-emerald-400">
-              <PhoneCall size={16} className="shrink-0" />
-              <span>{isArabic ? "تأكيد سريع قبل الإرسال (خلال ساعتين)" : "Confirmation rapide (sous 2h)"}</span>
-            </div>
-            <p className="mt-1 text-white/80 leading-relaxed">
-              {isArabic
-                ? "📞 سيتصل بك فريقنا هاتفياً خلال أقل من ساعتين لتأكيد العنوان والتوقيت المناسب لك قبل شحن الطلبية."
-                : "Notre équipe vous appellera sous 2h pour confirmer votre adresse et créneau de livraison avant expédition."}
-            </p>
+        <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-3 text-xs text-white">
+          <div className="flex items-center gap-2 font-bold text-emerald-400">
+            <PhoneCall size={16} className="shrink-0" />
+            <span>{isArabic ? "تأكيد سريع قبل الإرسال (خلال أقل من ساعتين)" : "Confirmation rapide (sous 2h)"}</span>
           </div>
-        ) : (
-          <p className={`text-xs ${darkTheme ? "text-white/60" : "text-black/60"}`}>
-            {isArabic ? "سيتم تأكيد رسوم التوصيل هاتفياً قبل الشحن." : isEnglish ? "Delivery fees will be confirmed by phone before shipping." : "Les frais de livraison seront confirmés par téléphone avant l'envoi."}
+          <p className="mt-1 text-white/80 leading-relaxed">
+            {isArabic
+              ? "📞 سيتصل بك فريقنا هاتفياً في أقل من ساعتين لتأكيد العنوان والتوقيت المناسب لك قبل شحن الطلبية."
+              : "Notre équipe vous appellera sous 2h pour confirmer votre adresse et créneau de livraison avant expédition."}
           </p>
-        )}
+        </div>
 
         {error ? (
           <div role="alert" className={`rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-sm font-bold ${darkTheme ? "text-red-300" : "text-red-800"}`}>
@@ -405,40 +321,23 @@ export function DirectCodForm({
           )}
         </button>
 
-        {isProstate ? (
-          <div className="mt-3 grid grid-cols-3 gap-2 text-center text-xs font-bold text-white/85">
-            <div className="flex flex-col items-center gap-1 rounded-lg border border-white/10 bg-white/[0.04] p-2.5">
-              <ShieldCheck size={20} className="text-amber-400" />
-              <span className="font-black text-white">{isArabic ? "تغليف سري 100%" : "Colis discret 100%"}</span>
-              <span className="text-[10px] text-white/60">{isArabic ? "بدون أي إحراج" : "Sans mention"}</span>
-            </div>
-            <div className="flex flex-col items-center gap-1 rounded-lg border border-white/10 bg-white/[0.04] p-2.5">
-              <Truck size={20} className="text-amber-400" />
-              <span className="font-black text-white">{isArabic ? "توصيل 24-48 ساعة" : "Livraison 24-48h"}</span>
-              <span className="text-[10px] text-white/60">{isArabic ? "لباب المنزل" : "À domicile"}</span>
-            </div>
-            <div className="flex flex-col items-center gap-1 rounded-lg border border-white/10 bg-white/[0.04] p-2.5">
-              <ShieldCheck size={20} className="text-emerald-400" />
-              <span className="font-black text-white">{isArabic ? "معاينة قبل الدفع" : "Vérifiez avant"}</span>
-              <span className="text-[10px] text-white/60">{isArabic ? "افحص علبتك" : "Paiement livreur"}</span>
-            </div>
+        <div className="mt-3 grid grid-cols-3 gap-2 text-center text-xs font-bold text-white/85">
+          <div className="flex flex-col items-center gap-1 rounded-lg border border-white/10 bg-white/[0.04] p-2.5">
+            <ShieldCheck size={20} className="text-amber-400" />
+            <span className="font-black text-white">{isArabic ? "تغليف سري 100%" : "Colis discret 100%"}</span>
+            <span className="text-[10px] text-white/60">{isArabic ? "بدون أي إحراج" : "Sans mention"}</span>
           </div>
-        ) : (
-          <div className={`mt-3 grid grid-cols-3 gap-2 text-center text-xs font-bold ${darkTheme ? "text-white/80" : "text-black/70"}`}>
-            <div className={`flex flex-col items-center gap-1 rounded-lg p-2 ${darkTheme ? "border border-white/10 bg-white/[0.03]" : "bg-sand-50/80"}`}>
-              <Truck size={18} className="text-bronze-400" />
-              <span>{isArabic ? "التوصيل بعد التأكيد" : isEnglish ? "Delivery after confirmation" : "Livraison après confirmation"}</span>
-            </div>
-            <div className={`flex flex-col items-center gap-1 rounded-lg p-2 ${darkTheme ? "border border-white/10 bg-white/[0.03]" : "bg-sand-50/80"}`}>
-              <ShieldCheck size={18} className="text-bronze-400" />
-              <span>{isArabic ? "الدفع عند الاستلام" : isEnglish ? "Pay on delivery" : "Paiement à la livraison"}</span>
-            </div>
-            <div className={`flex flex-col items-center gap-1 rounded-lg p-2 ${darkTheme ? "border border-white/10 bg-white/[0.03]" : "bg-sand-50/80"}`}>
-              <PhoneCall size={18} className="text-bronze-400" />
-              <span>{isArabic ? "تأكيد هاتفي" : isEnglish ? "Confirmation call" : "Appel de confirmation"}</span>
-            </div>
+          <div className="flex flex-col items-center gap-1 rounded-lg border border-white/10 bg-white/[0.04] p-2.5">
+            <Truck size={20} className="text-amber-400" />
+            <span className="font-black text-white">{isArabic ? "توصيل 24-48 ساعة" : "Livraison 24-48h"}</span>
+            <span className="text-[10px] text-white/60">{isArabic ? "لباب المنزل" : "À domicile"}</span>
           </div>
-        )}
+          <div className="flex flex-col items-center gap-1 rounded-lg border border-white/10 bg-white/[0.04] p-2.5">
+            <ShieldCheck size={20} className="text-emerald-400" />
+            <span className="font-black text-white">{isArabic ? "معاينة قبل الدفع" : "Vérifiez avant"}</span>
+            <span className="text-[10px] text-white/60">{isArabic ? "افحص علبتك" : "Paiement livreur"}</span>
+          </div>
+        </div>
       </form>
     </div>
   );

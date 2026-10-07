@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { checkoutSchema } from "@/lib/validators";
 import { normalizeMoroccanPhone } from "@/lib/phone";
+import { calculateTierDiscount } from "@/lib/pricing-tiers";
 
 export async function POST(request: Request) {
   const body = await request.json();
@@ -31,14 +32,12 @@ export async function POST(request: Request) {
 
   let discountTotal = 0;
   let packNote: string | null = null;
-  if (items.length === 1 && items[0].product.slug === "rovanx-prostate") {
-    const qty = items[0].quantity;
-    if (qty === 2) {
-      discountTotal = 99; // 598 -> 499
-      packNote = "Pack 2 Flacons Prosta Guard (499 DH - Livraison Gratuite)";
-    } else if (qty === 3) {
-      discountTotal = 248; // 897 -> 649
-      packNote = "Pack 3 Flacons Prosta Guard (649 DH - Livraison Gratuite)";
+  if (items.length === 1) {
+    const single = items[0];
+    const calc = calculateTierDiscount(single.product.slug, single.unitPrice, single.quantity);
+    if (calc.discount > 0) {
+      discountTotal = calc.discount;
+      packNote = `${single.product.name} - ${calc.packNote}`;
     }
   }
 
