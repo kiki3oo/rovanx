@@ -97,10 +97,10 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               priority
               unoptimized
               sizes="100vw"
-              className="object-cover object-center opacity-70 md:opacity-80"
+              className="object-cover object-top sm:object-center opacity-90 brightness-110"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#12141a] via-[#12141a]/40 to-[#12141a]/70" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#12141a]/80 via-transparent to-[#12141a]/80" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#12141a] via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#12141a]/60 via-transparent to-[#12141a]/60" />
           </div>
         )}
         <div className="container relative z-10 grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">

@@ -869,7 +869,7 @@ export function ProductCroExperience({ slug }: { slug: string }) {
           <img
             src="/products/vital-protein-bg.jpg"
             alt=""
-            className="h-full w-full object-cover object-center opacity-30 md:opacity-40"
+            className="h-full w-full object-cover object-center opacity-60 md:opacity-75 brightness-110"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[#0e1015] via-transparent to-[#0e1015]" />
         </div>
