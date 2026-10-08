@@ -104,6 +104,48 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               <h1 className="text-3xl font-black text-white sm:text-4xl">{detail?.name || product.name}</h1>
               {detail?.tagline ? <p className="mt-1 text-sm font-bold text-bronze-400"><SeedContent value={detail.tagline} /></p> : null}
               <p className="mt-3 text-lg leading-relaxed text-white/70"><SeedContent value={shortDescription} /></p>
+
+              {product.slug === "rovanx-vitality-30" && (
+                <div className="mt-4 grid grid-cols-2 gap-2 text-xs font-bold text-white/90">
+                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
+                    <span className="text-base">⚡</span>
+                    <span>طاقة ونشاط متواصل طول اليوم</span>
+                  </div>
+                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
+                    <span className="text-base">🧠</span>
+                    <span>تركيز ذهني وقوة تحمل عالية</span>
+                  </div>
+                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
+                    <span className="text-base">🌿</span>
+                    <span>100% طبيعي بدون منبهات كيميائية</span>
+                  </div>
+                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
+                    <span className="text-base">📦</span>
+                    <span>طرد سري + معاينة قبل الدفع</span>
+                  </div>
+                </div>
+              )}
+
+              {product.slug === "rovanx-prostate" && (
+                <div className="mt-4 grid grid-cols-2 gap-2 text-xs font-bold text-white/90">
+                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
+                    <span className="text-base">🌙</span>
+                    <span>نوم هادئ ومتواصل طوال الليل</span>
+                  </div>
+                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
+                    <span className="text-base">⚡</span>
+                    <span>تدفق بولي طبيعي وسلس وقوي</span>
+                  </div>
+                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
+                    <span className="text-base">💧</span>
+                    <span>صيغة سائلة سريعة الامتصاص</span>
+                  </div>
+                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
+                    <span className="text-base">📦</span>
+                    <span>طرد سري + معاينة قبل الدفع</span>
+                  </div>
+                </div>
+              )}
             </div>
             <div className="grid gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-5 shadow-xl backdrop-blur-md">
               <div className="flex flex-wrap items-end gap-3">

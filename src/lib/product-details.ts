@@ -34,21 +34,25 @@ export const PRODUCT_DETAILS: Record<string, ProductDetailInfo> = {
   "rovanx-vitality-30": {
     name: "Vitality Boost",
     badge: "30 capsules",
-    tagline: "Complément alimentaire pour hommes",
+    tagline: "طاقة متدفقة، صفاء ذهني، وقوة تحمل تدوم طوال اليوم بدون إجهاد",
     shortDescription:
-      "Une formule tonifiante pour accompagner la vitalité et l'endurance masculine au quotidien. Retrouvez la composition et les conseils d'utilisation indiqués sur l'étiquette.",
+      "تركيبة طبيعية مركزة تجمع بين الماكا البيروفية، الجينسينغ الأحمر الكوري، والتريبولوس لمحاربة التعب والإرهاق اليومي، تعزيز اللياقة البدنية والذهنية، واستعادة الحيوية الذكورية بدون أي منبهات صناعية.",
     benefits: [
-      "Format de 30 capsules.",
-      "Conseils d'utilisation : 1 à 2 capsules par jour, après le repas, avec un verre d'eau."
+      "طاقة نظيفة ومستقرة من الصباح للمساء بدون هبوط مفاجئ أو سخفة بعد الغداء.",
+      "محاربة قاطعة للكسل الصباحي والإرهاق المزمن والشعور بالثقل في الجسم.",
+      "زيادة ملحوظة في التركيز الذهني والإنتاجية وسرعة اتخاذ القرارات في العمل.",
+      "دعم القوة العضلية والقدرة على التحمل واللياقة البدنية والذكورية.",
+      "تركيبة نباتية 100% نقية (ماكا + جينسينغ + تريبولوس + زنك + فيتامين ب) آمنة تماماً وبدون أي آثار جانبية.",
+      "توصيل سريع ومجاني للباك الثنائي والثلاثي في كرتون سري ومحكم 100% مع حق المعاينة قبل الدفع."
     ],
     ingredients:
-      "Extraits de maca péruvienne, ginseng rouge coréen, tribulus terrestris, gluconate de zinc, vitamines B6 et B12, magnésium marin. Gélule végétale. Vérifiez la composition sur l'emballage reçu.",
+      "مستخلصات الماكا البيروفية النقية، الجينسينغ الأحمر الكوري المعتق، التريبولوس، غلوكونات الزنك العضوي، فيتامينات B6 و B12، ومغنيسيوم بحري نقي. كبسولات نباتية 100% خالية من الكافيين الصناعي والمواد الحافظة.",
     usageInstructions:
-      "Prendre 1 à 2 capsules par jour, après le repas, avec un verre d'eau. Respectez les indications figurant sur l'emballage.",
+      "تناول كبسولة إلى كبسولتين يومياً في الصباح بعد وجبة الإفطار مع كأس كبير من الماء. يُفضل الاستمرار على كورس شهرين إلى 3 أشهر لتثبيت مستويات الطاقة والنشاط الدائم.",
     warnings:
-      "Tenir hors de portée des enfants. Ne pas dépasser la dose journalière recommandée. Ne remplace pas une alimentation variée et équilibrée. En cas de grossesse, d'allaitement, de maladie ou de traitement médical, demandez conseil à un professionnel de santé.",
+      "يُحفظ بعيداً عن متناول الأطفال. لا تتجاوز الجرعة اليومية الموصى بها. مكمل غذائي طبيعي لا يغني عن تغذية متوازنة. في حال تناول أدوية مزمنة، يُفضل استشارة الطبيب.",
     regulatoryInformation:
-      "Ce complément alimentaire n'est pas un médicament. Il ne sert pas à diagnostiquer, traiter ou prévenir une maladie."
+      "هذا المكمل الغذائي مركب من خلاصات نباتية طبيعية وفيتامينات عضوية 100% وليس دواءً كيميائياً. لا يُستخدم لتشخيص أو علاج الأمراض بشكل منفرد، بل يدعم طاقة ونشاط الجسم الطبيعي."
   },
   "rovanx-prostate": {
     name: "Prosta Guard",

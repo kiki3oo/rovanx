@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { usePreferences } from "@/components/store/preferences-provider";
 import { ProstaGuardExperience } from "@/components/store/prosta-guard-experience";
+import { VitalityBoostExperience } from "@/components/store/vitality-boost-experience";
 
 interface CROConfig {
   trustItems: { icon: any; titleAr: string; titleFr: string; subAr: string; subFr: string }[];
@@ -857,6 +858,11 @@ export function ProductCroExperience({ slug }: { slug: string }) {
   // If prostate, use dedicated rich ProstaGuard experience
   if (slug === "rovanx-prostate") {
     return <ProstaGuardExperience />;
+  }
+
+  // If vitality boost, use dedicated rich VitalityBoost experience
+  if (slug === "rovanx-vitality-30") {
+    return <VitalityBoostExperience />;
   }
 
   const config = CRO_EXPERIENCES[slug];
