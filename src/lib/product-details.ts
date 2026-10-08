@@ -14,22 +14,25 @@ export const PRODUCT_DETAILS: Record<string, ProductDetailInfo> = {
   "rovanx-vitality-60": {
     name: "Vitality Ultra",
     badge: "60 capsules",
-    tagline: "Formule Puissance & Endurance Masculine - Vitality Ultra",
+    tagline: "صلابة حديدية، زيادة ملحوظة في الحجم والسمك، واستمرارية فائقة لإسعاد زوجتك",
     shortDescription:
-      "Formule avancée Vitality Ultra pour la puissance, la fermeté et l'épanouissement intime du couple.",
+      "التركيبة الطبيعية المطورة الأقوى لتعزيز تدفق الدم وتوسيع الأنسجة الكهفية، منحك انتصاباً صخرياً وضخامة تحس بها الزوجة فوراً، مع تحكم كامل في القذف لتمديد وقت العلاقة وعيش أسعد اللحظات الحميمية.",
     benefits: [
-      "صلابة حديدية وزيادة ملحوظة فالحجم والسمك كتحس بيها الزوجة ديالك فوراً.",
-      "استمرارية وتحكم عالي باش تمتع الزوجة ديالك وتعيشو علاقة حميمية ممتعة للطرفين.",
-      "Conseils d'utilisation : 1 à 2 capsules par jour, après le repas, avec un verre d'eau."
+      "انتصاب كامل وصلابة حديدية مع زيادة ملحوظة في السمك والطول (ضخامة تحس بها الزوجة فوراً).",
+      "تحكم فائق وتأخير طبيعي للقذف لإطالة مدة العلاقة لأكثر من 30 إلى 45 دقيقة بدون تعب.",
+      "توسيع الغرف الإسفنجية في أنسجة القضيب لاستيعاب تدفق دموي كثيف يمنح امتلاءً وضخامة دائمة.",
+      "طاقة ورغبة متجددة مع سرعة استرجاع لممارسة العلاقة أكثر من مرة في نفس الليلة.",
+      "تركيبة نباتية أصلية 100% (جينسينغ أحمر + تونغكات علي + ماكا + L-Arginine + زنك) بدون صداع أو خفقان قلب.",
+      "توصيل سريع ومجاني للباك الثنائي والثلاثي في كرتون سري ومحكم 100% مع حق المعاينة قبل الدفع."
     ],
     ingredients:
-      "Extraits de ginseng, maca et tongkat ali, gluconate de zinc, vitamine B3, pollen de palmier, gelée royale, vitamine B10 (PABA), citrate de magnésium, taurine, L-arginine, propolis, glycérine, sorbitol, arôme miel et eau. Vérifiez la composition sur l'emballage reçu.",
+      "مستخلصات الجينسينغ الأحمر الكوري المعتق، التونغكات علي الماليزي، الماكا البيروفية، L-Arginine والتورين، غلوكونات الزنك العضوي، حبوب لقاح النخيل، غذاء الملكات، بروبوليس، فيتامينات B3 و B10 وسترات المغنيسيوم. تركيبة نباتية 100% نقية بدون أي إضافات كيميائية ضارة.",
     usageInstructions:
-      "Prendre 1 à 2 capsules par jour, après le repas, avec un verre d'eau. Respectez les indications figurant sur l'emballage.",
+      "تناول كبسولة إلى كبسولتين يومياً بعد الوجبة مع كأس كبير من الماء. وفي أيام اللقاء، يمكنك تناول كبسولتين قبل العلاقة بساعة واحدة. يُفضل الاستمرار على كورس شهرين إلى 3 أشهر لثبات تمدد الأنسجة الدائم.",
     warnings:
-      "Tenir hors de portée des enfants. Ne pas dépasser la dose journalière recommandée. Ne remplace pas une alimentation variée et équilibrée. En cas de grossesse, d'allaitement, de maladie ou de traitement médical, demandez conseil à un professionnel de santé.",
+      "يُحفظ بعيداً عن متناول الأطفال. لا تتجاوز الجرعة اليومية الموصى بها. مكمل غذائي طبيعي لا يغني عن تغذية متوازنة. في حال تناول أدوية مزمنة، يُفضل استشارة الطبيب.",
     regulatoryInformation:
-      "Ce complément alimentaire n'est pas un médicament. Il ne sert pas à diagnostiquer, traiter ou prévenir une maladie."
+      "هذا المكمل الغذائي مركب من خلاصات نباتية طبيعية ومغذيات حيوية 100% وليس دواءً كيميائياً. لا يُستخدم لتشخيص أو علاج الأمراض بشكل منفرد، بل يدعم الأداء والنشاط الفسيولوجي الطبيعي للرجل."
   },
   "rovanx-vitality-30": {
     name: "Vitality Boost",

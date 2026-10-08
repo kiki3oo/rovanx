@@ -22,6 +22,7 @@ import {
 import { usePreferences } from "@/components/store/preferences-provider";
 import { ProstaGuardExperience } from "@/components/store/prosta-guard-experience";
 import { VitalityBoostExperience } from "@/components/store/vitality-boost-experience";
+import { VitalityUltraExperience } from "@/components/store/vitality-ultra-experience";
 
 interface CROConfig {
   trustItems: { icon: any; titleAr: string; titleFr: string; subAr: string; subFr: string }[];
@@ -863,6 +864,11 @@ export function ProductCroExperience({ slug }: { slug: string }) {
   // If vitality boost, use dedicated rich VitalityBoost experience
   if (slug === "rovanx-vitality-30") {
     return <VitalityBoostExperience />;
+  }
+
+  // If vitality ultra, use dedicated rich VitalityUltra experience
+  if (slug === "rovanx-vitality-60") {
+    return <VitalityUltraExperience />;
   }
 
   const config = CRO_EXPERIENCES[slug];

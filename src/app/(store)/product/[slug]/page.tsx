@@ -126,6 +126,27 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 </div>
               )}
 
+              {product.slug === "rovanx-vitality-60" && (
+                <div className="mt-4 grid grid-cols-2 gap-2 text-xs font-bold text-white/90">
+                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
+                    <span className="text-base">🍆</span>
+                    <span>صلابة حديدية وتمدد الحجم والسمك</span>
+                  </div>
+                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
+                    <span className="text-base">⏱️</span>
+                    <span>تحكم عالي وتأخير القذف 45 دقيقة</span>
+                  </div>
+                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
+                    <span className="text-base">🌿</span>
+                    <span>100% طبيعي بدون صداع ولا خفقان</span>
+                  </div>
+                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
+                    <span className="text-base">📦</span>
+                    <span>طرد سري + معاينة قبل الدفع</span>
+                  </div>
+                </div>
+              )}
+
               {product.slug === "rovanx-prostate" && (
                 <div className="mt-4 grid grid-cols-2 gap-2 text-xs font-bold text-white/90">
                   <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
