@@ -53,21 +53,25 @@ export const PRODUCT_DETAILS: Record<string, ProductDetailInfo> = {
   "rovanx-prostate": {
     name: "Prosta Guard",
     badge: "120 ml",
-    tagline: "Soutien et confort de la prostate pour hommes",
+    tagline: "ودّع الاستيقاظ الليلي وصعوبة التبول واسترجع راحة نومك وحيويتك",
     shortDescription:
-      "Une formule ciblée pour soutenir la santé de la prostate et préserver le confort urinaire masculin. Retrouvez la composition et les conseils d'utilisation indiqués sur l'étiquette.",
+      "تركيبة طبيعية سائلة متطورة مخصصة لدعم صحة البروستاتا والتخلص من تكرار التبول وضعف التدفق. تمنحك نوماً هادئاً متواصلاً وتدفقاً مريحاً وسلساً بدون أي مواد كيميائية وبدون آثار جانبية.",
     benefits: [
-      "Flacon de 120 ml.",
-      "Conseils d'utilisation : 5 ml par jour avec le bouchon doseur, de préférence après le repas."
+      "نوم هادئ ومتواصل طوال الليل مع تقليل الاستيقاظ المتكرر للتبول من الأسبوع الأول.",
+      "تدفق بولي طبيعي وسلس وقوي بدون تقطيع، حصر، أو تقطير مزعج في النهاية.",
+      "إفراغ مريح وتام للمثانة مع إحساس فوري بالخفة والراحة في منطقة الحوض وأسفل البطن.",
+      "صيغة سائلة مركزة (120 مل) سريعة الامتصاص المباشر تعطي مفعولاً أسرع بـ 3 مرات من الكبسولات الجافة.",
+      "تركيبة نباتية أصلية 100% (Saw Palmetto، بيجيوم، زيت القرع، زنك، ليكوبين) آمنة تماماً وبدون أي آثار جانبية.",
+      "توصيل سريع ومجاني للباك الثنائي والثلاثي في كرتون سري ومحكم 100% مع حق فحص ومعاينة الطرد قبل الدفع."
     ],
     ingredients:
-      "Extraits de baies de Saw Palmetto, écorce de Pygeum Africanum, huile de graines de courge, lycopène, gluconate de zinc. Vérifiez la composition sur l'emballage reçu.",
+      "مستخلصات توت البلميط المنشاري النقي (Saw Palmetto)، لحاء الخوخ الأفريقي (Pygeum Africanum)، زيت بذور القرع المعصور على البارد، ليكوبين طبيعي فائق الفعالية، غلوكونات الزنك العضوي عالي الامتصاص. تركيبة نباتية 100% خالية من أي إضافات كيميائية ضارة.",
     usageInstructions:
-      "Prendre 5 ml par jour à l'aide du bouchon doseur, après un repas. Agiter avant utilisation. Respectez les indications figurant sur l'emballage.",
+      "تناول 5 مل يومياً باستخدام غطاء القياس المرفق بعد وجبة الإفطار أو الغداء مع كأس كبير من الماء. رُجّ العبوة جيداً قبل الاستعمال. يُفضل المواظبة على كورس شهرين إلى 3 أشهر لثبات النتائج ووقاية مستمرة.",
     warnings:
-      "Tenir hors de portée des enfants. Ne pas dépasser la dose journalière recommandée. Ne remplace pas une alimentation variée et équilibrée. En cas de traitement médical ou de troubles urinaires sévères, consultez un médecin.",
+      "يُحفظ بعيداً عن متناول الأطفال. لا تتجاوز الجرعة اليومية الموصى بها. مكمل غذائي طبيعي لا يغني عن نظام غذائي متوازن. في حال وجود حالة طبية خاصة أو تناول أدوية مزمنة، يُنصح باستشارة الطبيب.",
     regulatoryInformation:
-      "Ce complément alimentaire n'est pas un médicament. Il ne sert pas à diagnostiquer, traiter ou prévenir une maladie."
+      "هذا المكمل الغذائي مركب من خلاصات نباتية طبيعية 100% وليس دواءً كيميائياً. لا يُستخدم لتشخيص أو منع الأمراض بشكل منفرد، بل يدعم التوازن الفسيولوجي الطبيعي للبروستاتا والمسالك البولية."
   },
   "rovanx-maca-max": {
     name: "Royal Force",

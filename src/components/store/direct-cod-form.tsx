@@ -287,12 +287,12 @@ export function DirectCodForm({
         <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-3 text-xs text-white">
           <div className="flex items-center gap-2 font-bold text-emerald-400">
             <PhoneCall size={16} className="shrink-0" />
-            <span>{isArabic ? "تأكيد سريع قبل الإرسال (خلال أقل من ساعتين)" : "Confirmation rapide (sous 2h)"}</span>
+            <span>{isArabic ? "تأكيد سريع وسري (في أقل من 30 دقيقة)" : "Confirmation rapide (sous 30 min)"}</span>
           </div>
           <p className="mt-1 text-white/80 leading-relaxed">
             {isArabic
-              ? "📞 سيتصل بك فريقنا هاتفياً في أقل من ساعتين لتأكيد العنوان والتوقيت المناسب لك قبل شحن الطلبية."
-              : "Notre équipe vous appellera sous 2h pour confirmer votre adresse et créneau de livraison avant expédition."}
+              ? "📞 سيتصل بك مستشارنا هاتفياً في أقل من 30 دقيقة (أو رسالة واتساب إذا كنت مشغولاً) لتأكيد العنوان وموعد التسليم الأنسب لك قبل إرسال الشحنة."
+              : "Notre conseiller vous contactera sous 30 min (ou par WhatsApp si vous êtes occupé) pour valider l'adresse et le créneau de livraison avant expédition."}
           </p>
         </div>
 
