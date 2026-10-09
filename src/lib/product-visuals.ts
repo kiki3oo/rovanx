@@ -14,6 +14,10 @@ const productVisuals: Record<string, ProductVisual[]> = {
     {
       src: "/products/rovanx-prostate.webp?v=3",
       alt: "Prosta Guard - flacon de 120 ml"
+    },
+    {
+      src: "/products/rovanx-prostate-energie-pack.webp?v=2",
+      alt: "Pack Santé Prostate & Énergie - Double Action"
     }
   ],
   "rovanx-maca-max": [

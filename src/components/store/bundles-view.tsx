@@ -34,10 +34,10 @@ type RawBundle = {
 };
 
 const BUNDLE_IMAGES: Record<string, string> = {
-  "rovanx-pack-puissance": "/products/rovanx-pack-puissance.webp?v=1",
-  "rovanx-men-pack": "/products/rovanx-men-pack.webp?v=1",
-  "rovanx-men-plus-pack": "/products/rovanx-men-plus-pack.webp?v=1",
-  "rovanx-prostate-energie-pack": "/products/rovanx-prostate-energie-pack.webp?v=1"
+  "rovanx-pack-puissance": "/products/rovanx-pack-puissance.webp?v=2",
+  "rovanx-men-pack": "/products/rovanx-men-pack.webp?v=2",
+  "rovanx-men-plus-pack": "/products/rovanx-men-plus-pack.webp?v=2",
+  "rovanx-prostate-energie-pack": "/products/rovanx-prostate-energie-pack.webp?v=2"
 };
 
 const BUNDLE_MULTILINGUAL: Record<
