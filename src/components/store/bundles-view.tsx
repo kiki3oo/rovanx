@@ -82,9 +82,9 @@ const BUNDLE_MULTILINGUAL: Record<
     ]
   },
   "rovanx-men-pack": {
-    nameAr: "ROVANX Men Pack",
-    nameFr: "ROVANX Men Pack",
-    nameEn: "ROVANX Men Pack",
+    nameAr: "Men Pack",
+    nameFr: "Men Pack",
+    nameEn: "Men Pack",
     badgeAr: "👑 الثنائي الفحولي الملكي",
     badgeFr: "👑 Duo Virilité Royale",
     badgeEn: "👑 Royal Virility Duo",
@@ -112,9 +112,9 @@ const BUNDLE_MULTILINGUAL: Record<
     ]
   },
   "rovanx-men-plus-pack": {
-    nameAr: "ROVANX Men Plus Pack",
-    nameFr: "ROVANX Men Plus Pack",
-    nameEn: "ROVANX Men Plus Pack",
+    nameAr: "Men Plus Pack",
+    nameFr: "Men Plus Pack",
+    nameEn: "Men Plus Pack",
     badgeAr: "🏆 الكورس الشامل VIP (3 في 1)",
     badgeFr: "🏆 Cure Complète VIP (3-en-1)",
     badgeEn: "🏆 Complete VIP Cure (3-in-1)",

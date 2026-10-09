@@ -217,7 +217,7 @@ export async function ensureCatalogSynced(force = false) {
         description: "الحل المزدوج المتكامل: كبسولات Vitality Ultra للصلابة وتمدد الحجم والسمك + زيت Control Flow لتأخير القذف 30-45 دقيقة وتحكم تام فالعلاقة لإسعاد الزوجة."
       },
       {
-        name: "ROVANX Men Pack",
+        name: "Men Pack",
         slug: "rovanx-men-pack",
         items: ["rovanx-vitality-60", "rovanx-maca-max"],
         bundlePrice: 469,
@@ -225,7 +225,7 @@ export async function ensureCatalogSynced(force = false) {
         description: "الثنائي الفحولي: Vitality Ultra + Royal Force لانتصاب حديدي وطاقة مضاعفة طوال اللقاء."
       },
       {
-        name: "ROVANX Men Plus Pack",
+        name: "Men Plus Pack",
         slug: "rovanx-men-plus-pack",
         items: ["rovanx-vitality-60", "rovanx-maca-max", "rovanx-ginseng"],
         bundlePrice: 629,
