@@ -35,7 +35,8 @@ type RawBundle = {
 
 const BUNDLE_IMAGES: Record<string, { ar?: string; default: string }> = {
   "rovanx-pack-puissance": {
-    default: "/products/rovanx-pack-puissance.webp?v=3"
+    ar: "/products/rovanx-pack-puissance-ar.webp?v=4",
+    default: "/products/rovanx-pack-puissance-fr.webp?v=4"
   },
   "rovanx-men-pack": {
     default: "/products/rovanx-men-pack.webp?v=3"
@@ -44,8 +45,8 @@ const BUNDLE_IMAGES: Record<string, { ar?: string; default: string }> = {
     default: "/products/rovanx-men-plus-pack.webp?v=3"
   },
   "rovanx-prostate-energie-pack": {
-    ar: "/products/rovanx-prostate-energie-pack-ar.webp?v=3",
-    default: "/products/rovanx-prostate-energie-pack-fr.webp?v=3"
+    ar: "/products/rovanx-prostate-energie-pack-ar.webp?v=4",
+    default: "/products/rovanx-prostate-energie-pack-fr.webp?v=4"
   }
 };
 

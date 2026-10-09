@@ -8,6 +8,10 @@ const productVisuals: Record<string, ProductVisual[]> = {
     {
       src: "/products/rovanx-control-oil.webp?v=3",
       alt: "Control Flow - flacon de 60 ml"
+    },
+    {
+      src: "/products/rovanx-pack-puissance-ar.webp?v=4",
+      alt: "باقة القوة و التحكم - ROVANX"
     }
   ],
   "rovanx-prostate": [
