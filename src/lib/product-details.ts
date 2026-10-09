@@ -83,21 +83,25 @@ export const PRODUCT_DETAILS: Record<string, ProductDetailInfo> = {
   "rovanx-maca-max": {
     name: "Royal Force",
     badge: "30 capsules",
-    tagline: "Complément alimentaire pour hommes",
+    tagline: "صلابة فولاذية مستمرة، طاقة فحولية متجددة، وتحكم مطلق في العلاقة الحميمية",
     shortDescription:
-      "Une formule concentrée pour stimuler la puissance, l'endurance et l'énergie masculine au quotidien. Retrouvez la composition et les conseils d'utilisation indiqués sur l'étiquette.",
+      "تركيبة ملكية أصلية ونادرة تجمع بين الماكا السوداء البيروفية المركزة، التريبولوس النقي، الجينسينغ الأحمر الكوري، والزنك العضوي. صُممت خصيصاً للرجل الذي يبحث عن صلابة حديدية لا تنكسر، قوة انتصاب تدوم طويلاً، وتحكم كامل يسعد شريكة حياته في كل لقاء.",
     benefits: [
-      "Format de 30 capsules.",
-      "Conseils d'utilisation : 1 à 2 capsules par jour, après le repas, avec un verre d'eau."
+      "صلابة قوية وانتصاب ثابت ومستمر طوال فترة اللقاء بدون أي ارتخاء مفاجئ أو تراجع.",
+      "قدرة عالية على التحكم وتأخير القذف للاستمتاع بعلاقة طويلة وإشباع رغبة الزوجة بالكامل.",
+      "طاقة فحولية متفجرة ورغبة متجددة تخلصك من التعب والفتور وضغوط العمل اليومية.",
+      "تركيبة طبيعية 100% غنية بالماكا السوداء البيروفية والتريبولوس والجينسينغ والزنك الحيوي بدون آثار جانبية.",
+      "تجدد سريع للنشاط لإمكانية تكرار اللقاء الحميمي بكل حيوية وثقة بدون إجهاد.",
+      "توصيل سريع ومجاني للباك الثنائي والثلاثي في تغليف سري ومحكم 100% مع حق فحص ومعاينة الطرد قبل الدفع."
     ],
     ingredients:
-      "Extrait concentré de racine de Maca, extrait de Tribulus Terrestris, extrait de Ginseng rouge, gluconate de zinc, vitamines B6 et B12. Vérifiez la composition sur l'emballage reçu.",
+      "مستخلص الماكا السوداء البيروفية النقية المركزة (Lepidium meyenii)، مستخلص نبتة التريبولوس (Tribulus Terrestris) عالي الصابونين، مستخلص الجينسينغ الأحمر الكوري المعتق (Panax Ginseng)، غلوكونات الزنك العضوي عالي الامتصاص، فيتامينات B6 و B12 الحيوية. كبسولات نباتية 100% خالية من المواد الكيميائية الضارة.",
     usageInstructions:
-      "Prendre 1 à 2 capsules par jour, après le repas, avec un verre d'eau. Respectez les indications figurant sur l'emballage.",
+      "تناول كبسولة واحدة يومياً بعد وجبة الإفطار أو الغداء مع كأس كبير من الماء. في أيام اللقاء الحميمي، يمكن تناول كبسولة إضافية قبل ساعتين. يُنصح بالالتزام بكورس شهرين إلى 3 أشهر لترسيخ النتائج واستدامة القوة والفحولة.",
     warnings:
-      "Tenir hors de portée des enfants. Ne pas dépasser la dose journalière recommandée. Ne remplace pas une alimentation variée et équilibrée. En cas de grossesse, d'allaitement, de maladie ou de traitement médical, demandez conseil à un professionnel de santé.",
+      "يُحفظ بعيداً عن متناول الأطفال وفي مكان جاف وبارد. لا تتجاوز الجرعة اليومية الموصى بها. مكمل غذائي طبيعي 100% ولا يغني عن نمط حياة وتغذية متوازنة. في حالة وجود أمراض قلبية حادة أو تناول أدوية خاصة، يُفضل استشارة الطبيب.",
     regulatoryInformation:
-      "Ce complément alimentaire n'est pas un médicament. Il ne sert pas à diagnostiquer, traiter ou prévenir une maladie."
+      "هذا المنتج مكمل غذائي طبيعي 100% مركب من أعشاب ومغذيات حيوية نقية وليس دواءً صيدلانياً كيميائياً. لا يُستخدم لتشخيص أو علاج الأمراض، بل يدعم الأداء الفحولي والنشاط الجنسي الطبيعي للرجل."
   },
   "rovanx-ginseng": {
     name: "Testo Drive",

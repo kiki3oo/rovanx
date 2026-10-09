@@ -188,6 +188,27 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                   </div>
                 </div>
               )}
+
+              {product.slug === "rovanx-maca-max" && (
+                <div className="mt-4 grid grid-cols-2 gap-2 text-xs font-bold text-white/90">
+                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
+                    <span className="text-base">👑</span>
+                    <span>ماكا سوداء بيروفية نادرة ومركزة</span>
+                  </div>
+                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
+                    <span className="text-base">⚡</span>
+                    <span>صلابة فولاذية وانتصاب حديدي مستمر</span>
+                  </div>
+                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
+                    <span className="text-base">🌿</span>
+                    <span>100% طبيعي بدون أي خفقان أو صداع</span>
+                  </div>
+                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
+                    <span className="text-base">📦</span>
+                    <span>طرد سري + معاينة قبل الدفع</span>
+                  </div>
+                </div>
+              )}
             </div>
             <div className="grid gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-5 shadow-xl backdrop-blur-md">
               <div className="flex flex-wrap items-end gap-3">

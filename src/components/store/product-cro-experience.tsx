@@ -24,6 +24,7 @@ import { ProstaGuardExperience } from "@/components/store/prosta-guard-experienc
 import { VitalityBoostExperience } from "@/components/store/vitality-boost-experience";
 import { VitalityUltraExperience } from "@/components/store/vitality-ultra-experience";
 import { TestoDriveExperience } from "@/components/store/testo-drive-experience";
+import { RoyalForceExperience } from "@/components/store/royal-force-experience";
 
 interface CROConfig {
   trustItems: { icon: any; titleAr: string; titleFr: string; subAr: string; subFr: string }[];
@@ -875,6 +876,11 @@ export function ProductCroExperience({ slug }: { slug: string }) {
   // If testo drive, use dedicated rich TestoDrive experience
   if (slug === "rovanx-ginseng") {
     return <TestoDriveExperience />;
+  }
+
+  // If royal force, use dedicated rich RoyalForce experience
+  if (slug === "rovanx-maca-max") {
+    return <RoyalForceExperience />;
   }
 
   const config = CRO_EXPERIENCES[slug];
