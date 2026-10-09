@@ -247,6 +247,7 @@ export async function ensureCatalogSynced(force = false) {
         where: { slug: b.slug },
         update: {
           name: b.name,
+          seoTitle: `${b.name} | ROVANX`,
           bundlePrice: b.bundlePrice,
           regularCombinedPrice: b.regularCombinedPrice,
           description: b.description,
