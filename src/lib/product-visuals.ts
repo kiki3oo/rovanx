@@ -10,11 +10,11 @@ const productVisuals: Record<string, ProductVisual[]> = {
       alt: "Control Flow - flacon de 60 ml"
     },
     {
-      src: "/products/rovanx-pack-puissance-ar.webp?v=5",
+      src: "/products/rovanx-pack-puissance-ar.webp?v=6",
       alt: "باقة القوة و التحكم - ROVANX"
     },
     {
-      src: "/products/rovanx-pack-puissance-fr.webp?v=5",
+      src: "/products/rovanx-pack-puissance-fr.webp?v=6",
       alt: "Pack Puissance & Contrôle - ROVANX"
     }
   ],
