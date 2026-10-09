@@ -33,6 +33,13 @@ type RawBundle = {
   }[];
 };
 
+const BUNDLE_IMAGES: Record<string, string> = {
+  "rovanx-pack-puissance": "/products/rovanx-pack-puissance.webp?v=1",
+  "rovanx-men-pack": "/products/rovanx-men-pack.webp?v=1",
+  "rovanx-men-plus-pack": "/products/rovanx-men-plus-pack.webp?v=1",
+  "rovanx-prostate-energie-pack": "/products/rovanx-prostate-energie-pack.webp?v=1"
+};
+
 const BUNDLE_MULTILINGUAL: Record<
   string,
   {
@@ -199,6 +206,7 @@ export function BundlesView({ bundles }: { bundles: RawBundle[] }) {
       regularCombinedPrice: b.regularCombinedPrice,
       description,
       badge,
+      image: BUNDLE_IMAGES[b.slug] || `/products/${b.slug}.webp`,
       items: b.items.map((it) => ({
         productId: it.product.id,
         productName: it.product.name,
@@ -329,29 +337,15 @@ export function BundlesView({ bundles }: { bundles: RawBundle[] }) {
                       ) : null}
                     </div>
 
-                    {/* Pack Visual Packshots Preview */}
-                    <div className="mb-5 flex items-center justify-center gap-3 rounded-2xl border border-white/10 bg-white/[0.02] p-4">
-                      {bundle.items.map((item, idx) => {
-                        const visual = getProductVisual(item.product.slug);
-                        return (
-                          <div key={item.product.id} className="flex items-center gap-2">
-                            {idx > 0 ? (
-                              <span className="text-xl font-black text-amber-400">+</span>
-                            ) : null}
-                            <div className="relative h-28 w-24 shrink-0 overflow-hidden rounded-xl bg-white/[0.03] p-1.5 flex items-center justify-center">
-                              {visual ? (
-                                <img
-                                  src={visual.src}
-                                  alt={item.product.name}
-                                  className="h-full w-full object-contain drop-shadow-[0_10px_15px_rgba(0,0,0,0.5)] transition-transform duration-300 group-hover:scale-105"
-                                />
-                              ) : (
-                                <span className="text-xs font-bold text-white/50">{item.product.name}</span>
-                              )}
-                            </div>
-                          </div>
-                        );
-                      })}
+                    {/* Unified Professional Packshot */}
+                    <div className="relative mb-5 aspect-square w-full overflow-hidden rounded-2xl border border-white/10 bg-black/40 shadow-xl group-hover:border-amber-500/40 transition-all duration-300">
+                      <img
+                        src={BUNDLE_IMAGES[bundle.slug] || `/products/${bundle.slug}.webp`}
+                        alt={title}
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        loading="lazy"
+                      />
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0e1015]/70 via-transparent to-transparent" />
                     </div>
 
                     <h3 className="text-2xl font-black text-white group-hover:text-amber-400 transition-colors">

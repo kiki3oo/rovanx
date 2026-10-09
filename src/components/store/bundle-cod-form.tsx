@@ -14,6 +14,7 @@ export type BundleItemData = {
   regularCombinedPrice: number;
   description: string;
   badge?: string;
+  image?: string;
   items: {
     productId: string;
     productName: string;
@@ -185,6 +186,11 @@ export function BundleCodForm({
                   >
                     ✓
                   </div>
+                  {b.image ? (
+                    <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-white/10 bg-black/40">
+                      <img src={b.image} alt={b.name} className="h-full w-full object-cover" />
+                    </div>
+                  ) : null}
                   <div>
                     <div className="flex flex-wrap items-center gap-2">
                       <h4 className="text-base font-black text-white">{b.name}</h4>
