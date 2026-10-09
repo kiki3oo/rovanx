@@ -58,7 +58,7 @@ const BUNDLE_MULTILINGUAL: Record<
     badgeAr: "⭐ الأكثر طلباً وتوفيراً (Best-Seller)",
     badgeFr: "⭐ Meilleure Vente (Best-Seller)",
     badgeEn: "⭐ Best-Seller Pack",
-    badgeColor: "from-amber-500 to-amber-600 text-black font-black",
+    badgeColor: "bg-gradient-to-r from-amber-500/25 via-amber-400/20 to-amber-500/25 text-amber-300 border border-amber-400/80 font-black shadow-sm shadow-amber-500/10",
     descAr:
       "الحل المزدوج المتكامل: كبسولات Vitality Ultra للصلابة وتمدد الحجم والسمك + زيت Control Flow لتأخير القذف 30-45 دقيقة وتحكم تام فالعلاقة لإسعاد الزوجة.",
     descFr:
@@ -88,7 +88,7 @@ const BUNDLE_MULTILINGUAL: Record<
     badgeAr: "👑 الثنائي الفحولي الملكي",
     badgeFr: "👑 Duo Virilité Royale",
     badgeEn: "👑 Royal Virility Duo",
-    badgeColor: "from-amber-500/20 to-bronze-500/30 text-amber-300 border border-amber-500/30",
+    badgeColor: "bg-gradient-to-r from-amber-500/15 to-bronze-500/20 text-amber-300 border border-amber-500/30",
     descAr:
       "الثنائي الفحولي: Vitality Ultra + Royal Force لانتصاب حديدي وطاقة مضاعفة طوال اللقاء.",
     descFr:
@@ -118,7 +118,7 @@ const BUNDLE_MULTILINGUAL: Record<
     badgeAr: "🏆 الكورس الشامل VIP (3 في 1)",
     badgeFr: "🏆 Cure Complète VIP (3-en-1)",
     badgeEn: "🏆 Complete VIP Cure (3-in-1)",
-    badgeColor: "from-emerald-500/20 to-teal-500/30 text-emerald-300 border border-emerald-500/30",
+    badgeColor: "bg-gradient-to-r from-emerald-500/15 to-teal-500/20 text-emerald-300 border border-emerald-500/30",
     descAr:
       "الباك الملكي 3 في 1: صلابة مستمرة، تحفيز التستوستيرون، ومقاومة تامة للتعب والإجهاد.",
     descFr:
@@ -148,7 +148,7 @@ const BUNDLE_MULTILINGUAL: Record<
     badgeAr: "🌿 صحة البروستاتا والراحة الليلية",
     badgeFr: "🌿 Santé Prostate & Confort Nocturne",
     badgeEn: "🌿 Prostate Health & Night Comfort",
-    badgeColor: "from-blue-500/20 to-cyan-500/30 text-cyan-300 border border-blue-500/30",
+    badgeColor: "bg-gradient-to-r from-blue-500/15 to-cyan-500/20 text-cyan-300 border border-blue-500/30",
     descAr:
       "باك صحة البروستاتا والراحة الليلية: Prosta Guard (120 مل) للراحة البولية والنوم الهادئ + Testo Drive لدعم الحيوية والدورة الدموية للحوض.",
     descFr:
