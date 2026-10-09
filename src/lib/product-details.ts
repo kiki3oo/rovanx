@@ -102,21 +102,25 @@ export const PRODUCT_DETAILS: Record<string, ProductDetailInfo> = {
   "rovanx-ginseng": {
     name: "Testo Drive",
     badge: "30 capsules",
-    tagline: "Complément alimentaire pour hommes",
+    tagline: "تحفيز التستوستيرون الطبيعي، قوة عضلية وذهنية خارقة، ومقاومة تامة للإجهاد",
     shortDescription:
-      "Une formule puissante associant le ginseng rouge et la rhodiola pour dynamiser la résistance physique et mentale. Retrouvez la composition et les conseils d'utilisation indiqués sur l'étiquette.",
+      "تركيبة نخبوية متطورة تجمع بين الجينسينغ الأحمر الكوري المعتق (6 سنوات) وعشبة الروديولا المتكيفة والزنك العضوي لرفع مستويات التستوستيرون الطبيعي، القضاء على التوتر والإرهاق، واستعادة القوة والدافع الفحولي للرجال.",
     benefits: [
-      "Format de 30 capsules.",
-      "Conseils d'utilisation : 1 capsule par jour le matin, après le repas, avec un verre d'eau."
+      "تحفيز قوي لإفراز هرمون التستوستيرون الحر الطبيعي بدون أي هرمونات صناعية.",
+      "طاقة عضلية وبدنية متفجرة ومقاومة فائقة للإجهاد وضغوطات العمل اليومية.",
+      "تخفيض هرمون التوتر (الكورتيزول) بفضل عشبة الروديولا المتكيفة لصفاء ذهني وهدوء تام.",
+      "استعادة الرغبة الحميمية المتوهجة والفحولة والثقة الذكورية الكاملة.",
+      "تركيبة نباتية أصلية 100% (جينسينغ أحمر كوري 6 سنوات + روديولا + زنك + فيتامينات ب) آمنة تماماً.",
+      "توصيل سريع ومجاني للباك الثنائي والثلاثي في كرتون سري ومحكم 100% مع حق المعاينة قبل الدفع."
     ],
     ingredients:
-      "Extrait sec de Panax Ginseng rouge coréen, extrait de Rhodiola Rosea, zinc, vitamines B1, B2, B6. Gélule végétale. Vérifiez la composition sur l'emballage reçu.",
+      "مستخلص الجينسينغ الأحمر الكوري المعتق 6 سنوات (Panax Ginseng)، مستخلص عشبة الروديولا الوردية النقية (Rhodiola Rosea)، غلوكونات الزنك العضوي عالي الامتصاص، فيتامينات B1 و B2 و B6. كبسولات نباتية 100% بدون أي إضافات كيميائية ضارة.",
     usageInstructions:
-      "Prendre 1 capsule par jour le matin, après le repas, avec un grand verre d'eau. Respectez les indications figurant sur l'emballage.",
+      "تناول كبسولة واحدة يومياً في الصباح بعد وجبة الإفطار مع كأس كبير من الماء. وفي فترات التمارين الشاقة أو الإجهاد الشديد يمكن تناول كبسولتين. يُفضل الالتزام بكورس شهرين إلى 3 أشهر لتثبيت مستويات التستوستيرون الطبيعي.",
     warnings:
-      "Tenir hors de portée des enfants. Ne pas dépasser la dose journalière recommandée. Déconseillé aux personnes sous traitement antidiabétique sans avis médical. Ne remplace pas une alimentation variée et équilibrée.",
+      "يُحفظ بعيداً عن متناول الأطفال. لا تتجاوز الجرعة اليومية الموصى بها. مكمل غذائي طبيعي لا يغني عن تغذية متوازنة. في حال تناول أدوية مزمنة، يُفضل استشارة الطبيب.",
     regulatoryInformation:
-      "Ce complément alimentaire n'est pas un médicament. Il ne sert pas à diagnostiquer, traiter ou prévenir une maladie."
+      "هذا المكمل الغذائي مركب من خلاصات نباتية طبيعية ومغذيات حيوية 100% وليس دواءً كيميائياً. لا يُستخدم لتشخيص أو علاج الأمراض بشكل منفرد، بل يدعم التوازن الهرموني والطاقة الحيوية للرجل."
   },
   "rovanx-control-oil": {
     name: "Control Flow",
