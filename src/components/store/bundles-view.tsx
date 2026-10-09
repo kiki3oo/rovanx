@@ -35,8 +35,8 @@ type RawBundle = {
 
 const BUNDLE_IMAGES: Record<string, { ar?: string; default: string }> = {
   "rovanx-pack-puissance": {
-    ar: "/products/rovanx-pack-puissance-ar.webp?v=4",
-    default: "/products/rovanx-pack-puissance-fr.webp?v=4"
+    ar: "/products/rovanx-pack-puissance-ar.webp?v=5",
+    default: "/products/rovanx-pack-puissance-fr.webp?v=5"
   },
   "rovanx-men-pack": {
     default: "/products/rovanx-men-pack.webp?v=3"
