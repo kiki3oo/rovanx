@@ -33,12 +33,27 @@ type RawBundle = {
   }[];
 };
 
-const BUNDLE_IMAGES: Record<string, string> = {
-  "rovanx-pack-puissance": "/products/rovanx-pack-puissance.webp?v=2",
-  "rovanx-men-pack": "/products/rovanx-men-pack.webp?v=2",
-  "rovanx-men-plus-pack": "/products/rovanx-men-plus-pack.webp?v=2",
-  "rovanx-prostate-energie-pack": "/products/rovanx-prostate-energie-pack.webp?v=2"
+const BUNDLE_IMAGES: Record<string, { ar?: string; default: string }> = {
+  "rovanx-pack-puissance": {
+    default: "/products/rovanx-pack-puissance.webp?v=3"
+  },
+  "rovanx-men-pack": {
+    default: "/products/rovanx-men-pack.webp?v=3"
+  },
+  "rovanx-men-plus-pack": {
+    default: "/products/rovanx-men-plus-pack.webp?v=3"
+  },
+  "rovanx-prostate-energie-pack": {
+    ar: "/products/rovanx-prostate-energie-pack-ar.webp?v=3",
+    default: "/products/rovanx-prostate-energie-pack-fr.webp?v=3"
+  }
 };
+
+function getBundleImage(slug: string, isArabic: boolean): string {
+  const item = BUNDLE_IMAGES[slug];
+  if (!item) return `/products/${slug}.webp?v=3`;
+  return (isArabic && item.ar) ? item.ar : item.default;
+}
 
 const BUNDLE_MULTILINGUAL: Record<
   string,
@@ -206,7 +221,7 @@ export function BundlesView({ bundles }: { bundles: RawBundle[] }) {
       regularCombinedPrice: b.regularCombinedPrice,
       description,
       badge,
-      image: BUNDLE_IMAGES[b.slug] || `/products/${b.slug}.webp`,
+      image: getBundleImage(b.slug, isArabic),
       items: b.items.map((it) => ({
         productId: it.product.id,
         productName: it.product.name,
@@ -340,7 +355,7 @@ export function BundlesView({ bundles }: { bundles: RawBundle[] }) {
                     {/* Unified Professional Packshot */}
                     <div className="relative mb-5 aspect-square w-full overflow-hidden rounded-2xl border border-white/10 bg-black/40 shadow-xl group-hover:border-amber-500/40 transition-all duration-300">
                       <img
-                        src={BUNDLE_IMAGES[bundle.slug] || `/products/${bundle.slug}.webp`}
+                        src={getBundleImage(bundle.slug, isArabic)}
                         alt={title}
                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                         loading="lazy"
