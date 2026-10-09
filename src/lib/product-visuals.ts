@@ -38,11 +38,11 @@ const productVisuals: Record<string, ProductVisual[]> = {
       alt: "Royal Force - flacon de 30 capsules"
     },
     {
-      src: "/products/rovanx-men-plus-pack-ar.webp?v=5",
+      src: "/products/rovanx-men-plus-pack-ar.webp?v=6",
       alt: "باقة القوة و التحكم - ROVANX"
     },
     {
-      src: "/products/rovanx-men-plus-pack-fr.webp?v=5",
+      src: "/products/rovanx-men-plus-pack-fr.webp?v=6",
       alt: "Men Plus Pack - ROVANX"
     }
   ],
@@ -58,11 +58,11 @@ const productVisuals: Record<string, ProductVisual[]> = {
       alt: "Vitality Ultra - flacon de 60 capsules"
     },
     {
-      src: "/products/rovanx-men-plus-pack-ar.webp?v=5",
+      src: "/products/rovanx-men-plus-pack-ar.webp?v=6",
       alt: "باقة القوة و التحكم - ROVANX"
     },
     {
-      src: "/products/rovanx-men-plus-pack-fr.webp?v=5",
+      src: "/products/rovanx-men-plus-pack-fr.webp?v=6",
       alt: "Men Plus Pack - ROVANX"
     }
   ],
@@ -78,11 +78,11 @@ const productVisuals: Record<string, ProductVisual[]> = {
       alt: "Testo Drive - flacon de 30 capsules"
     },
     {
-      src: "/products/rovanx-men-plus-pack-ar.webp?v=5",
+      src: "/products/rovanx-men-plus-pack-ar.webp?v=6",
       alt: "باقة القوة و التحكم - ROVANX"
     },
     {
-      src: "/products/rovanx-men-plus-pack-fr.webp?v=5",
+      src: "/products/rovanx-men-plus-pack-fr.webp?v=6",
       alt: "Men Plus Pack - ROVANX"
     }
   ]
