@@ -231,6 +231,14 @@ export async function ensureCatalogSynced(force = false) {
         bundlePrice: 629,
         regularCombinedPrice: 827,
         description: "الباك الملكي 3 في 1: صلابة مستمرة، تحفيز التستوستيرون، ومقاومة تامة للتعب والإجهاد."
+      },
+      {
+        name: "Pack Santé Prostate & Énergie",
+        slug: "rovanx-prostate-energie-pack",
+        items: ["rovanx-prostate", "rovanx-ginseng"],
+        bundlePrice: 469,
+        regularCombinedPrice: 548,
+        description: "باك صحة البروستاتا والراحة الليلية: Prosta Guard (120 مل) للراحة البولية والنوم الهادئ + Testo Drive لدعم الحيوية والدورة الدموية للحوض."
       }
     ];
 

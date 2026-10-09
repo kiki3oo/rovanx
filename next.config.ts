@@ -9,6 +9,20 @@ const nextConfig: NextConfig = {
       bodySizeLimit: "2mb"
     }
   },
+  async redirects() {
+    return [
+      {
+        source: "/categories",
+        destination: "/bundles",
+        permanent: true
+      },
+      {
+        source: "/packs",
+        destination: "/bundles",
+        permanent: true
+      }
+    ];
+  },
   async headers() {
     return [
       {

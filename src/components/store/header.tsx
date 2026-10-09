@@ -10,7 +10,7 @@ import { usePreferences } from "@/components/store/preferences-provider";
 
 const nav = [
   ["shop", "/shop"],
-  ["categories", "/shop"],
+  ["bundles", "/bundles"],
   ["blog", "/blog"],
   ["about", "/legal/about"],
   ["faq", "/legal/faq"]

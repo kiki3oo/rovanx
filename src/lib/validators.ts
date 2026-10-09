@@ -7,6 +7,7 @@ export const checkoutSchema = z.object({
   address: z.string().min(3, "Adresse ou ville requise"),
   addressDetails: z.string().optional(),
   notes: z.string().optional(),
+  bundleSlug: z.string().optional(),
   items: z
     .array(
       z.object({

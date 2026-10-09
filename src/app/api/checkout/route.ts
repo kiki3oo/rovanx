@@ -35,19 +35,29 @@ export async function POST(request: Request) {
   const notesList: string[] = [];
   if (parsed.data.notes) notesList.push(parsed.data.notes);
 
-  for (const item of items) {
-    if (item.isBump) {
-      const targetBumpPrice = 149;
-      if (item.unitPrice > targetBumpPrice) {
-        const bumpDiscount = (item.unitPrice - targetBumpPrice) * item.quantity;
-        discountTotal += bumpDiscount;
-        notesList.push(`Order Bump: ${item.product.name} à ${targetBumpPrice} DH (-${bumpDiscount} DH)`);
-      }
-    } else {
-      const calc = calculateTierDiscount(item.product.slug, item.unitPrice, item.quantity);
-      if (calc.discount > 0) {
-        discountTotal += calc.discount;
-        notesList.push(`${item.product.name} - ${calc.packNote}`);
+  if (parsed.data.bundleSlug) {
+    const bundle = await prisma.bundle.findUnique({
+      where: { slug: parsed.data.bundleSlug }
+    });
+    if (bundle && bundle.bundlePrice < subtotal) {
+      discountTotal = subtotal - bundle.bundlePrice;
+      notesList.push(`Pack: ${bundle.name} (${bundle.bundlePrice} DH)`);
+    }
+  } else {
+    for (const item of items) {
+      if (item.isBump) {
+        const targetBumpPrice = 149;
+        if (item.unitPrice > targetBumpPrice) {
+          const bumpDiscount = (item.unitPrice - targetBumpPrice) * item.quantity;
+          discountTotal += bumpDiscount;
+          notesList.push(`Order Bump: ${item.product.name} à ${targetBumpPrice} DH (-${bumpDiscount} DH)`);
+        }
+      } else {
+        const calc = calculateTierDiscount(item.product.slug, item.unitPrice, item.quantity);
+        if (calc.discount > 0) {
+          discountTotal += calc.discount;
+          notesList.push(`${item.product.name} - ${calc.packNote}`);
+        }
       }
     }
   }
