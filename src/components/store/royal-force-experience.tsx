@@ -678,6 +678,37 @@ export function RoyalForceExperience() {
               </div>
             </div>
           </div>
+
+          {/* COMBO PACK BANNER: Royal Force + Control Flow */}
+          <div className="mx-auto mt-10 max-w-5xl rounded-2xl border-2 border-dashed border-amber-500/50 bg-gradient-to-r from-amber-500/10 via-bronze-900/30 to-amber-500/10 p-6 text-center sm:text-start flex flex-col sm:flex-row items-center justify-between gap-5 shadow-xl">
+            <div className="flex-1">
+              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                <span className="rounded-full bg-amber-500 px-3 py-0.5 text-xs font-black text-black">
+                  {isArabic ? "🔥 الحل المزدوج الأكثر طلباً" : "Pack Double Action"}
+                </span>
+                <span className="text-xs font-bold text-amber-300">
+                  {isArabic ? "صلابة ملكية + تأخير وتحكم فالعلاقة" : "Fermeté royale + Maîtrise externe"}
+                </span>
+              </div>
+              <h3 className="mt-2 text-lg sm:text-xl font-black text-white">
+                {isArabic
+                  ? "باك القوة والتحكم: Royal Force + سيروم Control Flow"
+                  : "Pack Puissance & Contrôle : Royal Force + Huile Control Flow"}
+              </h3>
+              <p className="mt-1 text-xs sm:text-sm text-white/80 leading-relaxed">
+                {isArabic
+                  ? "يمكنك إضافة زيت Control Flow لتأخير القذف بـ 149 درهم فقط (عوض 249 درهم) بضغطة واحدة في نموذج الطلب أسفله!"
+                  : "Ajoutez l'huile Control Flow à 149 DH seulement (au lieu de 249 DH) en cochant l'option dans le formulaire ci-dessous !"}
+              </p>
+            </div>
+            <a
+              href="#cod-form"
+              className="shrink-0 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 px-6 py-3.5 text-sm font-black text-black shadow-lg hover:brightness-110 transition-all"
+            >
+              <span>{isArabic ? "اطلب الباك المزدوج أسفله" : "Commander le Pack ci-dessous"}</span>
+              <ArrowDown size={16} />
+            </a>
+          </div>
         </div>
       </section>
 

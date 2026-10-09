@@ -57,6 +57,77 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const warningsText = detail?.warnings || (product.warnings?.includes("Placeholder") ? null : product.warnings);
   const regulatoryText = detail?.regulatoryInformation || (product.regulatoryInformation?.includes("Placeholder") ? null : product.regulatoryInformation);
 
+  let bumpSlug: string | null = null;
+  if (
+    product.slug === "rovanx-vitality-60" ||
+    product.slug === "rovanx-vitality-30" ||
+    product.slug === "rovanx-maca-max" ||
+    product.slug === "rovanx-ginseng"
+  ) {
+    bumpSlug = "rovanx-control-oil";
+  } else if (product.slug === "rovanx-control-oil") {
+    bumpSlug = "rovanx-vitality-60";
+  } else if (product.slug === "rovanx-prostate") {
+    bumpSlug = "rovanx-ginseng";
+  }
+
+  const bumpProduct = bumpSlug
+    ? await prisma.product.findUnique({
+        where: { slug: bumpSlug, active: true },
+        select: { id: true, name: true, slug: true, sku: true, regularPrice: true, salePrice: true }
+      }).catch(() => null)
+    : null;
+
+  let bumpOffer:
+    | {
+        productId: string;
+        slug: string;
+        titleAr: string;
+        titleFr: string;
+        descAr: string;
+        descFr: string;
+        regularPrice: number;
+        bumpPrice: number;
+      }
+    | undefined = undefined;
+
+  if (bumpProduct) {
+    if (bumpProduct.slug === "rovanx-control-oil") {
+      bumpOffer = {
+        productId: bumpProduct.id,
+        slug: bumpProduct.slug,
+        titleAr: "أضف سيروم Control Flow لتأخير القذف والتحكم بـ 149 درهم فقط! (عوض 249 درهم)",
+        titleFr: "Ajoutez l'huile Control Flow pour le contrôle et l'endurance à 149 DH seulement (au lieu de 249 DH)",
+        descAr: "🔥 تركيبة أعشاب طبيعية لتأخير القذف 30-45 دقيقة بدون تخدير + تحكم كامل فالعلاقة لإسعاد الزوجة.",
+        descFr: "Formule naturelle retardante pour prolonger le plaisir de 30 à 45 min sans anesthésie ni engourdissement.",
+        regularPrice: 249,
+        bumpPrice: 149
+      };
+    } else if (bumpProduct.slug === "rovanx-vitality-60") {
+      bumpOffer = {
+        productId: bumpProduct.id,
+        slug: bumpProduct.slug,
+        titleAr: "أضف كبسولات Vitality Ultra للصلابة وتكبير الحجم بـ 199 درهم فقط! (عوض 299 درهم)",
+        titleFr: "Ajoutez Vitality Ultra pour une fermeté maximale et volume à 199 DH seulement (au lieu de 299 DH)",
+        descAr: "🔥 تركيبة مركزة 60 كبسولة لضخ دموي كثيف، انتصاب حديدي وتمدد الحجم والسمك.",
+        descFr: "Formule concentrée 60 capsules pour afflux sanguin, fermeté maximale et plénitude intime.",
+        regularPrice: 299,
+        bumpPrice: 199
+      };
+    } else if (bumpProduct.slug === "rovanx-ginseng") {
+      bumpOffer = {
+        productId: bumpProduct.id,
+        slug: bumpProduct.slug,
+        titleAr: "أضف Testo Drive لتحفيز التستوستيرون والطاقة بـ 149 درهم فقط! (عوض 249 درهم)",
+        titleFr: "Ajoutez Testo Drive (Ginseng Coréen & Énergie) à 149 DH seulement (au lieu de 249 DH)",
+        descAr: "⚡ جينسينغ كوري معتق 6 سنوات + زنك لرفع التستوستيرون، محاربة التعب والفتور وتنشيط الحوض.",
+        descFr: "Ginseng coréen 6 ans et zinc pour stimuler la testostérone naturelle, réduire le stress et booster la vitalité.",
+        regularPrice: 249,
+        bumpPrice: 149
+      };
+    }
+  }
+
   const price = product.salePrice || product.regularPrice;
   const visual = getProductVisual(product.slug);
   const gallery = getProductGallery(product.slug);
@@ -261,6 +332,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 price,
                 regularPrice: product.regularPrice
               }}
+              bumpOffer={bumpOffer}
             />
           </div>
         </div>

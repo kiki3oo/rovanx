@@ -11,7 +11,8 @@ export const checkoutSchema = z.object({
     .array(
       z.object({
         productId: z.string().min(1),
-        quantity: z.coerce.number().int().min(1).max(20)
+        quantity: z.coerce.number().int().min(1).max(20),
+        isBump: z.boolean().optional()
       })
     )
     .min(1, "Panier vide"),

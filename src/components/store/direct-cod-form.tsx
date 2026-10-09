@@ -16,12 +16,25 @@ type DirectCodProduct = {
   regularPrice: number;
 };
 
+export type OrderBumpOffer = {
+  productId: string;
+  slug: string;
+  titleAr: string;
+  titleFr: string;
+  descAr: string;
+  descFr: string;
+  regularPrice: number;
+  bumpPrice: number;
+};
+
 export function DirectCodForm({
   product,
-  darkTheme = false
+  darkTheme = false,
+  bumpOffer
 }: {
   product: DirectCodProduct;
   darkTheme?: boolean;
+  bumpOffer?: OrderBumpOffer;
 }) {
   const router = useRouter();
   const { locale, currency } = usePreferences();
@@ -30,13 +43,21 @@ export function DirectCodForm({
 
   const tiers = getProductTiers(product.slug, product.price, isArabic);
   const [quantity, setQuantity] = useState(2);
+  const [addBump, setAddBump] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const selectedInfo = getSelectedTierInfo(product.slug, product.price, quantity, isArabic);
-  const totalPrice = selectedInfo.totalPrice;
-  const originalPrice = selectedInfo.originalPrice;
-  const freeShipping = selectedInfo.freeShipping;
+  const bumpPrice = addBump && bumpOffer ? bumpOffer.bumpPrice : 0;
+  const bumpRegular = addBump && bumpOffer ? bumpOffer.regularPrice : 0;
+
+  const totalPrice = selectedInfo.totalPrice + bumpPrice;
+  const originalPrice = selectedInfo.originalPrice
+    ? selectedInfo.originalPrice + bumpRegular
+    : bumpRegular
+      ? product.price * quantity + bumpRegular
+      : null;
+  const freeShipping = selectedInfo.freeShipping || Boolean(addBump);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -52,14 +73,24 @@ export function DirectCodForm({
       return;
     }
 
+    const items = [{ productId: product.id, quantity, isBump: false }];
+    if (addBump && bumpOffer) {
+      items.push({ productId: bumpOffer.productId, quantity: 1, isBump: true });
+    }
+
+    const notes = [
+      formData.get("notes"),
+      addBump && bumpOffer ? `+ Order Bump: ${bumpOffer.slug} (${bumpOffer.bumpPrice} DH)` : null
+    ].filter(Boolean).join(" | ") || undefined;
+
     const payload = {
       fullName: formData.get("fullName"),
       phone: formData.get("phone"),
       city: "À confirmer",
       address: formData.get("address"),
       addressDetails: formData.get("addressDetails") || undefined,
-      notes: formData.get("notes") || undefined,
-      items: [{ productId: product.id, quantity }],
+      notes,
+      items,
       displayCurrency: currency,
       locale,
       landingPage: typeof window !== "undefined" ? window.location.href : undefined,
@@ -257,6 +288,56 @@ export function DirectCodForm({
           </span>
         </label>
 
+        {bumpOffer ? (
+          <div
+            onClick={() => setAddBump((prev) => !prev)}
+            className={`relative cursor-pointer rounded-2xl border-2 p-4 transition-all duration-200 select-none ${
+              addBump
+                ? "border-amber-400 bg-gradient-to-br from-amber-500/20 via-bronze-900/30 to-amber-950/30 shadow-xl shadow-amber-500/10"
+                : "border-dashed border-amber-500/40 bg-white/[0.02] hover:border-amber-400 hover:bg-white/[0.04]"
+            }`}
+          >
+            <div className="flex items-start gap-3">
+              <div className="pt-0.5">
+                <input
+                  type="checkbox"
+                  checked={addBump}
+                  onChange={(e) => setAddBump(e.target.checked)}
+                  onClick={(e) => e.stopPropagation()}
+                  className="h-5 w-5 rounded border-amber-400 text-amber-500 focus:ring-amber-400 cursor-pointer accent-amber-500"
+                />
+              </div>
+              <div className="flex-1">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="rounded-full bg-gradient-to-r from-amber-500 to-amber-600 px-2.5 py-0.5 text-[11px] font-black uppercase text-black shadow-sm">
+                    {isArabic ? "🔥 عرض حصري لطلبك اليوم" : "Offre exclusive"}
+                  </span>
+                  <span className="rounded-full border border-emerald-500/30 bg-emerald-500/20 px-2 py-0.5 text-[11px] font-black text-emerald-400">
+                    {isArabic ? `وفر ${bumpOffer.regularPrice - bumpOffer.bumpPrice} درهم فوري` : `Économisez ${bumpOffer.regularPrice - bumpOffer.bumpPrice} DH`}
+                  </span>
+                </div>
+                <h4 className="mt-2 text-sm font-black text-white sm:text-base leading-snug">
+                  {isArabic ? bumpOffer.titleAr : bumpOffer.titleFr}
+                </h4>
+                <p className="mt-1 text-xs text-white/75 leading-relaxed">
+                  {isArabic ? bumpOffer.descAr : bumpOffer.descFr}
+                </p>
+                <div className="mt-3 flex items-center justify-between border-t border-white/10 pt-2.5">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-lg font-black text-amber-400">+{bumpOffer.bumpPrice} DH</span>
+                    <span className="text-xs text-white/40 line-through">{bumpOffer.regularPrice} DH</span>
+                  </div>
+                  <span className={`text-xs font-bold ${addBump ? "text-emerald-400" : "text-amber-400/80"}`}>
+                    {addBump
+                      ? (isArabic ? "✓ تمت الإضافة إلى طلبيتك" : "✓ Ajouté à votre commande")
+                      : (isArabic ? "اضغط هنا لإضافته لطلبك" : "Cliquez pour ajouter")}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : null}
+
         <div
           className={`mt-2 flex items-center justify-between rounded-xl p-4 font-black ${
             darkTheme ? "border border-white/10 bg-white/[0.03]" : "bg-sand-50"
@@ -276,6 +357,13 @@ export function DirectCodForm({
                 </span>
               ) : null}
             </div>
+            {addBump && bumpOffer ? (
+              <p className="mt-1 text-xs font-bold text-amber-400">
+                {isArabic
+                  ? `✓ يتضمن العرض الخاص (+${bumpOffer.bumpPrice} DH) - شحن مجاني`
+                  : `✓ Inclut l'offre spéciale (+${bumpOffer.bumpPrice} DH) - Livraison gratuite`}
+              </p>
+            ) : null}
           </div>
           {freeShipping ? (
             <span className="rounded-full border border-emerald-500/30 bg-emerald-500/20 px-3 py-1 text-xs font-black text-emerald-400">

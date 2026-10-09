@@ -25,24 +25,35 @@ export async function POST(request: Request) {
       product,
       quantity: item.quantity,
       unitPrice,
+      isBump: Boolean(item.isBump),
       total: unitPrice * item.quantity
     };
   });
   const subtotal = items.reduce((sum, item) => sum + item.total, 0);
 
   let discountTotal = 0;
-  let packNote: string | null = null;
-  if (items.length === 1) {
-    const single = items[0];
-    const calc = calculateTierDiscount(single.product.slug, single.unitPrice, single.quantity);
-    if (calc.discount > 0) {
-      discountTotal = calc.discount;
-      packNote = `${single.product.name} - ${calc.packNote}`;
+  const notesList: string[] = [];
+  if (parsed.data.notes) notesList.push(parsed.data.notes);
+
+  for (const item of items) {
+    if (item.isBump) {
+      const targetBumpPrice = 149;
+      if (item.unitPrice > targetBumpPrice) {
+        const bumpDiscount = (item.unitPrice - targetBumpPrice) * item.quantity;
+        discountTotal += bumpDiscount;
+        notesList.push(`Order Bump: ${item.product.name} à ${targetBumpPrice} DH (-${bumpDiscount} DH)`);
+      }
+    } else {
+      const calc = calculateTierDiscount(item.product.slug, item.unitPrice, item.quantity);
+      if (calc.discount > 0) {
+        discountTotal += calc.discount;
+        notesList.push(`${item.product.name} - ${calc.packNote}`);
+      }
     }
   }
 
   const finalTotal = Math.max(0, subtotal - discountTotal);
-  const combinedNotes = [parsed.data.notes, packNote].filter(Boolean).join(" | ") || undefined;
+  const combinedNotes = notesList.filter(Boolean).join(" | ") || undefined;
   const phoneNorm = normalizeMoroccanPhone(parsed.data.phone);
   const reference = `ROV-${Date.now().toString(36).toUpperCase()}`;
 

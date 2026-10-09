@@ -112,30 +112,59 @@ async function main() {
   );
 
   const bundleData = [
-    ["ROVANX Men Pack", "rovanx-men-pack", ["rovanx-vitality-60", "rovanx-maca-max"], 469, 598],
+    [
+      "Pack Puissance & Contrôle",
+      "rovanx-pack-puissance",
+      ["rovanx-vitality-60", "rovanx-control-oil"],
+      449,
+      548,
+      "الحل المزدوج المتكامل: كبسولات Vitality Ultra للصلابة وتمدد الحجم والسمك + زيت Control Flow لتأخير القذف 30-45 دقيقة وتحكم تام فالعلاقة لإسعاد الزوجة."
+    ],
+    [
+      "ROVANX Men Pack",
+      "rovanx-men-pack",
+      ["rovanx-vitality-60", "rovanx-maca-max"],
+      469,
+      598,
+      "الثنائي الفحولي: Vitality Ultra + Royal Force لانتصاب حديدي وطاقة مضاعفة طوال اللقاء."
+    ],
     [
       "ROVANX Men Plus Pack",
       "rovanx-men-plus-pack",
       ["rovanx-vitality-60", "rovanx-maca-max", "rovanx-ginseng"],
       629,
-      827
+      827,
+      "الباك الملكي 3 في 1: صلابة مستمرة، تحفيز التستوستيرون، ومقاومة تامة للتعب والإجهاد."
     ],
-    ["ROVANX Daily Balance Pack", "rovanx-daily-balance-pack", ["rovanx-balance", "rovanx-magnesium"], 339, 418]
+    [
+      "ROVANX Daily Balance Pack",
+      "rovanx-daily-balance-pack",
+      ["rovanx-balance", "rovanx-magnesium"],
+      339,
+      418,
+      "توازن يومي واسترجاع طاقة الجسم والجهاز العصبي."
+    ]
   ] as const;
 
-  for (const [name, slug, items, bundlePrice, regularCombinedPrice] of bundleData) {
+  for (const [name, slug, items, bundlePrice, regularCombinedPrice, description] of bundleData) {
     const bundle = await prisma.bundle.upsert({
       where: { slug },
-      update: {},
+      update: {
+        name,
+        bundlePrice,
+        regularCombinedPrice,
+        description,
+        active: true
+      },
       create: {
         name,
         slug,
-        description: "Bundle provisoire editable dans l'administration.",
+        description,
         bundlePrice,
         regularCombinedPrice,
-        active: false,
+        active: true,
         seoTitle: `${name} | ROVANX`,
-        seoDescription: "Pack ROVANX avec prix et contenu editables."
+        seoDescription: "Pack ROVANX avantage avec livraison gratuite et discrète."
       }
     });
 
