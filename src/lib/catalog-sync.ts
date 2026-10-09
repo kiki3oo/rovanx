@@ -203,6 +203,71 @@ export async function ensureCatalogSynced(force = false) {
       });
     }
 
+    // 3. Ensure official bundles exist and are active
+    const allProducts = await prisma.product.findMany();
+    const productBySlug = Object.fromEntries(allProducts.map((p) => [p.slug, p]));
+
+    const BUNDLES = [
+      {
+        name: "Pack Puissance & Contrôle",
+        slug: "rovanx-pack-puissance",
+        items: ["rovanx-vitality-60", "rovanx-control-oil"],
+        bundlePrice: 449,
+        regularCombinedPrice: 548,
+        description: "الحل المزدوج المتكامل: كبسولات Vitality Ultra للصلابة وتمدد الحجم والسمك + زيت Control Flow لتأخير القذف 30-45 دقيقة وتحكم تام فالعلاقة لإسعاد الزوجة."
+      },
+      {
+        name: "ROVANX Men Pack",
+        slug: "rovanx-men-pack",
+        items: ["rovanx-vitality-60", "rovanx-maca-max"],
+        bundlePrice: 469,
+        regularCombinedPrice: 598,
+        description: "الثنائي الفحولي: Vitality Ultra + Royal Force لانتصاب حديدي وطاقة مضاعفة طوال اللقاء."
+      },
+      {
+        name: "ROVANX Men Plus Pack",
+        slug: "rovanx-men-plus-pack",
+        items: ["rovanx-vitality-60", "rovanx-maca-max", "rovanx-ginseng"],
+        bundlePrice: 629,
+        regularCombinedPrice: 827,
+        description: "الباك الملكي 3 في 1: صلابة مستمرة، تحفيز التستوستيرون، ومقاومة تامة للتعب والإجهاد."
+      }
+    ];
+
+    for (const b of BUNDLES) {
+      const bundle = await prisma.bundle.upsert({
+        where: { slug: b.slug },
+        update: {
+          name: b.name,
+          bundlePrice: b.bundlePrice,
+          regularCombinedPrice: b.regularCombinedPrice,
+          description: b.description,
+          active: true
+        },
+        create: {
+          name: b.name,
+          slug: b.slug,
+          description: b.description,
+          bundlePrice: b.bundlePrice,
+          regularCombinedPrice: b.regularCombinedPrice,
+          active: true,
+          seoTitle: `${b.name} | ROVANX`,
+          seoDescription: "Pack avantage ROVANX avec livraison gratuite et discrète."
+        }
+      });
+
+      for (const pSlug of b.items) {
+        const prod = productBySlug[pSlug];
+        if (prod) {
+          await prisma.bundleItem.upsert({
+            where: { bundleId_productId: { bundleId: bundle.id, productId: prod.id } },
+            update: {},
+            create: { bundleId: bundle.id, productId: prod.id, quantity: 1 }
+          });
+        }
+      }
+    }
+
     syncExecuted = true;
   } catch (error) {
     console.error("Failed to ensure catalog synced:", error);
