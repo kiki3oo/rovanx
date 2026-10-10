@@ -27,15 +27,34 @@ import { ensureCatalogSynced } from "@/lib/catalog-sync";
 
 export default async function HomePage() {
   await ensureCatalogSynced().catch(() => {});
+  const BEST_SELLER_ORDER = [
+    "rovanx-vitality-60",
+    "rovanx-control-oil",
+    "rovanx-prostate",
+    "rovanx-maca-max",
+    "rovanx-ginseng",
+    "rovanx-vital-protein",
+    "rovanx-vitality-30"
+  ];
+
   const [featured, bundles] = await Promise.all([
-    prisma.product.findMany({ where: { active: true, featured: true }, take: 12, orderBy: { createdAt: "asc" } }).catch(() => []),
+    prisma.product.findMany({ where: { active: true, featured: true }, orderBy: { createdAt: "asc" } }).catch(() => []),
     prisma.bundle.findMany({ where: { active: true }, take: 3, include: { items: { include: { product: true } } } }).catch(() => [])
   ]);
 
-  let displayFeatured = featured;
-  if (!displayFeatured || displayFeatured.length === 0) {
-    displayFeatured = await prisma.product.findMany({ where: { active: true }, take: 6, orderBy: { createdAt: "asc" } }).catch(() => []);
+  let allFeatured = featured;
+  if (!allFeatured || allFeatured.length === 0) {
+    allFeatured = await prisma.product.findMany({ where: { active: true }, orderBy: { createdAt: "asc" } }).catch(() => []);
   }
+
+  // Keep only the top 3 best-selling products to keep the page clean and concise
+  const displayFeatured = [...allFeatured]
+    .sort((a, b) => {
+      const idxA = BEST_SELLER_ORDER.indexOf(a.slug);
+      const idxB = BEST_SELLER_ORDER.indexOf(b.slug);
+      return (idxA === -1 ? 999 : idxA) - (idxB === -1 ? 999 : idxB);
+    })
+    .slice(0, 3);
 
   return (
     <>
