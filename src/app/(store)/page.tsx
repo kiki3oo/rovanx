@@ -11,6 +11,7 @@ import { SeedContent } from "@/components/store/seed-content";
 import { BLOG_POSTS } from "@/lib/blog-data";
 import { HomeBlogArticles } from "@/components/store/home-blog-articles";
 import { HomeReviews } from "@/components/store/home-reviews";
+import { HomeSolutions } from "@/components/store/home-solutions";
 import { HeroShowcaseSlider } from "@/components/store/hero-showcase-slider";
 
 export const dynamic = "force-dynamic";
@@ -164,37 +165,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="section border-b border-white/10 bg-[#12141a] text-white">
-        <div className="container grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
-          <div>
-            <p className="badge mb-3 border-white/10 bg-white/10 text-bronze-400"><LocalizedText id="fastDecision" /></p>
-            <h2 className="text-3xl font-black text-white sm:text-4xl"><LocalizedText id="categories" /></h2>
-            <LocalizedText id="categoryIntro" as="p" className="mt-3 text-white/70" />
-          </div>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              ["goalVitality", "Vitality"], ["goalWellness", "Men's wellness"], ["goalProstate", "Prostate support"],
-              ["goalEnergy", "Energy"], ["goalBalance", "Balance"], ["goalSleep", "Sleep"]
-            ].map(([key, goal]) => (
-              <Link
-                key={key}
-                href={`/shop?search=${encodeURIComponent(goal)}`}
-                className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-5 font-black text-white backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-bronze-500/50 hover:bg-white/[0.08] hover:shadow-xl hover:shadow-black/40"
-              >
-                <div className="mb-4 flex items-center justify-between">
-                  <span className="grid h-10 w-10 place-items-center rounded-xl border border-bronze-500/25 bg-bronze-500/15 text-bronze-400 transition-colors group-hover:bg-bronze-500/25 group-hover:text-bronze-300">
-                    <Sparkles size={20} />
-                  </span>
-                  <ArrowRight size={16} className="text-white/40 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-bronze-400" />
-                </div>
-                <span className="text-base font-black text-white transition-colors group-hover:text-bronze-300">
-                  <LocalizedText id={key as "goalVitality" | "goalWellness" | "goalProstate" | "goalEnergy" | "goalBalance" | "goalSleep"} />
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
+      <HomeSolutions />
 
       <section className="section relative overflow-hidden border-b border-white/10 bg-[#12141a] text-white">
         <div className="pointer-events-none absolute -top-40 right-1/4 h-96 w-96 rounded-full bg-bronze-500/10 blur-3xl" />
