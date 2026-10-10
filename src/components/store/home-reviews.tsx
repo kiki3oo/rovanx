@@ -156,7 +156,7 @@ export function HomeReviews() {
 
                 <div className="mt-2 flex items-center justify-between">
                   <span className="inline-block rounded-md border border-white/10 bg-white/[0.03] px-2 py-0.5 text-[11px] font-semibold text-white/70">
-                    {rev.productName}
+                    {isArabic && rev.productNameAr ? rev.productNameAr : rev.productName}
                   </span>
                   {rev.highlight ? (
                     <span className="text-[10px] font-bold text-bronze-500/80 uppercase tracking-wider">
