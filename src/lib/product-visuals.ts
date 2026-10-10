@@ -38,6 +38,10 @@ const productVisuals: Record<string, ProductVisual[]> = {
       alt: "Royal Force - flacon de 30 capsules"
     },
     {
+      src: "/products/rovanx-men-pack.webp?v=4",
+      alt: "Men Pack - ROVANX"
+    },
+    {
       src: "/products/rovanx-men-plus-pack-ar.webp?v=7",
       alt: "باقة القوة و التحكم - ROVANX"
     },
@@ -56,6 +60,10 @@ const productVisuals: Record<string, ProductVisual[]> = {
     {
       src: "/products/rovanx-vitality-60.webp?v=3",
       alt: "Vitality Ultra - flacon de 60 capsules"
+    },
+    {
+      src: "/products/rovanx-men-pack.webp?v=4",
+      alt: "Men Pack - ROVANX"
     },
     {
       src: "/products/rovanx-men-plus-pack-ar.webp?v=7",
