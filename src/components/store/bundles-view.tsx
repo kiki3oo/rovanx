@@ -46,8 +46,8 @@ const BUNDLE_IMAGES: Record<string, { ar?: string; default: string }> = {
     default: "/products/rovanx-men-plus-pack-fr.webp?v=7"
   },
   "rovanx-prostate-energie-pack": {
-    ar: "/products/rovanx-prostate-energie-pack-ar.webp?v=4",
-    default: "/products/rovanx-prostate-energie-pack-fr.webp?v=4"
+    ar: "/products/rovanx-prostate-energie-pack-ar.webp?v=5",
+    default: "/products/rovanx-prostate-energie-pack-fr.webp?v=5"
   }
 };
 

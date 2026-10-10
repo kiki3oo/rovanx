@@ -24,11 +24,11 @@ const productVisuals: Record<string, ProductVisual[]> = {
       alt: "Prosta Guard - flacon de 120 ml"
     },
     {
-      src: "/products/rovanx-prostate-energie-pack-ar.webp?v=3",
+      src: "/products/rovanx-prostate-energie-pack-ar.webp?v=5",
       alt: "باك صحي لصحة البروستاتا والطاقة - ROVANX"
     },
     {
-      src: "/products/rovanx-prostate-energie-pack-fr.webp?v=3",
+      src: "/products/rovanx-prostate-energie-pack-fr.webp?v=5",
       alt: "Pack Santé Prostate & Énergie - ROVANX"
     }
   ],
