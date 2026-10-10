@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, BadgeCheck, CheckCircle2, MessageSquare, ShieldCheck, Sparkles, Star, ThumbsUp, Truck } from "lucide-react";
+import { ArrowRight, BadgeCheck, CheckCircle2, ChevronDown, ChevronUp, MessageSquare, ShieldCheck, Sparkles, Star, ThumbsUp, Truck } from "lucide-react";
 import { REVIEWS_DATA, GLOBAL_REVIEW_STATS } from "@/lib/reviews-data";
 import { StarRating } from "@/components/store/star-rating";
 import { usePreferences } from "@/components/store/preferences-provider";
@@ -11,6 +11,9 @@ export function HomeReviews() {
   const { locale } = usePreferences();
   const isArabic = locale === "ar";
   const [selectedFilter, setSelectedFilter] = useState<string>("all");
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+
+  const INITIAL_COUNT = 6;
 
   const filterOptions = [
     { id: "all", labelFr: "Tous les avis", labelAr: "جميع الآراء" },
@@ -22,6 +25,17 @@ export function HomeReviews() {
   const filteredReviews = selectedFilter === "all"
     ? REVIEWS_DATA
     : REVIEWS_DATA.filter((r) => r.highlight === selectedFilter);
+
+  const displayedReviews = isExpanded
+    ? filteredReviews
+    : filteredReviews.slice(0, INITIAL_COUNT);
+
+  const hasMore = filteredReviews.length > INITIAL_COUNT;
+
+  function handleFilterChange(filterId: string) {
+    setSelectedFilter(filterId);
+    setIsExpanded(false);
+  }
 
   return (
     <section className="section relative overflow-hidden border-t border-white/10 bg-[#12141a] text-white">
@@ -88,7 +102,7 @@ export function HomeReviews() {
             {filterOptions.map((opt) => (
               <button
                 key={opt.id}
-                onClick={() => setSelectedFilter(opt.id)}
+                onClick={() => handleFilterChange(opt.id)}
                 className={`rounded-full px-4 py-2 text-xs font-bold transition-all ${
                   selectedFilter === opt.id
                     ? "border border-bronze-500/50 bg-gradient-to-r from-bronze-600 to-amber-600 text-white shadow-lg shadow-bronze-600/30"
@@ -103,7 +117,7 @@ export function HomeReviews() {
 
         {/* Reviews Grid */}
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredReviews.map((rev) => (
+          {displayedReviews.map((rev) => (
             <div
               key={rev.id}
               className="group flex flex-col justify-between rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-bronze-500/40 hover:bg-white/[0.06] hover:shadow-2xl hover:shadow-black/50"
@@ -154,6 +168,33 @@ export function HomeReviews() {
             </div>
           ))}
         </div>
+
+        {/* View More / View Less Toggle Button */}
+        {hasMore && (
+          <div className="mt-8 flex justify-center">
+            <button
+              type="button"
+              onClick={() => setIsExpanded((prev) => !prev)}
+              className="group inline-flex items-center gap-2 rounded-xl border border-bronze-500/40 bg-white/[0.05] px-6 py-3 text-sm font-bold text-white shadow-lg backdrop-blur-md transition-all duration-300 hover:border-bronze-400 hover:bg-bronze-500/20 hover:shadow-bronze-500/20 hover:-translate-y-0.5 active:translate-y-0"
+            >
+              {isExpanded ? (
+                <>
+                  <span>{isArabic ? "عرض أقل" : "Voir moins d'avis"}</span>
+                  <ChevronUp size={18} className="text-bronze-400 transition-transform duration-200 group-hover:-translate-y-0.5" />
+                </>
+              ) : (
+                <>
+                  <span>
+                    {isArabic
+                      ? `عرض المزيد من الآراء (+${filteredReviews.length - INITIAL_COUNT})`
+                      : `Voir plus d'avis (+${filteredReviews.length - INITIAL_COUNT})`}
+                  </span>
+                  <ChevronDown size={18} className="text-bronze-400 transition-transform duration-200 group-hover:translate-y-0.5" />
+                </>
+              )}
+            </button>
+          </div>
+        )}
 
         {/* Bottom Banner CTA */}
         <div className="mt-12 rounded-2xl border border-bronze-500/30 bg-gradient-to-r from-[#1f0509] via-[#2d0810] to-[#1a0407] p-6 text-center shadow-2xl backdrop-blur-xl sm:p-8">
