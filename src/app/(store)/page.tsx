@@ -209,21 +209,6 @@ export default async function HomePage() {
 
       <HomeReviews />
 
-      <section className="section bg-graphite-950 text-white">
-        <div className="container grid gap-4 md:grid-cols-3">
-          {[
-            [PhoneCall, "quickConfirm", "quickConfirmText"],
-            [Truck, "shipAfterCall", "shipAfterCallText"],
-            [ShieldCheck, "cashOnDelivery", "cashOnDeliveryText"]
-          ].map(([Icon, title, text]) => (
-            <div key={String(title)} className="dark-surface rounded-lg p-5">
-              <Icon className="text-bronze-500" />
-              <h3 className="mt-4 font-black"><LocalizedText id={title as "quickConfirm" | "shipAfterCall" | "cashOnDelivery"} /></h3>
-              <LocalizedText id={text as "quickConfirmText" | "shipAfterCallText" | "cashOnDeliveryText"} as="p" className="mt-2 text-sm text-white/65" />
-            </div>
-          ))}
-        </div>
-      </section>
 
       <section className="section border-t border-white/10 bg-[#12141a] text-white">
         <div className="container">
