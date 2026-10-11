@@ -5,8 +5,8 @@ import { BLOG_POSTS } from "@/lib/blog-data";
 export const revalidate = 60;
 
 export const metadata = buildMetadata({
-  title: "Blog & Conseils Vitalité Masculine",
-  description: "Découvrez nos guides d'experts, conseils nutritionnels et solutions naturelles pour la santé et la vitalité masculine au Maroc.",
+  title: "دليل ومقالات الصحة والحيوية الذكورية | Blog ROVANX Maroc",
+  description: "مقالات طبية وحلول طبيعية مثبتة لعلاج سرعة القذف، تقوية الانتصاب، صحة البروستات، رفع التستوستيرون، ودليل الشراء السري والدفع عند الاستلام بالمغرب.",
   path: "/blog"
 });
 
