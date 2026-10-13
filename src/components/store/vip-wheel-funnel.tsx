@@ -684,10 +684,10 @@ export function VipWheelFunnel({ funnel }: { funnel: WheelFunnelTarget }) {
                             const midAngle = startAngle + 22.5;
                             const path = createSlicePath(220, 220, 218, startAngle, endAngle);
 
-                            const iconPos = polarToCartesian(220, 220, 178, midAngle);
-                            const labelPos = polarToCartesian(220, 220, 140, midAngle);
-                            const subPos = polarToCartesian(220, 220, 98, midAngle);
-                            const innerDotPos = polarToCartesian(220, 220, 68, midAngle);
+                            const iconPos = polarToCartesian(220, 220, 182, midAngle);
+                            const labelPos = polarToCartesian(220, 220, 145, midAngle);
+                            const subPos = polarToCartesian(220, 220, 105, midAngle);
+                            const innerDotPos = polarToCartesian(220, 220, 76, midAngle);
 
                             return (
                               <g key={index}>
@@ -786,7 +786,7 @@ export function VipWheelFunnel({ funnel }: { funnel: WheelFunnelTarget }) {
                           <circle
                             cx="220"
                             cy="220"
-                            r="58"
+                            r="68"
                             fill="none"
                             stroke="#fde68a"
                             strokeWidth="2.5"
@@ -830,13 +830,13 @@ export function VipWheelFunnel({ funnel }: { funnel: WheelFunnelTarget }) {
                         }}
                       />
 
-                      {/* CENTER 3D ROYAL SPIN HUB BUTTON */}
+                      {/* CENTER 3D ROYAL SPIN HUB BUTTON WITH ENLARGED LION HEAD */}
                       <button
                         type="button"
                         onClick={handleSpin}
                         disabled={spinning}
                         aria-label="Spin the wheel"
-                        className="group absolute left-1/2 top-1/2 z-30 flex h-24 w-24 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full p-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.95),0_0_25px_rgba(216,162,74,0.5)] transition-transform duration-200 hover:scale-105 active:scale-95 sm:h-28 sm:w-28"
+                        className="group absolute left-1/2 top-1/2 z-30 flex h-[108px] w-[108px] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full p-[5px] shadow-[0_12px_35px_rgba(0,0,0,0.95),0_0_30px_rgba(216,162,74,0.55)] transition-transform duration-200 hover:scale-105 active:scale-95 sm:h-[132px] sm:w-[132px]"
                         style={{
                           background:
                             "conic-gradient(from 45deg, #78350f, #fef08a, #d8a24a, #fffbeb, #92400e, #fde68a, #78350f)"
@@ -846,12 +846,16 @@ export function VipWheelFunnel({ funnel }: { funnel: WheelFunnelTarget }) {
                           <span className="pointer-events-none absolute -inset-1.5 animate-ping rounded-full border-2 border-bronze-300/50 opacity-60" />
                         )}
 
-                        <div className="flex h-full w-full flex-col items-center justify-center rounded-full border-2 border-[#fffbeb]/80 bg-gradient-to-b from-[#480a16] via-[#24060c] to-[#0f0204] p-2 shadow-inner">
-                          <RovanxLogo variant="mark" className="h-11 w-11 sm:h-13 sm:w-13" />
-                          <span className="-mt-1 rounded-full bg-gradient-to-r from-[#fde68a] via-[#d8a24a] to-[#fde68a] px-2.5 py-0.5 text-[9px] font-black uppercase tracking-wider text-[#170306] shadow">
-                            {spinning ? "..." : isAr ? "دوّر الآن" : "TOURNER"}
-                          </span>
+                        <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-full border-2 border-[#fffbeb]/85 bg-gradient-to-b from-[#480a16] via-[#24060c] to-[#0c0204] shadow-[inset_0_0_18px_rgba(0,0,0,0.9)]">
+                          <RovanxLogo
+                            variant="mark"
+                            className="h-[84px] w-[84px] scale-110 drop-shadow-[0_6px_14px_rgba(0,0,0,0.9)] sm:h-[104px] sm:w-[104px]"
+                          />
                         </div>
+
+                        <span className=" -bottom-2 left-1/2 z-10 -translate-x-1/2 whitespace-nowrap rounded-full border border-[#fffbeb] bg-gradient-to-r from-[#fde68a] via-[#d8a24a] to-[#fde68a] px-3 py-0.5 text-[9.5px] font-black uppercase tracking-wider text-[#170306] shadow-[0_4px_12px_rgba(0,0,0,0.85)] absolute">
+                          {spinning ? "..." : isAr ? "دوّر الآن" : "TOURNER"}
+                        </span>
                       </button>
                     </div>
                   </div>
