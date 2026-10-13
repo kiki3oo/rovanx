@@ -456,29 +456,29 @@ export function VipWheelFunnel({ funnel }: { funnel: WheelFunnelTarget }) {
 
       <div>
         {/* Top Royal Header Bar */}
-        <header className="relative z-20 border-b border-bronze-500/25 bg-[#140307]/90 backdrop-blur-xl">
-          <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-2.5 sm:px-6">
-            <div className="flex items-center gap-3">
-              <RovanxLogo className="h-11 w-auto sm:h-13" tone="light" priority />
-              <span className="hidden items-center gap-1.5 rounded-full border border-bronze-400/40 bg-gradient-to-r from-bronze-500/20 to-[#5a0d1c]/50 px-3.5 py-1 text-[11px] font-black text-bronze-300 shadow-inner sm:inline-flex">
-                <Crown size={13} className="text-bronze-400" />
+        <header className="relative z-20 border-b border-bronze-500/30 bg-gradient-to-r from-[#170306]/95 via-[#24060c]/95 to-[#170306]/95 shadow-[0_6px_30px_rgba(0,0,0,0.65)] backdrop-blur-xl">
+          <div className="mx-auto flex min-h-20 max-w-6xl items-center justify-between px-4 py-3 sm:min-h-24 sm:px-6">
+            <div className="flex items-center gap-3.5 sm:gap-4">
+              <RovanxLogo className="h-16 w-auto sm:h-20" tone="light" priority />
+              <span className="hidden items-center gap-2 rounded-full border border-bronze-400/45 bg-gradient-to-r from-bronze-500/20 to-[#5a0d1c]/60 px-4 py-1.5 text-xs font-black text-bronze-200 shadow-inner sm:inline-flex">
+                <Crown size={15} className="text-bronze-400" />
                 <span>{isAr ? "نادي العروض الملكية VIP" : "Club Privilège Royal VIP"}</span>
               </span>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2.5 sm:gap-3">
               <button
                 type="button"
                 onClick={() => setSoundEnabled((prev) => !prev)}
                 aria-label="Toggle sound"
-                className="flex h-8 w-8 items-center justify-center rounded-xl border border-white/15 bg-white/5 text-bronze-300 transition hover:border-bronze-400/50 hover:bg-white/10"
+                className="flex h-10 w-10 items-center justify-center rounded-xl border border-bronze-400/35 bg-white/[0.06] text-bronze-300 shadow-md transition hover:border-bronze-400 hover:bg-white/10 sm:h-11 sm:w-11"
               >
-                {soundEnabled ? <Volume2 size={15} /> : <VolumeX size={15} />}
+                {soundEnabled ? <Volume2 size={18} /> : <VolumeX size={18} />}
               </button>
               <button
                 type="button"
                 onClick={() => setLocale(isAr ? "fr" : "ar")}
-                className="rounded-xl border border-bronze-400/40 bg-gradient-to-b from-[#5a0d1c] to-[#2b060d] px-3.5 py-1.5 text-xs font-black text-bronze-200 shadow-md transition hover:border-bronze-300 hover:text-white"
+                className="flex h-10 items-center justify-center rounded-xl border border-bronze-400/50 bg-gradient-to-b from-[#5a0d1c] via-[#480a16] to-[#2b060d] px-4 text-xs font-black text-bronze-100 shadow-md transition hover:border-bronze-300 hover:text-white sm:h-11 sm:px-5 sm:text-sm"
               >
                 {isAr ? "Français" : "العربية"}
               </button>
@@ -1274,10 +1274,10 @@ export function VipWheelFunnel({ funnel }: { funnel: WheelFunnelTarget }) {
       </div>
 
       {/* Royal Standalone Footer Bar (Anchors the bottom of the page cleanly) */}
-      <footer className="relative z-20 border-t border-bronze-500/25 bg-[#090103]/95 px-4 py-5 text-xs text-white/65">
+      <footer className="relative z-20 border-t border-bronze-500/25 bg-[#090103]/95 px-4 py-6 text-xs text-white/65">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 sm:flex-row sm:px-6">
-          <div className="flex items-center gap-3">
-            <RovanxLogo className="h-9 w-auto" tone="light" />
+          <div className="flex items-center gap-3.5">
+            <RovanxLogo className="h-14 w-auto sm:h-16" tone="light" />
             <span>
               {isAr
                 ? "© جميع الحقوق محفوظة لعلامة ROVANX الرسمية بالمغرب."
