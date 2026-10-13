@@ -12,7 +12,7 @@ type IpRecord = {
 const ipRateMap = new Map<string, IpRecord>();
 const IP_WINDOW_MS = 60 * 60 * 1000; // 1 hour
 const MAX_DISTINCT_PHONES_PER_IP = 2;
-const MAX_ATTEMPTS_PER_IP = 6;
+const MAX_ATTEMPTS_PER_IP = 8;
 
 function getClientIp(request: Request): string {
   const forwarded = request.headers.get("x-forwarded-for");
@@ -91,17 +91,19 @@ export async function POST(request: Request) {
     );
   }
 
-  // Layer 4: Blacklist & 15-Minute Duplicate Cooldown Check
+  // Layer 4: Blacklist & Multi-Order Rules (Allow 1, 2, 3 -> Block 4+)
   const existingCustomer = await prisma.customer.findUnique({
     where: { phoneNorm },
     include: {
       orders: {
         orderBy: { createdAt: "desc" },
-        take: 5,
+        take: 10,
         include: { items: true }
       }
     }
   });
+
+  let multiOrderIndex = 1; // 1 = primary order, 2 = 2nd order, 3 = 3rd order
 
   if (existingCustomer) {
     // Check if customer has been marked as FAKE / BLACKLIST in any previous order notes
@@ -118,20 +120,38 @@ export async function POST(request: Request) {
       );
     }
 
-    // Check if customer placed a NEW order within the last 15 minutes (prevent duplicate orders)
-    const fifteenMinutesAgo = new Date(Date.now() - 15 * 60 * 1000);
-    const recentOrder = existingCustomer.orders.find(
-      (o) => o.status === "NEW" && o.createdAt >= fifteenMinutesAgo
+    // Accidental double-click guard (within 10 seconds)
+    const tenSecondsAgo = new Date(Date.now() - 10 * 1000);
+    const accidentalDoubleClickOrder = existingCustomer.orders.find(
+      (o) => o.status === "NEW" && o.createdAt >= tenSecondsAgo
     );
-
-    if (recentOrder) {
+    if (accidentalDoubleClickOrder) {
       return NextResponse.json({
-        orderId: recentOrder.id,
-        reference: recentOrder.reference,
-        upsellUrl: `/order/${recentOrder.reference}`,
+        orderId: accidentalDoubleClickOrder.id,
+        reference: accidentalDoubleClickOrder.reference,
+        upsellUrl: `/order/${accidentalDoubleClickOrder.reference}`,
         deduplicated: true
       });
     }
+
+    // Count active orders placed in the last 24 hours
+    const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+    const activeRecentOrders = existingCustomer.orders.filter(
+      (o) => o.status !== "CANCELLED" && o.createdAt >= twentyFourHoursAgo
+    );
+
+    // Block on the 4th order or more!
+    if (activeRecentOrders.length >= 3) {
+      return NextResponse.json(
+        {
+          error:
+            "لديك بالفعل 3 طلبات قيد المعالجة اليوم بهذا الرقم. إذا كنت ترغب في إضافة منتج آخر أو تعديل طلبك، يرجى التواصل معنا مباشرة عبر واتساب / Vous avez déjà 3 commandes en cours aujourd'hui avec ce numéro. Contactez-nous sur WhatsApp pour modifier votre commande."
+        },
+        { status: 429 }
+      );
+    }
+
+    multiOrderIndex = activeRecentOrders.length + 1;
   }
 
   const productIds = parsed.data.items.map((item) => item.productId);
@@ -156,6 +176,9 @@ export async function POST(request: Request) {
 
   let discountTotal = 0;
   const notesList: string[] = [];
+  if (multiOrderIndex > 1) {
+    notesList.push(`[MULTI_ORDER #${multiOrderIndex}]`);
+  }
   if (parsed.data.notes) notesList.push(parsed.data.notes);
 
   if (parsed.data.bundleSlug) {
@@ -234,7 +257,13 @@ export async function POST(request: Request) {
           }))
         },
         statusHistory: {
-          create: { to: "NEW", note: "Order created from COD checkout" }
+          create: {
+            to: "NEW",
+            note:
+              multiOrderIndex > 1
+                ? `Multi-commande #${multiOrderIndex} créée par le même numéro`
+                : "Order created from COD checkout"
+          }
         }
       },
       include: { items: true }
@@ -256,6 +285,8 @@ export async function POST(request: Request) {
   return NextResponse.json({
     orderId: order.id,
     reference: order.reference,
-    upsellUrl: rule ? `/upsell/${order.id}` : `/order/${order.reference}`
+    multiOrderIndex,
+    upsellUrl:
+      multiOrderIndex > 1 || !rule ? `/order/${order.reference}` : `/upsell/${order.id}`
   });
 }

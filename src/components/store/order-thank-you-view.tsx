@@ -49,6 +49,13 @@ export type ThankYouUpsellOffer = {
   descFr: string;
 };
 
+export type OtherActiveOrderSummary = {
+  id: string;
+  reference: string;
+  total: number;
+  summary: string;
+};
+
 type OrderThankYouViewProps = {
   order: {
     id: string;
@@ -66,12 +73,14 @@ type OrderThankYouViewProps = {
   };
   whatsappNumber: string;
   availableUpsell?: ThankYouUpsellOffer | null;
+  otherActiveOrders?: OtherActiveOrderSummary[];
 };
 
 export function OrderThankYouView({
   order,
   whatsappNumber,
-  availableUpsell
+  availableUpsell,
+  otherActiveOrders = []
 }: OrderThankYouViewProps) {
   const router = useRouter();
   const { locale } = usePreferences();
@@ -91,11 +100,32 @@ export function OrderThankYouView({
   const [addingUpsell, setAddingUpsell] = useState(false);
   const [upsellAdded, setUpsellAdded] = useState(false);
 
+  const [multiOrderLoading, setMultiOrderLoading] = useState<"merge" | "keep_latest" | null>(null);
+  const [multiOrderResolved, setMultiOrderResolved] = useState<"merge" | "keep_latest" | null>(null);
+
   function copyReference() {
     if (typeof navigator !== "undefined" && navigator.clipboard) {
       navigator.clipboard.writeText(order.reference);
       setCopied(true);
       setTimeout(() => setCopied(false), 2500);
+    }
+  }
+
+  async function handleMultiOrderChoice(action: "merge" | "keep_latest") {
+    setMultiOrderLoading(action);
+    try {
+      const res = await fetch(`/api/orders/${order.id}/multi-order`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action })
+      });
+      if (res.ok) {
+        setMultiOrderResolved(action);
+        setIsVerified(true);
+        router.refresh();
+      }
+    } finally {
+      setMultiOrderLoading(null);
     }
   }
 
@@ -105,8 +135,8 @@ export function OrderThankYouView({
     if (!confirmOnly && !isValidMoroccanPhone10Digits(cleanPhone)) {
       setContactError(
         isArabic
-          ? "يرجى إدخال رقم هاتف مغربي صحيح مكون من 10 أرقام بالضبط (مثال: 0612345678)."
-          : "Veuillez saisir un numéro de téléphone marocain valide composé exactement de 10 chiffres (ex: 0612345678)."
+          ? "يرجى إدخال رقم هاتف مغربي حقيقي وصحيح مكون من 10 أرقام (يبدأ بـ 06 أو 07)."
+          : "Veuillez saisir un vrai numéro de téléphone marocain valide à 10 chiffres."
       );
       return;
     }
@@ -179,8 +209,140 @@ export function OrderThankYouView({
       : `Bonjour ROVANX, je confirme ma commande N° ${order.reference} :\n- Nom : ${fullName}\n- Téléphone : ${phone}\n- Adresse : ${address}\n- Produits : ${itemsSummaryText}\n- Total COD : ${order.total} DH\nMerci d'expédier mon colis discret en priorité.`
   );
 
+  const multiOrderWaText = encodeURIComponent(
+    isArabic
+      ? `السلام عليكم ROVANX، بخصوص طلباتي برقم الهاتف ${phone}:\n- الطلب الحالي (${order.reference}): ${itemsSummaryText}\n- الطلب السابق: ${otherActiveOrders.map((o) => `${o.reference} (${o.summary})`).join(" | ")}\nأود توضيح طلبي معكم:`
+      : `Bonjour ROVANX, concernant mes commandes avec le numéro ${phone} :\n- Commande actuelle (${order.reference}) : ${itemsSummaryText}\n- Commande précédente : ${otherActiveOrders.map((o) => `${o.reference} (${o.summary})`).join(" | ")}\nJe souhaite préciser ma demande :`
+  );
+
   return (
     <div className="mx-auto max-w-4xl space-y-8">
+      {/* SMART MULTI-ORDER ASSISTANT CHATBOT (Appears automatically on 2nd or 3rd order) */}
+      {(otherActiveOrders.length > 0 || multiOrderResolved) ? (
+        <div className="relative overflow-hidden rounded-3xl border-2 border-amber-400/60 bg-gradient-to-br from-[#261a0a] via-[#18161f] to-[#12141a] p-6 shadow-[0_15px_45px_rgba(245,158,11,0.2)] sm:p-7">
+          <div className="flex items-start gap-4">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-amber-400/40 bg-amber-500/20 text-2xl shadow-md">
+              🤖
+            </div>
+            <div className="flex-1 space-y-3">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="rounded-full bg-amber-500 px-3 py-0.5 text-[11px] font-black uppercase text-black">
+                  {isArabic ? "المساعد الذكي للطلبات المتعددة" : "Assistant Intelligent Multi-Commandes"}
+                </span>
+                <span className="text-xs font-bold text-amber-300/90">
+                  {isArabic
+                    ? `تم رصد ${otherActiveOrders.length + 1} طلبات بنفس رقم الهاتف`
+                    : `${otherActiveOrders.length + 1} commandes détectées avec ce numéro`}
+                </span>
+              </div>
+
+              {multiOrderResolved ? (
+                <div className="rounded-2xl border border-emerald-500/40 bg-emerald-500/15 p-4 text-sm font-bold text-emerald-300">
+                  {multiOrderResolved === "merge"
+                    ? isArabic
+                      ? "✓ تم دمج جميع منتجاتك في شحنة سرية واحدة بنجاح! تم تحديث ملخص طلبك أسفله."
+                      : "✓ Toutes vos commandes ont été regroupées dans un seul colis discret avec succès !"
+                    : isArabic
+                      ? "✓ تم اعتماد هذا الطلب الأخير فقط وإلغاء الطلبات السابقة تلقائياً!"
+                      : "✓ Seule cette dernière commande a été conservée et les précédentes ont été annulées !"}
+                </div>
+              ) : (
+                <>
+                  <div className="rounded-2xl rounded-tr-sm border border-white/10 bg-black/40 p-4 text-sm leading-relaxed text-white/90">
+                    <p className="font-bold text-white">
+                      {isArabic
+                        ? `مرحباً سي ${fullName} 👋 لاحظنا أنك سجلت طلباً آخر اليوم بنفس الرقم (${phone}):`
+                        : `Bonjour M. ${fullName} 👋 Nous avons remarqué que vous avez passé plus d'une commande aujourd'hui avec le numéro (${phone}) :`}
+                    </p>
+                    <ul className="mt-2.5 space-y-1.5 text-xs text-white/80">
+                      {otherActiveOrders.map((prev, idx) => (
+                        <li key={prev.id} className="flex items-center justify-between gap-2 rounded-lg bg-white/[0.04] px-3 py-1.5">
+                          <span>
+                            {isArabic ? `• الطلب السابق #${idx + 1}` : `• Commande précédente #${idx + 1}`} ({prev.reference}):{" "}
+                            <strong className="text-white">{prev.summary}</strong>
+                          </span>
+                          <span className="font-black text-amber-300">
+                            <Money value={prev.total} />
+                          </span>
+                        </li>
+                      ))}
+                      <li className="flex items-center justify-between gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-1.5">
+                        <span>
+                          {isArabic ? "• هذا الطلب الجديد" : "• Cette nouvelle commande"} ({order.reference}):{" "}
+                          <strong className="text-amber-300">{itemsSummaryText}</strong>
+                        </span>
+                        <span className="font-black text-amber-300">
+                          <Money value={order.total} />
+                        </span>
+                      </li>
+                    </ul>
+                    <p className="mt-3 text-xs font-bold text-amber-200">
+                      {isArabic
+                        ? "👈 لتفادي أي خطأ في الشحن، اختر بضغطة واحدة كيف ترغب أن نعالج طلبك:"
+                        : "👈 Pour éviter toute erreur d'expédition, choisissez en un clic comment traiter vos commandes :"}
+                    </p>
+                  </div>
+
+                  <div className="grid gap-2.5 sm:grid-cols-2">
+                    <button
+                      type="button"
+                      disabled={multiOrderLoading !== null}
+                      onClick={() => handleMultiOrderChoice("merge")}
+                      className="flex items-center justify-center gap-2 rounded-xl border border-emerald-400/50 bg-emerald-600 px-4 py-3.5 text-xs font-black text-white shadow-lg transition hover:bg-emerald-500 disabled:opacity-50 sm:text-sm"
+                    >
+                      {multiOrderLoading === "merge" ? (
+                        <Loader2 size={16} className="animate-spin" />
+                      ) : (
+                        <PackageCheck size={17} />
+                      )}
+                      <span>
+                        {isArabic
+                          ? "1️⃣ نعم، أدمج كل طلباتي في شحنة واحدة"
+                          : "1️⃣ Oui, regrouper tout en un seul colis"}
+                      </span>
+                    </button>
+
+                    <button
+                      type="button"
+                      disabled={multiOrderLoading !== null}
+                      onClick={() => handleMultiOrderChoice("keep_latest")}
+                      className="flex items-center justify-center gap-2 rounded-xl border border-amber-400/40 bg-white/10 px-4 py-3.5 text-xs font-black text-white transition hover:bg-white/15 disabled:opacity-50 sm:text-sm"
+                    >
+                      {multiOrderLoading === "keep_latest" ? (
+                        <Loader2 size={16} className="animate-spin" />
+                      ) : (
+                        <CheckCircle2 size={17} className="text-amber-400" />
+                      )}
+                      <span>
+                        {isArabic
+                          ? "2️⃣ اعتمد هذا الطلب الأخير فقط وألغِ السابق"
+                          : "2️⃣ Garder uniquement cette dernière commande"}
+                      </span>
+                    </button>
+                  </div>
+
+                  <div className="pt-1">
+                    <a
+                      href={`https://wa.me/${whatsappNumber}?text=${multiOrderWaText}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-400 underline-offset-4 hover:underline"
+                    >
+                      <MessageCircle size={14} />
+                      <span>
+                        {isArabic
+                          ? "أو اضغط هنا للتحدث مع المساعد عبر واتساب لتوضيح طلبك"
+                          : "Ou cliquez ici pour discuter sur WhatsApp au sujet de vos commandes"}
+                      </span>
+                    </a>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      ) : null}
+
       {/* 1. HERO CELEBRATION BANNER */}
       <div className="relative overflow-hidden rounded-3xl border border-emerald-500/35 bg-gradient-to-b from-emerald-950/40 via-[#161923]/95 to-[#12141a] p-6 text-center shadow-2xl backdrop-blur-xl sm:p-10">
         <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border-2 border-emerald-400/50 bg-emerald-500/20 text-emerald-300 shadow-[0_0_30px_rgba(16,185,129,0.3)]">

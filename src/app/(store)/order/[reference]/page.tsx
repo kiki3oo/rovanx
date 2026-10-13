@@ -133,6 +133,26 @@ export default async function OrderConfirmationPage({
     };
   });
 
+  // Check if customer has other active orders in the last 24 hours (Orders #2 or #3)
+  const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+  const otherOrdersRaw = await prisma.order.findMany({
+    where: {
+      customerId: order.customerId,
+      id: { not: order.id },
+      status: { in: ["NEW", "UPSOLD", "CONTACTING"] },
+      createdAt: { gte: twentyFourHoursAgo }
+    },
+    include: { items: true },
+    orderBy: { createdAt: "asc" }
+  });
+
+  const otherActiveOrders = otherOrdersRaw.map((o) => ({
+    id: o.id,
+    reference: o.reference,
+    total: o.total,
+    summary: o.items.map((it) => `${it.productName} (x${it.quantity})`).join(" + ")
+  }));
+
   return (
     <section className="relative min-h-[85vh] bg-[#12141a] text-white overflow-hidden py-10 md:py-16">
       <div className="pointer-events-none absolute -top-40 right-1/4 h-96 w-96 rounded-full bg-bronze-500/10 blur-3xl" />
@@ -160,6 +180,7 @@ export default async function OrderConfirmationPage({
           }}
           whatsappNumber={whatsappNumber}
           availableUpsell={availableUpsell}
+          otherActiveOrders={otherActiveOrders}
         />
       </div>
     </section>
