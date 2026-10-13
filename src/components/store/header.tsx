@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, ShoppingBag, X } from "lucide-react";
 import { useState } from "react";
 import { RovanxLogo } from "@/components/brand/rovanx-logo";
@@ -17,9 +18,12 @@ const nav = [
 ] as const;
 
 export function Header() {
+  const pathname = usePathname();
   const { count, openCart } = useCart();
   const { t } = usePreferences();
   const [open, setOpen] = useState(false);
+
+  if (pathname?.startsWith("/go")) return null;
 
   return (
     <header className="sticky top-0 z-40 border-b border-[#5e0d1b]/40 bg-gradient-to-r from-[#170306]/98 via-[#24060c]/96 to-[#170306]/98 shadow-[0_4px_30px_rgba(23,3,6,0.7)] backdrop-blur-xl">

@@ -6,6 +6,7 @@ import { Check, CheckCircle2, Loader2, Lock, PhoneCall, ShieldCheck, Sparkles, T
 import { Money } from "@/components/store/money";
 import { usePreferences } from "@/components/store/preferences-provider";
 import { isValidHumanText, isValidMoroccanPhone10Digits, sanitizePhoneInput } from "@/lib/phone";
+import { getActiveWheelReward } from "@/lib/wheel-funnels";
 
 export type BundleItemData = {
   id: string;
@@ -99,13 +100,21 @@ export function BundleCodForm({
       return;
     }
 
+    const wheelReward = getActiveWheelReward();
+    const notes = [
+      `Commande Pack: ${activeBundle.name}`,
+      wheelReward ? `[🎁 عرض العجلة VIP: ${wheelReward.promoCode}]` : null
+    ]
+      .filter(Boolean)
+      .join(" | ");
+
     const payload = {
       fullName,
       phone: cleanPhone,
       city: "À confirmer",
       address,
       addressDetails: formData.get("addressDetails") || undefined,
-      notes: `Commande Pack: ${activeBundle.name}`,
+      notes,
       bundleSlug: activeBundle.slug,
       website,
       formRenderedAt,

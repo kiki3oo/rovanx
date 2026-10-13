@@ -7,6 +7,7 @@ import { Money } from "@/components/store/money";
 import { usePreferences } from "@/components/store/preferences-provider";
 import { getProductTiers, getSelectedTierInfo } from "@/lib/pricing-tiers";
 import { isValidHumanText, isValidMoroccanPhone10Digits, sanitizePhoneInput } from "@/lib/phone";
+import { getActiveWheelReward } from "@/lib/wheel-funnels";
 
 type DirectCodProduct = {
   id: string;
@@ -111,8 +112,10 @@ export function DirectCodForm({
       items.push({ productId: bumpOffer.productId, quantity: 1, isBump: true });
     }
 
+    const wheelReward = getActiveWheelReward();
     const notes = [
       formData.get("notes"),
+      wheelReward ? `[🎁 عرض العجلة VIP: ${wheelReward.promoCode}]` : null,
       addBump && bumpOffer ? `+ Order Bump: ${bumpOffer.slug} (${bumpOffer.bumpPrice} DH)` : null
     ].filter(Boolean).join(" | ") || undefined;
 

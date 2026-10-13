@@ -2,7 +2,27 @@ import { NextResponse, type NextRequest } from "next/server";
 import { currencyForCountry } from "@/lib/geo-currency";
 
 export function proxy(request: NextRequest) {
-  const response = NextResponse.next();
+  const host = (request.headers.get("host") || "").toLowerCase();
+  const pathname = request.nextUrl.pathname;
+
+  // Support dedicated Ad Wheel subdomains (e.g. promo.rovanx.com/v1 or offre.rovanx.com/v1)
+  const isWheelSubdomain =
+    host.startsWith("promo.") || host.startsWith("offre.") || host.startsWith("vip.");
+
+  let response: NextResponse;
+  if (
+    isWheelSubdomain &&
+    !pathname.startsWith("/go") &&
+    !pathname.startsWith("/brand") &&
+    !pathname.startsWith("/products")
+  ) {
+    const url = request.nextUrl.clone();
+    url.pathname = pathname === "/" ? "/go/v1" : `/go${pathname}`;
+    response = NextResponse.rewrite(url);
+  } else {
+    response = NextResponse.next();
+  }
+
   const hasCurrencyCookie = request.cookies.has("rovanx-currency");
   const hasDefaultCookie = request.cookies.has("rovanx-currency-default");
 
@@ -25,3 +45,4 @@ export function proxy(request: NextRequest) {
 export const config = {
   matcher: ["/((?!api|_next/static|_next/image|favicon.*|icon.png|apple-touch-icon.png|robots.txt|sitemap.xml).*)"]
 };
+

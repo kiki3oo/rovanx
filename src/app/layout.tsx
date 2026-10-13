@@ -5,6 +5,7 @@ import { CartDrawer } from "@/components/store/cart-drawer";
 import { Header } from "@/components/store/header";
 import { Footer } from "@/components/store/footer";
 import { PreferencesProvider } from "@/components/store/preferences-provider";
+import { VipPromoBanner } from "@/components/store/vip-promo-banner";
 import { WhatsAppFloatingButton } from "@/components/store/whatsapp-floating-button";
 import { TrackingScripts } from "@/components/store/tracking-scripts";
 
@@ -39,6 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <PreferencesProvider>
           <CartProvider>
+            <VipPromoBanner />
             <Header />
             <main>{children}</main>
             <Footer />
