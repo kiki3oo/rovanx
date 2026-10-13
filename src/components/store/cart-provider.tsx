@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { calculateTierDiscount } from "@/lib/pricing-tiers";
 
 export type CartProduct = {
   id: string;
@@ -19,8 +20,13 @@ export type CartLine = {
 type CartContextValue = {
   lines: CartLine[];
   count: number;
+  rawSubtotal: number;
+  discountTotal: number;
   subtotal: number;
-  addItem: (product: CartProduct, quantity?: number) => void;
+  isOpen: boolean;
+  openCart: () => void;
+  closeCart: () => void;
+  addItem: (product: CartProduct, quantity?: number, openDrawer?: boolean) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   removeItem: (productId: string) => void;
   clear: () => void;
@@ -32,6 +38,7 @@ const storageKey = "rovanx-cart";
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [lines, setLines] = useState<CartLine[]>([]);
   const [loaded, setLoaded] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     try {
@@ -58,13 +65,27 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const value = useMemo<CartContextValue>(() => {
     const count = lines.reduce((sum, line) => sum + line.quantity, 0);
-    const subtotal = lines.reduce((sum, line) => sum + line.quantity * line.product.price, 0);
+    const rawSubtotal = lines.reduce((sum, line) => sum + line.quantity * line.product.price, 0);
+    const discountTotal = lines.reduce((sum, line) => {
+      const { discount } = calculateTierDiscount(line.product.slug, line.product.price, line.quantity);
+      return sum + discount;
+    }, 0);
+    const subtotal = Math.max(0, rawSubtotal - discountTotal);
 
     return {
       lines,
       count,
+      rawSubtotal,
+      discountTotal,
       subtotal,
-      addItem(product, quantity = 1) {
+      isOpen,
+      openCart() {
+        setIsOpen(true);
+      },
+      closeCart() {
+        setIsOpen(false);
+      },
+      addItem(product, quantity = 1, openDrawer = true) {
         setLines((current) => {
           const existing = current.find((line) => line.product.id === product.id);
           if (!existing) return [...current, { product, quantity }];
@@ -74,6 +95,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
               : line
           );
         });
+        if (openDrawer) {
+          setIsOpen(true);
+        }
       },
       updateQuantity(productId, quantity) {
         setLines((current) =>
@@ -89,10 +113,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       },
       clear() {
         setLines([]);
-        window.localStorage.removeItem(storageKey);
+        if (typeof window !== "undefined") {
+          window.localStorage.removeItem(storageKey);
+        }
       }
     };
-  }, [lines]);
+  }, [lines, isOpen]);
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }

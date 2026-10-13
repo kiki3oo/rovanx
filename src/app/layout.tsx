@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { CartProvider } from "@/components/store/cart-provider";
+import { CartDrawer } from "@/components/store/cart-drawer";
 import { Header } from "@/components/store/header";
 import { Footer } from "@/components/store/footer";
 import { PreferencesProvider } from "@/components/store/preferences-provider";
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Header />
             <main>{children}</main>
             <Footer />
+            <CartDrawer />
             <WhatsAppFloatingButton />
           </CartProvider>
         </PreferencesProvider>

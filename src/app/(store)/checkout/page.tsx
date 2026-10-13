@@ -9,7 +9,7 @@ import { usePreferences } from "@/components/store/preferences-provider";
 import { isValidMoroccanPhone10Digits, sanitizePhoneInput } from "@/lib/phone";
 
 export default function CheckoutPage() {
-  const { lines, subtotal, clear } = useCart();
+  const { lines, rawSubtotal, discountTotal, subtotal, clear } = useCart();
   const { currency, locale, t } = usePreferences();
   const router = useRouter();
   const [phoneValue, setPhoneValue] = useState("");
@@ -148,7 +148,7 @@ export default function CheckoutPage() {
                 <span>{t("addressDetails")}</span>
                 <input
                   className="rounded-xl border border-white/15 bg-white/[0.05] p-3 text-white placeholder:text-white/35 backdrop-blur-sm focus:border-bronze-400 focus:outline-none"
-                  name="addressDetails"
+                name="addressDetails"
                 />
               </label>
               <label className="field text-sm font-bold text-white/90">
@@ -175,9 +175,25 @@ export default function CheckoutPage() {
                   </div>
                 ))}
               </div>
-              <div className="mt-5 flex justify-between border-t border-white/10 pt-4">
+              {discountTotal > 0 ? (
+                <div className="mt-4 space-y-1.5 border-t border-white/10 pt-3 text-sm">
+                  <div className="flex justify-between text-white/60">
+                    <span>{locale === "ar" ? "المجموع قبل الخصم" : "Sous-total"}</span>
+                    <span className="line-through"><Money value={rawSubtotal} /></span>
+                  </div>
+                  <div className="flex justify-between font-bold text-emerald-400">
+                    <span>{locale === "ar" ? "تخفيض الكمية التلقائي" : "Remise quantité"}</span>
+                    <span>-<Money value={discountTotal} /></span>
+                  </div>
+                </div>
+              ) : null}
+              <div className="mt-3 flex justify-between border-t border-white/10 pt-3 text-sm text-white/75">
+                <span>{t("shipping")}</span>
+                <span className="font-black text-emerald-400">{locale === "ar" ? "مجاني (0 د.م)" : "Gratuit (0 DH)"}</span>
+              </div>
+              <div className="mt-3 flex justify-between border-t border-white/10 pt-4">
                 <span className="text-white/80">{t("totalCod")}</span>
-                <strong className="text-2xl font-black text-white"><Money value={subtotal} /></strong>
+                <strong className="text-2xl font-black text-bronze-300"><Money value={subtotal} /></strong>
               </div>
               <div className="mt-6 grid gap-3 text-sm text-white/70">
                 <span className="flex items-center gap-2"><ShieldCheck size={16} className="text-bronze-400" /> {t("noOnlinePayment")}</span>

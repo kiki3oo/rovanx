@@ -17,7 +17,7 @@ const nav = [
 ] as const;
 
 export function Header() {
-  const { count } = useCart();
+  const { count, openCart } = useCart();
   const { t } = usePreferences();
   const [open, setOpen] = useState(false);
 
@@ -40,8 +40,9 @@ export function Header() {
         </nav>
         <div className="flex items-center gap-1.5 sm:gap-2">
           <PreferenceSwitcher />
-          <Link
-            href="/cart"
+          <button
+            type="button"
+            onClick={openCart}
             className="flex h-10 items-center gap-2 rounded-lg border border-[#991b31]/60 bg-gradient-to-b from-[#5a0d1c] via-[#480a16] to-[#33070f] px-3.5 text-white shadow-md transition-all hover:border-[#c22240] hover:from-[#6e1022] hover:to-[#420914]"
             aria-label={t("cart")}
           >
@@ -49,7 +50,7 @@ export function Header() {
             <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-bronze-500 px-1.5 text-xs font-black text-graphite-950">
               {count}
             </span>
-          </Link>
+          </button>
           <button
             className="flex h-10 w-10 items-center justify-center rounded-lg border border-[#991b31]/60 bg-gradient-to-b from-[#5a0d1c] via-[#480a16] to-[#33070f] text-white shadow-md transition-all hover:border-[#c22240] hover:from-[#6e1022] hover:to-[#420914] md:hidden"
             onClick={() => setOpen(!open)}
