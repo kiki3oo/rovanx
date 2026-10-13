@@ -68,8 +68,8 @@ export const WHEEL_FUNNELS: WheelFunnelTarget[] = [
   },
   {
     code: "a1",
-    aliases: ["alpha", "mass", "rovanx-mass-protein"],
-    targetPath: "/product/rovanx-mass-protein",
+    aliases: ["alpha", "mass", "protein", "vital-protein", "rovanx-vital-protein", "rovanx-mass-protein"],
+    targetPath: "/product/rovanx-vital-protein",
     productLabelAr: "العرض الحصري لبناء الحجم والقوة العضلية",
     productLabelFr: "Offre Exclusive Volume & Masse Musculaire",
     vipBadgeAr: "تخفيض VIP يصل إلى -40% + شحن سري مجاني 0 DH",
