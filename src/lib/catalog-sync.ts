@@ -17,8 +17,6 @@ const CATEGORIES = [
   "Men's Wellness",
   "Prostate",
   "Energy",
-  "Balance",
-  "Sleep",
   "Supplements"
 ];
 
@@ -137,6 +135,12 @@ export async function ensureCatalogSynced(force = false) {
         create: { name, slug, description: `${name} products`, active: true }
       });
     }
+
+    // Deactivate unused categories without products
+    await prisma.category.updateMany({
+      where: { slug: { in: ["balance", "sleep"] } },
+      data: { active: false }
+    }).catch(() => {});
 
     const categories = await prisma.category.findMany();
     const categoryBySlug = Object.fromEntries(categories.map((c) => [c.slug, c]));
