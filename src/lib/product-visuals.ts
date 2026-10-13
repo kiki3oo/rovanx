@@ -34,7 +34,7 @@ const productVisuals: Record<string, ProductVisual[]> = {
   ],
   "rovanx-maca-max": [
     {
-      src: "/products/rovanx-maca-max.webp?v=3",
+      src: "/products/rovanx-maca-max.webp?v=5",
       alt: "Royal Force - flacon de 30 capsules"
     },
     {
