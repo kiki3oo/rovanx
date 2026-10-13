@@ -830,13 +830,13 @@ export function VipWheelFunnel({ funnel }: { funnel: WheelFunnelTarget }) {
                         }}
                       />
 
-                      {/* CENTER 3D ROYAL SPIN HUB BUTTON WITH CLEAN ZOOMED LION HEAD */}
+                      {/* CENTER 3D ROYAL SPIN HUB BUTTON WITH BALANCED LION HEAD */}
                       <button
                         type="button"
                         onClick={handleSpin}
                         disabled={spinning}
                         aria-label="Spin the wheel"
-                        className="group absolute left-1/2 top-1/2 z-30 flex h-[88px] w-[88px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full p-[4px] shadow-[0_12px_35px_rgba(0,0,0,0.95),0_0_28px_rgba(216,162,74,0.55)] transition-transform duration-200 hover:scale-105 active:scale-95 sm:h-[106px] sm:w-[106px]"
+                        className="group absolute left-1/2 top-1/2 z-30 flex h-[82px] w-[82px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full p-[4px] shadow-[0_12px_35px_rgba(0,0,0,0.95),0_0_28px_rgba(216,162,74,0.55)] transition-transform duration-200 hover:scale-105 active:scale-95 sm:h-[96px] sm:w-[96px]"
                         style={{
                           background:
                             "conic-gradient(from 45deg, #78350f, #fef08a, #d8a24a, #fffbeb, #92400e, #fde68a, #78350f)"
@@ -846,10 +846,10 @@ export function VipWheelFunnel({ funnel }: { funnel: WheelFunnelTarget }) {
                           <span className="pointer-events-none absolute -inset-1.5 animate-ping rounded-full border-2 border-bronze-300/50 opacity-60" />
                         )}
 
-                        <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-full border-2 border-[#fffbeb]/85 bg-gradient-to-b from-[#480a16] via-[#24060c] to-[#0c0204] p-1 shadow-[inset_0_0_16px_rgba(0,0,0,0.9)]">
+                        <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-full border-2 border-[#fffbeb]/85 bg-gradient-to-b from-[#480a16] via-[#24060c] to-[#0c0204] p-2 shadow-[inset_0_0_16px_rgba(0,0,0,0.9)]">
                           <RovanxLogo
                             variant="mark"
-                            className="h-full w-full scale-[1.18] drop-shadow-[0_6px_14px_rgba(0,0,0,0.9)]"
+                            className="h-[56px] w-[56px] drop-shadow-[0_6px_14px_rgba(0,0,0,0.9)] sm:h-[66px] sm:w-[66px]"
                           />
                         </div>
                       </button>
