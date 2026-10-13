@@ -7,7 +7,7 @@ import { Money } from "@/components/store/money";
 import { usePreferences } from "@/components/store/preferences-provider";
 import { getProductTiers, getSelectedTierInfo } from "@/lib/pricing-tiers";
 import { isValidHumanText, isValidMoroccanPhone10Digits, sanitizePhoneInput } from "@/lib/phone";
-import { getActiveWheelReward } from "@/lib/wheel-funnels";
+import { getActiveWheelReward, getAttributionPayload } from "@/lib/wheel-funnels";
 
 type DirectCodProduct = {
   id: string;
@@ -131,11 +131,7 @@ export function DirectCodForm({
       items,
       displayCurrency: currency,
       locale,
-      landingPage: typeof window !== "undefined" ? window.location.href : undefined,
-      referrer: typeof document !== "undefined" ? document.referrer || undefined : undefined,
-      utmSource: typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("utm_source") || undefined : undefined,
-      utmMedium: typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("utm_medium") || undefined : undefined,
-      utmCampaign: typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("utm_campaign") || undefined : undefined
+      ...getAttributionPayload()
     };
 
     try {

@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { Clock, Gift, Sparkles } from "lucide-react";
 import { usePreferences } from "@/components/store/preferences-provider";
 import {
+  captureUtmAttributionFromUrl,
   getActiveWheelReward,
   VIP_WHEEL_STORAGE_KEY,
   type StoredWheelReward
@@ -19,9 +20,13 @@ export function VipPromoBanner() {
   const [secondsLeft, setSecondsLeft] = useState(0);
 
   useEffect(() => {
-    // Also check if URL has ?promo=ROV-... and activate if not already stored
+    // Capture & persist any incoming UTMs (utm_source, utm_medium / Ad Set, utm_campaign, etc.)
+    // and check if URL has ?promo=ROV-... to activate wheel reward if coming from subdomain
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
+      const wheelParam = params.get("wheel") || undefined;
+      captureUtmAttributionFromUrl({ funnelCode: wheelParam });
+
       const promoParam = params.get("promo");
       let current = getActiveWheelReward();
 
@@ -29,7 +34,7 @@ export function VipPromoBanner() {
         current = {
           promoCode: promoParam,
           prizePercent: promoParam.includes("50") ? 50 : 40,
-          funnelCode: params.get("utm_campaign") || "v1",
+          funnelCode: wheelParam || params.get("utm_campaign") || "v1",
           expiresAt: Date.now() + 15 * 60 * 1000
         };
         window.localStorage.setItem(VIP_WHEEL_STORAGE_KEY, JSON.stringify(current));

@@ -156,3 +156,158 @@ export function getActiveWheelReward(): StoredWheelReward | null {
     return null;
   }
 }
+
+export const UTM_STORAGE_KEY = "rovanx_utm_attribution_v1";
+
+export type StoredUtmAttribution = {
+  utmSource?: string;
+  utmMedium?: string; // Ensemble de publicités (Ad Set)
+  utmCampaign?: string;
+  utmContent?: string; // Publicité / Creative
+  utmTerm?: string; // Placement / Funnel
+  landingPage?: string;
+  referrer?: string;
+  funnelCode?: string;
+  capturedAt: number;
+  expiresAt: number;
+};
+
+export function getStoredUtmAttribution(): StoredUtmAttribution | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = window.localStorage.getItem(UTM_STORAGE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as StoredUtmAttribution;
+    if (!parsed || typeof parsed.expiresAt !== "number" || Date.now() > parsed.expiresAt) {
+      window.localStorage.removeItem(UTM_STORAGE_KEY);
+      return null;
+    }
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+export function captureUtmAttributionFromUrl(extra?: { funnelCode?: string }): StoredUtmAttribution | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const existing = getStoredUtmAttribution();
+
+    const urlSource =
+      params.get("utm_source") ||
+      params.get("source") ||
+      (params.get("fbclid") ? "facebook_ads" : undefined) ||
+      (params.get("ttclid") ? "tiktok_ads" : undefined);
+
+    // Support standard utm_medium as well as adset / ensemble aliases
+    const urlMedium =
+      params.get("utm_medium") ||
+      params.get("adset") ||
+      params.get("ad_set") ||
+      params.get("ensemble") ||
+      undefined;
+
+    const urlCampaign =
+      params.get("utm_campaign") ||
+      params.get("campaign") ||
+      undefined;
+
+    const urlContent =
+      params.get("utm_content") ||
+      params.get("ad") ||
+      params.get("creative") ||
+      undefined;
+
+    const urlTerm =
+      params.get("utm_term") ||
+      params.get("placement") ||
+      params.get("wheel") ||
+      undefined;
+
+    const funnelCode = extra?.funnelCode || params.get("wheel") || existing?.funnelCode || undefined;
+
+    const hasNewUrlUtm = Boolean(
+      urlSource || urlMedium || urlCampaign || urlContent || urlTerm || extra?.funnelCode
+    );
+
+    if (!hasNewUrlUtm && existing) {
+      return existing;
+    }
+
+    const updated: StoredUtmAttribution = {
+      utmSource: urlSource || existing?.utmSource || (funnelCode ? `vip_wheel_${funnelCode}` : undefined),
+      utmMedium: urlMedium || existing?.utmMedium,
+      utmCampaign: urlCampaign || existing?.utmCampaign || (funnelCode ? `wheel_${funnelCode}` : undefined),
+      utmContent: urlContent || existing?.utmContent,
+      utmTerm: urlTerm || existing?.utmTerm || (funnelCode ? `wheel:${funnelCode}` : undefined),
+      landingPage: existing?.landingPage || window.location.href,
+      referrer: existing?.referrer || (typeof document !== "undefined" ? document.referrer || undefined : undefined),
+      funnelCode,
+      capturedAt: existing?.capturedAt || Date.now(),
+      expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000 // 7 days attribution window
+    };
+
+    window.localStorage.setItem(UTM_STORAGE_KEY, JSON.stringify(updated));
+    return updated;
+  } catch {
+    return null;
+  }
+}
+
+export function getAttributionPayload() {
+  if (typeof window === "undefined") {
+    return {
+      utmSource: undefined,
+      utmMedium: undefined,
+      utmCampaign: undefined,
+      utmContent: undefined,
+      utmTerm: undefined,
+      landingPage: undefined,
+      referrer: undefined
+    };
+  }
+
+  const captured = captureUtmAttributionFromUrl();
+  const wheel = getActiveWheelReward();
+  const params = new URLSearchParams(window.location.search);
+
+  const utmSource =
+    params.get("utm_source") ||
+    captured?.utmSource ||
+    (wheel ? `vip_wheel_${wheel.funnelCode}` : undefined);
+
+  const utmMedium =
+    params.get("utm_medium") ||
+    params.get("adset") ||
+    params.get("ensemble") ||
+    captured?.utmMedium ||
+    undefined;
+
+  const utmCampaign =
+    params.get("utm_campaign") ||
+    captured?.utmCampaign ||
+    (wheel ? `wheel_${wheel.funnelCode}` : undefined);
+
+  const utmContent =
+    params.get("utm_content") ||
+    params.get("ad") ||
+    captured?.utmContent ||
+    undefined;
+
+  const utmTerm =
+    params.get("utm_term") ||
+    captured?.utmTerm ||
+    (wheel ? `wheel:${wheel.funnelCode}` : undefined);
+
+  return {
+    utmSource,
+    utmMedium,
+    utmCampaign,
+    utmContent,
+    utmTerm,
+    landingPage: captured?.landingPage || window.location.href,
+    referrer: captured?.referrer || (typeof document !== "undefined" ? document.referrer || undefined : undefined)
+  };
+}
+

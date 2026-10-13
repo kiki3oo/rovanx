@@ -21,6 +21,7 @@ import { usePreferences } from "@/components/store/preferences-provider";
 import { isValidHumanText, isValidMoroccanPhone10Digits, sanitizePhoneInput } from "@/lib/phone";
 import { getSelectedTierInfo } from "@/lib/pricing-tiers";
 import { getProductVisual } from "@/lib/product-visuals";
+import { getActiveWheelReward, getAttributionPayload } from "@/lib/wheel-funnels";
 
 export default function CartPage() {
   const {
@@ -81,11 +82,13 @@ export default function CartPage() {
       return;
     }
 
+    const wheelReward = getActiveWheelReward();
     const payload = {
       fullName: fullName.trim(),
       phone: cleanPhone,
       city: "À confirmer",
       address: address.trim(),
+      notes: wheelReward ? `[🎁 عرض العجلة VIP: ${wheelReward.promoCode}]` : undefined,
       website,
       formRenderedAt,
       items: lines.map((line) => ({
@@ -94,13 +97,7 @@ export default function CartPage() {
       })),
       displayCurrency: currency,
       locale,
-      landingPage: window.location.href,
-      referrer: document.referrer || undefined,
-      utmSource: new URLSearchParams(window.location.search).get("utm_source") || undefined,
-      utmMedium: new URLSearchParams(window.location.search).get("utm_medium") || undefined,
-      utmCampaign: new URLSearchParams(window.location.search).get("utm_campaign") || undefined,
-      utmContent: new URLSearchParams(window.location.search).get("utm_content") || undefined,
-      utmTerm: new URLSearchParams(window.location.search).get("utm_term") || undefined
+      ...getAttributionPayload()
     };
 
     try {

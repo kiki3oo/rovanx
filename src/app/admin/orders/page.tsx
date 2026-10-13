@@ -10,7 +10,7 @@ import { AdminShell } from "@/components/admin/admin-shell";
 export default async function AdminOrdersPage({
   searchParams
 }: {
-  searchParams: Promise<{ search?: string; status?: string; tab?: string }>;
+  searchParams: Promise<{ search?: string; status?: string; tab?: string; adset?: string }>;
 }) {
   const params = await searchParams;
   const currentTab = params.tab || "main";
@@ -18,17 +18,40 @@ export default async function AdminOrdersPage({
   const allOrders = await prisma.order.findMany({
     where: {
       status: params.status ? (params.status as never) : undefined,
+      utmMedium: params.adset ? { equals: params.adset, mode: "insensitive" } : undefined,
       OR: params.search
         ? [
             { reference: { contains: params.search, mode: "insensitive" } },
             { customer: { fullName: { contains: params.search, mode: "insensitive" } } },
-            { customer: { phone: { contains: params.search, mode: "insensitive" } } }
+            { customer: { phone: { contains: params.search, mode: "insensitive" } } },
+            { utmMedium: { contains: params.search, mode: "insensitive" } },
+            { utmSource: { contains: params.search, mode: "insensitive" } },
+            { utmCampaign: { contains: params.search, mode: "insensitive" } },
+            { utmContent: { contains: params.search, mode: "insensitive" } }
           ]
         : undefined
     },
     include: { customer: true, items: true },
     orderBy: { createdAt: "desc" }
   });
+
+  // Fetch distinct Ad Sets (Ensembles de publicités) across all orders for quick filtering
+  const allUtmOrders = await prisma.order.findMany({
+    where: { utmMedium: { not: null } },
+    select: { utmMedium: true, status: true }
+  });
+  const adSetCounts = new Map<string, { total: number; confirmed: number }>();
+  for (const u of allUtmOrders) {
+    const key = u.utmMedium?.trim();
+    if (!key) continue;
+    const prev = adSetCounts.get(key) || { total: 0, confirmed: 0 };
+    prev.total += 1;
+    if (u.status === "CONFIRMED" || u.status === "SHIPPED" || u.status === "DELIVERED") {
+      prev.confirmed += 1;
+    }
+    adSetCounts.set(key, prev);
+  }
+  const sortedAdSets = Array.from(adSetCounts.entries()).sort((a, b) => b[1].total - a[1].total);
 
   // Group active orders by customerId to detect multi-orders
   const activeOrdersByCustomer = new Map<string, typeof allOrders>();
@@ -72,20 +95,90 @@ export default async function AdminOrdersPage({
     <AdminShell>
       <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-3xl font-black">Orders</h1>
+          <h1 className="text-3xl font-black">Orders & Tracking UTM</h1>
           <p className="mt-1 text-xs text-black/60">
-            Les commandes supplémentaires (2e et 3e commande du même client) sont isolées dans l&apos;onglet Multi-commandes pour ne pas perturber votre confirmation.
+            Suivi complet des commandes par Ensemble de publicités (Ad Set), Campagne, Vidéo (Creative) et Roue VIP.
           </p>
         </div>
         <a className="btn btn-secondary" href="/api/admin/orders/export">
-          Export CSV
+          Export CSV (avec UTMs)
         </a>
       </div>
+
+      {/* Collapsible UTM Setup Helper for Meta / TikTok Ads */}
+      <details className="mb-5 rounded-xl border border-bronze-500/35 bg-gradient-to-r from-amber-50/80 via-white to-amber-50/60 p-4 shadow-sm">
+        <summary className="cursor-pointer select-none text-xs font-black text-graphite-950">
+          🎯 Guide rapide : Comment traquer chaque Ensemble de publicités (Meta Ads / TikTok Ads) ? (Cliquer pour afficher)
+        </summary>
+        <div className="mt-3 grid gap-3 border-t border-black/10 pt-3 text-xs text-black/80">
+          <div>
+            <p className="font-bold text-black">
+              1️⃣ Dans Meta Ads Manager (en bas de la publicité → &quot;Paramètres d&apos;URL / URL Parameters&quot;), collez exactement cette ligne :
+            </p>
+            <code className="mt-1.5 block select-all rounded-lg border border-black/15 bg-graphite-950 p-2.5 font-mono text-[11px] text-amber-300">
+              utm_source=&#123;&#123;site_source_name&#125;&#125;&amp;utm_medium=&#123;&#123;adset.name&#125;&#125;&amp;utm_campaign=&#123;&#123;campaign.name&#125;&#125;&amp;utm_content=&#123;&#123;ad.name&#125;&#125;&amp;utm_term=&#123;&#123;placement&#125;&#125;
+            </code>
+          </div>
+          <div className="grid gap-2 sm:grid-cols-2">
+            <div className="rounded-lg border border-black/10 bg-white p-2.5">
+              <p className="font-black text-black">🔗 Vos 4 liens de Roue VIP (URL du site web) :</p>
+              <ul className="mt-1 space-y-1 font-mono text-[11px]">
+                <li>• Produit 1 (Vitality) : <strong>https://rovanx.com/go/v1</strong></li>
+                <li>• Produit 2 (Control Oil) : <strong>https://rovanx.com/go/v2</strong></li>
+                <li>• Produit 3 (Prostate) : <strong>https://rovanx.com/go/v3</strong></li>
+                <li>• Produit 4 (Maca Max) : <strong>https://rovanx.com/go/v4</strong></li>
+              </ul>
+            </div>
+            <div className="rounded-lg border border-black/10 bg-white p-2.5">
+              <p className="font-black text-black">📊 Ce qui s&apos;affichera automatiquement sur chaque commande :</p>
+              <ul className="mt-1 space-y-1 text-[11px]">
+                <li>• <strong>🎯 Ensemble (utm_medium)</strong> : Nom exact de votre Ad Set</li>
+                <li>• <strong>📁 Campagne (utm_campaign)</strong> : Nom de la campagne</li>
+                <li>• <strong>🎬 Pub (utm_content)</strong> : Nom de la vidéo / image</li>
+                <li>• <strong>📢 Source (utm_source)</strong> : fb / ig / tiktok + Roue v1..v4</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      {/* Active Ensembles de publicités (Ad Sets) Quick Filter Bar */}
+      {sortedAdSets.length > 0 ? (
+        <div className="mb-4 flex flex-wrap items-center gap-2 rounded-xl border border-indigo-500/20 bg-indigo-50/50 p-3">
+          <span className="text-xs font-black text-indigo-950">🎯 Ensembles de pub (Ad Sets) :</span>
+          <Link
+            href={`/admin/orders?tab=${currentTab}${params.status ? `&status=${params.status}` : ""}`}
+            className={`rounded-lg px-2.5 py-1 text-xs font-bold transition ${
+              !params.adset
+                ? "bg-indigo-700 text-white"
+                : "border border-indigo-200 bg-white text-indigo-900 hover:bg-indigo-100"
+            }`}
+          >
+            Tous
+          </Link>
+          {sortedAdSets.map(([adsetName, stats]) => (
+            <Link
+              key={adsetName}
+              href={`/admin/orders?tab=${currentTab}&adset=${encodeURIComponent(adsetName)}${params.status ? `&status=${params.status}` : ""}`}
+              className={`inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-bold transition ${
+                params.adset === adsetName
+                  ? "bg-indigo-700 text-white shadow-sm"
+                  : "border border-indigo-200 bg-white text-indigo-950 hover:bg-indigo-100"
+              }`}
+            >
+              <span>{adsetName}</span>
+              <span className="rounded bg-black/10 px-1.5 py-0.5 text-[10px] font-black">
+                {stats.total} cmd ({stats.confirmed} conf.)
+              </span>
+            </Link>
+          ))}
+        </div>
+      ) : null}
 
       {/* 3 Clean Workspace Tabs */}
       <div className="mb-5 flex flex-wrap gap-2 border-b border-black/10 pb-3">
         <Link
-          href={`/admin/orders?tab=main${params.status ? `&status=${params.status}` : ""}${params.search ? `&search=${params.search}` : ""}`}
+          href={`/admin/orders?tab=main${params.status ? `&status=${params.status}` : ""}${params.search ? `&search=${params.search}` : ""}${params.adset ? `&adset=${encodeURIComponent(params.adset)}` : ""}`}
           className={`inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-black transition ${
             currentTab === "main"
               ? "bg-graphite-950 text-white shadow-sm"
@@ -99,7 +192,7 @@ export default async function AdminOrdersPage({
         </Link>
 
         <Link
-          href={`/admin/orders?tab=multi${params.status ? `&status=${params.status}` : ""}${params.search ? `&search=${params.search}` : ""}`}
+          href={`/admin/orders?tab=multi${params.status ? `&status=${params.status}` : ""}${params.search ? `&search=${params.search}` : ""}${params.adset ? `&adset=${encodeURIComponent(params.adset)}` : ""}`}
           className={`inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-black transition ${
             currentTab === "multi"
               ? "bg-amber-500 text-black shadow-sm"
@@ -113,7 +206,7 @@ export default async function AdminOrdersPage({
         </Link>
 
         <Link
-          href={`/admin/orders?tab=blocked${params.status ? `&status=${params.status}` : ""}${params.search ? `&search=${params.search}` : ""}`}
+          href={`/admin/orders?tab=blocked${params.status ? `&status=${params.status}` : ""}${params.search ? `&search=${params.search}` : ""}${params.adset ? `&adset=${encodeURIComponent(params.adset)}` : ""}`}
           className={`inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-black transition ${
             currentTab === "blocked"
               ? "bg-red-700 text-white shadow-sm"
@@ -125,14 +218,22 @@ export default async function AdminOrdersPage({
         </Link>
       </div>
 
-      <form className="mb-5 grid gap-3 rounded-lg border border-black/10 bg-white p-4 sm:grid-cols-[1fr_180px_auto]">
+      <form className="mb-5 grid gap-3 rounded-lg border border-black/10 bg-white p-4 sm:grid-cols-[1fr_200px_180px_auto]">
         <input type="hidden" name="tab" value={currentTab} />
         <input
           className="input"
           name="search"
-          placeholder="Search par référence, nom ou téléphone..."
+          placeholder="Rechercher par réf, nom, tél, Ensemble de pub (Ad Set) ou Campagne..."
           defaultValue={params.search || ""}
         />
+        <select className="select" name="adset" defaultValue={params.adset || ""}>
+          <option value="">🎯 Tous les Ensembles (Ad Sets)</option>
+          {sortedAdSets.map(([adsetName, stats]) => (
+            <option key={adsetName} value={adsetName}>
+              {adsetName} ({stats.total})
+            </option>
+          ))}
+        </select>
         <select className="select" name="status" defaultValue={params.status || ""}>
           <option value="">All statuses</option>
           {[
@@ -159,7 +260,7 @@ export default async function AdminOrdersPage({
             <tr>
               <th className="p-3">Reference</th>
               <th className="p-3">Customer</th>
-              <th className="p-3">Produits & Notes</th>
+              <th className="p-3">Produits, Notes &amp; Ensemble de Pub (UTM)</th>
               <th className="p-3">Status</th>
               <th className="p-3">Total</th>
               <th className="p-3">Created</th>
@@ -220,6 +321,35 @@ export default async function AdminOrdersPage({
                       {order.notes ? (
                         <div className="mt-1 rounded bg-sand-50 p-1.5 text-[11px] text-black/65">
                           {order.notes}
+                        </div>
+                      ) : null}
+                      {(order.utmMedium || order.utmSource || order.utmCampaign || order.utmContent || order.utmTerm) ? (
+                        <div className="mt-1.5 flex flex-wrap gap-1 rounded-lg border border-indigo-500/20 bg-indigo-50/60 p-1.5 text-[10px]">
+                          {order.utmMedium ? (
+                            <span className="inline-flex items-center gap-1 rounded bg-indigo-700 px-1.5 py-0.5 font-black text-white">
+                              🎯 Ensemble: {order.utmMedium}
+                            </span>
+                          ) : null}
+                          {order.utmSource ? (
+                            <span className="inline-flex items-center gap-1 rounded bg-white px-1.5 py-0.5 font-bold text-indigo-950 ring-1 ring-indigo-200">
+                              📢 Source: {order.utmSource}
+                            </span>
+                          ) : null}
+                          {order.utmCampaign ? (
+                            <span className="inline-flex items-center gap-1 rounded bg-white px-1.5 py-0.5 font-bold text-black/75 ring-1 ring-black/10">
+                              📁 Campagne: {order.utmCampaign}
+                            </span>
+                          ) : null}
+                          {order.utmContent ? (
+                            <span className="inline-flex items-center gap-1 rounded bg-amber-100 px-1.5 py-0.5 font-bold text-amber-950 ring-1 ring-amber-300">
+                              🎬 Pub: {order.utmContent}
+                            </span>
+                          ) : null}
+                          {order.utmTerm ? (
+                            <span className="inline-flex items-center gap-1 rounded bg-emerald-100 px-1.5 py-0.5 font-bold text-emerald-950">
+                              🎡 {order.utmTerm}
+                            </span>
+                          ) : null}
                         </div>
                       ) : null}
                     </td>

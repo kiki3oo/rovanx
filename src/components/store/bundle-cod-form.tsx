@@ -6,7 +6,7 @@ import { Check, CheckCircle2, Loader2, Lock, PhoneCall, ShieldCheck, Sparkles, T
 import { Money } from "@/components/store/money";
 import { usePreferences } from "@/components/store/preferences-provider";
 import { isValidHumanText, isValidMoroccanPhone10Digits, sanitizePhoneInput } from "@/lib/phone";
-import { getActiveWheelReward } from "@/lib/wheel-funnels";
+import { getActiveWheelReward, getAttributionPayload } from "@/lib/wheel-funnels";
 
 export type BundleItemData = {
   id: string;
@@ -124,8 +124,7 @@ export function BundleCodForm({
       })),
       displayCurrency: currency,
       locale,
-      landingPage: typeof window !== "undefined" ? window.location.href : undefined,
-      referrer: typeof document !== "undefined" ? document.referrer || undefined : undefined
+      ...getAttributionPayload()
     };
 
     try {

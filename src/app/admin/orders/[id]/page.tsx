@@ -114,6 +114,37 @@ export default async function AdminOrderDetailPage({
             ) : null}
           </section>
         </div>
+        <section className="rounded-lg border border-indigo-500/25 bg-indigo-50/40 p-5">
+          <h2 className="font-black text-indigo-950">📊 Origine Publicitaire &amp; UTM (Ensemble de publicités)</h2>
+          <div className="mt-3 grid gap-3 text-sm sm:grid-cols-2 lg:grid-cols-3">
+            <div className="rounded-lg border border-indigo-200 bg-white p-3">
+              <p className="text-xs font-bold text-black/55">🎯 Ensemble de publicités (Ad Set / utm_medium)</p>
+              <p className="mt-1 font-black text-indigo-800">{order.utmMedium || "— Non renseigné"}</p>
+            </div>
+            <div className="rounded-lg border border-indigo-200 bg-white p-3">
+              <p className="text-xs font-bold text-black/55">📢 Source (utm_source)</p>
+              <p className="mt-1 font-black text-black">{order.utmSource || "— Direct / Organique"}</p>
+            </div>
+            <div className="rounded-lg border border-indigo-200 bg-white p-3">
+              <p className="text-xs font-bold text-black/55">📁 Campagne (utm_campaign)</p>
+              <p className="mt-1 font-black text-black">{order.utmCampaign || "—"}</p>
+            </div>
+            <div className="rounded-lg border border-indigo-200 bg-white p-3">
+              <p className="text-xs font-bold text-black/55">🎬 Publicité / Vidéo (Ad / utm_content)</p>
+              <p className="mt-1 font-black text-amber-900">{order.utmContent || "—"}</p>
+            </div>
+            <div className="rounded-lg border border-indigo-200 bg-white p-3">
+              <p className="text-xs font-bold text-black/55">🎡 Placement / Roue (utm_term)</p>
+              <p className="mt-1 font-black text-emerald-800">{order.utmTerm || "—"}</p>
+            </div>
+            <div className="rounded-lg border border-indigo-200 bg-white p-3">
+              <p className="text-xs font-bold text-black/55">🔗 Page d&apos;entrée (Landing Page)</p>
+              <p className="mt-1 truncate font-mono text-xs text-black/75" title={order.landingPage || ""}>
+                {order.landingPage || "—"}
+              </p>
+            </div>
+          </div>
+        </section>
         <section className="rounded-lg border border-black/10 bg-white p-5">
           <h2 className="font-black">Items</h2>
           <div className="mt-3 grid gap-2">

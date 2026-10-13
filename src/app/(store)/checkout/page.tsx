@@ -7,6 +7,7 @@ import { useCart } from "@/components/store/cart-provider";
 import { Money } from "@/components/store/money";
 import { usePreferences } from "@/components/store/preferences-provider";
 import { isValidHumanText, isValidMoroccanPhone10Digits, sanitizePhoneInput } from "@/lib/phone";
+import { getActiveWheelReward, getAttributionPayload } from "@/lib/wheel-funnels";
 
 export default function CheckoutPage() {
   const { lines, rawSubtotal, discountTotal, subtotal, clear } = useCart();
@@ -55,25 +56,27 @@ export default function CheckoutPage() {
       return;
     }
 
+    const wheelReward = getActiveWheelReward();
+    const combinedNotes = [
+      formData.get("notes"),
+      wheelReward ? `[🎁 عرض العجلة VIP: ${wheelReward.promoCode}]` : null
+    ]
+      .filter(Boolean)
+      .join(" | ") || undefined;
+
     const payload = {
       fullName,
       phone: cleanPhone,
       city: "À confirmer",
       address,
       addressDetails: formData.get("addressDetails"),
-      notes: formData.get("notes"),
+      notes: combinedNotes,
       website,
       formRenderedAt,
       items: lines.map((line) => ({ productId: line.product.id, quantity: line.quantity })),
       displayCurrency: currency,
       locale,
-      landingPage: window.location.href,
-      referrer: document.referrer || undefined,
-      utmSource: new URLSearchParams(window.location.search).get("utm_source") || undefined,
-      utmMedium: new URLSearchParams(window.location.search).get("utm_medium") || undefined,
-      utmCampaign: new URLSearchParams(window.location.search).get("utm_campaign") || undefined,
-      utmContent: new URLSearchParams(window.location.search).get("utm_content") || undefined,
-      utmTerm: new URLSearchParams(window.location.search).get("utm_term") || undefined
+      ...getAttributionPayload()
     };
     try {
       const response = await fetch("/api/checkout", {

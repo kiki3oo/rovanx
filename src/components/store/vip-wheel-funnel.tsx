@@ -22,6 +22,7 @@ import {
 import { RovanxLogo } from "@/components/brand/rovanx-logo";
 import { usePreferences } from "@/components/store/preferences-provider";
 import {
+  captureUtmAttributionFromUrl,
   VIP_WHEEL_STORAGE_KEY,
   type WheelFunnelTarget
 } from "@/lib/wheel-funnels";
@@ -235,6 +236,11 @@ export function VipWheelFunnel({ funnel }: { funnel: WheelFunnelTarget }) {
 
   const audioCtxRef = useRef<AudioContext | null>(null);
 
+  // Capture incoming Meta / TikTok Ad UTMs immediately on funnel landing
+  useEffect(() => {
+    captureUtmAttributionFromUrl({ funnelCode: funnel.code });
+  }, [funnel.code]);
+
   // Rotate live winner ticker every 3.5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
@@ -383,15 +389,43 @@ export function VipWheelFunnel({ funnel }: { funnel: WheelFunnelTarget }) {
       })
     );
 
+    const captured = captureUtmAttributionFromUrl({ funnelCode: funnel.code });
+
     const host = window.location.hostname;
     const isSubdomain =
       host.endsWith(".rovanx.com") && host !== "rovanx.com" && host !== "www.rovanx.com";
 
-    const separator = funnel.targetPath.includes("?") ? "&" : "?";
     const [pathWithoutHash, hashPart] = funnel.targetPath.split("#");
-    const destRelative = `${pathWithoutHash}${separator}promo=${funnel.promoCode}&utm_source=vip_wheel&utm_campaign=${funnel.code}${
-      hashPart ? `#${hashPart}` : ""
-    }`;
+    const [basePath, targetQuery] = pathWithoutHash.split("?");
+    const outParams = new URLSearchParams(targetQuery || "");
+
+    // Forward all incoming query parameters (fbclid, ttclid, utm_*, etc.)
+    const incomingParams = new URLSearchParams(window.location.search);
+    incomingParams.forEach((val, key) => {
+      if (val && !outParams.has(key)) {
+        outParams.set(key, val);
+      }
+    });
+
+    outParams.set("promo", funnel.promoCode);
+    outParams.set("wheel", funnel.code);
+    if (!outParams.get("utm_source")) {
+      outParams.set("utm_source", captured?.utmSource || `vip_wheel_${funnel.code}`);
+    }
+    if (!outParams.get("utm_campaign")) {
+      outParams.set("utm_campaign", captured?.utmCampaign || `wheel_${funnel.code}`);
+    }
+    if (captured?.utmMedium && !outParams.get("utm_medium")) {
+      outParams.set("utm_medium", captured.utmMedium);
+    }
+    if (captured?.utmContent && !outParams.get("utm_content")) {
+      outParams.set("utm_content", captured.utmContent);
+    }
+    if (captured?.utmTerm && !outParams.get("utm_term")) {
+      outParams.set("utm_term", captured.utmTerm);
+    }
+
+    const destRelative = `${basePath}?${outParams.toString()}${hashPart ? `#${hashPart}` : ""}`;
 
     if (isSubdomain) {
       window.location.href = `https://rovanx.com${destRelative}`;

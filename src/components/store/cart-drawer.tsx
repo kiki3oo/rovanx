@@ -24,6 +24,7 @@ import { Money } from "@/components/store/money";
 import { getProductVisual } from "@/lib/product-visuals";
 import { getProductTiers, getSelectedTierInfo } from "@/lib/pricing-tiers";
 import { isValidHumanText, isValidMoroccanPhone10Digits, sanitizePhoneInput } from "@/lib/phone";
+import { getActiveWheelReward, getAttributionPayload } from "@/lib/wheel-funnels";
 
 type CatalogCrossSellItem = {
   id: string;
@@ -141,6 +142,7 @@ export function CartDrawer() {
     }
 
     setLoading(true);
+    const wheelReward = getActiveWheelReward();
     try {
       const response = await fetch("/api/checkout", {
         method: "POST",
@@ -150,6 +152,7 @@ export function CartDrawer() {
           phone: cleanPhone,
           city: "À confirmer",
           address: address.trim(),
+          notes: wheelReward ? `[🎁 عرض العجلة VIP: ${wheelReward.promoCode}]` : undefined,
           website,
           formRenderedAt,
           items: lines.map((line) => ({
@@ -158,7 +161,7 @@ export function CartDrawer() {
           })),
           displayCurrency: currency,
           locale,
-          landingPage: typeof window !== "undefined" ? window.location.href : undefined
+          ...getAttributionPayload()
         })
       });
 
