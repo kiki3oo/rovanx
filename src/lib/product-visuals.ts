@@ -20,7 +20,7 @@ const productVisuals: Record<string, ProductVisual[]> = {
   ],
   "rovanx-prostate": [
     {
-      src: "/products/rovanx-prostate.webp?v=3",
+      src: "/products/rovanx-prostate.webp?v=5",
       alt: "Prosta Guard - flacon de 120 ml"
     },
     {
