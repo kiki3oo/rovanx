@@ -281,6 +281,121 @@ export async function ensureCatalogSynced(force = false) {
       }
     }
 
+    // 4. Ensure active upsell rules exist for all 7 official products and disable legacy inactive ones
+    const activeSlugs = CATALOG_PRODUCTS.map((p) => p.slug);
+    const activeIds = activeSlugs.map((s) => productBySlug[s]?.id).filter(Boolean) as string[];
+    await prisma.upsellRule.updateMany({
+      where: {
+        OR: [
+          { sourceProductId: { notIn: activeIds } },
+          { offeredProductId: { notIn: activeIds } }
+        ]
+      },
+      data: { enabled: false }
+    });
+
+    const UPSELL_RULES = [
+      {
+        sourceSlug: "rovanx-vitality-60",
+        offeredSlug: "rovanx-control-oil",
+        upsellPrice: 149,
+        priority: 20,
+        headline: "عرض VIP حصري: أضف زيت التحكم Control Flow بـ 149 درهم فقط (عوض 249 درهم)",
+        description: "ضاعف النتيجة 100%: كبسولات Vitality Ultra تمنحك الصلابة من الداخل، وزيت Control Flow يمنحك تحكماً تاماً وتأخيراً من 30 إلى 45 دقيقة بدون أي تخدير."
+      },
+      {
+        sourceSlug: "rovanx-vitality-60",
+        offeredSlug: "rovanx-maca-max",
+        upsellPrice: 179,
+        priority: 10,
+        headline: "عرض VIP حصري: أضف Royal Force بـ 179 درهم فقط (عوض 299 درهم)",
+        description: "عزز كورس الصلابة بطاقة الماكا السوداء الملكية والجينسينغ الكوري لقوة مضاعفة وعدم الشعور بأي إرهاق بعد العلاقة."
+      },
+      {
+        sourceSlug: "rovanx-control-oil",
+        offeredSlug: "rovanx-vitality-60",
+        upsellPrice: 199,
+        priority: 20,
+        headline: "عرض VIP حصري: أضف كبسولات Vitality Ultra (60 كبسولة) بـ 199 درهم فقط (عوض 299 درهم)",
+        description: "للحصول على أفضل نتيجة: اجمع بين التحكم الخارجي (Control Flow) والصلابة الحديدية وتدفق الدم من الداخل مع Vitality Ultra."
+      },
+      {
+        sourceSlug: "rovanx-prostate",
+        offeredSlug: "rovanx-ginseng",
+        upsellPrice: 169,
+        priority: 20,
+        headline: "عرض VIP حصري: أضف Testo Drive بـ 169 درهم فقط (عوض 249 درهم)",
+        description: "كورس متكامل لصحة البروستات والحيوية: بينما يريح Prosta Guard المسالك البولية، يعيد Testo Drive تنشيط الدورة الدموية للحوض ورفع التستوستيرون الطبيعي."
+      },
+      {
+        sourceSlug: "rovanx-maca-max",
+        offeredSlug: "rovanx-control-oil",
+        upsellPrice: 149,
+        priority: 20,
+        headline: "عرض VIP حصري: أضف زيت التحكم Control Flow بـ 149 درهم فقط (عوض 249 درهم)",
+        description: "أكمل قوة Royal Force بتحكم كامل في توقيت القذف (30-45 دقيقة) مع سيروم القرنفل الطبيعي Control Flow في نفس الطرد السري."
+      },
+      {
+        sourceSlug: "rovanx-ginseng",
+        offeredSlug: "rovanx-vitality-60",
+        upsellPrice: 199,
+        priority: 20,
+        headline: "عرض VIP حصري: أضف كبسولات Vitality Ultra بـ 199 درهم فقط (عوض 299 درهم)",
+        description: "اجمع بين رفع التستوستيرون (Testo Drive) وأقوى تركيبة لتوسيع الأوعية والصلابة الفورية (Vitality Ultra) بتخفيض 100 درهم."
+      },
+      {
+        sourceSlug: "rovanx-vitality-30",
+        offeredSlug: "rovanx-control-oil",
+        upsellPrice: 149,
+        priority: 20,
+        headline: "عرض VIP حصري: أضف زيت التحكم Control Flow بـ 149 درهم فقط (عوض 249 درهم)",
+        description: "أضف سيروم التحكم الطبيعي Control Flow لطردك واستفد من تأخير القذف 30-45 دقيقة مع شحن مجاني بالكامل."
+      },
+      {
+        sourceSlug: "rovanx-vital-protein",
+        offeredSlug: "rovanx-vitality-60",
+        upsellPrice: 199,
+        priority: 20,
+        headline: "عرض VIP حصري: أضف كبسولات Vitality Ultra بـ 199 درهم فقط (عوض 299 درهم)",
+        description: "ضاعف نتائج Vital Protein في الضخامة وتدفق الدم مع كبسولات Vitality Ultra (60 كبسولة) بتخفيض فوري 100 درهم."
+      }
+    ];
+
+    for (const r of UPSELL_RULES) {
+      const source = productBySlug[r.sourceSlug];
+      const offered = productBySlug[r.offeredSlug];
+      if (!source || !offered) continue;
+
+      const existingRule = await prisma.upsellRule.findFirst({
+        where: { sourceProductId: source.id, offeredProductId: offered.id }
+      });
+
+      if (existingRule) {
+        await prisma.upsellRule.update({
+          where: { id: existingRule.id },
+          data: {
+            enabled: true,
+            upsellPrice: r.upsellPrice,
+            priority: r.priority,
+            headline: r.headline,
+            description: r.description
+          }
+        });
+      } else {
+        await prisma.upsellRule.create({
+          data: {
+            sourceProductId: source.id,
+            offeredProductId: offered.id,
+            enabled: true,
+            upsellPrice: r.upsellPrice,
+            priority: r.priority,
+            headline: r.headline,
+            description: r.description
+          }
+        });
+      }
+    }
+
     syncExecuted = true;
   } catch (error) {
     console.error("Failed to ensure catalog synced:", error);

@@ -1,12 +1,53 @@
-import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
-import { Money } from "@/components/store/money";
+import { ensureCatalogSynced } from "@/lib/catalog-sync";
+import { getProductVisual } from "@/lib/product-visuals";
 import { UpsellDecision } from "@/components/store/upsell-decision";
-import { LocalizedText } from "@/components/store/localized-text";
-import { SeedContent } from "@/components/store/seed-content";
+
+const UPSELL_COPY: Record<
+  string,
+  { headlineAr: string; headlineFr: string; descAr: string; descFr: string; defaultUpsellPrice: number }
+> = {
+  "rovanx-control-oil": {
+    defaultUpsellPrice: 149,
+    headlineAr: "عرض VIP حصري: أضف زيت التحكم Control Flow بـ 149 درهم فقط (عوض 249 درهم)",
+    headlineFr: "Offre VIP Exclusive : Ajoutez le sérum Control Flow pour 149 DH seulement (au lieu de 249 DH)",
+    descAr:
+      "ضاعف النتيجة 100%: الكبسولات تمنحك الصلابة من الداخل، وزيت Control Flow يمنحك تحكماً تاماً في التوقيت وتأخيراً من 30 إلى 45 دقيقة بدون أي تخدير أو فقدان للإحساس.",
+    descFr:
+      "Doublez vos résultats : pendant que vos capsules agissent de l'intérieur sur la fermeté, le sérum naturel Control Flow vous offre une maîtrise totale (30 à 45 min) sans aucun effet anesthésiant."
+  },
+  "rovanx-vitality-60": {
+    defaultUpsellPrice: 199,
+    headlineAr: "عرض VIP حصري: أضف كبسولات Vitality Ultra (60 كبسولة) بـ 199 درهم فقط (عوض 299 درهم)",
+    headlineFr: "Offre VIP Exclusive : Ajoutez Vitality Ultra (60 gélules) pour 199 DH seulement (au lieu de 299 DH)",
+    descAr:
+      "احصل على الكورس المزدوج الكامل: تدفق دم قوي وصلابة صخرية مستمرة من الداخل مع Vitality Ultra بتخفيض فوري 100 درهم وفي نفس الطرد السري.",
+    descFr:
+      "Complétez votre cure avec Vitality Ultra (60 gélules) pour un flux sanguin puissant et une rigidité durable avec 100 DH de réduction immédiate dans le même colis discret."
+  },
+  "rovanx-maca-max": {
+    defaultUpsellPrice: 179,
+    headlineAr: "عرض VIP حصري: أضف Royal Force بـ 179 درهم فقط (عوض 299 درهم)",
+    headlineFr: "Offre VIP Exclusive : Ajoutez Royal Force pour 179 DH seulement (au lieu de 299 DH)",
+    descAr:
+      "عزز كورس الصلابة بطاقة الماكا السوداء الملكية والجينسينغ الكوري لقوة مضاعفة، رغبة متقدة، وعدم الشعور بأي إرهاق بعد العلاقة.",
+    descFr:
+      "Boostez votre cure avec la Maca Noire royale et le Ginseng coréen de Royal Force pour une endurance décuplée et zéro fatigue après l'effort."
+  },
+  "rovanx-ginseng": {
+    defaultUpsellPrice: 169,
+    headlineAr: "عرض VIP حصري: أضف Testo Drive بـ 169 درهم فقط (عوض 249 درهم)",
+    headlineFr: "Offre VIP Exclusive : Ajoutez Testo Drive pour 169 DH seulement (au lieu de 249 DH)",
+    descAr:
+      "كورس متكامل للحيوية والتستوستيرون: يعيد Testo Drive تنشيط الدورة الدموية للحوض ورفع هرمون الذكورة الطبيعي ومقاومة الإجهاد اليومي.",
+    descFr:
+      "Synergie complète : Testo Drive stimule la testostérone naturelle, la circulation pelvienne et élimine le stress et la fatigue chronique."
+  }
+};
 
 export default async function UpsellPage({ params }: { params: Promise<{ orderId: string }> }) {
+  await ensureCatalogSynced();
   const { orderId } = await params;
   const order = await prisma.order.findUnique({ where: { id: orderId }, include: { items: true } });
   if (!order) notFound();
@@ -16,48 +57,42 @@ export default async function UpsellPage({ params }: { params: Promise<{ orderId
     where: {
       enabled: true,
       sourceProductId: { in: sourceProductIds },
-      offeredProductId: { notIn: sourceProductIds }
+      offeredProductId: { notIn: sourceProductIds },
+      offeredProduct: { active: true }
     },
     include: { offeredProduct: true },
     orderBy: [{ priority: "desc" }, { createdAt: "asc" }]
   });
 
   if (!rule) {
-    return (
-      <section className="relative min-h-[85vh] bg-[#12141a] text-white overflow-hidden py-12 md:py-20">
-        <div className="container relative z-10 max-w-xl text-center rounded-2xl border border-white/10 bg-white/[0.04] p-8 backdrop-blur-md shadow-2xl">
-          <h1 className="text-3xl font-black text-white"><LocalizedText id="orderReceived" /></h1>
-          <Link href={`/order/${order.reference}`} className="btn btn-primary mt-6">
-            <LocalizedText id="viewConfirmation" />
-          </Link>
-        </div>
-      </section>
-    );
+    redirect(`/order/${order.reference}`);
   }
 
-  const price = rule.upsellPrice || rule.offeredProduct.salePrice || rule.offeredProduct.regularPrice;
+  const copy = UPSELL_COPY[rule.offeredProduct.slug];
+  const price = rule.upsellPrice || copy?.defaultUpsellPrice || rule.offeredProduct.salePrice || rule.offeredProduct.regularPrice;
+  const visual = getProductVisual(rule.offeredProduct.slug);
 
   return (
-    <section className="relative min-h-[85vh] bg-[#12141a] text-white overflow-hidden py-12 md:py-20">
+    <section className="relative min-h-[85vh] bg-[#12141a] text-white overflow-hidden py-10 md:py-16">
       <div className="pointer-events-none absolute -top-40 right-1/4 h-96 w-96 rounded-full bg-bronze-500/10 blur-3xl" />
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-bronze-500/70 to-transparent" />
-      <div className="container relative z-10 grid gap-8 md:grid-cols-[0.9fr_1.1fr] md:items-center">
-        <div className="relative flex min-h-[340px] items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-8 text-center backdrop-blur-md shadow-2xl">
-          <div>
-            <p className="text-3xl font-black text-white">{rule.offeredProduct.name}</p>
-            <p className="mt-2 text-white/70"><LocalizedText id="extraOffer" /></p>
-          </div>
-        </div>
-        <div className="grid gap-5">
-          <p className="badge w-fit border-bronze-400/30 bg-bronze-500/15 text-bronze-300 font-bold"><LocalizedText id="oneOffer" /></p>
-          <h1 className="text-4xl font-black text-white"><SeedContent value={rule.headline} /></h1>
-          <p className="text-lg leading-relaxed text-white/75"><SeedContent value={rule.description} /></p>
-          <p className="text-3xl font-black text-white"><Money value={price} /></p>
-          <p className="rounded-xl border border-white/10 bg-white/[0.04] p-4 text-sm leading-6 text-white/80 backdrop-blur-sm">
-            <LocalizedText id="sameParcel" />
-          </p>
-          <UpsellDecision orderId={order.id} reference={order.reference} offeredProductId={rule.offeredProductId} />
-        </div>
+      <div className="container relative z-10">
+        <UpsellDecision
+          orderId={order.id}
+          reference={order.reference}
+          offeredProduct={{
+            id: rule.offeredProduct.id,
+            name: rule.offeredProduct.name,
+            slug: rule.offeredProduct.slug,
+            regularPrice: rule.offeredProduct.regularPrice,
+            imageSrc: visual?.src || "/products/rovanx-vitality-60.webp?v=3"
+          }}
+          upsellPrice={price}
+          headlineAr={copy?.headlineAr || rule.headline}
+          headlineFr={copy?.headlineFr || `Offre VIP : Ajoutez ${rule.offeredProduct.name} à votre colis`}
+          descAr={copy?.descAr || rule.description}
+          descFr={copy?.descFr || "Profitez d'un tarif préférentiel unique ajouté directement dans votre colis discret sans frais de livraison supplémentaires."}
+        />
       </div>
     </section>
   );

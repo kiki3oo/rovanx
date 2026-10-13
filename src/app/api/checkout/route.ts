@@ -122,7 +122,12 @@ export async function POST(request: Request) {
 
   const sourceProductIds = order.items.map((item) => item.productId);
   const rule = await prisma.upsellRule.findFirst({
-    where: { enabled: true, sourceProductId: { in: sourceProductIds } },
+    where: {
+      enabled: true,
+      sourceProductId: { in: sourceProductIds },
+      offeredProductId: { notIn: sourceProductIds },
+      offeredProduct: { active: true }
+    },
     orderBy: [{ priority: "desc" }, { createdAt: "asc" }]
   });
 

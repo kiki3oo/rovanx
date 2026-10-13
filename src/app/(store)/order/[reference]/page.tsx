@@ -1,57 +1,166 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
-import { formatMoney } from "@/lib/money";
-import { LocalizedText } from "@/components/store/localized-text";
+import { ensureCatalogSynced } from "@/lib/catalog-sync";
+import { getProductVisual } from "@/lib/product-visuals";
 import { PurchaseTracker } from "@/components/store/purchase-tracker";
+import { OrderThankYouView, type ThankYouUpsellOffer } from "@/components/store/order-thank-you-view";
 
-export default async function OrderConfirmationPage({ params }: { params: Promise<{ reference: string }> }) {
+const UPSELL_COPY: Record<
+  string,
+  { headlineAr: string; headlineFr: string; descAr: string; descFr: string; defaultUpsellPrice: number }
+> = {
+  "rovanx-control-oil": {
+    defaultUpsellPrice: 149,
+    headlineAr: "عرض VIP أخير: أضف زيت التحكم Control Flow بـ 149 درهم فقط (عوض 249 درهم)",
+    headlineFr: "Offre VIP : Ajoutez le sérum Control Flow pour 149 DH seulement (au lieu de 249 DH)",
+    descAr:
+      "يُضاف لنفس الكرتونة السرية مجاناً: تحكم كامل في توقيت القذف وتمديد العلاقة من 30 إلى 45 دقيقة بدون أي تخدير.",
+    descFr:
+      "Ajouté dans le même colis discret sans frais : maîtrise totale (30 à 45 min) sans aucun effet anesthésiant."
+  },
+  "rovanx-vitality-60": {
+    defaultUpsellPrice: 199,
+    headlineAr: "عرض VIP أخير: أضف كبسولات Vitality Ultra (60 كبسولة) بـ 199 درهم فقط (عوض 299 درهم)",
+    headlineFr: "Offre VIP : Ajoutez Vitality Ultra (60 gélules) pour 199 DH seulement (au lieu de 299 DH)",
+    descAr:
+      "يُضاف لنفس الكرتونة السرية مجاناً: تدفق دم قوي وصلابة حديدية مستمرة بتخفيض فوري 100 درهم.",
+    descFr:
+      "Ajouté dans le même colis discret : flux sanguin puissant et rigidité durable avec 100 DH de réduction immédiate."
+  },
+  "rovanx-maca-max": {
+    defaultUpsellPrice: 179,
+    headlineAr: "عرض VIP أخير: أضف Royal Force بـ 179 درهم فقط (عوض 299 درهم)",
+    headlineFr: "Offre VIP : Ajoutez Royal Force pour 179 DH seulement (au lieu de 299 DH)",
+    descAr:
+      "يُضاف لنفس الكرتونة السرية مجاناً: طاقة الماكا السوداء الملكية والجينسينغ الكوري لقوة مضاعفة طوال اللقاء.",
+    descFr:
+      "Ajouté dans le même colis discret : Maca Noire royale et Ginseng coréen pour une endurance décuplée."
+  },
+  "rovanx-ginseng": {
+    defaultUpsellPrice: 169,
+    headlineAr: "عرض VIP أخير: أضف Testo Drive بـ 169 درهم فقط (عوض 249 درهم)",
+    headlineFr: "Offre VIP : Ajoutez Testo Drive pour 169 DH seulement (au lieu de 249 DH)",
+    descAr:
+      "يُضاف لنفس الكرتونة السرية مجاناً: تنشيط الدورة الدموية للحوض ورفع هرمون التستوستيرون الطبيعي.",
+    descFr:
+      "Ajouté dans le même colis discret : stimule la testostérone naturelle et la circulation pelvienne."
+  }
+};
+
+export default async function OrderConfirmationPage({
+  params
+}: {
+  params: Promise<{ reference: string }>;
+}) {
+  await ensureCatalogSynced();
   const { reference } = await params;
+
   const order = await prisma.order.findUnique({
     where: { reference },
-    include: { customer: true, items: true }
+    include: {
+      customer: true,
+      items: {
+        include: {
+          product: true
+        }
+      }
+    }
   });
+
   if (!order) notFound();
+
   const setting = await prisma.siteSetting.findUnique({ where: { key: "store" } });
   const store = (setting?.value || {}) as { whatsapp?: string };
-  const whatsapp = store.whatsapp && store.whatsapp !== "PLACEHOLDER" ? store.whatsapp : "";
-  const whatsappMessage = encodeURIComponent(`Bonjour ROVANX, je souhaite confirmer ma commande ${order.reference}.`);
+  const rawWhatsapp =
+    store.whatsapp && store.whatsapp !== "PLACEHOLDER" ? store.whatsapp : "212600000000";
+  const whatsappNumber = rawWhatsapp.replace(/\D/g, "") || "212600000000";
+
+  // Check if there is still an unaccepted upsell offer available for this order
+  const sourceProductIds = order.items.map((item) => item.productId);
+  const upsellRule = !order.upsellAccepted
+    ? await prisma.upsellRule.findFirst({
+        where: {
+          enabled: true,
+          sourceProductId: { in: sourceProductIds },
+          offeredProductId: { notIn: sourceProductIds },
+          offeredProduct: { active: true }
+        },
+        include: { offeredProduct: true },
+        orderBy: [{ priority: "desc" }, { createdAt: "asc" }]
+      })
+    : null;
+
+  let availableUpsell: ThankYouUpsellOffer | null = null;
+  if (upsellRule) {
+    const copy = UPSELL_COPY[upsellRule.offeredProduct.slug];
+    const visual = getProductVisual(upsellRule.offeredProduct.slug);
+    const upsellPrice =
+      upsellRule.upsellPrice ||
+      copy?.defaultUpsellPrice ||
+      upsellRule.offeredProduct.salePrice ||
+      upsellRule.offeredProduct.regularPrice;
+
+    availableUpsell = {
+      productId: upsellRule.offeredProduct.id,
+      name: upsellRule.offeredProduct.name,
+      slug: upsellRule.offeredProduct.slug,
+      imageSrc: visual?.src || "/products/rovanx-vitality-60.webp?v=3",
+      regularPrice: upsellRule.offeredProduct.regularPrice,
+      upsellPrice,
+      headlineAr: copy?.headlineAr || upsellRule.headline,
+      headlineFr:
+        copy?.headlineFr || `Offre VIP : Ajoutez ${upsellRule.offeredProduct.name} à votre colis`,
+      descAr: copy?.descAr || upsellRule.description,
+      descFr:
+        copy?.descFr ||
+        "Profitez d'un tarif préférentiel unique ajouté directement dans votre colis discret sans frais de port."
+    };
+  }
+
+  const mappedItems = order.items.map((item) => {
+    const slug = item.product?.slug || "rovanx-vitality-60";
+    const visual = getProductVisual(slug);
+    return {
+      id: item.id,
+      productId: item.productId,
+      productName: item.productName,
+      productSlug: slug,
+      imageSrc: visual?.src || "/products/rovanx-vitality-60.webp?v=3",
+      quantity: item.quantity,
+      unitPrice: item.unitPrice,
+      total: item.total,
+      isUpsell: item.isUpsell
+    };
+  });
 
   return (
-    <section className="relative min-h-[85vh] bg-[#12141a] text-white overflow-hidden py-12 md:py-20">
+    <section className="relative min-h-[85vh] bg-[#12141a] text-white overflow-hidden py-10 md:py-16">
       <div className="pointer-events-none absolute -top-40 right-1/4 h-96 w-96 rounded-full bg-bronze-500/10 blur-3xl" />
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-bronze-500/70 to-transparent" />
-      <PurchaseTracker reference={order.reference} total={order.total} currency={order.currency} />
-      <div className="container relative z-10 max-w-3xl">
-        <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-8 text-white backdrop-blur-md shadow-2xl">
-          <p className="badge mb-3 border-bronze-400/30 bg-bronze-500/15 text-bronze-300 font-bold"><LocalizedText id="thanks" /></p>
-          <h1 className="text-4xl font-black text-white sm:text-5xl"><LocalizedText id="orderReceived" /></h1>
-          <p className="mt-3 text-white/75">
-            <LocalizedText id="reference" />: <strong className="text-bronze-300">{order.reference}</strong>
-          </p>
-          <div className="mt-6 grid gap-3">
-            {order.items.map((item) => (
-              <div key={item.id} className="flex justify-between border-b border-white/10 pb-3 text-white/85">
-                <span>
-                  {item.productName} x {item.quantity}
-                  {item.isUpsell ? <> (<LocalizedText id="upsell" />)</> : null}
-                </span>
-                <strong className="text-white">{formatMoney(item.total)}</strong>
-              </div>
-            ))}
-          </div>
-          <div className="mt-5 flex justify-between border-t border-white/10 pt-4 text-xl">
-            <span className="text-white/80"><LocalizedText id="totalCod" /></span>
-            <strong className="text-2xl font-black text-white">{formatMoney(order.total)}</strong>
-          </div>
-          <div className="mt-6 rounded-xl border border-white/10 bg-white/[0.03] p-4 text-sm leading-6 text-white/75">
-            <LocalizedText id="nextSteps" />
-          </div>
-          {whatsapp ? (
-            <a className="btn btn-primary mt-6 w-full sm:w-auto" href={`https://wa.me/${whatsapp}?text=${whatsappMessage}`} target="_blank" rel="noreferrer">
-              <LocalizedText id="confirmWhatsapp" />
-            </a>
-          ) : null}
-        </div>
+      <PurchaseTracker
+        reference={order.reference}
+        total={order.total}
+        currency={order.currency}
+      />
+      <div className="container relative z-10">
+        <OrderThankYouView
+          order={{
+            id: order.id,
+            reference: order.reference,
+            subtotal: order.subtotal,
+            discountTotal: order.discountTotal,
+            total: order.total,
+            notes: order.notes,
+            customer: {
+              fullName: order.customer.fullName,
+              phone: order.customer.phone,
+              address: order.customer.address
+            },
+            items: mappedItems
+          }}
+          whatsappNumber={whatsappNumber}
+          availableUpsell={availableUpsell}
+        />
       </div>
     </section>
   );
