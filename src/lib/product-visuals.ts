@@ -82,7 +82,7 @@ const productVisuals: Record<string, ProductVisual[]> = {
   ],
   "rovanx-ginseng": [
     {
-      src: "/products/rovanx-ginseng.webp?v=3",
+      src: "/products/rovanx-ginseng.webp?v=5",
       alt: "Testo Drive - flacon de 30 capsules"
     },
     {
