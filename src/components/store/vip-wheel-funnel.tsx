@@ -686,8 +686,8 @@ export function VipWheelFunnel({ funnel }: { funnel: WheelFunnelTarget }) {
 
                             const iconPos = polarToCartesian(220, 220, 182, midAngle);
                             const labelPos = polarToCartesian(220, 220, 145, midAngle);
-                            const subPos = polarToCartesian(220, 220, 105, midAngle);
-                            const innerDotPos = polarToCartesian(220, 220, 76, midAngle);
+                            const subPos = polarToCartesian(220, 220, 104, midAngle);
+                            const innerDotPos = polarToCartesian(220, 220, 70, midAngle);
 
                             return (
                               <g key={index}>
@@ -786,7 +786,7 @@ export function VipWheelFunnel({ funnel }: { funnel: WheelFunnelTarget }) {
                           <circle
                             cx="220"
                             cy="220"
-                            r="68"
+                            r="60"
                             fill="none"
                             stroke="#fde68a"
                             strokeWidth="2.5"
@@ -830,13 +830,13 @@ export function VipWheelFunnel({ funnel }: { funnel: WheelFunnelTarget }) {
                         }}
                       />
 
-                      {/* CENTER 3D ROYAL SPIN HUB BUTTON WITH ENLARGED LION HEAD */}
+                      {/* CENTER 3D ROYAL SPIN HUB BUTTON WITH CLEAN ZOOMED LION HEAD */}
                       <button
                         type="button"
                         onClick={handleSpin}
                         disabled={spinning}
                         aria-label="Spin the wheel"
-                        className="group absolute left-1/2 top-1/2 z-30 flex h-[108px] w-[108px] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full p-[5px] shadow-[0_12px_35px_rgba(0,0,0,0.95),0_0_30px_rgba(216,162,74,0.55)] transition-transform duration-200 hover:scale-105 active:scale-95 sm:h-[132px] sm:w-[132px]"
+                        className="group absolute left-1/2 top-1/2 z-30 flex h-[88px] w-[88px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full p-[4px] shadow-[0_12px_35px_rgba(0,0,0,0.95),0_0_28px_rgba(216,162,74,0.55)] transition-transform duration-200 hover:scale-105 active:scale-95 sm:h-[106px] sm:w-[106px]"
                         style={{
                           background:
                             "conic-gradient(from 45deg, #78350f, #fef08a, #d8a24a, #fffbeb, #92400e, #fde68a, #78350f)"
@@ -846,16 +846,12 @@ export function VipWheelFunnel({ funnel }: { funnel: WheelFunnelTarget }) {
                           <span className="pointer-events-none absolute -inset-1.5 animate-ping rounded-full border-2 border-bronze-300/50 opacity-60" />
                         )}
 
-                        <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-full border-2 border-[#fffbeb]/85 bg-gradient-to-b from-[#480a16] via-[#24060c] to-[#0c0204] shadow-[inset_0_0_18px_rgba(0,0,0,0.9)]">
+                        <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-full border-2 border-[#fffbeb]/85 bg-gradient-to-b from-[#480a16] via-[#24060c] to-[#0c0204] p-1 shadow-[inset_0_0_16px_rgba(0,0,0,0.9)]">
                           <RovanxLogo
                             variant="mark"
-                            className="h-[84px] w-[84px] scale-110 drop-shadow-[0_6px_14px_rgba(0,0,0,0.9)] sm:h-[104px] sm:w-[104px]"
+                            className="h-full w-full scale-[1.18] drop-shadow-[0_6px_14px_rgba(0,0,0,0.9)]"
                           />
                         </div>
-
-                        <span className=" -bottom-2 left-1/2 z-10 -translate-x-1/2 whitespace-nowrap rounded-full border border-[#fffbeb] bg-gradient-to-r from-[#fde68a] via-[#d8a24a] to-[#fde68a] px-3 py-0.5 text-[9.5px] font-black uppercase tracking-wider text-[#170306] shadow-[0_4px_12px_rgba(0,0,0,0.85)] absolute">
-                          {spinning ? "..." : isAr ? "دوّر الآن" : "TOURNER"}
-                        </span>
                       </button>
                     </div>
                   </div>
