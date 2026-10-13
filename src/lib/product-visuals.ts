@@ -58,7 +58,7 @@ const productVisuals: Record<string, ProductVisual[]> = {
   ],
   "rovanx-vitality-60": [
     {
-      src: "/products/rovanx-vitality-60.webp?v=3",
+      src: "/products/rovanx-vitality-60.webp?v=5",
       alt: "Vitality Ultra - flacon de 60 capsules"
     },
     {
