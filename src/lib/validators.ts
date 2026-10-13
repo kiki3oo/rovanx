@@ -1,10 +1,16 @@
 import { z } from "zod";
+import { isValidMoroccanPhone10Digits, sanitizePhoneInput } from "@/lib/phone";
 
 export const checkoutSchema = z.object({
-  fullName: z.string().min(2, "Nom complet requis"),
-  phone: z.string().min(8, "Numero de telephone requis"),
+  fullName: z.string().min(2, "الاسم الكامل مطلوب / Nom complet requis"),
+  phone: z
+    .string()
+    .transform((val) => sanitizePhoneInput(val))
+    .refine((val) => isValidMoroccanPhone10Digits(val), {
+      message: "يرجى إدخال رقم هاتف صحيح مكون من 10 أرقام (مثال: 0612345678) / Numéro à 10 chiffres requis (ex: 0612345678)"
+    }),
   city: z.string().optional().default("À confirmer"),
-  address: z.string().min(3, "Adresse ou ville requise"),
+  address: z.string().min(3, "العنوان والمدينة مطلوبان / Adresse et ville requises"),
   addressDetails: z.string().optional(),
   notes: z.string().optional(),
   bundleSlug: z.string().optional(),

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Check, CheckCircle2, Loader2, Lock, PhoneCall, ShieldCheck, Sparkles, Truck } from "lucide-react";
 import { Money } from "@/components/store/money";
 import { usePreferences } from "@/components/store/preferences-provider";
+import { isValidMoroccanPhone10Digits, sanitizePhoneInput } from "@/lib/phone";
 
 export type BundleItemData = {
   id: string;
@@ -40,6 +41,7 @@ export function BundleCodForm({
   const [currentSlug, setCurrentSlug] = useState<string>(
     selectedSlug || bundles[0]?.slug || "rovanx-pack-puissance"
   );
+  const [phoneValue, setPhoneValue] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -59,15 +61,15 @@ export function BundleCodForm({
 
     const form = event.currentTarget;
     const formData = new FormData(form);
-    const phoneDigits = String(formData.get("phone") || "").replace(/\D/g, "");
+    const cleanPhone = sanitizePhoneInput(String(formData.get("phone") || phoneValue));
 
-    if (!/^(?:0[67]\d{8}|212[67]\d{8}|[67]\d{8})$/.test(phoneDigits)) {
+    if (!isValidMoroccanPhone10Digits(cleanPhone)) {
       setError(
         isArabic
-          ? "يرجى إدخال رقم هاتف مغربي صحيح لتأكيد الطلب."
+          ? "يرجى إدخال رقم هاتف مغربي صحيح مكون من 10 أرقام بالضبط (مثال: 0612345678)."
           : isEnglish
-            ? "Enter a valid Moroccan mobile number."
-            : "Saisissez un numéro mobile marocain valide."
+            ? "Please enter a valid Moroccan phone number with exactly 10 digits (e.g. 0612345678)."
+            : "Veuillez saisir un numéro de téléphone marocain valide composé exactement de 10 chiffres (ex: 0612345678)."
       );
       setLoading(false);
       return;
@@ -75,7 +77,7 @@ export function BundleCodForm({
 
     const payload = {
       fullName: formData.get("fullName"),
-      phone: formData.get("phone"),
+      phone: cleanPhone,
       city: "À confirmer",
       address: formData.get("address"),
       addressDetails: formData.get("addressDetails") || undefined,
@@ -239,28 +241,51 @@ export function BundleCodForm({
         </label>
 
         <label className="flex flex-col gap-1.5">
-          <span className="font-bold text-white/90">
-            {isArabic
-              ? "رقم الهاتف (للتأكيد قبل الشحن) *"
-              : isEnglish
-                ? "Phone Number (for confirmation) *"
-                : "Numéro de téléphone portable *"}
-          </span>
+          <div className="flex items-center justify-between gap-2">
+            <span className="font-bold text-white/90">
+              {isArabic
+                ? "رقم الهاتف (10 أرقام للتأكيد) *"
+                : isEnglish
+                  ? "Phone Number (10 digits) *"
+                  : "Numéro de téléphone (10 chiffres) *"}
+            </span>
+            {phoneValue.length > 0 ? (
+              <span
+                className={`rounded-full px-2 py-0.5 text-[11px] font-black ${
+                  isValidMoroccanPhone10Digits(phoneValue)
+                    ? "bg-emerald-500/20 text-emerald-400"
+                    : "bg-amber-500/20 text-amber-400"
+                }`}
+              >
+                {isValidMoroccanPhone10Digits(phoneValue)
+                  ? isArabic
+                    ? "✓ 10/10 أرقام صحيح"
+                    : "✓ 10/10 chiffres"
+                  : isArabic
+                    ? `${phoneValue.length}/10 أرقام`
+                    : `${phoneValue.length}/10 chiffres`}
+              </span>
+            ) : null}
+          </div>
           <input
-            className="w-full rounded-xl border border-white/15 bg-white/[0.05] p-3 text-base text-white placeholder:text-white/35 backdrop-blur-sm focus:border-amber-400 focus:outline-none"
+            className="w-full rounded-xl border border-white/15 bg-white/[0.05] p-3 font-mono text-base tracking-wider text-white placeholder:text-white/35 backdrop-blur-sm focus:border-amber-400 focus:outline-none"
             name="phone"
             type="tel"
-            inputMode="tel"
-            placeholder="06 00 00 00 00"
+            dir="ltr"
+            inputMode="numeric"
+            maxLength={10}
+            value={phoneValue}
+            onChange={(e) => setPhoneValue(sanitizePhoneInput(e.target.value))}
+            placeholder="0612345678"
             required
             autoComplete="tel"
           />
           <span className="text-xs text-white/50">
             {isArabic
-              ? "سنتصل بك لتأكيد الطلب والعنوان هاتفياً."
+              ? "يرجى إدخال 10 أرقام بالضبط (تبدأ بـ 06 أو 07) لتأكيد الطلب قبل الشحن."
               : isEnglish
-                ? "We will call you to confirm your address before shipping."
-                : "Nous vous appellerons avant l'envoi."}
+                ? "Enter exactly 10 digits starting with 06 or 07."
+                : "Saisissez exactement 10 chiffres (06 ou 07) avant l'envoi."}
           </span>
         </label>
 

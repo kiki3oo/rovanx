@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { usePreferences } from "@/components/store/preferences-provider";
 import { Money } from "@/components/store/money";
+import { isValidMoroccanPhone10Digits, sanitizePhoneInput } from "@/lib/phone";
 
 export type ThankYouOrderItem = {
   id: string;
@@ -78,7 +79,7 @@ export function OrderThankYouView({
 
   const [copied, setCopied] = useState(false);
   const [fullName, setFullName] = useState(order.customer.fullName);
-  const [phone, setPhone] = useState(order.customer.phone);
+  const [phone, setPhone] = useState(sanitizePhoneInput(order.customer.phone));
   const [address, setAddress] = useState(order.customer.address);
 
   const alreadyVerified = Boolean(order.notes?.includes("[✓"));
@@ -99,8 +100,18 @@ export function OrderThankYouView({
   }
 
   async function handleConfirmDetails(confirmOnly: boolean) {
-    setSavingContact(true);
     setContactError("");
+    const cleanPhone = sanitizePhoneInput(phone);
+    if (!confirmOnly && !isValidMoroccanPhone10Digits(cleanPhone)) {
+      setContactError(
+        isArabic
+          ? "يرجى إدخال رقم هاتف مغربي صحيح مكون من 10 أرقام بالضبط (مثال: 0612345678)."
+          : "Veuillez saisir un numéro de téléphone marocain valide composé exactement de 10 chiffres (ex: 0612345678)."
+      );
+      return;
+    }
+
+    setSavingContact(true);
     try {
       const res = await fetch(`/api/orders/${order.id}/contact`, {
         method: "POST",
@@ -108,7 +119,7 @@ export function OrderThankYouView({
         body: JSON.stringify(
           confirmOnly
             ? { confirmOnly: true }
-            : { fullName, phone, address, confirmOnly: false }
+            : { fullName, phone: cleanPhone, address, confirmOnly: false }
         )
       });
       const data = await res.json();
@@ -117,13 +128,13 @@ export function OrderThankYouView({
         setContactError(
           data.error ||
             (isArabic
-              ? "يرجى التأكد من إدخال رقم هاتف مغربي صحيح."
-              : "Veuillez saisir un numéro de téléphone marocain valide.")
+              ? "يرجى التأكد من إدخال رقم هاتف مغربي صحيح مكون من 10 أرقام."
+              : "Veuillez saisir un numéro de téléphone marocain valide (10 chiffres).")
         );
         return;
       }
       setFullName(data.fullName || fullName);
-      setPhone(data.phone || phone);
+      setPhone(data.phone || cleanPhone);
       setAddress(data.address || address);
       setIsVerified(true);
       setIsEditing(false);
@@ -284,15 +295,35 @@ export function OrderThankYouView({
                 />
               </div>
               <div>
-                <label className="mb-1 block text-xs font-bold text-amber-300">
-                  {isArabic ? "رقم الهاتف (10 أرقام)" : "Numéro de téléphone"}
-                </label>
+                <div className="mb-1 flex items-center justify-between gap-2">
+                  <label className="block text-xs font-bold text-amber-300">
+                    {isArabic ? "رقم الهاتف (10 أرقام بالضبط)" : "Numéro de téléphone (10 chiffres)"}
+                  </label>
+                  <span
+                    className={`rounded-full px-2 py-0.5 text-[10px] font-black ${
+                      isValidMoroccanPhone10Digits(phone)
+                        ? "bg-emerald-500/20 text-emerald-400"
+                        : "bg-amber-500/20 text-amber-400"
+                    }`}
+                  >
+                    {isValidMoroccanPhone10Digits(phone)
+                      ? isArabic
+                        ? "✓ 10/10 أرقام صحيح"
+                        : "✓ 10/10 chiffres"
+                      : isArabic
+                        ? `${phone.length}/10 أرقام`
+                        : `${phone.length}/10 chiffres`}
+                  </span>
+                </div>
                 <input
                   type="tel"
                   dir="ltr"
+                  inputMode="numeric"
+                  maxLength={10}
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className="input w-full font-mono text-base font-bold"
+                  onChange={(e) => setPhone(sanitizePhoneInput(e.target.value))}
+                  placeholder="0612345678"
+                  className="input w-full font-mono text-base font-bold tracking-wider"
                 />
               </div>
               <div>

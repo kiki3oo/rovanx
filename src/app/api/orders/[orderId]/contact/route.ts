@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
-import { normalizeMoroccanPhone } from "@/lib/phone";
+import { isValidMoroccanPhone10Digits, normalizeMoroccanPhone, sanitizePhoneInput } from "@/lib/phone";
 
 export async function POST(request: Request, { params }: { params: Promise<{ orderId: string }> }) {
   try {
@@ -51,20 +51,18 @@ export async function POST(request: Request, { params }: { params: Promise<{ ord
     }
 
     const cleanName = (fullName || order.customer.fullName).trim();
-    const cleanPhone = (phone || order.customer.phone).trim();
+    const cleanPhone = sanitizePhoneInput(phone || order.customer.phone);
     const cleanAddress = (address || order.customer.address).trim();
-    const phoneDigits = cleanPhone.replace(/\D/g, "");
 
-    if (!/^(?:0[67]\d{8}|212[67]\d{8}|[67]\d{8})$/.test(phoneDigits)) {
+    if (!isValidMoroccanPhone10Digits(cleanPhone)) {
       return NextResponse.json(
-        { error: "رقم الهاتف غير صحيح. يرجى إدخال رقم مغربي مكون من 10 أرقام." },
+        { error: "يرجى إدخال رقم هاتف مغربي صحيح مكون من 10 أرقام بالضبط (مثال: 0612345678)." },
         { status: 400 }
       );
     }
 
     const phoneNorm = normalizeMoroccanPhone(cleanPhone);
 
-    // Update customer info safely
     await prisma.customer.update({
       where: { id: order.customerId },
       data: {

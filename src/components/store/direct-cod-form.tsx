@@ -6,6 +6,7 @@ import { Eye, Loader2, Lock, PhoneCall, ShieldCheck, Truck } from "lucide-react"
 import { Money } from "@/components/store/money";
 import { usePreferences } from "@/components/store/preferences-provider";
 import { getProductTiers, getSelectedTierInfo } from "@/lib/pricing-tiers";
+import { isValidMoroccanPhone10Digits, sanitizePhoneInput } from "@/lib/phone";
 
 type DirectCodProduct = {
   id: string;
@@ -44,6 +45,7 @@ export function DirectCodForm({
   const tiers = getProductTiers(product.slug, product.price, isArabic);
   const [quantity, setQuantity] = useState(2);
   const [addBump, setAddBump] = useState(false);
+  const [phoneValue, setPhoneValue] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -66,9 +68,15 @@ export function DirectCodForm({
 
     const form = event.currentTarget;
     const formData = new FormData(form);
-    const phoneDigits = String(formData.get("phone") || "").replace(/\D/g, "");
-    if (!/^(?:0[67]\d{8}|212[67]\d{8}|[67]\d{8})$/.test(phoneDigits)) {
-      setError(isArabic ? "يرجى إدخال رقم هاتف مغربي صحيح لتأكيد الطلب." : isEnglish ? "Enter a valid Moroccan mobile number so we can confirm your order." : "Saisissez un numéro mobile marocain valide pour confirmer votre commande.");
+    const cleanPhone = sanitizePhoneInput(String(formData.get("phone") || phoneValue));
+    if (!isValidMoroccanPhone10Digits(cleanPhone)) {
+      setError(
+        isArabic
+          ? "يرجى إدخال رقم هاتف مغربي صحيح مكون من 10 أرقام بالضبط (مثال: 0612345678)."
+          : isEnglish
+            ? "Please enter a valid Moroccan phone number with exactly 10 digits (e.g. 0612345678)."
+            : "Veuillez saisir un numéro de téléphone marocain valide composé exactement de 10 chiffres (ex: 0612345678)."
+      );
       setLoading(false);
       return;
     }
@@ -85,7 +93,7 @@ export function DirectCodForm({
 
     const payload = {
       fullName: formData.get("fullName"),
-      phone: formData.get("phone"),
+      phone: cleanPhone,
       city: "À confirmer",
       address: formData.get("address"),
       addressDetails: formData.get("addressDetails") || undefined,
@@ -247,24 +255,51 @@ export function DirectCodForm({
         </label>
 
         <label className="flex flex-col gap-1.5">
-          <span className={`font-bold ${darkTheme ? "text-white/90" : "text-black/85"}`}>
-            {isArabic ? "رقم الهاتف (للتأكيد قبل الشحن) *" : isEnglish ? "Mobile number for confirmation *" : "Numéro de téléphone portable *"}
-          </span>
+          <div className="flex items-center justify-between gap-2">
+            <span className={`font-bold ${darkTheme ? "text-white/90" : "text-black/85"}`}>
+              {isArabic ? "رقم الهاتف (10 أرقام للتأكيد) *" : isEnglish ? "Mobile number (10 digits) *" : "Numéro de téléphone (10 chiffres) *"}
+            </span>
+            {phoneValue.length > 0 ? (
+              <span
+                className={`rounded-full px-2 py-0.5 text-[11px] font-black ${
+                  isValidMoroccanPhone10Digits(phoneValue)
+                    ? "bg-emerald-500/20 text-emerald-400"
+                    : "bg-amber-500/20 text-amber-400"
+                }`}
+              >
+                {isValidMoroccanPhone10Digits(phoneValue)
+                  ? isArabic
+                    ? "✓ 10/10 أرقام صحيح"
+                    : "✓ 10/10 chiffres"
+                  : isArabic
+                    ? `${phoneValue.length}/10 أرقام`
+                    : `${phoneValue.length}/10 chiffres`}
+              </span>
+            ) : null}
+          </div>
           <input
             className={
               darkTheme
-                ? "w-full rounded-xl border border-white/15 bg-white/[0.05] p-3 text-base text-white placeholder:text-white/35 backdrop-blur-sm focus:border-bronze-400 focus:outline-none"
-                : "input text-base"
+                ? "w-full rounded-xl border border-white/15 bg-white/[0.05] p-3 font-mono text-base tracking-wider text-white placeholder:text-white/35 backdrop-blur-sm focus:border-bronze-400 focus:outline-none"
+                : "input font-mono text-base tracking-wider"
             }
             name="phone"
             type="tel"
-            inputMode="tel"
-            placeholder="06 00 00 00 00"
+            dir="ltr"
+            inputMode="numeric"
+            maxLength={10}
+            value={phoneValue}
+            onChange={(e) => setPhoneValue(sanitizePhoneInput(e.target.value))}
+            placeholder="0612345678"
             required
             autoComplete="tel"
           />
           <span className={`text-xs ${darkTheme ? "text-white/50" : "text-black/55"}`}>
-            {isArabic ? "سنتصل بك لتأكيد الطلب قبل الشحن." : isEnglish ? "We'll call you to confirm before shipping." : "Nous vous appellerons pour confirmer avant l'envoi."}
+            {isArabic
+              ? "يرجى إدخال 10 أرقام بالضبط (تبدأ بـ 06 أو 07) لكي يتمكن الموزع من الاتصال بك."
+              : isEnglish
+                ? "Enter exactly 10 digits starting with 06 or 07."
+                : "Saisissez exactement 10 chiffres (commençant par 06 ou 07) pour la confirmation."}
           </span>
         </label>
 
