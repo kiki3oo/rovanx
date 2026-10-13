@@ -76,7 +76,7 @@ const productVisuals: Record<string, ProductVisual[]> = {
   ],
   "rovanx-vitality-30": [
     {
-      src: "/products/rovanx-vitality-30.webp?v=3",
+      src: "/products/rovanx-vitality-30.webp?v=5",
       alt: "Vitality Boost - flacon de 30 capsules"
     }
   ],
