@@ -6,7 +6,7 @@ export type ProductVisual = {
 const productVisuals: Record<string, ProductVisual[]> = {
   "rovanx-control-oil": [
     {
-      src: "/products/rovanx-control-oil.webp?v=3",
+      src: "/products/rovanx-control-oil.webp?v=5",
       alt: "Control Flow - flacon de 60 ml"
     },
     {
