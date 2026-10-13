@@ -23,3 +23,27 @@ export async function updateOrderStatusAction(formData: FormData) {
   revalidatePath("/admin/orders");
   revalidatePath(`/admin/orders/${orderId}`);
 }
+
+export async function blockFakeOrderAction(formData: FormData) {
+  await requireAdmin();
+  const orderId = String(formData.get("orderId"));
+  const order = await prisma.order.findUniqueOrThrow({ where: { id: orderId } });
+  const updatedNotes = [order.notes, "BLACKLIST: Fake / Spam Order"].filter(Boolean).join(" | ");
+  await prisma.order.update({
+    where: { id: orderId },
+    data: {
+      status: "CANCELLED",
+      notes: updatedNotes,
+      statusHistory: {
+        create: {
+          from: order.status,
+          to: "CANCELLED",
+          note: "BLACKLIST: Numéro bloqué (Fake / Spam)"
+        }
+      }
+    }
+  });
+  revalidatePath("/admin/orders");
+  revalidatePath(`/admin/orders/${orderId}`);
+}
+

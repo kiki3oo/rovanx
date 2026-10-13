@@ -18,7 +18,7 @@ import {
 import { useCart } from "@/components/store/cart-provider";
 import { Money } from "@/components/store/money";
 import { usePreferences } from "@/components/store/preferences-provider";
-import { isValidMoroccanPhone10Digits, sanitizePhoneInput } from "@/lib/phone";
+import { isValidHumanText, isValidMoroccanPhone10Digits, sanitizePhoneInput } from "@/lib/phone";
 import { getSelectedTierInfo } from "@/lib/pricing-tiers";
 import { getProductVisual } from "@/lib/product-visuals";
 
@@ -39,6 +39,8 @@ export default function CartPage() {
   const [fullName, setFullName] = useState("");
   const [phoneValue, setPhoneValue] = useState("");
   const [address, setAddress] = useState("");
+  const [website, setWebsite] = useState("");
+  const [formRenderedAt] = useState(() => Date.now());
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -49,12 +51,32 @@ export default function CartPage() {
     setError("");
 
     const cleanPhone = sanitizePhoneInput(phoneValue);
+    if (!isValidHumanText(fullName, 2)) {
+      setLoading(false);
+      setError(
+        isAr
+          ? "يرجى إدخال اسمك الكامل الحقيقي للتوصل بطلبك."
+          : "Veuillez saisir votre vrai nom complet."
+      );
+      return;
+    }
+
     if (!isValidMoroccanPhone10Digits(cleanPhone)) {
       setLoading(false);
       setError(
         isAr
-          ? "يرجى إدخال رقم هاتف مغربي صحيح مكون من 10 أرقام بالضبط (مثال: 0612345678)."
-          : "Veuillez saisir un numéro de téléphone marocain valide composé exactement de 10 chiffres (ex: 0612345678)."
+          ? "يرجى إدخال رقم هاتف مغربي حقيقي وصحيح مكون من 10 أرقام (يبدأ بـ 06 أو 07)."
+          : "Veuillez saisir un vrai numéro de téléphone marocain valide à 10 chiffres."
+      );
+      return;
+    }
+
+    if (!isValidHumanText(address, 4)) {
+      setLoading(false);
+      setError(
+        isAr
+          ? "يرجى كتابة المدينة والعنوان بشكل واضح وصحيح للتوصيل."
+          : "Veuillez saisir une adresse et ville de livraison valides."
       );
       return;
     }
@@ -64,6 +86,8 @@ export default function CartPage() {
       phone: cleanPhone,
       city: "À confirmer",
       address: address.trim(),
+      website,
+      formRenderedAt,
       items: lines.map((line) => ({
         productId: line.product.id,
         quantity: line.quantity
@@ -305,6 +329,17 @@ export default function CartPage() {
                   />
                 </label>
 
+                <input
+                  type="text"
+                  name="website"
+                  value={website}
+                  onChange={(e) => setWebsite(e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  className="hidden"
+                />
+
                 <label className="grid gap-1 text-xs font-bold text-white/85">
                   <div className="flex items-center justify-between gap-2">
                     <span>{isAr ? "رقم الهاتف (10 أرقام) *" : "Téléphone (10 chiffres) *"}</span>
@@ -313,14 +348,20 @@ export default function CartPage() {
                         className={`rounded-full px-2 py-0.5 text-[10px] font-black ${
                           isValidMoroccanPhone10Digits(phoneValue)
                             ? "bg-emerald-500/20 text-emerald-400"
-                            : "bg-amber-500/20 text-amber-400"
+                            : phoneValue.length === 10
+                              ? "bg-red-500/20 text-red-400"
+                              : "bg-amber-500/20 text-amber-400"
                         }`}
                       >
                         {isValidMoroccanPhone10Digits(phoneValue)
                           ? isAr
                             ? "✓ 10/10 صحيح"
                             : "✓ 10/10 valide"
-                          : `${phoneValue.length}/10`}
+                          : phoneValue.length === 10
+                            ? isAr
+                              ? "✗ رقم غير صالح"
+                              : "✗ Invalide"
+                            : `${phoneValue.length}/10`}
                       </span>
                     ) : null}
                   </div>
@@ -332,7 +373,7 @@ export default function CartPage() {
                     required
                     value={phoneValue}
                     onChange={(e) => setPhoneValue(sanitizePhoneInput(e.target.value))}
-                    placeholder="0612345678"
+                    placeholder="06XXXXXXXX"
                     className="rounded-xl border border-white/15 bg-black/40 px-3.5 py-2.5 font-mono text-sm tracking-wider text-white placeholder:text-white/35 focus:border-bronze-400 focus:outline-none"
                   />
                 </label>

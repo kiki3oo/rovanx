@@ -4,11 +4,134 @@ import { checkoutSchema } from "@/lib/validators";
 import { normalizeMoroccanPhone } from "@/lib/phone";
 import { calculateTierDiscount } from "@/lib/pricing-tiers";
 
+type IpRecord = {
+  phones: Set<string>;
+  timestamps: number[];
+};
+
+const ipRateMap = new Map<string, IpRecord>();
+const IP_WINDOW_MS = 60 * 60 * 1000; // 1 hour
+const MAX_DISTINCT_PHONES_PER_IP = 2;
+const MAX_ATTEMPTS_PER_IP = 6;
+
+function getClientIp(request: Request): string {
+  const forwarded = request.headers.get("x-forwarded-for");
+  if (forwarded) {
+    return forwarded.split(",")[0].trim();
+  }
+  return request.headers.get("x-real-ip")?.trim() || "unknown";
+}
+
+function checkIpRateLimit(ip: string, phoneNorm: string): boolean {
+  if (!ip || ip === "unknown" || ip === "127.0.0.1" || ip === "::1") {
+    return true;
+  }
+  const now = Date.now();
+  const record = ipRateMap.get(ip) || { phones: new Set<string>(), timestamps: [] };
+  record.timestamps = record.timestamps.filter((t) => now - t < IP_WINDOW_MS);
+
+  if (record.timestamps.length >= MAX_ATTEMPTS_PER_IP) {
+    return false;
+  }
+  if (!record.phones.has(phoneNorm) && record.phones.size >= MAX_DISTINCT_PHONES_PER_IP) {
+    return false;
+  }
+
+  record.timestamps.push(now);
+  record.phones.add(phoneNorm);
+  ipRateMap.set(ip, record);
+  return true;
+}
+
 export async function POST(request: Request) {
   const body = await request.json();
+
+  // Layer 1: Invisible Honeypot Trap against bots
+  if (typeof body?.website === "string" && body.website.trim().length > 0) {
+    return NextResponse.json(
+      { error: "تم رفض الطلب تلقائياً / Requête bloquée" },
+      { status: 400 }
+    );
+  }
+
+  // Layer 2: Speed-Trap against automated scripts (< 1.5s fill time)
+  if (
+    typeof body?.formRenderedAt === "number" &&
+    body.formRenderedAt > 0 &&
+    Date.now() - body.formRenderedAt < 1500
+  ) {
+    return NextResponse.json(
+      {
+        error:
+          "يرجى التأكد من معلوماتك والمحاولة مرة أخرى / Veuillez vérifier vos informations et réessayer"
+      },
+      { status: 400 }
+    );
+  }
+
   const parsed = checkoutSchema.safeParse(body);
   if (!parsed.success) {
-    return NextResponse.json({ error: parsed.error.issues[0]?.message || "Invalid checkout" }, { status: 400 });
+    return NextResponse.json(
+      { error: parsed.error.issues[0]?.message || "Invalid checkout" },
+      { status: 400 }
+    );
+  }
+
+  const phoneNorm = normalizeMoroccanPhone(parsed.data.phone);
+  const clientIp = getClientIp(request);
+
+  // Layer 3: IP Rate Limiting (blocks spam with multiple fake phone numbers from same device/IP)
+  if (!checkIpRateLimit(clientIp, phoneNorm)) {
+    return NextResponse.json(
+      {
+        error:
+          "لقد قمت بإرسال عدة طلبات مؤخراً. سنتصل بك قريباً لتأكيد طلبك أو تواصل معنا عبر واتساب / Vous avez déjà envoyé plusieurs commandes récemment."
+      },
+      { status: 429 }
+    );
+  }
+
+  // Layer 4: Blacklist & 15-Minute Duplicate Cooldown Check
+  const existingCustomer = await prisma.customer.findUnique({
+    where: { phoneNorm },
+    include: {
+      orders: {
+        orderBy: { createdAt: "desc" },
+        take: 5,
+        include: { items: true }
+      }
+    }
+  });
+
+  if (existingCustomer) {
+    // Check if customer has been marked as FAKE / BLACKLIST in any previous order notes
+    const isBlacklisted = existingCustomer.orders.some((o) =>
+      /\b(fake|blacklist|spam|faux|bloque|bloqué)\b/i.test(o.notes || "")
+    );
+    if (isBlacklisted) {
+      return NextResponse.json(
+        {
+          error:
+            "تعذر تسجيل الطلب بهذا الرقم، يرجى التواصل معنا مباشرة عبر واتساب / Impossible de valider avec ce numéro, contactez-nous sur WhatsApp."
+        },
+        { status: 403 }
+      );
+    }
+
+    // Check if customer placed a NEW order within the last 15 minutes (prevent duplicate orders)
+    const fifteenMinutesAgo = new Date(Date.now() - 15 * 60 * 1000);
+    const recentOrder = existingCustomer.orders.find(
+      (o) => o.status === "NEW" && o.createdAt >= fifteenMinutesAgo
+    );
+
+    if (recentOrder) {
+      return NextResponse.json({
+        orderId: recentOrder.id,
+        reference: recentOrder.reference,
+        upsellUrl: `/order/${recentOrder.reference}`,
+        deduplicated: true
+      });
+    }
   }
 
   const productIds = parsed.data.items.map((item) => item.productId);
@@ -64,24 +187,23 @@ export async function POST(request: Request) {
 
   const finalTotal = Math.max(0, subtotal - discountTotal);
   const combinedNotes = notesList.filter(Boolean).join(" | ") || undefined;
-  const phoneNorm = normalizeMoroccanPhone(parsed.data.phone);
   const reference = `ROV-${Date.now().toString(36).toUpperCase()}`;
 
   const order = await prisma.$transaction(async (tx) => {
     const customer = await tx.customer.upsert({
       where: { phoneNorm },
       update: {
-        fullName: parsed.data.fullName,
+        fullName: parsed.data.fullName.trim(),
         phone: parsed.data.phone,
         city: parsed.data.city || "À confirmer",
-        address: parsed.data.address
+        address: parsed.data.address.trim()
       },
       create: {
-        fullName: parsed.data.fullName,
+        fullName: parsed.data.fullName.trim(),
         phone: parsed.data.phone,
         phoneNorm,
         city: parsed.data.city || "À confirmer",
-        address: parsed.data.address
+        address: parsed.data.address.trim()
       }
     });
 

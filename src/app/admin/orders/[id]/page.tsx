@@ -5,7 +5,7 @@ import { prisma } from "@/lib/db";
 import { formatMoney } from "@/lib/money";
 import { normalizeMoroccanPhone } from "@/lib/phone";
 import { getOrderStatusClassName, getOrderStatusLabel } from "@/lib/order-status";
-import { updateOrderStatusAction } from "@/app/admin/actions/orders";
+import { blockFakeOrderAction, updateOrderStatusAction } from "@/app/admin/actions/orders";
 import { AdminShell } from "@/components/admin/admin-shell";
 
 export default async function AdminOrderDetailPage({
@@ -24,6 +24,7 @@ export default async function AdminOrderDetailPage({
   const whatsappText = encodeURIComponent(
     `Bonjour ${order.customer.fullName}, nous vous contactons pour confirmer votre commande ROVANX ${order.reference}.`
   );
+  const isBlacklisted = /\b(fake|blacklist|spam|faux|bloque|bloqué)\b/i.test(order.notes || "");
 
   return (
     <AdminShell>
@@ -31,11 +32,18 @@ export default async function AdminOrderDetailPage({
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h1 className="text-3xl font-black">Order {order.reference}</h1>
-            <span
-              className={`mt-2 inline-flex rounded-full px-3 py-1 text-sm font-bold ring-1 ${getOrderStatusClassName(order.status)}`}
-            >
-              {getOrderStatusLabel(order.status)}
-            </span>
+            <div className="mt-2 flex flex-wrap items-center gap-2">
+              <span
+                className={`inline-flex rounded-full px-3 py-1 text-sm font-bold ring-1 ${getOrderStatusClassName(order.status)}`}
+              >
+                {getOrderStatusLabel(order.status)}
+              </span>
+              {isBlacklisted ? (
+                <span className="inline-flex rounded-full bg-red-600 px-3 py-1 text-xs font-black text-white">
+                  🚫 NUMÉRO BLOQUÉ (FAKE / SPAM)
+                </span>
+              ) : null}
+            </div>
           </div>
           <Link className="btn btn-secondary" href="/admin/orders">
             Back to orders
@@ -96,6 +104,14 @@ export default async function AdminOrderDetailPage({
               <input className="input" name="note" placeholder="Note" />
               <button className="btn btn-primary">Update</button>
             </form>
+            {!isBlacklisted ? (
+              <form action={blockFakeOrderAction} className="mt-3 border-t border-black/10 pt-3">
+                <input type="hidden" name="orderId" value={order.id} />
+                <button className="btn w-full border border-red-600/30 bg-red-50 text-xs font-black text-red-700 hover:bg-red-100">
+                  🚫 Annuler & Bloquer ce numéro (Fake / Spam)
+                </button>
+              </form>
+            ) : null}
           </section>
         </div>
         <section className="rounded-lg border border-black/10 bg-white p-5">

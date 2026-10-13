@@ -6,7 +6,7 @@ import { Eye, Loader2, Lock, PhoneCall, ShieldCheck, Truck } from "lucide-react"
 import { Money } from "@/components/store/money";
 import { usePreferences } from "@/components/store/preferences-provider";
 import { getProductTiers, getSelectedTierInfo } from "@/lib/pricing-tiers";
-import { isValidMoroccanPhone10Digits, sanitizePhoneInput } from "@/lib/phone";
+import { isValidHumanText, isValidMoroccanPhone10Digits, sanitizePhoneInput } from "@/lib/phone";
 
 type DirectCodProduct = {
   id: string;
@@ -46,6 +46,7 @@ export function DirectCodForm({
   const [quantity, setQuantity] = useState(2);
   const [addBump, setAddBump] = useState(false);
   const [phoneValue, setPhoneValue] = useState("");
+  const [formRenderedAt] = useState(() => Date.now());
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -68,14 +69,38 @@ export function DirectCodForm({
 
     const form = event.currentTarget;
     const formData = new FormData(form);
+    const fullName = String(formData.get("fullName") || "").trim();
+    const address = String(formData.get("address") || "").trim();
+    const website = String(formData.get("website") || "");
     const cleanPhone = sanitizePhoneInput(String(formData.get("phone") || phoneValue));
+
+    if (!isValidHumanText(fullName, 2)) {
+      setError(
+        isArabic
+          ? "يرجى إدخال اسمك الكامل الحقيقي للتوصل بطلبك."
+          : "Veuillez saisir votre vrai nom complet."
+      );
+      setLoading(false);
+      return;
+    }
+
     if (!isValidMoroccanPhone10Digits(cleanPhone)) {
       setError(
         isArabic
-          ? "يرجى إدخال رقم هاتف مغربي صحيح مكون من 10 أرقام بالضبط (مثال: 0612345678)."
+          ? "يرجى إدخال رقم هاتف مغربي حقيقي وصحيح مكون من 10 أرقام (يبدأ بـ 06 أو 07)."
           : isEnglish
-            ? "Please enter a valid Moroccan phone number with exactly 10 digits (e.g. 0612345678)."
-            : "Veuillez saisir un numéro de téléphone marocain valide composé exactement de 10 chiffres (ex: 0612345678)."
+            ? "Please enter a valid real Moroccan phone number with 10 digits."
+            : "Veuillez saisir un vrai numéro de téléphone marocain valide à 10 chiffres."
+      );
+      setLoading(false);
+      return;
+    }
+
+    if (!isValidHumanText(address, 4)) {
+      setError(
+        isArabic
+          ? "يرجى كتابة المدينة والعنوان بشكل واضح وصحيح للتوصيل."
+          : "Veuillez saisir une adresse et ville de livraison valides."
       );
       setLoading(false);
       return;
@@ -92,12 +117,14 @@ export function DirectCodForm({
     ].filter(Boolean).join(" | ") || undefined;
 
     const payload = {
-      fullName: formData.get("fullName"),
+      fullName,
       phone: cleanPhone,
       city: "À confirmer",
-      address: formData.get("address"),
+      address,
       addressDetails: formData.get("addressDetails") || undefined,
       notes,
+      website,
+      formRenderedAt,
       items,
       displayCurrency: currency,
       locale,
@@ -254,6 +281,16 @@ export function DirectCodForm({
           />
         </label>
 
+        {/* Invisible Honeypot against bots */}
+        <input
+          type="text"
+          name="website"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          className="hidden"
+        />
+
         <label className="flex flex-col gap-1.5">
           <div className="flex items-center justify-between gap-2">
             <span className={`font-bold ${darkTheme ? "text-white/90" : "text-black/85"}`}>
@@ -264,16 +301,22 @@ export function DirectCodForm({
                 className={`rounded-full px-2 py-0.5 text-[11px] font-black ${
                   isValidMoroccanPhone10Digits(phoneValue)
                     ? "bg-emerald-500/20 text-emerald-400"
-                    : "bg-amber-500/20 text-amber-400"
+                    : phoneValue.length === 10
+                      ? "bg-red-500/20 text-red-400"
+                      : "bg-amber-500/20 text-amber-400"
                 }`}
               >
                 {isValidMoroccanPhone10Digits(phoneValue)
                   ? isArabic
                     ? "✓ 10/10 أرقام صحيح"
                     : "✓ 10/10 chiffres"
-                  : isArabic
-                    ? `${phoneValue.length}/10 أرقام`
-                    : `${phoneValue.length}/10 chiffres`}
+                  : phoneValue.length === 10
+                    ? isArabic
+                      ? "✗ رقم غير صالح"
+                      : "✗ Numéro invalide"
+                    : isArabic
+                      ? `${phoneValue.length}/10 أرقام`
+                      : `${phoneValue.length}/10 chiffres`}
               </span>
             ) : null}
           </div>
@@ -290,7 +333,7 @@ export function DirectCodForm({
             maxLength={10}
             value={phoneValue}
             onChange={(e) => setPhoneValue(sanitizePhoneInput(e.target.value))}
-            placeholder="0612345678"
+            placeholder="06XXXXXXXX"
             required
             autoComplete="tel"
           />

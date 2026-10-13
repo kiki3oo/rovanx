@@ -23,7 +23,7 @@ import { usePreferences } from "@/components/store/preferences-provider";
 import { Money } from "@/components/store/money";
 import { getProductVisual } from "@/lib/product-visuals";
 import { getProductTiers, getSelectedTierInfo } from "@/lib/pricing-tiers";
-import { isValidMoroccanPhone10Digits, sanitizePhoneInput } from "@/lib/phone";
+import { isValidHumanText, isValidMoroccanPhone10Digits, sanitizePhoneInput } from "@/lib/phone";
 
 type CatalogCrossSellItem = {
   id: string;
@@ -61,6 +61,8 @@ export function CartDrawer() {
   const [fullName, setFullName] = useState("");
   const [phoneValue, setPhoneValue] = useState("");
   const [address, setAddress] = useState("");
+  const [website, setWebsite] = useState("");
+  const [formRenderedAt, setFormRenderedAt] = useState(() => Date.now());
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -70,6 +72,7 @@ export function CartDrawer() {
       setError("");
       return;
     }
+    setFormRenderedAt(Date.now());
     if (!cachedCatalogProducts) {
       fetch("/api/sync-catalog")
         .then((r) => r.json())
@@ -110,20 +113,29 @@ export function CartDrawer() {
     setError("");
     const cleanPhone = sanitizePhoneInput(phoneValue);
 
-    if (!isValidMoroccanPhone10Digits(cleanPhone)) {
+    if (!isValidHumanText(fullName, 2)) {
       setError(
         isArabic
-          ? "يرجى إدخال رقم هاتف مغربي صحيح مكون من 10 أرقام بالضبط (مثال: 0612345678)."
-          : "Veuillez saisir un numéro de téléphone marocain valide composé exactement de 10 chiffres (ex: 0612345678)."
+          ? "يرجى إدخال اسمك الكامل الحقيقي للتوصل بطلبك."
+          : "Veuillez saisir votre vrai nom complet."
       );
       return;
     }
 
-    if (fullName.trim().length < 2 || address.trim().length < 3) {
+    if (!isValidMoroccanPhone10Digits(cleanPhone)) {
       setError(
         isArabic
-          ? "يرجى ملء الاسم الكامل والعنوان بالتفصيل."
-          : "Veuillez renseigner votre nom complet et votre adresse."
+          ? "يرجى إدخال رقم هاتف مغربي حقيقي وصحيح مكون من 10 أرقام (يبدأ بـ 06 أو 07)."
+          : "Veuillez saisir un vrai numéro de téléphone marocain valide à 10 chiffres."
+      );
+      return;
+    }
+
+    if (!isValidHumanText(address, 4)) {
+      setError(
+        isArabic
+          ? "يرجى كتابة المدينة والعنوان بشكل واضح وصحيح للتوصيل."
+          : "Veuillez saisir une adresse et ville de livraison valides."
       );
       return;
     }
@@ -138,6 +150,8 @@ export function CartDrawer() {
           phone: cleanPhone,
           city: "À confirmer",
           address: address.trim(),
+          website,
+          formRenderedAt,
           items: lines.map((line) => ({
             productId: line.product.id,
             quantity: line.quantity
@@ -477,6 +491,17 @@ export function CartDrawer() {
                       />
                     </div>
 
+                    <input
+                      type="text"
+                      name="website"
+                      value={website}
+                      onChange={(e) => setWebsite(e.target.value)}
+                      tabIndex={-1}
+                      autoComplete="off"
+                      aria-hidden="true"
+                      className="hidden"
+                    />
+
                     <div>
                       <div className="mb-1 flex items-center justify-between gap-2">
                         <label className="block text-xs font-bold text-white/85">
@@ -487,14 +512,20 @@ export function CartDrawer() {
                             className={`rounded-full px-2 py-0.5 text-[10px] font-black ${
                               isValidMoroccanPhone10Digits(phoneValue)
                                 ? "bg-emerald-500/20 text-emerald-400"
-                                : "bg-amber-500/20 text-amber-400"
+                                : phoneValue.length === 10
+                                  ? "bg-red-500/20 text-red-400"
+                                  : "bg-amber-500/20 text-amber-400"
                             }`}
                           >
                             {isValidMoroccanPhone10Digits(phoneValue)
                               ? isArabic
                                 ? "✓ 10/10 صحيح"
                                 : "✓ 10/10"
-                              : `${phoneValue.length}/10`}
+                              : phoneValue.length === 10
+                                ? isArabic
+                                  ? "✗ رقم غير صالح"
+                                  : "✗ Invalide"
+                                : `${phoneValue.length}/10`}
                           </span>
                         ) : null}
                       </div>
@@ -506,7 +537,7 @@ export function CartDrawer() {
                         required
                         value={phoneValue}
                         onChange={(e) => setPhoneValue(sanitizePhoneInput(e.target.value))}
-                        placeholder="0612345678"
+                        placeholder="06XXXXXXXX"
                         className="input w-full py-2.5 font-mono text-sm font-bold tracking-wider"
                       />
                     </div>

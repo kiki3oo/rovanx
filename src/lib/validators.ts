@@ -1,19 +1,32 @@
 import { z } from "zod";
-import { isValidMoroccanPhone10Digits, sanitizePhoneInput } from "@/lib/phone";
+import { isValidHumanText, isValidMoroccanPhone10Digits, sanitizePhoneInput } from "@/lib/phone";
 
 export const checkoutSchema = z.object({
-  fullName: z.string().min(2, "الاسم الكامل مطلوب / Nom complet requis"),
+  fullName: z
+    .string()
+    .min(2, "يرجى إدخال الاسم الكامل الحقيقي / Veuillez saisir votre vrai nom complet")
+    .refine((val) => isValidHumanText(val, 2), {
+      message: "يرجى إدخال اسم حقيقي صحيح / Veuillez saisir un nom valide"
+    }),
   phone: z
     .string()
     .transform((val) => sanitizePhoneInput(val))
     .refine((val) => isValidMoroccanPhone10Digits(val), {
-      message: "يرجى إدخال رقم هاتف صحيح مكون من 10 أرقام (مثال: 0612345678) / Numéro à 10 chiffres requis (ex: 0612345678)"
+      message:
+        "يرجى إدخال رقم هاتف مغربي حقيقي وصحيح مكون من 10 أرقام / Numéro marocain valide à 10 chiffres requis"
     }),
   city: z.string().optional().default("À confirmer"),
-  address: z.string().min(3, "العنوان والمدينة مطلوبان / Adresse et ville requises"),
+  address: z
+    .string()
+    .min(4, "يرجى إدخال المدينة والعنوان بشكل واضح / Veuillez préciser votre ville et adresse")
+    .refine((val) => isValidHumanText(val, 4), {
+      message: "يرجى كتابة عنوان حقيقي وواضح للتوصيل / Veuillez saisir une adresse de livraison valide"
+    }),
   addressDetails: z.string().optional(),
   notes: z.string().optional(),
   bundleSlug: z.string().optional(),
+  website: z.string().optional(), // Invisible honeypot against bots
+  formRenderedAt: z.number().optional(), // Timestamp speed-trap against automated scripts
   items: z
     .array(
       z.object({

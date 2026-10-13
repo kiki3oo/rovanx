@@ -6,37 +6,64 @@ import { CheckCircle2, LockKeyhole, PhoneCall, ShieldCheck, Truck } from "lucide
 import { useCart } from "@/components/store/cart-provider";
 import { Money } from "@/components/store/money";
 import { usePreferences } from "@/components/store/preferences-provider";
-import { isValidMoroccanPhone10Digits, sanitizePhoneInput } from "@/lib/phone";
+import { isValidHumanText, isValidMoroccanPhone10Digits, sanitizePhoneInput } from "@/lib/phone";
 
 export default function CheckoutPage() {
   const { lines, rawSubtotal, discountTotal, subtotal, clear } = useCart();
   const { currency, locale, t } = usePreferences();
   const router = useRouter();
   const [phoneValue, setPhoneValue] = useState("");
+  const [formRenderedAt] = useState(() => Date.now());
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   async function submit(formData: FormData) {
     setLoading(true);
     setError("");
+    const fullName = String(formData.get("fullName") || "").trim();
+    const address = String(formData.get("address") || "").trim();
+    const website = String(formData.get("website") || "");
     const cleanPhone = sanitizePhoneInput(String(formData.get("phone") || phoneValue));
+
+    if (!isValidHumanText(fullName, 2)) {
+      setLoading(false);
+      setError(
+        locale === "ar"
+          ? "يرجى إدخال اسمك الكامل الحقيقي للتوصل بطلبك."
+          : "Veuillez saisir votre vrai nom complet."
+      );
+      return;
+    }
+
     if (!isValidMoroccanPhone10Digits(cleanPhone)) {
       setLoading(false);
       setError(
         locale === "ar"
-          ? "يرجى إدخال رقم هاتف مغربي صحيح مكون من 10 أرقام بالضبط (مثال: 0612345678)."
-          : "Veuillez saisir un numéro de téléphone marocain valide composé exactement de 10 chiffres (ex: 0612345678)."
+          ? "يرجى إدخال رقم هاتف مغربي حقيقي وصحيح مكون من 10 أرقام (يبدأ بـ 06 أو 07)."
+          : "Veuillez saisir un vrai numéro de téléphone marocain valide à 10 chiffres."
+      );
+      return;
+    }
+
+    if (!isValidHumanText(address, 4)) {
+      setLoading(false);
+      setError(
+        locale === "ar"
+          ? "يرجى كتابة المدينة والعنوان بشكل واضح وصحيح للتوصيل."
+          : "Veuillez saisir une adresse et ville de livraison valides."
       );
       return;
     }
 
     const payload = {
-      fullName: formData.get("fullName"),
+      fullName,
       phone: cleanPhone,
       city: "À confirmer",
-      address: formData.get("address"),
+      address,
       addressDetails: formData.get("addressDetails"),
       notes: formData.get("notes"),
+      website,
+      formRenderedAt,
       items: lines.map((line) => ({ productId: line.product.id, quantity: line.quantity })),
       displayCurrency: currency,
       locale,
@@ -101,6 +128,14 @@ export default function CheckoutPage() {
                   required
                 />
               </label>
+              <input
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="hidden"
+              />
               <label className="field text-sm font-bold text-white/90">
                 <div className="flex items-center justify-between gap-2">
                   <span>{locale === "ar" ? "رقم الهاتف (10 أرقام للتأكيد) *" : "Numéro de téléphone (10 chiffres) *"}</span>
@@ -109,16 +144,22 @@ export default function CheckoutPage() {
                       className={`rounded-full px-2 py-0.5 text-[11px] font-black ${
                         isValidMoroccanPhone10Digits(phoneValue)
                           ? "bg-emerald-500/20 text-emerald-400"
-                          : "bg-amber-500/20 text-amber-400"
+                          : phoneValue.length === 10
+                            ? "bg-red-500/20 text-red-400"
+                            : "bg-amber-500/20 text-amber-400"
                       }`}
                     >
                       {isValidMoroccanPhone10Digits(phoneValue)
                         ? locale === "ar"
                           ? "✓ 10/10 أرقام صحيح"
                           : "✓ 10/10 chiffres"
-                        : locale === "ar"
-                          ? `${phoneValue.length}/10 أرقام`
-                          : `${phoneValue.length}/10 chiffres`}
+                        : phoneValue.length === 10
+                          ? locale === "ar"
+                            ? "✗ رقم غير صالح"
+                            : "✗ Numéro invalide"
+                          : locale === "ar"
+                            ? `${phoneValue.length}/10 أرقام`
+                            : `${phoneValue.length}/10 chiffres`}
                     </span>
                   ) : null}
                 </div>
@@ -131,7 +172,7 @@ export default function CheckoutPage() {
                   maxLength={10}
                   value={phoneValue}
                   onChange={(e) => setPhoneValue(sanitizePhoneInput(e.target.value))}
-                  placeholder="0612345678"
+                  placeholder="06XXXXXXXX"
                   required
                 />
               </label>
