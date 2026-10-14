@@ -35,7 +35,7 @@ export async function sendOrderToGoogleSheet(payload: OrderSheetPayload): Promis
   try {
     let webhookUrl =
       process.env.GOOGLE_SHEET_WEBHOOK_URL?.trim() ||
-      "https://script.google.com/macros/s/AKfycbyd1wdMWp-DW2a70RnKTNoBPm2wibASrD1Tfcwo4J95eGI1HFzEfTsW66uh91C0uUQ9/exec";
+      "https://script.google.com/macros/s/AKfycbyScs3vez41m-vugt65U4qgAEMly2Kfh4o8K4hBoQw4hXqZDnFZvTUZ2Qi3uqNgxshp/exec";
 
     if (!webhookUrl) {
       const setting = await prisma.siteSetting
@@ -107,7 +107,7 @@ export async function sendOrderToGoogleSheet(payload: OrderSheetPayload): Promis
 
     fetch(webhookUrl, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify(bodyData),
       signal: controller.signal
     })
