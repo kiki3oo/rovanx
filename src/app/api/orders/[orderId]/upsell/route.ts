@@ -1,10 +1,14 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+import { sendOrderToGoogleSheet } from "@/lib/google-sheets";
 
 export async function POST(request: Request, { params }: { params: Promise<{ orderId: string }> }) {
   const { orderId } = await params;
   const { accept, offeredProductId } = await request.json();
-  const order = await prisma.order.findUnique({ where: { id: orderId }, include: { items: true } });
+  const order = await prisma.order.findUnique({
+    where: { id: orderId },
+    include: { items: true, customer: true }
+  });
   if (!order) return NextResponse.json({ error: "Order not found" }, { status: 404 });
   if (!accept) return NextResponse.json({ ok: true });
 
@@ -49,6 +53,46 @@ export async function POST(request: Request, { params }: { params: Promise<{ ord
       }
     })
   ]);
+
+  if (order.customer) {
+    const updatedItems = [
+      ...order.items.map((it) => ({
+        productName: it.productName,
+        quantity: it.quantity,
+        unitPrice: it.unitPrice,
+        total: it.total,
+        isUpsell: it.isUpsell
+      })),
+      {
+        productName: product.name,
+        quantity: 1,
+        unitPrice,
+        total: unitPrice,
+        isUpsell: true
+      }
+    ];
+
+    sendOrderToGoogleSheet({
+      reference: order.reference,
+      createdAt: order.createdAt,
+      fullName: order.customer.fullName,
+      phone: order.customer.phone,
+      city: order.customer.city,
+      address: order.customer.address,
+      addressDetails: order.addressDetails,
+      items: updatedItems,
+      subtotal: order.subtotal + unitPrice,
+      discountTotal: order.discountTotal,
+      total: order.total + unitPrice,
+      notes: [order.notes, `+ Upsell: ${product.name} (${unitPrice} DH)`].filter(Boolean).join(" | "),
+      utmSource: order.utmSource,
+      utmMedium: order.utmMedium,
+      utmCampaign: order.utmCampaign,
+      utmContent: order.utmContent,
+      utmTerm: order.utmTerm,
+      status: "UPSOLD"
+    }).catch(() => {});
+  }
 
   return NextResponse.json({ ok: true });
 }

@@ -3,6 +3,7 @@ import { prisma } from "@/lib/db";
 import { checkoutSchema } from "@/lib/validators";
 import { normalizeMoroccanPhone } from "@/lib/phone";
 import { calculateTierDiscount } from "@/lib/pricing-tiers";
+import { sendOrderToGoogleSheet } from "@/lib/google-sheets";
 
 type IpRecord = {
   phones: Set<string>;
@@ -274,6 +275,34 @@ export async function POST(request: Request) {
     });
     return created;
   });
+
+  // Async push to Google Sheet (non-blocking for instant checkout response)
+  sendOrderToGoogleSheet({
+    reference: order.reference,
+    createdAt: order.createdAt,
+    fullName: parsed.data.fullName,
+    phone: parsed.data.phone,
+    city: parsed.data.city || "À confirmer",
+    address: parsed.data.address,
+    addressDetails: parsed.data.addressDetails,
+    items: items.map((it) => ({
+      productName: it.product.name,
+      quantity: it.quantity,
+      unitPrice: it.unitPrice,
+      total: it.total,
+      isBump: it.isBump
+    })),
+    subtotal,
+    discountTotal,
+    total: finalTotal,
+    notes: combinedNotes,
+    utmSource: parsed.data.utmSource,
+    utmMedium: parsed.data.utmMedium,
+    utmCampaign: parsed.data.utmCampaign,
+    utmContent: parsed.data.utmContent,
+    utmTerm: parsed.data.utmTerm,
+    status: multiOrderIndex > 1 ? `MULTI_${multiOrderIndex}` : "NEW"
+  }).catch(() => {});
 
   const sourceProductIds = order.items.map((item) => item.productId);
   const rule = await prisma.upsellRule.findFirst({
