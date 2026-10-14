@@ -33,7 +33,9 @@ export type OrderSheetPayload = {
  */
 export async function sendOrderToGoogleSheet(payload: OrderSheetPayload): Promise<void> {
   try {
-    let webhookUrl = process.env.GOOGLE_SHEET_WEBHOOK_URL?.trim();
+    let webhookUrl =
+      process.env.GOOGLE_SHEET_WEBHOOK_URL?.trim() ||
+      "https://script.google.com/macros/s/AKfycbyd1wdMWp-DW2a70RnKTNoBPm2wibASrD1Tfcwo4J95eGI1HFzEfTsW66uh91C0uUQ9/exec";
 
     if (!webhookUrl) {
       const setting = await prisma.siteSetting
