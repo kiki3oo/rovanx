@@ -15,6 +15,10 @@ const MAX_DISTINCT_PHONES_PER_IP = 2;
 const MAX_ATTEMPTS_PER_IP = 8;
 
 function getClientIp(request: Request): string {
+  const cfConnectingIp = request.headers.get("cf-connecting-ip");
+  if (cfConnectingIp) {
+    return cfConnectingIp.trim();
+  }
   const forwarded = request.headers.get("x-forwarded-for");
   if (forwarded) {
     return forwarded.split(",")[0].trim();

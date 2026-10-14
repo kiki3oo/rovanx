@@ -4,6 +4,21 @@ import { currencyForCountry } from "@/lib/geo-currency";
 export function proxy(request: NextRequest) {
   const host = (request.headers.get("host") || "").toLowerCase();
   const pathname = request.nextUrl.pathname;
+  const lowerPath = pathname.toLowerCase();
+
+  // Instant block for common automated exploit scanners to protect CPU/RAM
+  if (
+    lowerPath.includes("wp-admin") ||
+    lowerPath.includes("wp-login") ||
+    lowerPath.includes("xmlrpc.php") ||
+    lowerPath.includes(".env") ||
+    lowerPath.includes("phpmyadmin") ||
+    lowerPath.includes("/.git") ||
+    lowerPath.includes("actuator") ||
+    lowerPath.includes("cgi-bin")
+  ) {
+    return new NextResponse("Forbidden", { status: 403 });
+  }
 
   // Support dedicated Ad Wheel subdomains (e.g. promo.rovanx.com/v1 or offre.rovanx.com/v1)
   const isWheelSubdomain =

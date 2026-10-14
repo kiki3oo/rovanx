@@ -27,7 +27,13 @@ export default async function AdminLoginPage({
             <span>Password</span>
             <input className="input" type="password" name="password" required />
           </label>
-          {params.error ? <p className="rounded-md bg-red-50 p-3 text-sm text-red-700">Invalid admin login.</p> : null}
+          {params.error === "locked" ? (
+            <p className="rounded-md bg-red-50 p-3 text-sm text-red-700 font-bold">
+              Trop de tentatives erronées. Accès temporairement bloqué pendant 15 minutes pour votre sécurité.
+            </p>
+          ) : params.error ? (
+            <p className="rounded-md bg-red-50 p-3 text-sm text-red-700">Invalid admin login.</p>
+          ) : null}
           <button className="btn btn-primary">Login</button>
         </form>
       </div>
