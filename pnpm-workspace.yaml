@@ -4,6 +4,11 @@ allowBuilds:
   esbuild: true
   prisma: true
   unrs-resolver: true
+overrides:
+  source-map-js: ^1.2.2
+  effect: ^3.20.0
+  deepmerge-ts: ^8.0.0
+  postcss-selector-parser: ^7.1.6
 onlyBuiltDependencies:
   - "@prisma/engines"
   - "@prisma/client"
