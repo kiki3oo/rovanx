@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+import { hasOrderAccess } from "@/lib/order-access";
 
 export async function POST(
   request: Request,
@@ -7,6 +8,9 @@ export async function POST(
 ) {
   try {
     const { orderId } = await params;
+    if (!(await hasOrderAccess(orderId))) {
+      return NextResponse.json({ error: "Order not found" }, { status: 404 });
+    }
     const body = await request.json();
     const action = body?.action as "merge" | "keep_latest";
 

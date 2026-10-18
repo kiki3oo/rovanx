@@ -2,23 +2,28 @@ import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
+import { createHmac, timingSafeEqual } from "node:crypto";
 
 const cookieName = "rovanx_admin";
 
 function secret() {
-  return process.env.ADMIN_SESSION_SECRET || "development-secret-change-me";
+  const value = process.env.ADMIN_SESSION_SECRET;
+  if (!value || value.length < 32 || value === "replace-with-a-long-random-secret") {
+    throw new Error("ADMIN_SESSION_SECRET must be a unique secret of at least 32 characters");
+  }
+  return value;
 }
 
-async function sign(value: string) {
-  const data = new TextEncoder().encode(`${value}.${secret()}`);
-  const digest = await crypto.subtle.digest("SHA-256", data);
-  return Buffer.from(digest).toString("hex");
+function sign(value: string) {
+  return createHmac("sha256", secret()).update(value).digest("hex");
 }
 
 export async function createSession(adminId: string) {
-  const signature = await sign(adminId);
+  const expiresAt = Date.now() + 60 * 60 * 24 * 7 * 1000;
+  const payload = `${adminId}.${expiresAt}`;
+  const signature = sign(payload);
   const store = await cookies();
-  store.set(cookieName, `${adminId}.${signature}`, {
+  store.set(cookieName, `${payload}.${signature}`, {
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
@@ -36,9 +41,12 @@ export async function getAdmin() {
   const store = await cookies();
   const session = store.get(cookieName)?.value;
   if (!session) return null;
-  const [adminId, signature] = session.split(".");
-  if (!adminId || !signature) return null;
-  if ((await sign(adminId)) !== signature) return null;
+  const [adminId, expiresAt, signature] = session.split(".");
+  if (!adminId || !expiresAt || !signature || session.split(".").length !== 3) return null;
+  if (!Number.isSafeInteger(Number(expiresAt)) || Number(expiresAt) <= Date.now()) return null;
+  const expected = Buffer.from(sign(`${adminId}.${expiresAt}`), "hex");
+  const supplied = Buffer.from(signature, "hex");
+  if (expected.length !== supplied.length || !timingSafeEqual(expected, supplied)) return null;
   return prisma.adminUser.findUnique({ where: { id: adminId } });
 }
 

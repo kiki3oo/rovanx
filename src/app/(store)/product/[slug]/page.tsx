@@ -156,7 +156,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
       <section className="section bg-[#12141a] text-white">
         <div className="container grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
           <div className="flex items-start justify-center">

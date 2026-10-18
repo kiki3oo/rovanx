@@ -29,10 +29,6 @@ const nextConfig: NextConfig = {
         source: "/:path*",
         headers: [
           {
-            key: "Cache-Control",
-            value: "public, max-age=0, must-revalidate"
-          },
-          {
             key: "X-Frame-Options",
             value: "SAMEORIGIN"
           },
@@ -57,6 +53,22 @@ const nextConfig: NextConfig = {
             value: "max-age=63072000; includeSubDomains; preload"
           }
         ]
+      },
+      {
+        source: "/admin/:path*",
+        headers: [{ key: "Cache-Control", value: "private, no-store" }]
+      },
+      {
+        source: "/order/:path*",
+        headers: [{ key: "Cache-Control", value: "private, no-store" }]
+      },
+      {
+        source: "/upsell/:path*",
+        headers: [{ key: "Cache-Control", value: "private, no-store" }]
+      },
+      {
+        source: "/api/:path*",
+        headers: [{ key: "Cache-Control", value: "private, no-store" }]
       }
     ];
   }
