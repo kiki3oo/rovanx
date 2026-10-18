@@ -195,8 +195,9 @@ export async function POST(request: Request) {
       notesList.push(`Pack: ${bundle.name} (${bundle.bundlePrice} DH)`);
     }
   } else {
+    const hasMainProduct = items.some((i) => !i.isBump);
     for (const item of items) {
-      if (item.isBump) {
+      if (item.isBump && hasMainProduct && item.quantity === 1) {
         const targetBumpPrice = 149;
         if (item.unitPrice > targetBumpPrice) {
           const bumpDiscount = (item.unitPrice - targetBumpPrice) * item.quantity;
@@ -215,7 +216,8 @@ export async function POST(request: Request) {
 
   const finalTotal = Math.max(0, subtotal - discountTotal);
   const combinedNotes = notesList.filter(Boolean).join(" | ") || undefined;
-  const reference = `ROV-${Date.now().toString(36).toUpperCase()}`;
+  const randomSuffix = Math.random().toString(36).substring(2, 6).toUpperCase();
+  const reference = `ROV-${Date.now().toString(36).toUpperCase()}-${randomSuffix}`;
 
   const order = await prisma.$transaction(async (tx) => {
     const customer = await tx.customer.upsert({
