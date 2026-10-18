@@ -1,9 +1,13 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { sendOrderToGoogleSheet } from "@/lib/google-sheets";
+import { hasOrderAccess } from "@/lib/order-access";
 
 export async function POST(request: Request, { params }: { params: Promise<{ orderId: string }> }) {
   const { orderId } = await params;
+  if (!(await hasOrderAccess(orderId))) {
+    return NextResponse.json({ error: "Order not found" }, { status: 404 });
+  }
   const { accept, offeredProductId } = await request.json();
   const order = await prisma.order.findUnique({
     where: { id: orderId },

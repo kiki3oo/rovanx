@@ -23,7 +23,7 @@
     "bcryptjs": "latest",
     "clsx": "latest",
     "lucide-react": "latest",
-    "next": "latest",
+    "next": "16.4.1",
     "react": "latest",
     "react-dom": "latest",
     "zod": "latest"
@@ -36,7 +36,7 @@
     "@types/react-dom": "latest",
     "autoprefixer": "latest",
     "eslint": "9.39.2",
-    "eslint-config-next": "latest",
+    "eslint-config-next": "16.4.1",
     "postcss": "latest",
     "prettier": "latest",
     "prisma": "6.19.0",

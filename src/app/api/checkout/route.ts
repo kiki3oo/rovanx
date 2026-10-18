@@ -4,6 +4,9 @@ import { checkoutSchema } from "@/lib/validators";
 import { normalizeMoroccanPhone } from "@/lib/phone";
 import { calculateTierDiscount } from "@/lib/pricing-tiers";
 import { sendOrderToGoogleSheet } from "@/lib/google-sheets";
+import { randomBytes } from "node:crypto";
+import { matchesBundle, validBumpPrice } from "@/lib/checkout-offers";
+import { grantOrderAccess } from "@/lib/order-access";
 
 type IpRecord = {
   phones: Set<string>;
@@ -131,12 +134,12 @@ export async function POST(request: Request) {
       (o) => o.status === "NEW" && o.createdAt >= tenSecondsAgo
     );
     if (accidentalDoubleClickOrder) {
-      return NextResponse.json({
+      return grantOrderAccess(NextResponse.json({
         orderId: accidentalDoubleClickOrder.id,
         reference: accidentalDoubleClickOrder.reference,
         upsellUrl: `/order/${accidentalDoubleClickOrder.reference}`,
         deduplicated: true
-      });
+      }), accidentalDoubleClickOrder.id);
     }
 
     // Count active orders placed in the last 24 hours
@@ -160,6 +163,9 @@ export async function POST(request: Request) {
   }
 
   const productIds = parsed.data.items.map((item) => item.productId);
+  if (new Set(productIds).size !== productIds.length) {
+    return NextResponse.json({ error: "Produit en double" }, { status: 400 });
+  }
   const products = await prisma.product.findMany({ where: { id: { in: productIds }, active: true } });
   if (products.length !== productIds.length) {
     return NextResponse.json({ error: "Produit invalide" }, { status: 400 });
@@ -188,17 +194,25 @@ export async function POST(request: Request) {
 
   if (parsed.data.bundleSlug) {
     const bundle = await prisma.bundle.findUnique({
-      where: { slug: parsed.data.bundleSlug }
+      where: { slug: parsed.data.bundleSlug },
+      include: { items: true }
     });
-    if (bundle && bundle.bundlePrice < subtotal) {
+    if (!bundle?.active || !matchesBundle(items, bundle.items)) {
+      return NextResponse.json({ error: "Pack invalide" }, { status: 400 });
+    }
+    if (bundle.bundlePrice < subtotal) {
       discountTotal = subtotal - bundle.bundlePrice;
       notesList.push(`Pack: ${bundle.name} (${bundle.bundlePrice} DH)`);
     }
   } else {
-    const hasMainProduct = items.some((i) => !i.isBump);
+    const hasBump = items.some((item) => item.isBump);
+    const bumpPrice = hasBump ? validBumpPrice(items) : null;
+    if (hasBump && bumpPrice === null) {
+      return NextResponse.json({ error: "Offre invalide" }, { status: 400 });
+    }
     for (const item of items) {
-      if (item.isBump && hasMainProduct && item.quantity === 1) {
-        const targetBumpPrice = 149;
+      if (item.isBump && bumpPrice !== null) {
+        const targetBumpPrice = bumpPrice;
         if (item.unitPrice > targetBumpPrice) {
           const bumpDiscount = (item.unitPrice - targetBumpPrice) * item.quantity;
           discountTotal += bumpDiscount;
@@ -216,7 +230,7 @@ export async function POST(request: Request) {
 
   const finalTotal = Math.max(0, subtotal - discountTotal);
   const combinedNotes = notesList.filter(Boolean).join(" | ") || undefined;
-  const randomSuffix = Math.random().toString(36).substring(2, 6).toUpperCase();
+  const randomSuffix = randomBytes(12).toString("hex").toUpperCase();
   const reference = `ROV-${Date.now().toString(36).toUpperCase()}-${randomSuffix}`;
 
   const order = await prisma.$transaction(async (tx) => {
@@ -317,11 +331,11 @@ export async function POST(request: Request) {
     orderBy: [{ priority: "desc" }, { createdAt: "asc" }]
   });
 
-  return NextResponse.json({
+  return grantOrderAccess(NextResponse.json({
     orderId: order.id,
     reference: order.reference,
     multiOrderIndex,
     upsellUrl:
       multiOrderIndex > 1 || !rule ? `/order/${order.reference}` : `/upsell/${order.id}`
-  });
+  }), order.id);
 }

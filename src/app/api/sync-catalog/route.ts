@@ -1,25 +1,15 @@
 import { NextResponse } from "next/server";
 import { ensureCatalogSynced } from "@/lib/catalog-sync";
 import { prisma } from "@/lib/db";
+import type { Product } from "@prisma/client";
 
 export const dynamic = "force-dynamic";
 
-let cachedProductsResponse: { timestamp: number; data: any[] } | null = null;
+type CatalogProduct = Pick<Product, "id" | "name" | "slug" | "sku" | "salePrice" | "regularPrice" | "active" | "featured">;
+let cachedProductsResponse: { timestamp: number; data: CatalogProduct[] } | null = null;
 const CACHE_TTL_MS = 60 * 1000; // 60s cache to shield database from bursts
 
-export async function GET(request: Request) {
-  const url = new URL(request.url);
-  const force = url.searchParams.get("force") === "1";
-  const authHeader = request.headers.get("authorization") || url.searchParams.get("secret");
-
-  // Only run heavy full-sync if explicitly forced and authorized, or let it run gracefully once
-  if (force && (authHeader === process.env.CRON_SECRET || authHeader === "rovanx-secure-sync")) {
-    await ensureCatalogSynced(true);
-    cachedProductsResponse = null;
-  } else {
-    await ensureCatalogSynced(false);
-  }
-
+export async function GET() {
   const now = Date.now();
   if (cachedProductsResponse && now - cachedProductsResponse.timestamp < CACHE_TTL_MS) {
     return NextResponse.json({
@@ -53,5 +43,11 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  return GET(request);
+  const secret = process.env.CRON_SECRET;
+  if (!secret || secret.length < 32 || request.headers.get("authorization") !== `Bearer ${secret}`) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  await ensureCatalogSynced(true);
+  cachedProductsResponse = null;
+  return GET();
 }

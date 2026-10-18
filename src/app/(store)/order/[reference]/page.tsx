@@ -4,6 +4,7 @@ import { ensureCatalogSynced } from "@/lib/catalog-sync";
 import { getProductVisual } from "@/lib/product-visuals";
 import { PurchaseTracker } from "@/components/store/purchase-tracker";
 import { OrderThankYouView, type ThankYouUpsellOffer } from "@/components/store/order-thank-you-view";
+import { hasOrderAccess } from "@/lib/order-access";
 
 const UPSELL_COPY: Record<
   string,
@@ -68,6 +69,16 @@ export default async function OrderConfirmationPage({
   });
 
   if (!order) notFound();
+  if (!(await hasOrderAccess(order.id))) {
+    return (
+      <main className="container min-h-[60vh] py-16 text-center">
+        <h1 className="text-2xl font-bold">Accès aux détails de la commande expiré</h1>
+        <p className="mt-4">Pour protéger vos informations, contactez-nous avec votre référence de commande.</p>
+        <p className="mt-2" dir="rtl">لحماية معلوماتك، تواصل معنا وأعطنا رقم الطلب ديالك.</p>
+        <a className="mt-6 inline-block underline" href="mailto:contact@rovanx.com">contact@rovanx.com</a>
+      </main>
+    );
+  }
 
   const setting = await prisma.siteSetting.findUnique({ where: { key: "store" } });
   const store = (setting?.value || {}) as { whatsapp?: string };
@@ -133,8 +144,8 @@ export default async function OrderConfirmationPage({
     };
   });
 
-  // Check if customer has other active orders in the last 24 hours (Orders #2 or #3)
-  const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+  // Compare nearby orders against the original order time, not the page visit time.
+  const twentyFourHoursAgo = new Date(order.createdAt.getTime() - 24 * 60 * 60 * 1000);
   const otherOrdersRaw = await prisma.order.findMany({
     where: {
       customerId: order.customerId,

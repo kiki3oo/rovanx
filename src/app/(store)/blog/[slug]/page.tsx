@@ -109,7 +109,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
       />
       <ArticleView post={post} product={product} />
     </>

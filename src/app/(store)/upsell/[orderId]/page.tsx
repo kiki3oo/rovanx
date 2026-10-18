@@ -3,6 +3,7 @@ import { prisma } from "@/lib/db";
 import { ensureCatalogSynced } from "@/lib/catalog-sync";
 import { getProductVisual } from "@/lib/product-visuals";
 import { UpsellDecision } from "@/components/store/upsell-decision";
+import { hasOrderAccess } from "@/lib/order-access";
 
 const UPSELL_COPY: Record<
   string,
@@ -49,6 +50,7 @@ const UPSELL_COPY: Record<
 export default async function UpsellPage({ params }: { params: Promise<{ orderId: string }> }) {
   await ensureCatalogSynced();
   const { orderId } = await params;
+  if (!(await hasOrderAccess(orderId))) notFound();
   const order = await prisma.order.findUnique({ where: { id: orderId }, include: { items: true } });
   if (!order) notFound();
 
