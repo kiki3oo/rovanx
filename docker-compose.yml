@@ -5,10 +5,10 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_USER: rovanx
-      POSTGRES_PASSWORD: rovanx
+      POSTGRES_PASSWORD: ${ROVANX_DB_PASSWORD:?Set ROVANX_DB_PASSWORD in .env}
       POSTGRES_DB: rovanx
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
     volumes:
       - rovanx-postgres-data:/var/lib/postgresql/data
     healthcheck:
@@ -25,11 +25,11 @@ services:
       postgres:
         condition: service_healthy
     environment:
-      DATABASE_URL: postgresql://rovanx:rovanx@postgres:5432/rovanx?schema=public
+      DATABASE_URL: postgresql://rovanx:${ROVANX_DB_PASSWORD:?Set ROVANX_DB_PASSWORD in .env}@postgres:5432/rovanx?schema=public
       NEXT_PUBLIC_SITE_URL: http://localhost:3000
-      ADMIN_EMAIL: admin@rovanx.local
-      ADMIN_PASSWORD: change-this-admin-password
-      ADMIN_SESSION_SECRET: replace-with-a-long-random-secret
+      ADMIN_EMAIL: ${ADMIN_EMAIL:?Set ADMIN_EMAIL in .env}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?Set ADMIN_PASSWORD in .env}
+      ADMIN_SESSION_SECRET: ${ADMIN_SESSION_SECRET:?Set ADMIN_SESSION_SECRET in .env}
     ports:
       - "3000:3000"
 

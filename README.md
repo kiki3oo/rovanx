@@ -25,6 +25,11 @@ pnpm install
 cp .env.example .env
 ```
 
+Before starting Docker, replace the placeholder `ROVANX_DB_PASSWORD`,
+`ADMIN_PASSWORD`, and `ADMIN_SESSION_SECRET` in `.env` with unique values.
+Use a URL-safe database password and put the same value in `DATABASE_URL`.
+`ADMIN_SESSION_SECRET` must be at least 32 random characters. Never commit `.env`.
+
 3. Start PostgreSQL:
 
 ```bash
