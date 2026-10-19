@@ -1,9 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import type { Product } from "@prisma/client";
 import { AddToCartButton } from "@/components/store/add-to-cart-button";
 import { Money } from "@/components/store/money";
-import { LocalizedText } from "@/components/store/localized-text";
-import { SeedContent } from "@/components/store/seed-content";
+import { usePreferences } from "@/components/store/preferences-provider";
 import { getProductVisual } from "@/lib/product-visuals";
 import { getProductDetail } from "@/lib/product-details";
 
@@ -19,7 +20,11 @@ export function ProductCard({
   product: ProductCardProduct;
   darkTheme?: boolean;
 }) {
+  const { locale } = usePreferences();
+  const isArabic = locale === "ar";
+
   const price = product.salePrice || product.regularPrice;
+  const savings = product.regularPrice > price ? product.regularPrice - price : 0;
   const visual = getProductVisual(product.slug);
   const detail = getProductDetail(product.slug);
   const shortDescription = detail?.shortDescription || product.shortDescription;
@@ -27,66 +32,90 @@ export function ProductCard({
 
   if (darkTheme) {
     return (
-      <article className="group relative grid overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-bronze-500/50 hover:bg-white/[0.08] hover:shadow-2xl hover:shadow-black/50 text-white">
-        <Link
-          href={`/product/${product.slug}`}
-          className="relative m-3 flex min-h-[260px] items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-white/[0.02] backdrop-blur-sm p-4 transition-all duration-300 group-hover:bg-white/[0.05] group-hover:border-bronze-500/30"
-        >
-          {visual ? (
-            <img
-              src={visual.src}
-              alt={visual.alt}
-              className="product-packshot product-packshot-card rounded-xl drop-shadow-[0_20px_25px_rgba(0,0,0,0.5)] transition-transform duration-500 group-hover:scale-105"
-            />
-          ) : (
-            <span className="max-w-[13ch] text-balance text-xl font-black leading-tight text-white">{product.name}</span>
-          )}
-        </Link>
-        <div className="grid gap-4 p-5 pt-1">
-          <div className="flex min-h-7 flex-wrap gap-2">
+      <article className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border-2 border-white/10 bg-gradient-to-b from-[#1c1a24]/80 via-[#14161f]/90 to-[#0e1017] p-5 sm:p-6 text-white backdrop-blur-md transition-all duration-300 hover:-translate-y-1.5 hover:border-amber-400/60 hover:shadow-2xl hover:shadow-amber-500/10">
+        <div>
+          {/* Top Badges (Header) */}
+          <div className="mb-4 flex items-center justify-between gap-2 min-h-[26px]">
             {detail?.badge ? (
-              <span className="badge border-bronze-400/30 bg-bronze-500/15 text-xs font-bold text-bronze-300">
+              <span className="badge border-amber-400/40 bg-amber-500/15 text-xs font-black text-amber-300 uppercase tracking-wider shadow-sm">
                 {detail.badge}
               </span>
-            ) : null}
-            {product.salePrice ? (
-              <span className="badge border-white/15 bg-white/10 text-xs font-bold text-white">
-                <LocalizedText id="offer" />
+            ) : product.hero || product.featured ? (
+              <span className="badge border-amber-400/40 bg-amber-500/15 text-xs font-black text-amber-300 uppercase tracking-wider shadow-sm">
+                {isArabic ? "⭐ اختيار مميز" : "⭐ Sélection Premium"}
               </span>
-            ) : null}
-            {product.hero || product.featured ? (
-              <span className="badge border-amber-400/30 bg-amber-500/15 text-xs font-bold text-amber-300">
-                <LocalizedText id="selectionPremium" />
+            ) : <span />}
+
+            {savings > 0 ? (
+              <span className="rounded-full bg-emerald-500/20 border border-emerald-500/30 px-2.5 py-0.5 text-xs font-black text-emerald-300">
+                {isArabic ? `وفّر ${savings} DH` : `-${savings} DH`}
+              </span>
+            ) : product.hero || product.featured ? (
+              <span className="rounded-full bg-amber-500/15 border border-amber-500/30 px-2.5 py-0.5 text-[11px] font-black text-amber-300">
+                {isArabic ? "الأكثر طلباً" : "Best-Seller"}
               </span>
             ) : null}
           </div>
-          <Link href={`/product/${product.slug}`}>
-            <h3 className="text-xl font-black leading-tight text-white transition-colors group-hover:text-bronze-400">
+
+          {/* Luxury Packshot Image Container */}
+          <Link
+            href={`/product/${product.slug}`}
+            className="relative mb-5 flex aspect-square w-full items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-gradient-to-b from-black/50 to-black/25 p-4 transition-all duration-500 group-hover:border-amber-400/40"
+          >
+            {visual ? (
+              <img
+                src={visual.src}
+                alt={visual.alt}
+                className="h-full w-full object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.65)] transition-transform duration-500 group-hover:scale-105"
+              />
+            ) : (
+              <span className="max-w-[13ch] text-balance text-xl font-black leading-tight text-white">{productName}</span>
+            )}
+          </Link>
+
+          {/* Title */}
+          <Link href={`/product/${product.slug}`} className="block">
+            <h3 className="text-xl sm:text-2xl font-black tracking-tight text-white transition-colors group-hover:text-amber-400 line-clamp-1">
               {productName}
             </h3>
           </Link>
-          <p className="min-h-12 text-sm leading-6 text-white/70 line-clamp-2">{shortDescription}</p>
-          <div className="grid grid-cols-3 gap-2 text-center text-[11px] font-black uppercase text-white/70">
-            {[
-              ["COD", "COD"],
-              ["phoneCall", "Appel"],
-              ["delivery", "Livraison"]
-            ].map(([key, fallback]) => (
-              <span key={key} className="rounded-md border border-white/10 bg-white/[0.05] px-2 py-2 text-bronze-300">
-                {key === "COD" ? fallback : <LocalizedText id={key as "phoneCall" | "delivery"} />}
+
+          {/* Short Description */}
+          <p className="mt-2 text-sm leading-relaxed text-white/70 line-clamp-2 min-h-[40px]">
+            {shortDescription}
+          </p>
+        </div>
+
+        {/* Pricing & CTA */}
+        <div className="mt-6 border-t border-white/10 pt-4">
+          <div className="mb-4 flex items-end justify-between gap-3">
+            <div>
+              <span className="block text-[11px] font-semibold uppercase tracking-wider text-white/50">
+                {isArabic ? "السعر :" : "Prix :"}
               </span>
-            ))}
-          </div>
-          <div className="flex items-end justify-between gap-3 border-t border-white/10 pt-4">
-            <strong className="text-2xl font-black text-white">
-              <Money value={price} />
-            </strong>
-            {product.salePrice ? (
-              <span className="text-sm text-white/50 line-through">
-                <Money value={product.regularPrice} />
+              <div className="flex items-baseline gap-2">
+                <strong className="text-2xl sm:text-3xl font-black text-amber-400">
+                  <Money value={price} />
+                </strong>
+                {product.salePrice ? (
+                  <span className="text-sm text-white/40 line-through">
+                    <Money value={product.regularPrice} />
+                  </span>
+                ) : null}
+              </div>
+            </div>
+
+            {savings > 0 ? (
+              <span className="rounded-md bg-emerald-500/15 border border-emerald-500/25 px-2 py-1 text-xs font-black text-emerald-300">
+                {isArabic ? `توفير ${savings} DH` : `-${savings} DH`}
               </span>
-            ) : null}
+            ) : (
+              <span className="rounded-md bg-white/[0.05] border border-white/10 px-2 py-1 text-[11px] font-bold text-white/70">
+                {isArabic ? "أصلي 100% ✓" : "100% Authentique ✓"}
+              </span>
+            )}
           </div>
+
           <AddToCartButton
             product={{
               id: product.id,
@@ -102,45 +131,79 @@ export function ProductCard({
     );
   }
 
+  // Light theme fallback
   return (
-    <article className="surface-card grid overflow-hidden transition duration-200 hover:-translate-y-1 hover:border-bronze-500/45">
-      <Link
-        href={`/product/${product.slug}`}
-        className={`product-visual m-3 min-h-[260px] overflow-hidden ${visual ? "product-visual-image" : ""}`}
-      >
-        {visual ? (
-          <img src={visual.src} alt={visual.alt} className="product-packshot product-packshot-card rounded-xl" />
-        ) : (
-          <span className="max-w-[13ch] text-balance text-xl font-black leading-tight">{product.name}</span>
-        )}
-      </Link>
-      <div className="grid gap-4 p-5 pt-1">
-        <div className="flex min-h-7 flex-wrap gap-2">
-          {detail?.badge ? <span className="badge border-bronze-500/20 bg-bronze-500/10 text-xs font-bold text-bronze-700">{detail.badge}</span> : null}
-          {product.salePrice ? <span className="badge"><LocalizedText id="offer" /></span> : null}
-          {product.hero || product.featured ? <span className="badge"><LocalizedText id="selectionPremium" /></span> : null}
-        </div>
-        <Link href={`/product/${product.slug}`}>
-          <h3 className="text-xl font-black leading-tight hover:text-bronze-600">{productName}</h3>
-        </Link>
-        <p className="min-h-12 text-sm leading-6 text-black/65 line-clamp-2">{shortDescription}</p>
-        <div className="grid grid-cols-3 gap-2 text-center text-[11px] font-black uppercase text-black/55">
-          {[
-            ["COD", "COD"],
-            ["phoneCall", "Appel"],
-            ["delivery", "Livraison"]
-          ].map(([key, fallback]) => (
-            <span key={key} className="rounded-md bg-bronze-500/10 px-2 py-2 text-bronze-700">
-              {key === "COD" ? fallback : <LocalizedText id={key as "phoneCall" | "delivery"} />}
+    <article className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border-2 border-stone-200 bg-white p-5 sm:p-6 text-stone-900 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-amber-500/60 hover:shadow-xl">
+      <div>
+        <div className="mb-4 flex items-center justify-between gap-2 min-h-[26px]">
+          {detail?.badge ? (
+            <span className="badge border-amber-500/30 bg-amber-500/10 text-xs font-black text-amber-700 uppercase tracking-wider">
+              {detail.badge}
             </span>
-          ))}
-        </div>
-        <div className="flex items-end justify-between gap-3 border-t border-black/10 pt-4">
-          <strong className="text-xl"><Money value={price} /></strong>
-          {product.salePrice ? (
-            <span className="text-sm text-black/45 line-through"><Money value={product.regularPrice} /></span>
+          ) : <span />}
+
+          {savings > 0 ? (
+            <span className="rounded-full bg-emerald-500/15 px-2.5 py-0.5 text-xs font-black text-emerald-700">
+              {isArabic ? `وفّر ${savings} DH` : `-${savings} DH`}
+            </span>
           ) : null}
         </div>
+
+        <Link
+          href={`/product/${product.slug}`}
+          className="relative mb-5 flex aspect-square w-full items-center justify-center overflow-hidden rounded-xl border border-stone-100 bg-stone-50 p-4 transition-all duration-500 group-hover:border-amber-400/40"
+        >
+          {visual ? (
+            <img
+              src={visual.src}
+              alt={visual.alt}
+              className="h-full w-full object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.15)] transition-transform duration-500 group-hover:scale-105"
+            />
+          ) : (
+            <span className="max-w-[13ch] text-balance text-xl font-black leading-tight">{productName}</span>
+          )}
+        </Link>
+
+        <Link href={`/product/${product.slug}`} className="block">
+          <h3 className="text-xl sm:text-2xl font-black tracking-tight text-stone-900 transition-colors group-hover:text-amber-600 line-clamp-1">
+            {productName}
+          </h3>
+        </Link>
+
+        <p className="mt-2 text-sm leading-relaxed text-stone-600 line-clamp-2 min-h-[40px]">
+          {shortDescription}
+        </p>
+      </div>
+
+      <div className="mt-6 border-t border-stone-100 pt-4">
+        <div className="mb-4 flex items-end justify-between gap-3">
+          <div>
+            <span className="block text-[11px] font-semibold uppercase tracking-wider text-stone-400">
+              {isArabic ? "السعر :" : "Prix :"}
+            </span>
+            <div className="flex items-baseline gap-2">
+              <strong className="text-2xl sm:text-3xl font-black text-stone-900">
+                <Money value={price} />
+              </strong>
+              {product.salePrice ? (
+                <span className="text-sm text-stone-400 line-through">
+                  <Money value={product.regularPrice} />
+                </span>
+              ) : null}
+            </div>
+          </div>
+
+          {savings > 0 ? (
+            <span className="rounded-md bg-emerald-50 px-2 py-1 text-xs font-black text-emerald-700">
+              {isArabic ? `توفير ${savings} DH` : `-${savings} DH`}
+            </span>
+          ) : (
+            <span className="rounded-md bg-stone-100 px-2 py-1 text-[11px] font-bold text-stone-600">
+              {isArabic ? "أصلي 100% ✓" : "100% Authentique ✓"}
+            </span>
+          )}
+        </div>
+
         <AddToCartButton
           product={{
             id: product.id,
