@@ -8,46 +8,18 @@ const productVisuals: Record<string, ProductVisual[]> = {
     {
       src: "/products/rovanx-control-oil.webp?v=5",
       alt: "Control Flow - flacon de 60 ml"
-    },
-    {
-      src: "/products/rovanx-pack-puissance-ar.webp?v=6",
-      alt: "باقة القوة و التحكم - ROVANX"
-    },
-    {
-      src: "/products/rovanx-pack-puissance-fr.webp?v=6",
-      alt: "Pack Puissance & Contrôle - ROVANX"
     }
   ],
   "rovanx-prostate": [
     {
       src: "/products/rovanx-prostate.webp?v=5",
       alt: "Prosta Guard - flacon de 120 ml"
-    },
-    {
-      src: "/products/rovanx-prostate-energie-pack-ar.webp?v=5",
-      alt: "باك صحي لصحة البروستاتا والطاقة - ROVANX"
-    },
-    {
-      src: "/products/rovanx-prostate-energie-pack-fr.webp?v=5",
-      alt: "Pack Santé Prostate & Énergie - ROVANX"
     }
   ],
   "rovanx-maca-max": [
     {
       src: "/products/rovanx-maca-max.webp?v=5",
       alt: "Royal Force - flacon de 30 capsules"
-    },
-    {
-      src: "/products/rovanx-men-pack.webp?v=4",
-      alt: "Men Pack - ROVANX"
-    },
-    {
-      src: "/products/rovanx-men-plus-pack-ar.webp?v=7",
-      alt: "باقة القوة و التحكم - ROVANX"
-    },
-    {
-      src: "/products/rovanx-men-plus-pack-fr.webp?v=7",
-      alt: "Men Plus Pack - ROVANX"
     }
   ],
   "rovanx-vital-protein": [
@@ -60,18 +32,6 @@ const productVisuals: Record<string, ProductVisual[]> = {
     {
       src: "/products/rovanx-vitality-60.webp?v=5",
       alt: "Vitality Ultra - flacon de 60 capsules"
-    },
-    {
-      src: "/products/rovanx-men-pack.webp?v=4",
-      alt: "Men Pack - ROVANX"
-    },
-    {
-      src: "/products/rovanx-men-plus-pack-ar.webp?v=7",
-      alt: "باقة القوة و التحكم - ROVANX"
-    },
-    {
-      src: "/products/rovanx-men-plus-pack-fr.webp?v=7",
-      alt: "Men Plus Pack - ROVANX"
     }
   ],
   "rovanx-vitality-30": [
@@ -84,14 +44,6 @@ const productVisuals: Record<string, ProductVisual[]> = {
     {
       src: "/products/rovanx-ginseng.webp?v=5",
       alt: "Testo Drive - flacon de 30 capsules"
-    },
-    {
-      src: "/products/rovanx-men-plus-pack-ar.webp?v=7",
-      alt: "باقة القوة و التحكم - ROVANX"
-    },
-    {
-      src: "/products/rovanx-men-plus-pack-fr.webp?v=7",
-      alt: "Men Plus Pack - ROVANX"
     }
   ]
 };
