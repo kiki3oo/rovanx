@@ -13,6 +13,8 @@ import { getProductDetail } from "@/lib/product-details";
 import { ProductGallery } from "@/components/store/product-gallery";
 import { ProductCroExperience } from "@/components/store/product-cro-experience";
 import { ProductReviews } from "@/components/store/product-reviews";
+import { ProductHeroHeader } from "@/components/store/product-hero-header";
+import { ProductInfoSections } from "@/components/store/product-info-sections";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -145,14 +147,6 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       availability: "https://schema.org/InStock"
     }
   };
-  const productDetails = [
-    [CheckCircle2, "benefits", benefitsText ? `• ${benefitsText}` : null],
-    [CheckCircle2, "ingredients", ingredientsText],
-    [Clock3, "instructions", instructionsText],
-    [ShieldCheck, "warnings", warningsText],
-    [ShieldCheck, "regulatory", regulatoryText],
-    [Truck, "deliveryCod", null]
-  ] as const;
 
   return (
     <>
@@ -166,121 +160,13 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             />
           </div>
           <div className="grid content-start gap-5">
-            <div>
-              <div className="mb-3 flex flex-wrap items-center gap-2">
-                <p className="inline-flex items-center gap-1.5 rounded-full border border-bronze-500/30 bg-bronze-500/10 px-3 py-1 text-xs font-bold text-bronze-300">
-                  <SeedContent value={detail?.badge || product.category.name} />
-                </p>
-              </div>
-              <h1 className="text-3xl font-black text-white sm:text-4xl">{detail?.name || product.name}</h1>
-              {detail?.tagline ? <p className="mt-1 text-sm font-bold text-bronze-400"><SeedContent value={detail.tagline} /></p> : null}
-              <p className="mt-3 text-lg leading-relaxed text-white/70"><SeedContent value={shortDescription} /></p>
-
-              {product.slug === "rovanx-vitality-30" && (
-                <div className="mt-4 grid grid-cols-2 gap-2 text-xs font-bold text-white/90">
-                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
-                    <span className="text-base">⚡</span>
-                    <span>طاقة ونشاط متواصل طول اليوم</span>
-                  </div>
-                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
-                    <span className="text-base">🧠</span>
-                    <span>تركيز ذهني وقوة تحمل عالية</span>
-                  </div>
-                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
-                    <span className="text-base">🌿</span>
-                    <span>100% طبيعي بدون منبهات كيميائية</span>
-                  </div>
-                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
-                    <span className="text-base">📦</span>
-                    <span>طرد سري + معاينة قبل الدفع</span>
-                  </div>
-                </div>
-              )}
-
-              {product.slug === "rovanx-vitality-60" && (
-                <div className="mt-4 grid grid-cols-2 gap-2 text-xs font-bold text-white/90">
-                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
-                    <span className="text-base">🍆</span>
-                    <span>صلابة حديدية وتمدد الحجم والسمك</span>
-                  </div>
-                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
-                    <span className="text-base">⏱️</span>
-                    <span>تحكم عالي وتأخير القذف 45 دقيقة</span>
-                  </div>
-                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
-                    <span className="text-base">🌿</span>
-                    <span>100% طبيعي بدون صداع ولا خفقان</span>
-                  </div>
-                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
-                    <span className="text-base">📦</span>
-                    <span>طرد سري + معاينة قبل الدفع</span>
-                  </div>
-                </div>
-              )}
-
-              {product.slug === "rovanx-ginseng" && (
-                <div className="mt-4 grid grid-cols-2 gap-2 text-xs font-bold text-white/90">
-                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
-                    <span className="text-base">⚡</span>
-                    <span>تحفيز التستوستيرون والفحولة</span>
-                  </div>
-                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
-                    <span className="text-base">🛡️</span>
-                    <span>جينسينغ كوري معتق 6 سنوات</span>
-                  </div>
-                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
-                    <span className="text-base">🧠</span>
-                    <span>مقاومة الإجهاد وصفاء ذهني</span>
-                  </div>
-                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
-                    <span className="text-base">📦</span>
-                    <span>طرد سري + معاينة قبل الدفع</span>
-                  </div>
-                </div>
-              )}
-
-              {product.slug === "rovanx-prostate" && (
-                <div className="mt-4 grid grid-cols-2 gap-2 text-xs font-bold text-white/90">
-                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
-                    <span className="text-base">🌙</span>
-                    <span>نوم هادئ ومتواصل طوال الليل</span>
-                  </div>
-                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
-                    <span className="text-base">⚡</span>
-                    <span>تدفق بولي طبيعي وسلس وقوي</span>
-                  </div>
-                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
-                    <span className="text-base">💧</span>
-                    <span>صيغة سائلة سريعة الامتصاص</span>
-                  </div>
-                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
-                    <span className="text-base">📦</span>
-                    <span>طرد سري + معاينة قبل الدفع</span>
-                  </div>
-                </div>
-              )}
-
-              {product.slug === "rovanx-maca-max" && (
-                <div className="mt-4 grid grid-cols-2 gap-2 text-xs font-bold text-white/90">
-                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
-                    <span className="text-base">👑</span>
-                    <span>ماكا سوداء بيروفية نادرة ومركزة</span>
-                  </div>
-                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
-                    <span className="text-base">⚡</span>
-                    <span>صلابة فولاذية وانتصاب حديدي مستمر</span>
-                  </div>
-                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
-                    <span className="text-base">🌿</span>
-                    <span>100% طبيعي بدون أي خفقان أو صداع</span>
-                  </div>
-                  <div className="flex items-center gap-2 rounded-lg border border-bronze-500/20 bg-white/[0.04] p-2">
-                    <span className="text-base">📦</span>
-                    <span>طرد سري + معاينة قبل الدفع</span>
-                  </div>
-                </div>
-              )}
-            </div>
+            <ProductHeroHeader
+              productSlug={product.slug}
+              fallbackName={detail?.name || product.name}
+              fallbackBadge={detail?.badge || product.category.name}
+              fallbackTagline={detail?.tagline}
+              fallbackDescription={shortDescription}
+            />
             <div className="grid gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-5 shadow-xl backdrop-blur-md">
               <div className="flex flex-wrap items-end gap-3">
                 <strong className="text-4xl text-white"><Money value={price} /></strong>
@@ -340,23 +226,14 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
       <ProductCroExperience slug={product.slug} />
 
-      <section className="section border-t border-white/10 bg-[#0e1015] text-white">
-        <div className="container grid gap-5 md:grid-cols-2">
-          {productDetails.map(([Icon, title, content]) => (
-            <div key={String(title)} className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 text-white shadow-xl backdrop-blur-md">
-              <Icon className="mb-4 text-bronze-400" />
-              <h2 className="text-lg font-black text-white"><LocalizedText id={title as "benefits" | "ingredients" | "instructions" | "warnings" | "regulatory" | "deliveryCod"} /></h2>
-              <div className="mt-2 text-sm leading-relaxed text-white/70">
-                {title === "benefits" && detail ? (
-                  <ul className="list-disc space-y-2 ps-5">
-                    {detail.benefits.map((benefit) => <li key={benefit}><SeedContent value={benefit} /></li>)}
-                  </ul>
-                ) : content ? <SeedContent value={content as string} /> : <LocalizedText id={title === "deliveryCod" ? "bundleShippingText" : "productInfoPending"} />}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+      <ProductInfoSections
+        productSlug={product.slug}
+        fallbackBenefits={detail?.benefits}
+        fallbackIngredients={ingredientsText}
+        fallbackInstructions={instructionsText}
+        fallbackWarnings={warningsText}
+        fallbackRegulatory={regulatoryText}
+      />
 
       <ProductReviews slug={product.slug} productName={detail?.name || product.name} />
 
