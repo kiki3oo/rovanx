@@ -5,7 +5,10 @@ import Script from "next/script";
 export function TrackingScripts() {
   const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID || process.env.META_PIXEL_ID;
   const tiktokPixelId = process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID || process.env.TIKTOK_PIXEL_ID;
-  const gaId = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || process.env.GOOGLE_ANALYTICS_ID;
+  const gaId =
+    process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID ||
+    process.env.GOOGLE_ANALYTICS_ID ||
+    "G-CW9PRE8Y17";
 
   return (
     <>
