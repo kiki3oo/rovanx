@@ -27,18 +27,27 @@ export function ShopFilters({
   const categoryPills = [
     {
       slug: "",
-      labelAr: "جميع المنتجات",
-      labelFr: "Tous les produits"
+      label: {
+        ar: "جميع المنتجات",
+        fr: "Tous les produits",
+        en: "All products"
+      }
     },
     {
       slug: "packs",
-      labelAr: "⭐ باقات وعروض التوفير",
-      labelFr: "⭐ Packs & Offres Avantages"
+      label: {
+        ar: "⭐ باقات وعروض التوفير",
+        fr: "⭐ Packs & Offres Avantages",
+        en: "⭐ Value Packs & Bundles"
+      }
     },
     ...categories.map((c) => ({
       slug: c.slug,
-      labelAr: localizedSeedText(c.name, "ar"),
-      labelFr: localizedSeedText(c.name, "fr")
+      label: {
+        ar: localizedSeedText(c.name, "ar"),
+        fr: localizedSeedText(c.name, "fr"),
+        en: localizedSeedText(c.name, "en")
+      }
     }))
   ];
 
@@ -64,6 +73,7 @@ export function ShopFilters({
       <div className="flex flex-wrap items-center gap-2">
         {categoryPills.map((pill) => {
           const isSelected = category === pill.slug;
+          const labelText = pill.label[locale] || pill.label.fr;
           return (
             <button
               key={pill.slug || "all"}
@@ -75,7 +85,7 @@ export function ShopFilters({
                   : "border border-white/10 bg-white/[0.04] text-white/70 hover:border-white/25 hover:text-white hover:bg-white/[0.08]"
               }`}
             >
-              {isArabic ? pill.labelAr : pill.labelFr}
+              {labelText}
             </button>
           );
         })}
@@ -93,7 +103,13 @@ export function ShopFilters({
           <input
             name="search"
             defaultValue={search}
-            placeholder={isArabic ? "ابحث عن منتج أو باقة..." : "Rechercher un produit ou pack..."}
+            placeholder={
+              isArabic
+                ? "ابحث عن منتج أو باقة..."
+                : locale === "en"
+                  ? "Search for a product or bundle..."
+                  : "Rechercher un produit ou pack..."
+            }
             className="input w-full pl-10 pr-4 text-sm"
           />
           <Search size={16} className={`absolute top-1/2 -translate-y-1/2 text-white/40 ${isArabic ? "left-3" : "right-3"}`} />
@@ -106,15 +122,15 @@ export function ShopFilters({
             onChange={(e) => handleSortChange(e.target.value)}
             className="select text-sm pl-4 pr-8"
           >
-            <option value="featured">{isArabic ? "الأكثر طلباً (المميز)" : "Sélection & En vedette"}</option>
-            <option value="newest">{isArabic ? "الأحدث" : "Plus récents"}</option>
-            <option value="price-asc">{isArabic ? "السعر: من الأقل للأعلى" : "Prix croissant"}</option>
-            <option value="price-desc">{isArabic ? "السعر: من الأعلى للأقل" : "Prix décroissant"}</option>
+            <option value="featured">{isArabic ? "الأكثر طلباً (المميز)" : locale === "en" ? "Featured selection" : "Sélection & En vedette"}</option>
+            <option value="newest">{isArabic ? "الأحدث" : locale === "en" ? "Newest" : "Plus récents"}</option>
+            <option value="price-asc">{isArabic ? "السعر: من الأقل للأعلى" : locale === "en" ? "Price: Low to high" : "Prix croissant"}</option>
+            <option value="price-desc">{isArabic ? "السعر: من الأعلى للأقل" : locale === "en" ? "Price: High to low" : "Prix décroissant"}</option>
           </select>
         </div>
 
         <button type="submit" className="btn btn-primary px-5 text-sm font-bold">
-          {isArabic ? "بحث" : "Rechercher"}
+          {isArabic ? "بحث" : locale === "en" ? "Search" : "Rechercher"}
         </button>
       </form>
     </div>

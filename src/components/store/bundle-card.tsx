@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowRight, BadgeCheck, CheckCircle2, ShieldCheck, Sparkles, Truck } from "lucide-react";
 import { Money } from "@/components/store/money";
 import { usePreferences } from "@/components/store/preferences-provider";
+import { getLocalizedBundle } from "@/lib/store-translations";
 
 const BUNDLE_IMAGES: Record<string, { ar?: string; default: string }> = {
   "rovanx-pack-puissance": {
@@ -54,13 +55,15 @@ export type BundleCardData = {
 };
 
 export function BundleCard({ bundle }: { bundle: BundleCardData }) {
-  const { locale } = usePreferences();
+  const { locale, t } = usePreferences();
   const isArabic = locale === "ar";
 
   const imgInfo = BUNDLE_IMAGES[bundle.slug];
   const imgSrc = imgInfo ? (isArabic && imgInfo.ar ? imgInfo.ar : imgInfo.default) : `/products/${bundle.slug}.webp?v=2`;
-  const badge = BUNDLE_BADGES[bundle.slug] || { ar: "⭐ باقة توفير مميزة", fr: "⭐ Pack Avantage" };
-  const badgeText = isArabic ? badge.ar : badge.fr;
+  const localized = getLocalizedBundle(bundle.slug, locale);
+  const bundleName = localized?.name || bundle.name;
+  const badgeText = localized?.badge || (BUNDLE_BADGES[bundle.slug] ? (isArabic ? BUNDLE_BADGES[bundle.slug].ar : BUNDLE_BADGES[bundle.slug].fr) : t("packAvantage"));
+  const descriptionText = localized?.description || bundle.description;
   const savings = bundle.regularCombinedPrice - bundle.bundlePrice;
 
   return (
@@ -73,7 +76,7 @@ export function BundleCard({ bundle }: { bundle: BundleCardData }) {
           </span>
           {savings > 0 ? (
             <span className="rounded-full bg-emerald-500/20 px-2.5 py-0.5 text-xs font-black text-emerald-300">
-              {isArabic ? `وفّر ${savings} DH` : `-${savings} DH`}
+              {isArabic ? `${t("saveAmount")} ${savings} DH` : `-${savings} DH`}
             </span>
           ) : null}
         </div>
@@ -85,7 +88,7 @@ export function BundleCard({ bundle }: { bundle: BundleCardData }) {
         >
           <img
             src={imgSrc}
-            alt={bundle.name}
+            alt={bundleName}
             className="h-full w-full object-contain drop-shadow-[0_20px_25px_rgba(0,0,0,0.6)] transition-transform duration-500 group-hover:scale-105"
           />
         </Link>
@@ -93,13 +96,13 @@ export function BundleCard({ bundle }: { bundle: BundleCardData }) {
         {/* Title */}
         <Link href={`/bundles`}>
           <h3 className="text-xl font-black text-white transition-colors group-hover:text-amber-400">
-            {bundle.name}
+            {bundleName}
           </h3>
         </Link>
 
         {/* Description */}
         <p className="mt-2.5 text-sm leading-relaxed text-white/70 line-clamp-3">
-          {bundle.description}
+          {descriptionText}
         </p>
 
         {/* Inclusions */}

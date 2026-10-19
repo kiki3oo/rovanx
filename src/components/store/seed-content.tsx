@@ -257,7 +257,83 @@ const seedTranslations: Record<string, Record<SupportedLocale, string>> = {
   "Ajoutez Magnesium a votre routine": { ar: "أضف Magnesium إلى روتينك", fr: "Ajoutez Magnesium à votre routine", en: "Add Magnesium to your routine" },
   "Associez Sleep et Magnesium": { ar: "اجمع Sleep و Magnesium", fr: "Associez Sleep et Magnesium", en: "Pair Sleep with Magnesium" },
   "Ajoutez Multi": { ar: "أضف Multi", fr: "Ajoutez Multi", en: "Add Multi" },
-  "Ajoutez Daily Men": { ar: "أضف Daily Men", fr: "Ajoutez Daily Men", en: "Add Daily Men" }
+  "Ajoutez Daily Men": { ar: "أضف Daily Men", fr: "Ajoutez Daily Men", en: "Add Daily Men" },
+
+  // Product Taglines
+  "صلابة حديدية، زيادة ملحوظة في الحجم والسمك، واستمرارية فائقة لإسعاد زوجتك": {
+    ar: "صلابة حديدية، زيادة ملحوظة في الحجم والسمك، واستمرارية فائقة لإسعاد زوجتك",
+    fr: "Rigidité maximale, expansion du volume et endurance prolongée.",
+    en: "Steel firmness, volume expansion, and sustained intimate stamina."
+  },
+  "طاقة متدفقة، صفاء ذهني، وقوة تحمل تدوم طوال اليوم بدون إجهاد": {
+    ar: "طاقة متدفقة، صفاء ذهني، وقوة تحمل تدوم طوال اليوم بدون إجهاد",
+    fr: "Énergie propre, clarté mentale et vitalité masculine quotidienne.",
+    en: "Clean energy, mental clarity, and sustained male endurance."
+  },
+  "ودّع الاستيقاظ الليلي وصعوبة التبول واسترجع راحة نومك وحيويتك": {
+    ar: "ودّع الاستيقاظ الليلي وصعوبة التبول واسترجع راحة نومك وحيويتك",
+    fr: "Confort urinaire masculin, nuits paisibles et soutien ciblé de la prostate.",
+    en: "Targeted prostate comfort, restful sleep, and healthy urinary flow."
+  },
+  "صلابة فولاذية مستمرة، طاقة فحولية متجددة، وتحكم مطلق في العلاقة الحميمية": {
+    ar: "صلابة فولاذية مستمرة، طاقة فحولية متجددة، وتحكم مطلق في العلاقة الحميمية",
+    fr: "Maca noire pure et tribulus pour une puissance virile et une fermeté inébranlable.",
+    en: "Pure Peruvian black maca and tribulus for raw virility and rock-solid power."
+  },
+  "تحفيز التستوستيرون الطبيعي، قوة عضلية وذهنية خارقة، ومقاومة تامة للإجهاد": {
+    ar: "تحفيز التستوستيرون الطبيعي، قوة عضلية وذهنية خارقة، ومقاومة تامة للإجهاد",
+    fr: "Stimulation de la testostérone naturelle, force musculaire et résistance au stress.",
+    en: "Natural testosterone support, physical stamina, and stress resilience."
+  },
+
+  // Product Short Descriptions
+  "التركيبة الطبيعية المطورة الأقوى لتعزيز تدفق الدم وتوسيع الأنسجة الكهفية، منحك انتصاباً صخرياً وضخامة تحس بها الزوجة فوراً، مع تحكم كامل في القذف لتمديد وقت العلاقة وعيش أسعد اللحظات الحميمية.": {
+    ar: "التركيبة الطبيعية المطورة الأقوى لتعزيز تدفق الدم وتوسيع الأنسجة الكهفية، منحك انتصاباً صخرياً وضخامة تحس بها الزوجة فوراً، مع تحكم كامل في القذف لتمديد وقت العلاقة وعيش أسعد اللحظات الحميمية.",
+    fr: "Formule naturelle avancée pour stimuler le flux sanguin, maximiser la fermeté érectile et développer le volume tissulaire avec endurance prolongée.",
+    en: "Advanced natural formula to boost penile blood flow, maximize rock-solid firmness, and support tissue expansion with superior endurance."
+  },
+  "تركيبة طبيعية مركزة تجمع بين الماكا البيروفية، الجينسينغ الأحمر الكوري، والتريبولوس لمحاربة التعب والإرهاق اليومي، تعزيز اللياقة البدنية والذهنية، واستعادة الحيوية الذكورية بدون أي منبهات صناعية.": {
+    ar: "تركيبة طبيعية مركزة تجمع بين الماكا البيروفية، الجينسينغ الأحمر الكوري، والتريبولوس لمحاربة التعب والإرهاق اليومي، تعزيز اللياقة البدنية والذهنية، واستعادة الحيوية الذكورية بدون أي منبهات صناعية.",
+    fr: "Complexe tonifiant concentré associant maca péruvienne, ginseng rouge et tribulus pour vaincre la fatigue et stimuler la vitalité globale.",
+    en: "Concentrated herbal complex of Peruvian maca, red ginseng, and tribulus to fight daily fatigue and restore overall vitality and stamina."
+  },
+  "تركيبة طبيعية سائلة متطورة مخصصة لدعم صحة البروستاتا والتخلص من تكرار التبول وضعف التدفق. تمنحك نوماً هادئاً متواصلاً وتدفقاً مريحاً وسلساً بدون أي مواد كيميائية وبدون آثار جانبية.": {
+    ar: "تركيبة طبيعية سائلة متطورة مخصصة لدعم صحة البروستاتا والتخلص من تكرار التبول وضعف التدفق. تمنحك نوماً هادئاً متواصلاً وتدفقاً مريحاً وسلساً بدون أي مواد كيميائية وبدون آثار جانبية.",
+    fr: "Solution liquide hautement biodisponible (Saw Palmetto, Pygeum, zinc) pour soulager les envies nocturnes et restaurer un flux urinaire régulier.",
+    en: "Fast-absorbing liquid formula (Saw Palmetto, Pygeum, zinc) to relieve frequent nighttime urination and maintain healthy prostate function."
+  },
+  "تركيبة ملكية أصلية ونادرة تجمع بين الماكا السوداء البيروفية المركزة، التريبولوس النقي، الجينسينغ الأحمر الكوري، والزنك العضوي. صُممت خصيصاً للرجل الذي يبحث عن صلابة حديدية لا تنكسر، قوة انتصاب تدوم طويلاً، وتحكم كامل يسعد شريكة حياته في كل لقاء.": {
+    ar: "تركيبة ملكية أصلية ونادرة تجمع بين الماكا السوداء البيروفية المركزة، التريبولوس النقي، الجينسينغ الأحمر الكوري، والزنك العضوي. صُممت خصيصاً للرجل الذي يبحث عن صلابة حديدية لا تنكسر، قوة انتصاب تدوم طويلاً، وتحكم كامل يسعد شريكة حياته في كل لقاء.",
+    fr: "Formule royale à haute concentration en maca noire péruvienne pour stimuler la puissance virile, la fermeté et la confiance masculine.",
+    en: "Royal high-potency formula with rare Peruvian black maca and tribulus to enhance male stamina, hardness, and confidence."
+  },
+  "تركيبة نخبوية متطورة تجمع بين الجينسينغ الأحمر الكوري المعتق (6 سنوات) وعشبة الروديولا المتكيفة والزنك العضوي لرفع مستويات التستوستيرون الطبيعي، القضاء على التوتر والإرهاق، واستعادة القوة والدافع الفحولي للرجال.": {
+    ar: "تركيبة نخبوية متطورة تجمع بين الجينسينغ الأحمر الكوري المعتق (6 سنوات) وعشبة الروديولا المتكيفة والزنك العضوي لرفع مستويات التستوستيرون الطبيعي، القضاء على التوتر والإرهاق، واستعادة القوة والدافع الفحولي للرجال.",
+    fr: "Ginseng rouge coréen 6 ans d'âge, rhodiola adaptogène et zinc pour optimiser la testostérone libre et dynamiser la résistance physique.",
+    en: "6-year mature Korean red ginseng, adaptogenic rhodiola, and zinc to boost free testosterone and support physical power."
+  },
+
+  // Bundle Descriptions
+  "الحل المزدوج المتكامل: كبسولات Vitality Ultra للصلابة وتمدد الحجم والسمك + زيت Control Flow لتأخير القذف 30-45 دقيقة وتحكم تام فالعلاقة لإسعاد الزوجة.": {
+    ar: "الحل المزدوج المتكامل: كبسولات Vitality Ultra للصلابة وتمدد الحجم والسمك + زيت Control Flow لتأخير القذف 30-45 دقيقة وتحكم تام فالعلاقة لإسعاد الزوجة.",
+    fr: "La double action complète : Vitality Ultra pour une fermeté maximale et gain de volume + huile Control Flow pour retarder l'éjaculation de 30 à 45 min sans anesthésie.",
+    en: "Complete dual action: Vitality Ultra for maximum firmness and volume expansion + Control Flow oil to delay ejaculation by 30-45 min with full control."
+  },
+  "الثنائي الفحولي: Vitality Ultra + Royal Force لانتصاب حديدي وطاقة مضاعفة طوال اللقاء.": {
+    ar: "الثنائي الفحولي: Vitality Ultra + Royal Force لانتصاب حديدي وطاقة مضاعفة طوال اللقاء.",
+    fr: "Le duo de virilité : Vitality Ultra + Royal Force pour une érection inébranlable et une endurance décuplée.",
+    en: "The virility duo: Vitality Ultra + Royal Force for continuous steel erection and enhanced stamina."
+  },
+  "الباك الملكي 3 في 1: صلابة مستمرة، تحفيز التستوستيرون، ومقاومة تامة للتعب والإجهاد.": {
+    ar: "الباك الملكي 3 في 1: صلابة مستمرة، تحفيز التستوستيرون، ومقاومة تامة للتعب والإجهاد.",
+    fr: "Le pack royal ultime 3-en-1 : fermeté durable, stimulation de la testostérone et endurance sans faille.",
+    en: "The ultimate 3-in-1 royal pack: sustained firmness, natural testosterone optimization, and fatigue resilience."
+  },
+  "باقة البروستاتا والراحة الليلية: Prosta Guard للتخلص من صعوبة التبول + Testo Drive لنشاط متجدد طوال النهار.": {
+    ar: "باقة البروستاتا والراحة الليلية: Prosta Guard للتخلص من صعوبة التبول + Testo Drive لنشاط متجدد طوال النهار.",
+    fr: "Pack confort nocturne et vitalité : Prosta Guard pour le bien-être prostatique et Testo Drive pour l'énergie quotidienne.",
+    en: "Nighttime comfort and energy: Prosta Guard for healthy prostate and Testo Drive for daytime vitality."
+  }
 };
 
 export function localizedSeedText(value: string, locale: SupportedLocale) {

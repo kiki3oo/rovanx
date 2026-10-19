@@ -3,6 +3,7 @@ import Image from "next/image";
 import { ArrowRight, BadgeCheck, PhoneCall, ShieldCheck, Sparkles, Star, Truck } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { ProductCard } from "@/components/store/product-card";
+import { BundleCard } from "@/components/store/bundle-card";
 import { buildMetadata } from "@/lib/seo";
 import { RovanxLogo } from "@/components/brand/rovanx-logo";
 import { Money } from "@/components/store/money";
@@ -96,7 +97,7 @@ export default async function HomePage() {
                 ))}
               </div>
               <span className="font-bold text-white">4.9/5</span>
-              <span className="text-white/60">· +2,400 avis clients vérifiés au Maroc</span>
+              <span className="text-white/60"><LocalizedText id="verifiedReviews" /></span>
             </div>
             <div className="grid gap-3 pt-2 text-sm text-white/78 sm:grid-cols-3">
               {["codSecure", "callConfirm", "premiumPick"].map((item) => (
@@ -175,33 +176,7 @@ export default async function HomePage() {
           <LocalizedText id="bundlesIntro" as="p" className="mb-8 max-w-2xl text-white/70" />
           <div className="grid gap-6 md:grid-cols-3">
             {bundles.map((bundle) => (
-              <article
-                key={bundle.id}
-                className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-6 text-white backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-bronze-500/50 hover:bg-white/[0.07] hover:shadow-2xl hover:shadow-black/50"
-              >
-                <div>
-                  <div className="mb-5 flex items-center justify-between">
-                    <span className="grid h-12 w-12 place-items-center rounded-2xl border border-bronze-500/30 bg-gradient-to-br from-bronze-400/20 to-bronze-600/30 text-bronze-400 shadow-md">
-                      <BadgeCheck size={26} />
-                    </span>
-                    <span className="badge border-bronze-500/30 bg-bronze-500/15 text-xs font-bold text-bronze-300 uppercase tracking-wider">
-                      Pack Avantage
-                    </span>
-                  </div>
-                  <h3 className="text-2xl font-black text-white transition-colors group-hover:text-bronze-400">{bundle.name}</h3>
-                  <div className="mt-3 text-sm leading-6 text-white/70 line-clamp-3"><SeedContent value={bundle.description} /></div>
-                </div>
-
-                <div className="mt-6 border-t border-white/10 pt-5">
-                  <div className="mb-4 flex items-end justify-between gap-3">
-                    <strong className="text-2xl font-black text-white"><Money value={bundle.bundlePrice} /></strong>
-                    <span className="text-sm text-white/50 line-through"><Money value={bundle.regularCombinedPrice} /></span>
-                  </div>
-                  <Link href="/bundles" className="btn btn-primary flex w-full items-center justify-center gap-2">
-                    <LocalizedText id="heroBundles" /> <ArrowRight size={17} />
-                  </Link>
-                </div>
-              </article>
+              <BundleCard key={bundle.id} bundle={bundle} />
             ))}
           </div>
         </div>

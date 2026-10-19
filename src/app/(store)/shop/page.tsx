@@ -103,9 +103,9 @@ export default async function ShopPage({
             <div className="mb-6 flex items-center justify-between border-b border-white/10 pb-4">
               <div className="flex items-center gap-2">
                 <Sparkles size={18} className="text-amber-400" />
-                <h2 className="text-2xl font-black text-white">باقات وعروض التوفير الحصرية</h2>
+                <h2 className="text-2xl font-black text-white"><LocalizedText id="exclusivePacks" /></h2>
               </div>
-              <span className="text-xs text-white/50">{bundles.length} باقات متكاملة</span>
+              <span className="text-xs text-white/50">{bundles.length} <LocalizedText id="integratedPacks" /></span>
             </div>
 
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -131,20 +131,18 @@ export default async function ShopPage({
                 <div className="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
                   <div>
                     <span className="badge mb-2 border-amber-400/30 bg-amber-500/15 text-xs font-black text-amber-300">
-                      باقات التوفير
+                      <LocalizedText id="packAvantage" />
                     </span>
                     <h2 className="text-2xl sm:text-3xl font-black text-white">
-                      عروض وباقات ROVANX المتكاملة
+                      <LocalizedText id="bundlesTitle" />
                     </h2>
-                    <p className="mt-1 text-sm text-white/65">
-                      احصل على نتائج مضاعفة ووفر حتى 200 درهم مع التوصيل المجاني لكافة المدن.
-                    </p>
+                    <LocalizedText id="bundlesIntro" as="p" className="mt-1 text-sm text-white/65" />
                   </div>
                   <Link
                     href="/bundles"
                     className="btn border border-white/20 bg-white/10 text-white hover:bg-white/15 flex items-center gap-2"
                   >
-                    <span>عرض جميع الباقات</span>
+                    <span><LocalizedText id="allPacks" /></span>
                     <ArrowRight size={16} />
                   </Link>
                 </div>

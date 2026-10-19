@@ -7,6 +7,7 @@ import { Money } from "@/components/store/money";
 import { usePreferences } from "@/components/store/preferences-provider";
 import { getProductVisual } from "@/lib/product-visuals";
 import { getProductDetail } from "@/lib/product-details";
+import { getLocalizedProduct } from "@/lib/store-translations";
 
 type ProductCardProduct = Pick<
   Product,
@@ -20,15 +21,18 @@ export function ProductCard({
   product: ProductCardProduct;
   darkTheme?: boolean;
 }) {
-  const { locale } = usePreferences();
+  const { locale, t } = usePreferences();
   const isArabic = locale === "ar";
 
   const price = product.salePrice || product.regularPrice;
   const savings = product.regularPrice > price ? product.regularPrice - price : 0;
   const visual = getProductVisual(product.slug);
+  const localized = getLocalizedProduct(product.slug, locale);
   const detail = getProductDetail(product.slug);
-  const shortDescription = detail?.shortDescription || product.shortDescription;
-  const productName = detail?.name || product.name;
+
+  const productName = localized?.name || detail?.name || product.name;
+  const badgeText = localized?.badge || detail?.badge || null;
+  const shortDescription = localized?.shortDescription || detail?.shortDescription || product.shortDescription;
 
   if (darkTheme) {
     return (
@@ -36,23 +40,23 @@ export function ProductCard({
         <div>
           {/* Top Badges (Header) */}
           <div className="mb-4 flex items-center justify-between gap-2 min-h-[26px]">
-            {detail?.badge ? (
+            {badgeText ? (
               <span className="badge border-amber-400/40 bg-amber-500/15 text-xs font-black text-amber-300 uppercase tracking-wider shadow-sm">
-                {detail.badge}
+                {badgeText}
               </span>
             ) : product.hero || product.featured ? (
               <span className="badge border-amber-400/40 bg-amber-500/15 text-xs font-black text-amber-300 uppercase tracking-wider shadow-sm">
-                {isArabic ? "⭐ اختيار مميز" : "⭐ Sélection Premium"}
+                ⭐ {t("selectionPremium")}
               </span>
             ) : <span />}
 
             {savings > 0 ? (
               <span className="rounded-full bg-emerald-500/20 border border-emerald-500/30 px-2.5 py-0.5 text-xs font-black text-emerald-300">
-                {isArabic ? `وفّر ${savings} DH` : `-${savings} DH`}
+                {isArabic ? `${t("saveAmount")} ${savings} DH` : `-${savings} DH`}
               </span>
             ) : product.hero || product.featured ? (
               <span className="rounded-full bg-amber-500/15 border border-amber-500/30 px-2.5 py-0.5 text-[11px] font-black text-amber-300">
-                {isArabic ? "الأكثر طلباً" : "Best-Seller"}
+                {t("bestSellerTag")}
               </span>
             ) : null}
           </div>
@@ -91,7 +95,7 @@ export function ProductCard({
           <div className="mb-4 flex items-end justify-between gap-3">
             <div>
               <span className="block text-[11px] font-semibold uppercase tracking-wider text-white/50">
-                {isArabic ? "السعر :" : "Prix :"}
+                {t("priceLabel")}
               </span>
               <div className="flex items-baseline gap-2">
                 <strong className="text-2xl sm:text-3xl font-black text-amber-400">
@@ -107,11 +111,11 @@ export function ProductCard({
 
             {savings > 0 ? (
               <span className="rounded-md bg-emerald-500/15 border border-emerald-500/25 px-2 py-1 text-xs font-black text-emerald-300">
-                {isArabic ? `توفير ${savings} DH` : `-${savings} DH`}
+                {isArabic ? `${t("savingAmount")} ${savings} DH` : `-${savings} DH`}
               </span>
             ) : (
               <span className="rounded-md bg-white/[0.05] border border-white/10 px-2 py-1 text-[11px] font-bold text-white/70">
-                {isArabic ? "أصلي 100% ✓" : "100% Authentique ✓"}
+                {t("authenticProduct")}
               </span>
             )}
           </div>
@@ -119,7 +123,7 @@ export function ProductCard({
           <AddToCartButton
             product={{
               id: product.id,
-              name: product.name,
+              name: productName,
               slug: product.slug,
               sku: product.sku,
               price,
@@ -136,15 +140,15 @@ export function ProductCard({
     <article className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border-2 border-stone-200 bg-white p-5 sm:p-6 text-stone-900 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-amber-500/60 hover:shadow-xl">
       <div>
         <div className="mb-4 flex items-center justify-between gap-2 min-h-[26px]">
-          {detail?.badge ? (
+          {badgeText ? (
             <span className="badge border-amber-500/30 bg-amber-500/10 text-xs font-black text-amber-700 uppercase tracking-wider">
-              {detail.badge}
+              {badgeText}
             </span>
           ) : <span />}
 
           {savings > 0 ? (
             <span className="rounded-full bg-emerald-500/15 px-2.5 py-0.5 text-xs font-black text-emerald-700">
-              {isArabic ? `وفّر ${savings} DH` : `-${savings} DH`}
+              {isArabic ? `${t("saveAmount")} ${savings} DH` : `-${savings} DH`}
             </span>
           ) : null}
         </div>
@@ -179,7 +183,7 @@ export function ProductCard({
         <div className="mb-4 flex items-end justify-between gap-3">
           <div>
             <span className="block text-[11px] font-semibold uppercase tracking-wider text-stone-400">
-              {isArabic ? "السعر :" : "Prix :"}
+              {t("priceLabel")}
             </span>
             <div className="flex items-baseline gap-2">
               <strong className="text-2xl sm:text-3xl font-black text-stone-900">
@@ -195,11 +199,11 @@ export function ProductCard({
 
           {savings > 0 ? (
             <span className="rounded-md bg-emerald-50 px-2 py-1 text-xs font-black text-emerald-700">
-              {isArabic ? `توفير ${savings} DH` : `-${savings} DH`}
+              {isArabic ? `${t("savingAmount")} ${savings} DH` : `-${savings} DH`}
             </span>
           ) : (
             <span className="rounded-md bg-stone-100 px-2 py-1 text-[11px] font-bold text-stone-600">
-              {isArabic ? "أصلي 100% ✓" : "100% Authentique ✓"}
+              {t("authenticProduct")}
             </span>
           )}
         </div>
@@ -207,7 +211,7 @@ export function ProductCard({
         <AddToCartButton
           product={{
             id: product.id,
-            name: product.name,
+            name: productName,
             slug: product.slug,
             sku: product.sku,
             price,

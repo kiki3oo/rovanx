@@ -103,7 +103,9 @@ export type TranslationKey =
   | "contact" | "returns" | "privacy" | "terms" | "cookies" | "shippingPolicy" | "legalPending" | "pagePending"
   | "thanks" | "orderReceived" | "reference" | "nextSteps" | "confirmWhatsapp" | "upsell" | "viewConfirmation"
   | "extraOffer" | "oneOffer" | "sameParcel" | "addToOrder" | "skip" | "orderFailed" | "removeItem"
-  | "footerTagline" | "quantity" | "added";
+  | "footerTagline" | "quantity" | "added"
+  | "verifiedReviews" | "packAvantage" | "allPacks" | "exclusivePacks" | "integratedPacks"
+  | "authenticProduct" | "priceLabel" | "saveAmount" | "savingAmount" | "bestSellerTag";
 
 const translations: Record<SupportedLocale, Record<TranslationKey, string>> = {
   ar: {
@@ -137,7 +139,17 @@ const translations: Record<SupportedLocale, Record<TranslationKey, string>> = {
     legalPending: "سيُنشر المحتوى بعد مراجعته واعتماده.", pagePending: "محتوى قيد الإعداد", thanks: "شكرًا لك", orderReceived: "تم استلام طلبك", reference: "رقم الطلب",
     nextSteps: "سنتصل بك لتأكيد الطلب، ثم نجهزه ونرسله حسب منطقتك.", confirmWhatsapp: "التأكيد عبر واتساب", upsell: "منتج إضافي", viewConfirmation: "عرض تأكيد الطلب",
     extraOffer: "عرض إضافي", oneOffer: "عرض واحد لك", sameParcel: "سيُضاف إلى نفس الطلب والشحنة.", addToOrder: "أضف إلى طلبي", skip: "تخطي",
-    orderFailed: "تعذر إتمام الطلب. حاول مرة أخرى.", removeItem: "حذف المنتج", footerTagline: "علامة مغربية تعنى بحيوية الرجل ورفاهيته.", quantity: "الكمية", added: "تمت الإضافة! ✓"
+    orderFailed: "تعذر إتمام الطلب. حاول مرة أخرى.", removeItem: "حذف المنتج", footerTagline: "علامة مغربية تعنى بحيوية الرجل ورفاهيته.", quantity: "الكمية", added: "تمت الإضافة! ✓",
+    verifiedReviews: "· أكثر من 2,400 تقييم موثق لزبنائنا في المغرب",
+    packAvantage: "باقة توفير مميزة",
+    allPacks: "عرض جميع الباقات",
+    exclusivePacks: "باقات وعروض التوفير الحصرية",
+    integratedPacks: "باقات متكاملة",
+    authenticProduct: "أصلي 100% ✓",
+    priceLabel: "السعر :",
+    saveAmount: "وفّر",
+    savingAmount: "توفير",
+    bestSellerTag: "الأكثر طلباً"
   },
   fr: {
     shop: "Boutique",
@@ -224,7 +236,17 @@ const translations: Record<SupportedLocale, Record<TranslationKey, string>> = {
     legalPending: "Ce contenu sera publié après révision et validation.", pagePending: "Contenu à venir", thanks: "Merci", orderReceived: "Commande reçue", reference: "Référence",
     nextSteps: "Nous vous appelons pour confirmer votre commande, puis la préparons et l'expédions selon votre zone.", confirmWhatsapp: "Confirmer sur WhatsApp", upsell: "Produit supplémentaire", viewConfirmation: "Voir la confirmation",
     extraOffer: "Offre supplémentaire", oneOffer: "Une offre pour vous", sameParcel: "Ajouté à la même commande et au même colis.", addToOrder: "Ajouter à ma commande", skip: "Passer",
-    orderFailed: "La commande n'a pas abouti. Veuillez réessayer.", removeItem: "Supprimer le produit", footerTagline: "Marque marocaine dédiée à la vitalité et au bien-être masculin.", quantity: "Quantité", added: "Ajouté au panier ! ✓"
+    orderFailed: "La commande n'a pas abouti. Veuillez réessayer.", removeItem: "Supprimer le produit", footerTagline: "Marque marocaine dédiée à la vitalité et au bien-être masculin.", quantity: "Quantité", added: "Ajouté au panier ! ✓",
+    verifiedReviews: "· +2,400 avis clients vérifiés au Maroc",
+    packAvantage: "Pack Avantage",
+    allPacks: "Voir tous les packs",
+    exclusivePacks: "Packs et Offres Avantages Exclusifs",
+    integratedPacks: "packs complets",
+    authenticProduct: "100% Authentique ✓",
+    priceLabel: "Prix :",
+    saveAmount: "Économisez",
+    savingAmount: "Économie",
+    bestSellerTag: "Meilleure Vente"
   },
   en: {
     shop: "Shop",
@@ -311,7 +333,17 @@ const translations: Record<SupportedLocale, Record<TranslationKey, string>> = {
     legalPending: "This content will be published after review and approval.", pagePending: "Content coming soon", thanks: "Thank you", orderReceived: "Order received", reference: "Reference",
     nextSteps: "We will call to confirm your order, then prepare and ship it according to your area.", confirmWhatsapp: "Confirm on WhatsApp", upsell: "Additional item", viewConfirmation: "View confirmation",
     extraOffer: "Additional offer", oneOffer: "An offer for you", sameParcel: "Added to the same order and parcel.", addToOrder: "Add to my order", skip: "Skip",
-    orderFailed: "Your order could not be placed. Please try again.", removeItem: "Remove product", footerTagline: "A Moroccan brand for men's vitality and wellness.", quantity: "Quantity", added: "Added to cart! ✓"
+    orderFailed: "Your order could not be placed. Please try again.", removeItem: "Remove product", footerTagline: "A Moroccan brand for men's vitality and wellness.", quantity: "Quantity", added: "Added to cart! ✓",
+    verifiedReviews: "· +2,400 verified customer reviews in Morocco",
+    packAvantage: "Value Pack",
+    allPacks: "View all packs",
+    exclusivePacks: "Exclusive Value Packs & Bundles",
+    integratedPacks: "complete packs",
+    authenticProduct: "100% Authentic ✓",
+    priceLabel: "Price :",
+    saveAmount: "Save",
+    savingAmount: "Saving",
+    bestSellerTag: "Best-Seller"
   }
 };
 
