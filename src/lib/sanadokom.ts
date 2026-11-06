@@ -50,17 +50,23 @@ export async function sendOrderToSanadokom(orderData: SanadokomOrderData): Promi
       adSet: orderData.adSet || null,
     };
 
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 4000);
+
     const res = await fetch(webhookUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(payload),
-    });
+      signal: controller.signal,
+    }).finally(() => clearTimeout(timeoutId));
 
     if (!res.ok) {
       const errText = await res.text();
       console.warn(`[Sanadokom] HTTP ${res.status}:`, errText);
+    } else {
+      console.log(`[Sanadokom] Order successfully sent to Sanadokom for ${orderData.customerPhone}`);
     }
   } catch (err) {
     console.warn('[Sanadokom] Failed to send order webhook:', err);

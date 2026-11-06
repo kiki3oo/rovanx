@@ -293,53 +293,53 @@ export async function POST(request: Request) {
     return created;
   });
 
-  // Async push to Google Sheet (non-blocking for instant checkout response)
-  sendOrderToGoogleSheet({
-    reference: order.reference,
-    createdAt: order.createdAt,
-    fullName: parsed.data.fullName,
-    phone: parsed.data.phone,
-    city: parsed.data.city || "À confirmer",
-    address: parsed.data.address,
-    addressDetails: parsed.data.addressDetails,
-    items: items.map((it) => ({
-      productName: it.product.name,
-      quantity: it.quantity,
-      unitPrice: it.unitPrice,
-      total: it.total,
-      isBump: it.isBump
-    })),
-    subtotal,
-    discountTotal,
-    total: finalTotal,
-    notes: combinedNotes,
-    utmSource: parsed.data.utmSource,
-    utmMedium: parsed.data.utmMedium,
-    utmCampaign: parsed.data.utmCampaign,
-    utmContent: parsed.data.utmContent,
-    utmTerm: parsed.data.utmTerm,
-    status: multiOrderIndex > 1 ? `MULTI_${multiOrderIndex}` : "NEW"
-  }).catch(() => {});
-
-  // Async push to Sanadokom COD Operating System (non-blocking)
-  sendOrderToSanadokom({
-    customerName: parsed.data.fullName,
-    customerPhone: parsed.data.phone,
-    customerCity: parsed.data.city || "À confirmer",
-    customerAddress: [parsed.data.address, parsed.data.addressDetails].filter(Boolean).join(" - "),
-    customerNote: combinedNotes,
-    totalAmount: finalTotal,
-    items: items.map((it) => ({
-      sku: it.product.sku,
-      productName: it.product.name,
-      productId: it.product.id,
-      quantity: it.quantity,
-      unitPrice: it.unitPrice,
-    })),
-    source: "Rovanx Store",
-    utmSource: parsed.data.utmSource,
-    utmCampaign: parsed.data.utmCampaign,
-  }).catch(() => {});
+  // Push order asynchronously to Google Sheet and Sanadokom COD Operating System
+  await Promise.allSettled([
+    sendOrderToGoogleSheet({
+      reference: order.reference,
+      createdAt: order.createdAt,
+      fullName: parsed.data.fullName,
+      phone: parsed.data.phone,
+      city: parsed.data.city || "À confirmer",
+      address: parsed.data.address,
+      addressDetails: parsed.data.addressDetails,
+      items: items.map((it) => ({
+        productName: it.product.name,
+        quantity: it.quantity,
+        unitPrice: it.unitPrice,
+        total: it.total,
+        isBump: it.isBump
+      })),
+      subtotal,
+      discountTotal,
+      total: finalTotal,
+      notes: combinedNotes,
+      utmSource: parsed.data.utmSource,
+      utmMedium: parsed.data.utmMedium,
+      utmCampaign: parsed.data.utmCampaign,
+      utmContent: parsed.data.utmContent,
+      utmTerm: parsed.data.utmTerm,
+      status: multiOrderIndex > 1 ? `MULTI_${multiOrderIndex}` : "NEW"
+    }).catch(() => {}),
+    sendOrderToSanadokom({
+      customerName: parsed.data.fullName,
+      customerPhone: parsed.data.phone,
+      customerCity: parsed.data.city || "À confirmer",
+      customerAddress: [parsed.data.address, parsed.data.addressDetails].filter(Boolean).join(" - "),
+      customerNote: combinedNotes,
+      totalAmount: finalTotal,
+      items: items.map((it) => ({
+        sku: it.product.sku,
+        productName: it.product.name,
+        productId: it.product.id,
+        quantity: it.quantity,
+        unitPrice: it.unitPrice,
+      })),
+      source: "Rovanx Store",
+      utmSource: parsed.data.utmSource,
+      utmCampaign: parsed.data.utmCampaign,
+    }).catch(() => {}),
+  ]);
 
   const sourceProductIds = order.items.map((item) => item.productId);
   const rule = await prisma.upsellRule.findFirst({

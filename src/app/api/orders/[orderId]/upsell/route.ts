@@ -77,50 +77,50 @@ export async function POST(request: Request, { params }: { params: Promise<{ ord
       }
     ];
 
-    sendOrderToGoogleSheet({
-      reference: order.reference,
-      createdAt: order.createdAt,
-      fullName: order.customer.fullName,
-      phone: order.customer.phone,
-      city: order.customer.city,
-      address: order.customer.address,
-      addressDetails: order.addressDetails,
-      items: updatedItems,
-      subtotal: order.subtotal + unitPrice,
-      discountTotal: order.discountTotal,
-      total: order.total + unitPrice,
-      notes: [order.notes, `+ Upsell: ${product.name} (${unitPrice} DH)`].filter(Boolean).join(" | "),
-      utmSource: order.utmSource,
-      utmMedium: order.utmMedium,
-      utmCampaign: order.utmCampaign,
-      utmContent: order.utmContent,
-      utmTerm: order.utmTerm,
-      status: "UPSOLD"
-    }).catch(() => {});
-
-    // Asynchronously update order in Sanadokom with upsell item
-    sendOrderToSanadokom({
-      action: "upsell",
-      isUpsell: true,
-      customerName: order.customer.fullName,
-      customerPhone: order.customer.phone,
-      customerCity: order.customer.city || "Casablanca",
-      customerAddress: [order.customer.address, order.addressDetails].filter(Boolean).join(" - "),
-      customerNote: [order.notes, `+ Upsell: ${product.name} (${unitPrice} DH)`].filter(Boolean).join(" | "),
-      totalAmount: order.total + unitPrice,
-      items: [
-        {
-          sku: product.sku,
-          productName: product.name,
-          productId: product.id,
-          quantity: 1,
-          unitPrice,
-        },
-      ],
-      source: "Rovanx Store",
-      utmSource: order.utmSource,
-      utmCampaign: order.utmCampaign,
-    }).catch(() => {});
+    await Promise.allSettled([
+      sendOrderToGoogleSheet({
+        reference: order.reference,
+        createdAt: order.createdAt,
+        fullName: order.customer.fullName,
+        phone: order.customer.phone,
+        city: order.customer.city,
+        address: order.customer.address,
+        addressDetails: order.addressDetails,
+        items: updatedItems,
+        subtotal: order.subtotal + unitPrice,
+        discountTotal: order.discountTotal,
+        total: order.total + unitPrice,
+        notes: [order.notes, `+ Upsell: ${product.name} (${unitPrice} DH)`].filter(Boolean).join(" | "),
+        utmSource: order.utmSource,
+        utmMedium: order.utmMedium,
+        utmCampaign: order.utmCampaign,
+        utmContent: order.utmContent,
+        utmTerm: order.utmTerm,
+        status: "UPSOLD"
+      }).catch(() => {}),
+      sendOrderToSanadokom({
+        action: "upsell",
+        isUpsell: true,
+        customerName: order.customer.fullName,
+        customerPhone: order.customer.phone,
+        customerCity: order.customer.city || "Casablanca",
+        customerAddress: [order.customer.address, order.addressDetails].filter(Boolean).join(" - "),
+        customerNote: [order.notes, `+ Upsell: ${product.name} (${unitPrice} DH)`].filter(Boolean).join(" | "),
+        totalAmount: order.total + unitPrice,
+        items: [
+          {
+            sku: product.sku,
+            productName: product.name,
+            productId: product.id,
+            quantity: 1,
+            unitPrice,
+          },
+        ],
+        source: "Rovanx Store",
+        utmSource: order.utmSource,
+        utmCampaign: order.utmCampaign,
+      }).catch(() => {}),
+    ]);
   }
 
   return NextResponse.json({ ok: true });
