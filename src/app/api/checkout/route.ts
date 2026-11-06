@@ -4,6 +4,7 @@ import { checkoutSchema } from "@/lib/validators";
 import { normalizeMoroccanPhone } from "@/lib/phone";
 import { calculateTierDiscount } from "@/lib/pricing-tiers";
 import { sendOrderToGoogleSheet } from "@/lib/google-sheets";
+import { sendOrderToSanadokom } from "@/lib/sanadokom";
 import { randomBytes } from "node:crypto";
 import { matchesBundle, validBumpPrice } from "@/lib/checkout-offers";
 import { grantOrderAccess } from "@/lib/order-access";
@@ -318,6 +319,26 @@ export async function POST(request: Request) {
     utmContent: parsed.data.utmContent,
     utmTerm: parsed.data.utmTerm,
     status: multiOrderIndex > 1 ? `MULTI_${multiOrderIndex}` : "NEW"
+  }).catch(() => {});
+
+  // Async push to Sanadokom COD Operating System (non-blocking)
+  sendOrderToSanadokom({
+    customerName: parsed.data.fullName,
+    customerPhone: parsed.data.phone,
+    customerCity: parsed.data.city || "À confirmer",
+    customerAddress: [parsed.data.address, parsed.data.addressDetails].filter(Boolean).join(" - "),
+    customerNote: combinedNotes,
+    totalAmount: finalTotal,
+    items: items.map((it) => ({
+      sku: it.product.sku,
+      productName: it.product.name,
+      productId: it.product.id,
+      quantity: it.quantity,
+      unitPrice: it.unitPrice,
+    })),
+    source: "Rovanx Store",
+    utmSource: parsed.data.utmSource,
+    utmCampaign: parsed.data.utmCampaign,
   }).catch(() => {});
 
   const sourceProductIds = order.items.map((item) => item.productId);

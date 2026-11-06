@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { sendOrderToGoogleSheet } from "@/lib/google-sheets";
+import { sendOrderToSanadokom } from "@/lib/sanadokom";
 import { hasOrderAccess } from "@/lib/order-access";
 
 export async function POST(request: Request, { params }: { params: Promise<{ orderId: string }> }) {
@@ -95,6 +96,30 @@ export async function POST(request: Request, { params }: { params: Promise<{ ord
       utmContent: order.utmContent,
       utmTerm: order.utmTerm,
       status: "UPSOLD"
+    }).catch(() => {});
+
+    // Asynchronously update order in Sanadokom with upsell item
+    sendOrderToSanadokom({
+      action: "upsell",
+      isUpsell: true,
+      customerName: order.customer.fullName,
+      customerPhone: order.customer.phone,
+      customerCity: order.customer.city || "Casablanca",
+      customerAddress: [order.customer.address, order.addressDetails].filter(Boolean).join(" - "),
+      customerNote: [order.notes, `+ Upsell: ${product.name} (${unitPrice} DH)`].filter(Boolean).join(" | "),
+      totalAmount: order.total + unitPrice,
+      items: [
+        {
+          sku: product.sku,
+          productName: product.name,
+          productId: product.id,
+          quantity: 1,
+          unitPrice,
+        },
+      ],
+      source: "Rovanx Store",
+      utmSource: order.utmSource,
+      utmCampaign: order.utmCampaign,
     }).catch(() => {});
   }
 
