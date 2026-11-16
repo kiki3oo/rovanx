@@ -23,7 +23,7 @@
     "bcryptjs": "latest",
     "clsx": "latest",
     "lucide-react": "latest",
-    "next": "16.4.1",
+    "next": "16.4.5",
     "react": "latest",
     "react-dom": "latest",
     "zod": "latest"
